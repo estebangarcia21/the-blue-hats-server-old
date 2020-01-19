@@ -30,7 +30,7 @@ public class Main extends JavaPlugin {
         instance = this;
 
         ConfigAPI.setPlugin(this, "Ranks",
-                "Gold", "XP");
+                "Gold", "XP", "Prestige");
 
         Logger log = Bukkit.getLogger();
         log.info("------------------------------------------");
