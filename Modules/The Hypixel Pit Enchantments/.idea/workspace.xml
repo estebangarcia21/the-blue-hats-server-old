@@ -6,7 +6,15 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8b1a7c4-5763-4258-bf84-ef9b35cfecc3" name="Default Changelist" comment="" />
+    <list default="true" id="c8b1a7c4-5763-4258-bf84-ef9b35cfecc3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Config API/Config API.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Config API/Config API.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Player Protection/Player Protection.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Player Protection/Player Protection.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Config_API_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Config_API_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/The_Hypixel_Pit_Enchantments_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/The_Hypixel_Pit_Enchantments_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/The Hypixel Pit Enchantments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/The Hypixel Pit Enchantments.iml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,7 +29,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
   <component name="ProjectId" id="1WHDWOYGfA50spFxtdTdapn9I07" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -34,7 +46,8 @@
     <property name="GenerateAntBuildDialog.generateSingleFile" value="true" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="the_hypixel_pit_enchantments" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Projects/The Blue Hats Server/Console/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Projects/The Blue Hats Server/Console/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -53,7 +66,7 @@
   </component>
   <component name="RunManager">
     <configuration name="Server" type="JarApplication">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/../../../Projects/The Blue Hats Server/Console/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" />
+      <option name="JAR_PATH" value="$PROJECT_DIR$/../../../../Projects/The Blue Hats Server/Console/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" />
       <option name="WORKING_DIRECTORY" value="D:\Development\Projects\The Blue Hats Server\Console" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
@@ -95,10 +108,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579399279126">
+    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579400586782">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579399279126" />
+    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400586782" />
     <state x="1029" y="537" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1578800833526">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -124,35 +137,35 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1010" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578976179423" />
-    <state x="796" y="536" key="FileChooserDialogImpl" timestamp="1579399276517">
+    <state x="796" y="536" key="FileChooserDialogImpl" timestamp="1579400581855">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="796" y="536" key="FileChooserDialogImpl/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579399276517" />
-    <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1579398973217">
+    <state x="796" y="536" key="FileChooserDialogImpl/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400581855" />
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1579400694503">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579381866824" />
-    <state width="2517" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579398973217" />
-    <state width="2517" height="401" key="GridCell.Tab.0.center" timestamp="1579398973217">
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400694503" />
+    <state width="2517" height="401" key="GridCell.Tab.0.center" timestamp="1579400694502">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="401" key="GridCell.Tab.0.center/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579381866824" />
-    <state width="2517" height="401" key="GridCell.Tab.0.center/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579398973217" />
-    <state width="2517" height="401" key="GridCell.Tab.0.left" timestamp="1579398973217">
+    <state width="2517" height="401" key="GridCell.Tab.0.center/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400694502" />
+    <state width="2517" height="401" key="GridCell.Tab.0.left" timestamp="1579400694502">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="401" key="GridCell.Tab.0.left/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579381866824" />
-    <state width="2517" height="401" key="GridCell.Tab.0.left/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579398973217" />
-    <state width="2517" height="401" key="GridCell.Tab.0.right" timestamp="1579398973217">
+    <state width="2517" height="401" key="GridCell.Tab.0.left/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400694502" />
+    <state width="2517" height="401" key="GridCell.Tab.0.right" timestamp="1579400694503">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579381866824" />
-    <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579398973217" />
-    <state x="768" y="399" width="1040" height="845" key="SettingsEditor" timestamp="1579399314049">
+    <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400694503" />
+    <state x="835" y="402" width="1040" height="845" key="SettingsEditor" timestamp="1579400645516">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="-1235" y="354" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579138514496" />
-    <state x="768" y="399" width="1040" height="845" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579399314049" />
+    <state x="835" y="402" width="1040" height="845" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400645516" />
     <state x="449" y="692" width="2131" height="1385" key="dock-window-1" timestamp="1578852061281">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

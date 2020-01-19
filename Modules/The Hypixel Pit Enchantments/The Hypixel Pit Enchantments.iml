@@ -26,28 +26,17 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../Dependencies/spigot-1.8-R0.1-SNAPSHOT-latest.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../Dependencies/spigot-1.8-R0.1-SNAPSHOT-latest.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../Dependencies/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../Dependencies/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="module" module-name="Config API" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../Dependencies/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../Dependencies/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
