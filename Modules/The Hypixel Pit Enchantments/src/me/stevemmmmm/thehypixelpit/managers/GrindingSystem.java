@@ -90,6 +90,18 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
         }
     }
 
+    public int getPlayerPrestige(Player player) {
+        return playerPrestiges.get(player.getUniqueId());
+    }
+
+    public int getPlayerXP(Player player) {
+        return playerXP.get(player.getUniqueId());
+    }
+
+    public double getPlayerGold(Player player) {
+        return playerGold.get(player.getUniqueId());
+    }
+
     @Override
     public void readConfig() {
         for (Map.Entry<UUID, String> entry : ConfigAPI.read("Prestige").entrySet()) {
