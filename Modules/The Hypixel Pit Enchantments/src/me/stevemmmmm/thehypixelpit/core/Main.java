@@ -37,7 +37,7 @@ public class Main extends JavaPlugin {
 
         Logger log = Bukkit.getLogger();
         log.info("------------------------------------------");
-        log.info("The Hypixel Pit Enchantments by Stevemmmmm");
+        log.info("The Hypixel Pit Remake by Stevemmmmm");
         log.info("------------------------------------------");
 
         //Initialization

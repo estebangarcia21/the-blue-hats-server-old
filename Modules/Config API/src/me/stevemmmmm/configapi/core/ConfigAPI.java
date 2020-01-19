@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.*;
+import java.util.logging.Logger;
 
 /*
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
@@ -20,7 +21,10 @@ public class ConfigAPI extends JavaPlugin {
     private static ArrayList<ConfigReader> configReaders = new ArrayList<>();
 
     public void onEnable() {
-
+        Logger log = Bukkit.getLogger();
+        log.info("------------------------------------------");
+        log.info("ConfigAPI by Stevemmmmm");
+        log.info("------------------------------------------");
 
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             for (ConfigWriter writer : configWriters) {

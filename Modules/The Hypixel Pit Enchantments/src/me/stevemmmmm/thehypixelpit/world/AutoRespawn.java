@@ -18,7 +18,6 @@ public class AutoRespawn implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        if (event.getEntity().getKiller() != null) event.getEntity().getKiller().sendMessage(ChatColor.RED + "You killed " + event.getEntity().getName() + "!");
         event.setDeathMessage("");
         Player player = event.getEntity();
 
