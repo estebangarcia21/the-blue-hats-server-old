@@ -35,8 +35,8 @@ public class ConfigAPI extends JavaPlugin {
     }
 
     public void onDisable() {
-        for (ConfigReader reader : configReaders) {
-            reader.readConfig();
+        for (ConfigWriter writer : configWriters) {
+            writer.writeToConfig();
         }
     }
 
@@ -51,6 +51,7 @@ public class ConfigAPI extends JavaPlugin {
     }
 
     public static void registerConfigReader(ConfigReader reader) {
+        reader.readConfig();
         configReaders.add(reader);
     }
 
@@ -71,8 +72,12 @@ public class ConfigAPI extends JavaPlugin {
 
         //TODO Implement optional data deletion
 
+        Bukkit.getLogger().info("BRUH #1");
+
+        //TODO Fix gold error on addup
+
         for (Map.Entry<UUID, T> entry : object.entrySet()) {
-            data.add(dataCategory + ":" + entry.getKey().toString() + ":" + entry.getValue().toString()));
+            data.add(dataCategory + ":" + entry.getKey().toString() + ":" + entry.getValue().toString());
         }
 
         plugin.getConfig().set(file.getAbsolutePath() + "\\Data\\", data);

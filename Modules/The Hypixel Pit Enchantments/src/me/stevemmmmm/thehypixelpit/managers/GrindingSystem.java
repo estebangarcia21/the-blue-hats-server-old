@@ -58,7 +58,7 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
     public double giveRandomGold(Player player) {
         DecimalFormat df = new DecimalFormat("###.##");
         double gold = ThreadLocalRandom.current().nextDouble(10, 25);
-        playerGold.put(player.getUniqueId(), Double.parseDouble(df.format(playerXP.get(player.getUniqueId()) + gold)));
+        playerGold.put(player.getUniqueId(), Double.parseDouble(df.format(playerGold.get(player.getUniqueId()) + gold)));
 
         return gold;
     }
@@ -111,6 +111,10 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
 
         for (Map.Entry<UUID, String> entry : ConfigAPI.read("XP").entrySet()) {
             playerXP.put(entry.getKey(), Integer.parseInt(entry.getValue()));
+        }
+
+        for (Map.Entry<UUID, String> entry : ConfigAPI.read("Gold").entrySet()) {
+            playerGold.put(entry.getKey(), Double.parseDouble(entry.getValue()));
         }
     }
 
