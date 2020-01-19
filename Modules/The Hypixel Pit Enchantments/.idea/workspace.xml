@@ -6,15 +6,17 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8b1a7c4-5763-4258-bf84-ef9b35cfecc3" name="Default Changelist" comment="">
+    <list default="true" id="c8b1a7c4-5763-4258-bf84-ef9b35cfecc3" name="Default Changelist" comment="Removed uneeded files">
+      <change afterPath="$PROJECT_DIR$/../Config API/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Player Protection/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Dependencies/spigot-1.8-R0.1-SNAPSHOT-latest.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Dependencies/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Config API/Config API.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Config API/Config API.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Player Protection/Player Protection.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Player Protection/Player Protection.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eula.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Config API/META-INF/Config API.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/The Hypixel Pit Enchantments/META-INF/The Hypixel Pit Enchantments.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/The Hypixel Pit Enchantments/me/stevemmmmm/thehypixelpit/world/AutoRespawn.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/The Hypixel Pit Enchantments/me/stevemmmmm/thehypixelpit/world/AutoRespawn.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/the_hypixel_pit_enchantments.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/the_hypixel_pit_enchantments.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/The Hypixel Pit Enchantments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/The Hypixel Pit Enchantments.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/stevemmmmm/thehypixelpit/core/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/stevemmmmm/thehypixelpit/core/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +43,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
@@ -48,8 +51,8 @@
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="the_hypixel_pit_enchantments" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Projects/The Blue Hats Server/Console/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -113,12 +116,20 @@
       <option name="project" value="LOCAL" />
       <updated>1579400764915</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Removed uneeded files">
+      <created>1579400990610</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1579400990610</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated dependencies" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated dependencies" />
+    <MESSAGE value="Removed uneeded files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed uneeded files" />
   </component>
   <component name="WindowStateProjectService">
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579400586782">
@@ -150,14 +161,14 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1010" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578976179423" />
-    <state x="789" y="295" key="CommitChangelistDialog2" timestamp="1579400762993">
+    <state x="789" y="295" key="CommitChangelistDialog2" timestamp="1579401101221">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="789" y="295" key="CommitChangelistDialog2/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400762993" />
-    <state x="796" y="536" key="FileChooserDialogImpl" timestamp="1579400581855">
+    <state x="789" y="295" key="CommitChangelistDialog2/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579401101221" />
+    <state x="796" y="536" key="FileChooserDialogImpl" timestamp="1579401247156">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="796" y="536" key="FileChooserDialogImpl/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400581855" />
+    <state x="796" y="536" key="FileChooserDialogImpl/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579401247156" />
     <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1579400694503">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -182,15 +193,15 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="897" y="423" key="RollbackChangesDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400839206" />
-    <state x="835" y="402" width="1040" height="845" key="SettingsEditor" timestamp="1579400645516">
+    <state x="748" y="386" width="1040" height="845" key="SettingsEditor" timestamp="1579401248931">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="-1235" y="354" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579138514496" />
-    <state x="835" y="402" width="1040" height="845" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400645516" />
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1579400770227">
+    <state x="748" y="386" width="1040" height="845" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579401248931" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1579400995680">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400770227" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400995680" />
     <state x="449" y="692" width="2131" height="1385" key="dock-window-1" timestamp="1578852061281">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
