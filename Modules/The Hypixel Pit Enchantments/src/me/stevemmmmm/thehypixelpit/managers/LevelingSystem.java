@@ -58,13 +58,5 @@ public class LevelingSystem implements Listener, ConfigReader, ConfigWriter {
 
         ConfigAPI.write("XP", playerXP);
         ConfigAPI.write("Prestige", playerPrestiges);
-
-//        for (Map.Entry<UUID, Integer> entry : playerXP.entrySet()) {
-//            ConfigAPI.write("Prestiges", entry.getKey(), entry.getValue());
-//        }
-//
-//        for (Map.Entry<UUID, Integer> entry : playerXP.entrySet()) {
-//            ConfigAPI.write("XP", entry.getKey(), entry.getValue());
-//        }
     }
 }
