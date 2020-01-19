@@ -30,8 +30,10 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        ConfigAPI.setPlugin(this, "Ranks",
-                "Gold", "XP", "Prestige");
+        ConfigAPI.setPlugin(this, "Ranks", "Gold", "XP", "Prestige");
+
+        ConfigAPI.registerConfigReader(LevelingSystem.getInstance());
+        ConfigAPI.registerConfigWriter(LevelingSystem.getInstance());
 
         Logger log = Bukkit.getLogger();
         log.info("------------------------------------------");
@@ -55,7 +57,6 @@ public class Main extends JavaPlugin {
         //Game logic
         getServer().getPluginManager().registerEvents(new Prestiges(), this);
 
-        LevelingSystem.getInstance().readConfig();
         getServer().getPluginManager().registerEvents(LevelingSystem.getInstance(), this);
     }
 

@@ -16,11 +16,39 @@ public class ConfigAPI extends JavaPlugin {
     private static List<String> dataCategories = new ArrayList<>();
     private static File file = new File("");
 
+    private static ArrayList<ConfigWriter> configWriters = new ArrayList<>();
+    private static ArrayList<ConfigReader> configReaders = new ArrayList<>();
+
+    public void onEnable() {
+
+
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            for (ConfigWriter writer : configWriters) {
+                writer.writeToConfig();
+            }
+        }, 36000L, 36000L);
+    }
+
+    public void onDisable() {
+        for (ConfigReader reader : configReaders) {
+            reader.readConfig();
+        }
+    }
+
     public static void setPlugin(JavaPlugin javaPlugin, String... args) {
         plugin = javaPlugin;
 
         dataCategories.addAll(Arrays.asList(args));
     }
+
+    public static void registerConfigWriter(ConfigWriter writer) {
+        configWriters.add(writer);
+    }
+
+    public static void registerConfigReader(ConfigReader reader) {
+        configReaders.add(reader);
+    }
+
 
     public static <T> void write(String dataCategory, HashMap<UUID, T> object) {
         if (!dataCategories.contains(dataCategory)) {
