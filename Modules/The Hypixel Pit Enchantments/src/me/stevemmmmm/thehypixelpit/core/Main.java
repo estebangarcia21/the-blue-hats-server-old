@@ -29,7 +29,8 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        ConfigAPI.setPlugin(this, "Ranks");
+        ConfigAPI.setPlugin(this, "Ranks",
+                "Gold", "XP");
 
         Logger log = Bukkit.getLogger();
         log.info("------------------------------------------");
