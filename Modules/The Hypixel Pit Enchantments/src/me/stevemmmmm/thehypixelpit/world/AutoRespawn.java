@@ -11,17 +11,14 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.util.Vector;
-
-import java.util.List;
 
 public class AutoRespawn implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        event.getEntity().getKiller().sendMessage(ChatColor.RED + "You killed " + event.getEntity().getName() + "!");
+        if (event.getEntity().getKiller() != null) event.getEntity().getKiller().sendMessage(ChatColor.RED + "You killed " + event.getEntity().getName() + "!");
         event.setDeathMessage("");
         Player player = event.getEntity();
 

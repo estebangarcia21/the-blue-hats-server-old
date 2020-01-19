@@ -109,18 +109,6 @@ public class ConfigAPI extends JavaPlugin {
         return data;
     }
 
-    public static ArrayList<String> readRaw(String dataCategory) {
-        ArrayList<String> data = new ArrayList<>();
-
-        for (String raw : plugin.getConfig().getStringList(file.getAbsolutePath() + "\\Data\\")) {
-            if (raw.split(":")[0].equals(dataCategory)) {
-                data.add(raw);
-            }
-        }
-
-        return data;
-    }
-
     public static List<String> readAllData() {
         return plugin.getConfig().getStringList(file.getAbsolutePath() + "\\Data\\");
     }

@@ -19,13 +19,28 @@ import java.util.UUID;
 public class LevelingSystem implements Listener, ConfigReader, ConfigWriter {
     private static LevelingSystem instance;
 
+    private HashMap<Integer, Integer> xpPerLevel = new HashMap<>();
+    private HashMap<Integer, Float> prestigeMultiplier = new HashMap<>();
+
     private HashMap<UUID, Integer> playerPrestiges = new HashMap<>();
     private HashMap<UUID, Integer> playerXP = new HashMap<>();
+
+    private LevelingSystem() {
+        initializeMaps();
+    }
 
     public static LevelingSystem getInstance() {
         if (instance == null) instance = new LevelingSystem();
 
         return instance;
+    }
+
+    private void initializeMaps() {
+        xpPerLevel.put(1, 20);
+
+        for (int i = 2; i <= 120; i++) {
+            xpPerLevel.put(i, xpPerLevel.get(i - 1) + (int) (80 * Math.round(Math.pow(Math.E, (float) i / 20))));
+        }
     }
 
     @EventHandler
@@ -54,8 +69,6 @@ public class LevelingSystem implements Listener, ConfigReader, ConfigWriter {
 
     @Override
     public void writeToConfig() {
-        //TODO Implement config saving on an interval of time
-
         ConfigAPI.write("XP", playerXP);
         ConfigAPI.write("Prestige", playerPrestiges);
     }
