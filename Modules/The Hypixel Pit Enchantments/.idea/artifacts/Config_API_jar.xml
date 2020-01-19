@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Config API:jar">
+    <output-path>$PROJECT_DIR$/../../../Projects/The Blue Hats Server/Console/plugins</output-path>
+    <root id="archive" name="Config API.jar">
+      <element id="module-output" name="Config API" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Dependencies/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Dependencies/spigot-1.8-R0.1-SNAPSHOT-latest.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

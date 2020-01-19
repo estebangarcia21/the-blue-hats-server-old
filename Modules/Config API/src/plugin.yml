@@ -1,0 +1,3 @@
+name: ConfigAPI
+main: me.stevemmmmm.configapi.core.ConfigAPI
+version: 1.0

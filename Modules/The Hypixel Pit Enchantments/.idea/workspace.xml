@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="The Hypixel Pit Enchantments:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c8b1a7c4-5763-4258-bf84-ef9b35cfecc3" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1WHDWOYGfA50spFxtdTdapn9I07" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="GenerateAntBuildDialog.generateSingleFile" value="true" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="the_hypixel_pit_enchantments" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Projects/The Blue Hats Server/Console/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="me.stevemmmmm.commands" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Development\Java\The Blue Hats Server\Config API\src" />
+      <recent name="D:\Development\The Hypixel Pit Enchantments" />
+      <recent name="D:\Development\The Hypixel Pit Enchantments\src" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Server" type="JarApplication">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/../../../Projects/The Blue Hats Server/Console/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" />
+      <option name="WORKING_DIRECTORY" value="D:\Development\Projects\The Blue Hats Server\Console" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <module name="The Hypixel Pit Enchantments" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JarApplication">
+      <option name="JAR_PATH" value="D:/LS/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" />
+      <option name="WORKING_DIRECTORY" value="D:\LS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <module name="The Hypixel Pit Enchantments" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c8b1a7c4-5763-4258-bf84-ef9b35cfecc3" name="Default Changelist" comment="" />
+      <created>1578797657447</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1578797657447</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579399279126">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579399279126" />
+    <state x="1029" y="537" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1578800833526">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1029" y="537" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578800833526" />
+    <state x="1085" y="410" key="#com.intellij.ide.util.MemberChooser" timestamp="1579392626114">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="-1475" y="410" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579308294631" />
+    <state x="1085" y="410" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579392626114" />
+    <state x="1010" y="484" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1579044883854">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1010" y="484" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579044883854" />
+    <state x="1675" y="490" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog" timestamp="1579138751452">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1675" y="490" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579138751452" />
+    <state x="441" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1578985509404">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="441" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578985509404" />
+    <state x="1010" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1578976179423">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1010" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578976179423" />
+    <state x="796" y="536" key="FileChooserDialogImpl" timestamp="1579399276517">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="796" y="536" key="FileChooserDialogImpl/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579399276517" />
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom" timestamp="1579398973217">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579381866824" />
+    <state width="2517" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579398973217" />
+    <state width="2517" height="401" key="GridCell.Tab.0.center" timestamp="1579398973217">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.center/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579381866824" />
+    <state width="2517" height="401" key="GridCell.Tab.0.center/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579398973217" />
+    <state width="2517" height="401" key="GridCell.Tab.0.left" timestamp="1579398973217">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.left/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579381866824" />
+    <state width="2517" height="401" key="GridCell.Tab.0.left/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579398973217" />
+    <state width="2517" height="401" key="GridCell.Tab.0.right" timestamp="1579398973217">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579381866824" />
+    <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579398973217" />
+    <state x="768" y="399" width="1040" height="845" key="SettingsEditor" timestamp="1579399314049">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="-1235" y="354" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579138514496" />
+    <state x="768" y="399" width="1040" height="845" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579399314049" />
+    <state x="449" y="692" width="2131" height="1385" key="dock-window-1" timestamp="1578852061281">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="449" y="692" width="2131" height="1385" key="dock-window-1/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578852061281" />
+    <state x="662" y="321" key="new project wizard" timestamp="1579139712571">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="662" y="321" key="new project wizard/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579139712571" />
+    <state x="986" y="320" key="refactoring.ChangeSignatureDialog" timestamp="1578803914087">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="986" y="320" key="refactoring.ChangeSignatureDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578803914087" />
+    <state x="936" y="330" key="run.anything.popup" timestamp="1578883547203">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="936" y="330" key="run.anything.popup/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578883547203" />
+    <state x="-1617" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1579073920977">
+      <screen x="-2560" y="0" width="2560" height="1400" />
+    </state>
+    <state x="-1617" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579073920977" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578986463169" />
+  </component>
+</project>

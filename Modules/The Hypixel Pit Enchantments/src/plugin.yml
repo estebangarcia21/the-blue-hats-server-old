@@ -1,0 +1,13 @@
+name: TheHypixelPitRemake
+main: me.stevemmmmm.thehypixelpit.core.Main
+version: 1.0
+commands:
+  pitenchant:
+    description: Use it to enchant some weapons xD xD
+    usage: /pitenchant
+  mysticenchants:
+    description: Lists the enchants
+    usage: /mysticenchants
+  pitabout:
+    description: Information about this plugin
+    usage: /pitabout
