@@ -30,7 +30,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        ConfigAPI.setPlugin(this, "Ranks", "Gold", "XP", "Prestige");
+        ConfigAPI.setPlugin(this, "Ranks", "Gold", "XP", "Prestiges", "Levels");
 
         ConfigAPI.registerConfigReader(GrindingSystem.getInstance());
         ConfigAPI.registerConfigWriter(GrindingSystem.getInstance());

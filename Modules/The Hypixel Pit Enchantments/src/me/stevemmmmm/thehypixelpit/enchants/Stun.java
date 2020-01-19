@@ -50,7 +50,6 @@ public class Stun extends CustomEnchant {
                 PacketPlayOutTitle subTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, chatSubTitle);
                 PacketPlayOutTitle subTitleLength = new PacketPlayOutTitle(0, 20, 0);
 
-
                 ((CraftPlayer) event.getEntity()).getHandle().playerConnection.sendPacket(title);
                 ((CraftPlayer) event.getEntity()).getHandle().playerConnection.sendPacket(length);
 

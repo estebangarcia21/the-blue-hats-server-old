@@ -50,7 +50,7 @@ public class Assassin extends CustomEnchant {
                 Location tpLoc = target.getLocation().subtract(target.getEyeLocation().getDirection().normalize());
                 tpLoc.setY(target.getLocation().getY());
 
-                if (tpLoc.getBlock().getType() != Material.AIR) {
+                if (tpLoc.getBlock().getType() == Material.AIR) {
                     player.teleport(tpLoc);
                 } else {
                     player.teleport(target);
@@ -67,7 +67,7 @@ public class Assassin extends CustomEnchant {
                 Location tpLoc = target.getLocation().subtract(target.getEyeLocation().getDirection().normalize());
                 tpLoc.setY(target.getLocation().getY());
 
-                if (tpLoc.getBlock().getType() != Material.AIR) {
+                if (tpLoc.getBlock().getType() == Material.AIR) {
                     player.teleport(tpLoc);
                 } else {
                     player.teleport(target);
@@ -84,7 +84,7 @@ public class Assassin extends CustomEnchant {
                 Location tpLoc = target.getLocation().subtract(target.getEyeLocation().getDirection().normalize());
                 tpLoc.setY(target.getLocation().getY());
 
-                if (tpLoc.getBlock().getType() != Material.AIR) {
+                if (tpLoc.getBlock().getType() == Material.AIR) {
                     player.teleport(tpLoc);
                 } else {
                     player.teleport(target);

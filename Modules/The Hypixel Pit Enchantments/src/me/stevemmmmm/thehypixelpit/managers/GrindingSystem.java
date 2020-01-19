@@ -7,7 +7,13 @@ package me.stevemmmmm.thehypixelpit.managers;
 import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.configapi.core.ConfigReader;
 import me.stevemmmmm.configapi.core.ConfigWriter;
+import me.stevemmmmm.thehypixelpit.utils.MapSorter;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.util.CraftChatMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,6 +33,7 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
     private HashMap<Integer, Float> prestigeMultiplier = new HashMap<>();
 
     private HashMap<UUID, Integer> playerPrestiges = new HashMap<>();
+    private HashMap<UUID, Integer> playerLevels = new HashMap<>();
     private HashMap<UUID, Integer> playerXP = new HashMap<>();
     private HashMap<UUID, Double> playerGold = new HashMap<>();
 
@@ -38,6 +45,37 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
         if (instance == null) instance = new GrindingSystem();
 
         return instance;
+    }
+
+    public void updateLevel(Player player) {
+        if (playerXP.get(player.getUniqueId()) >= xpPerLevel.get(playerLevels.get(player.getUniqueId()) + 1) * prestigeMultiplier.get(playerPrestiges.get(player.getUniqueId()))) {
+            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.AQUA + "LEVEL UP!" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+
+            PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
+            PacketPlayOutTitle length = new PacketPlayOutTitle(20, 20, 20);
+
+            IChatBaseComponent chatSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.YELLOW + getPlayerLevel(player) + " ⇢ " + (getPlayerLevel(player) + 1) + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+
+            PacketPlayOutTitle subTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, chatSubTitle);
+            PacketPlayOutTitle subTitleLength = new PacketPlayOutTitle(20, 20, 20);
+
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
+
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitle);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitleLength);
+
+            playerLevels.put(player.getUniqueId(), playerLevels.get(player.getUniqueId()) + 1);
+            playerLevels = MapSorter.sortByValue(playerLevels);
+
+            ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevel(player) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] " + player.getName())[0];
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
+
+            for (Player p : player.getWorld().getPlayers()) {
+                ((CraftPlayer) p).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevel(player) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] " + player.getName())[0];
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
+            }
+        }
     }
 
     public void giveXP(Player player, int amount) {
@@ -70,12 +108,16 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
         if (!playerPrestiges.containsKey(event.getPlayer().getUniqueId())) playerPrestiges.put(event.getPlayer().getUniqueId(), 0);
         if (!playerXP.containsKey(event.getPlayer().getUniqueId())) playerXP.put(event.getPlayer().getUniqueId(), 0);
         if (!playerGold.containsKey(event.getPlayer().getUniqueId())) playerGold.put(event.getPlayer().getUniqueId(), 0D);
+        if (!playerLevels.containsKey(event.getPlayer().getUniqueId())) playerLevels.put(event.getPlayer().getUniqueId(), 0);
     }
 
     @EventHandler
     public void onPlayerKill(PlayerDeathEvent event) {
         DecimalFormat df = new DecimalFormat("##0.00");
-        if (event.getEntity().getKiller() != null) event.getEntity().getKiller().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "KILL!" + ChatColor.GRAY + " on " + event.getEntity().getName() + ChatColor.AQUA + " +" + giveRandomXP(event.getEntity().getKiller()) + "XP" + ChatColor.GOLD + " +" + df.format(giveRandomGold(event.getEntity().getKiller())) + "g");
+        if (event.getEntity().getKiller() != null) {
+            event.getEntity().getKiller().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "KILL!" + ChatColor.GRAY + " on " + event.getEntity().getName() + ChatColor.AQUA + " +" + giveRandomXP(event.getEntity().getKiller()) + "XP" + ChatColor.GOLD + " +" + df.format(giveRandomGold(event.getEntity().getKiller())) + "g");
+            updateLevel(event.getEntity().getKiller());
+        }
     }
 
     private void initializeMaps() {
@@ -89,6 +131,142 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
         for (int i = 2; i <= 120; i++) {
             xpPerLevel.put(i, xpPerLevel.get(i - 1) + (int) (80 * Math.round(Math.pow(Math.E, (float) i / 20))));
         }
+    }
+
+    public int getPlayerLevel(Player player) {
+        return playerLevels.getOrDefault(player.getUniqueId(), 0);
+    }
+
+    public String getFormattedPlayerLevel(Player player) {
+        if (getPlayerPrestige(player) != 0) {
+            ChatColor color = ChatColor.GRAY;
+
+            if (getPlayerPrestige(player) < 5) {
+                color = ChatColor.BLUE;
+            } else if (getPlayerPrestige(player) < 10) {
+                color = ChatColor.YELLOW;
+            } else if (getPlayerPrestige(player) < 15) {
+                color = ChatColor.GOLD;
+            } else if (getPlayerPrestige(player) < 20) {
+                color = ChatColor.RED;
+            } else if (getPlayerPrestige(player) < 25) {
+                color = ChatColor.DARK_PURPLE;
+            } else if (getPlayerPrestige(player) < 30) {
+                color = ChatColor.LIGHT_PURPLE;
+            }  else if (getPlayerPrestige(player) == 30) {
+                color = ChatColor.WHITE;
+            }
+
+            if (getPlayerLevel(player) < 10) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.GRAY + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 10 && getPlayerLevel(player) < 20) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.BLUE + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 20 && getPlayerLevel(player) < 30) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.DARK_AQUA + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 30 && getPlayerLevel(player) < 40) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.DARK_GREEN + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 40 && getPlayerLevel(player) < 50) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.GREEN + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 50 && getPlayerLevel(player) < 60) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.YELLOW + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 60 && getPlayerLevel(player) < 70) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.GOLD.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 70 && getPlayerLevel(player) < 80) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.RED.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 80 && getPlayerLevel(player) < 90) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.DARK_RED.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 90 && getPlayerLevel(player) < 100) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 100 && getPlayerLevel(player) < 110) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 110 && getPlayerLevel(player) < 120) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.WHITE.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) == 120) {
+                return color + "[" + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(getPlayerPrestige(player)) + color + "-" + ChatColor.AQUA.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+        } else {
+            if (getPlayerLevel(player) < 10) {
+                return ChatColor.GRAY + "[" + getPlayerLevel(player) + "]";
+            }
+
+            if (getPlayerLevel(player) >= 10 && getPlayerLevel(player) < 20) {
+                return ChatColor.GRAY + "[" + ChatColor.BLUE + getPlayerLevel(player) + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) >= 20 && getPlayerLevel(player) < 30) {
+                return ChatColor.GRAY + "[" + ChatColor.DARK_AQUA + getPlayerLevel(player) + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) >= 30 && getPlayerLevel(player) < 40) {
+                return ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + getPlayerLevel(player) + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) >= 40 && getPlayerLevel(player) < 50) {
+                return ChatColor.GRAY + "[" + ChatColor.GREEN + getPlayerLevel(player) + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) >= 50 && getPlayerLevel(player) < 60) {
+                return ChatColor.GRAY + "[" + ChatColor.YELLOW + getPlayerLevel(player) + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) >= 60 && getPlayerLevel(player) < 70) {
+                return ChatColor.GRAY + "[" + ChatColor.GOLD.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) >= 70 && getPlayerLevel(player) < 80) {
+                return ChatColor.GRAY + "[" + ChatColor.RED.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) >= 80 && getPlayerLevel(player) < 90) {
+                return ChatColor.GRAY + "[" + ChatColor.DARK_RED.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) >= 90 && getPlayerLevel(player) < 100) {
+                return ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) >= 100 && getPlayerLevel(player) < 110) {
+                return ChatColor.GRAY + "[" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) >= 110 && getPlayerLevel(player) < 120) {
+                return ChatColor.GRAY + "[" + ChatColor.WHITE.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+            }
+
+            if (getPlayerLevel(player) == 120) {
+                return ChatColor.GRAY + "[" + ChatColor.AQUA.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+            }
+        }
+
+        return null;
+    }
+
+    public HashMap<UUID, Integer> getPlayerPrestiges() {
+        return playerPrestiges;
     }
 
     public int getPlayerPrestige(Player player) {
@@ -105,7 +283,7 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
 
     @Override
     public void readConfig() {
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read("Prestige").entrySet()) {
+        for (Map.Entry<UUID, String> entry : ConfigAPI.read("Prestiges").entrySet()) {
             playerPrestiges.put(entry.getKey(), Integer.parseInt(entry.getValue()));
         }
 
@@ -116,12 +294,19 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
         for (Map.Entry<UUID, String> entry : ConfigAPI.read("Gold").entrySet()) {
             playerGold.put(entry.getKey(), Double.parseDouble(entry.getValue()));
         }
+
+        for (Map.Entry<UUID, String> entry : ConfigAPI.read("Levels").entrySet()) {
+            playerLevels.put(entry.getKey(), Integer.parseInt(entry.getValue()));
+        }
+
+        playerLevels = MapSorter.sortByValue(playerLevels);
     }
 
     @Override
     public void writeToConfig() {
         ConfigAPI.write("XP", playerXP);
         ConfigAPI.write("Gold", playerGold);
-        ConfigAPI.write("Prestige", playerPrestiges);
+        ConfigAPI.write("Prestiges", playerPrestiges);
+        ConfigAPI.write("Levels", playerLevels);
     }
 }
