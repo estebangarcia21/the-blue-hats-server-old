@@ -7,7 +7,7 @@ import me.stevemmmmm.thehypixelpit.commands.MysticEnchantsCommand;
 import me.stevemmmmm.thehypixelpit.commands.PitAboutCommand;
 import me.stevemmmmm.thehypixelpit.enchants.*;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchantManager;
-import me.stevemmmmm.thehypixelpit.managers.LevelingSystem;
+import me.stevemmmmm.thehypixelpit.managers.GrindingSystem;
 import me.stevemmmmm.thehypixelpit.perks.Vampire;
 import me.stevemmmmm.thehypixelpit.world.AntiFall;
 import me.stevemmmmm.thehypixelpit.world.AutoRespawn;
@@ -32,8 +32,8 @@ public class Main extends JavaPlugin {
 
         ConfigAPI.setPlugin(this, "Ranks", "Gold", "XP", "Prestige");
 
-        ConfigAPI.registerConfigReader(LevelingSystem.getInstance());
-        ConfigAPI.registerConfigWriter(LevelingSystem.getInstance());
+        ConfigAPI.registerConfigReader(GrindingSystem.getInstance());
+        ConfigAPI.registerConfigWriter(GrindingSystem.getInstance());
 
         Logger log = Bukkit.getLogger();
         log.info("------------------------------------------");
@@ -57,12 +57,12 @@ public class Main extends JavaPlugin {
         //Game logic
         getServer().getPluginManager().registerEvents(new Prestiges(), this);
 
-        getServer().getPluginManager().registerEvents(LevelingSystem.getInstance(), this);
+        getServer().getPluginManager().registerEvents(GrindingSystem.getInstance(), this);
     }
 
     @Override
     public void onDisable() {
-        LevelingSystem.getInstance().writeToConfig();
+        GrindingSystem.getInstance().writeToConfig();
     }
 
     private void registerPerks() {
