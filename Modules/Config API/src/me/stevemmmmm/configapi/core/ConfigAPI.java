@@ -1,5 +1,6 @@
 package me.stevemmmmm.configapi.core;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -71,7 +72,7 @@ public class ConfigAPI extends JavaPlugin {
         //TODO Implement optional data deletion
 
         for (Map.Entry<UUID, T> entry : object.entrySet()) {
-            data.add(dataCategory + ":" + entry.getKey().toString() + ":" + entry.getValue().toString());
+            data.add(dataCategory + ":" + entry.getKey().toString() + ":" + entry.getValue().toString()));
         }
 
         plugin.getConfig().set(file.getAbsolutePath() + "\\Data\\", data);
