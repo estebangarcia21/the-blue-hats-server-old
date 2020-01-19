@@ -43,7 +43,7 @@ public class LevelingSystem implements Listener, ConfigReader, ConfigWriter {
 
     @Override
     public void readConfig() {
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read("Prestiges").entrySet()) {
+        for (Map.Entry<UUID, String> entry : ConfigAPI.read("Prestige").entrySet()) {
             playerPrestiges.put(entry.getKey(), Integer.parseInt(entry.getValue()));
         }
 
@@ -57,6 +57,7 @@ public class LevelingSystem implements Listener, ConfigReader, ConfigWriter {
         //TODO Implement config saving on an interval of time
 
         ConfigAPI.write("XP", playerXP);
+        ConfigAPI.write("Prestige", playerPrestiges);
 
 //        for (Map.Entry<UUID, Integer> entry : playerXP.entrySet()) {
 //            ConfigAPI.write("Prestiges", entry.getKey(), entry.getValue());
