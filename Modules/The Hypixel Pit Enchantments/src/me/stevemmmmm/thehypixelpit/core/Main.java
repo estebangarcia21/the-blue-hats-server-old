@@ -7,6 +7,7 @@ import me.stevemmmmm.thehypixelpit.commands.MysticEnchantsCommand;
 import me.stevemmmmm.thehypixelpit.commands.PitAboutCommand;
 import me.stevemmmmm.thehypixelpit.enchants.*;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchantManager;
+import me.stevemmmmm.thehypixelpit.managers.LevelingSystem;
 import me.stevemmmmm.thehypixelpit.perks.Vampire;
 import me.stevemmmmm.thehypixelpit.world.AntiFall;
 import me.stevemmmmm.thehypixelpit.world.AutoRespawn;
@@ -53,11 +54,14 @@ public class Main extends JavaPlugin {
 
         //Game logic
         getServer().getPluginManager().registerEvents(new Prestiges(), this);
+
+        LevelingSystem.getInstance().readConfig();
+        getServer().getPluginManager().registerEvents(LevelingSystem.getInstance(), this);
     }
 
     @Override
     public void onDisable() {
-
+        LevelingSystem.getInstance().writeToConfig();
     }
 
     private void registerPerks() {

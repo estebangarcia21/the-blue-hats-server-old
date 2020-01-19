@@ -22,7 +22,6 @@ public class Billionaire extends CustomEnchant {
         //TODO Gold system
 
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            ConfigAPI.write("default", (Player) event.getDamager(), "lol", false);
             triggerEnchant(((Player) event.getDamager()).getItemInHand(), event);
         }
     }

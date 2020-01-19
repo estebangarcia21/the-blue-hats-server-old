@@ -15,6 +15,7 @@ public class ConfigAPI extends JavaPlugin {
     private static JavaPlugin plugin;
 
     private static List<String> directories = new ArrayList<>();
+    private static File file = new File("");
 
     public static void setPlugin(JavaPlugin javaPlugin, String... args) {
         plugin = javaPlugin;
@@ -22,7 +23,29 @@ public class ConfigAPI extends JavaPlugin {
         directories.addAll(Arrays.asList(args));
     }
 
-    public static void write(String directory, Player player, Object value, boolean isOverride) {
+    public static <T> void write(String directory, HashMap<UUID, T> object) {
+        if (!directories.contains(directory)) {
+            Bukkit.getLogger().severe("Directory " + directory + " does not exist!");
+            return;
+        }
+
+        List<String> data = new ArrayList<>();
+
+        for (Map.Entry<UUID, String> entry : read(directory).entrySet()) {
+            data.add(entry.getKey() + ":" + entry.getValue());
+        }
+
+        //TODO Implement optional data deletion
+
+        for (Map.Entry<UUID, T> entry : object.entrySet()) {
+            data.add(entry.getKey().toString() + ":" + entry.getValue().toString());
+        }
+
+        plugin.getConfig().set(file.getAbsolutePath() + "\\Data\\" + directory, data);
+        plugin.saveConfig();
+    }
+
+    public static void write(String directory, UUID player, Object value) {
         File file = new File("");
 
         if (!directories.contains(directory)) {
@@ -36,17 +59,15 @@ public class ConfigAPI extends JavaPlugin {
             data.add(entry.getKey() + ":" + entry.getValue());
         }
 
-        if (isOverride) data = new ArrayList<>();
+        //TODO Implement optional data deletion
 
-        data.add(player.getUniqueId() + ":" + value.toString());
+        data.add(player.toString() + ":" + value.toString());
 
         plugin.getConfig().set(file.getAbsolutePath() + "\\Data\\" + directory, data);
         plugin.saveConfig();
     }
 
     public static HashMap<UUID, String> read(String directory) {
-        File file = new File("");
-
         HashMap<UUID, String> data = new HashMap<>();
 
         for (String raw : plugin.getConfig().getStringList(file.getAbsolutePath() + "\\Data\\" + directory)) {
