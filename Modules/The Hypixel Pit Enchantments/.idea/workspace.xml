@@ -7,13 +7,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c8b1a7c4-5763-4258-bf84-ef9b35cfecc3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Config API/Config API.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Config API/Config API.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Player Protection/Player Protection.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../Player Protection/Player Protection.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Config_API_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Config_API_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/The_Hypixel_Pit_Enchantments_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/The_Hypixel_Pit_Enchantments_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/The Hypixel Pit Enchantments.iml" beforeDir="false" afterPath="$PROJECT_DIR$/The Hypixel Pit Enchantments.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eula.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Config API/META-INF/Config API.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/The Hypixel Pit Enchantments/META-INF/The Hypixel Pit Enchantments.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/The Hypixel Pit Enchantments/me/stevemmmmm/thehypixelpit/world/AutoRespawn.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/The Hypixel Pit Enchantments/me/stevemmmmm/thehypixelpit/world/AutoRespawn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/the_hypixel_pit_enchantments.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/the_hypixel_pit_enchantments.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +106,19 @@
       <option name="presentableId" value="Default" />
       <updated>1578797657447</updated>
     </task>
+    <task id="LOCAL-00001" summary="Updated dependencies">
+      <created>1579400764915</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1579400764915</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updated dependencies" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated dependencies" />
   </component>
   <component name="WindowStateProjectService">
     <state x="734" y="356" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579400586782">
@@ -137,6 +150,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1010" y="448" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578976179423" />
+    <state x="789" y="295" key="CommitChangelistDialog2" timestamp="1579400762993">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="789" y="295" key="CommitChangelistDialog2/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400762993" />
     <state x="796" y="536" key="FileChooserDialogImpl" timestamp="1579400581855">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -161,11 +178,19 @@
     </state>
     <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579381866824" />
     <state width="2517" height="401" key="GridCell.Tab.0.right/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400694503" />
+    <state x="897" y="423" key="RollbackChangesDialog" timestamp="1579400839206">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="897" y="423" key="RollbackChangesDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400839206" />
     <state x="835" y="402" width="1040" height="845" key="SettingsEditor" timestamp="1579400645516">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="-1235" y="354" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579138514496" />
     <state x="835" y="402" width="1040" height="845" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400645516" />
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2" timestamp="1579400770227">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="872" y="434" key="Vcs.Push.Dialog.v2/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400770227" />
     <state x="449" y="692" width="2131" height="1385" key="dock-window-1" timestamp="1578852061281">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -182,10 +207,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="936" y="330" key="run.anything.popup/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578883547203" />
-    <state x="-1617" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1579073920977">
-      <screen x="-2560" y="0" width="2560" height="1400" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1579400858572">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="-1617" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-2560.0.2560.1400@-2560.0.2560.1400" timestamp="1579073920977" />
-    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1578986463169" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1579400858572" />
   </component>
 </project>
