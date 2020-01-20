@@ -72,10 +72,6 @@ public class ConfigAPI extends JavaPlugin {
 
         //TODO Implement optional data deletion
 
-        Bukkit.getLogger().info("BRUH #1");
-
-        //TODO Fix gold error on addup
-
         for (Map.Entry<UUID, T> entry : object.entrySet()) {
             data.add(dataCategory + ":" + entry.getKey().toString() + ":" + entry.getValue().toString());
         }
