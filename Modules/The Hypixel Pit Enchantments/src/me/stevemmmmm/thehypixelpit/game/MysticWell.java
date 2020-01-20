@@ -66,7 +66,55 @@ public class MysticWell implements Listener {
 
             //Target mystic item slot
             if (event.getRawSlot() == 20) {
+                for (int i = 0; i < event.getWhoClicked().getInventory().getSize(); i++) {
+                    if (event.getWhoClicked().getInventory().getItem(i) == null) {
+                        event.getWhoClicked().getInventory().setItem(i, event.getCurrentItem());
+                        playerGui.get(event.getWhoClicked().getUniqueId()).remove(event.getCurrentItem());
+                        break;
+                    }
+                }
+            } else if (event.getCurrentItem() != null) {
+                String[] itemTokens = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).split(" ");
+                if (itemTokens[0].equalsIgnoreCase("Fresh")) {
+                    //TODO Implement sounds
 
+                    playerGui.get(event.getWhoClicked().getUniqueId()).setItem(20, event.getCurrentItem());
+                    event.getWhoClicked().getInventory().remove(event.getCurrentItem());
+                }
+            }
+
+            if (playerGui.get(event.getWhoClicked().getUniqueId()).getItem(20) != null) {
+                ItemStack enchantmentTableInfoT1 = new ItemStack(Material.ENCHANTMENT_TABLE);
+                ItemMeta etMeta = enchantmentTableInfoT1.getItemMeta();
+
+                etMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
+                etMeta.setLore(new ArrayList<String>() {{
+                    add(ChatColor.GRAY + "Upgrade:" + ChatColor.GREEN + " Tier I");
+                    add(ChatColor.GRAY + "Cost:" + ChatColor.GOLD + " 1000g");
+                    add(" ");
+                    add(ChatColor.YELLOW + "Click to upgrade!");
+                }});
+
+                enchantmentTableInfoT1.setItemMeta(etMeta);
+                playerGui.get(event.getWhoClicked().getUniqueId()).setItem(24, enchantmentTableInfoT1);
+            } else {
+                ItemStack enchantmentTableInfoIdle = new ItemStack(Material.ENCHANTMENT_TABLE);
+                ItemMeta etMeta = enchantmentTableInfoIdle.getItemMeta();
+
+                etMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
+                etMeta.setLore(new ArrayList<String>() {{
+                    add(ChatColor.GRAY + "Find a " + ChatColor.AQUA + "Mystic Bow" + ChatColor.GRAY + ", " + ChatColor.YELLOW + "Mystic");
+                    add(ChatColor.YELLOW + "Sword" + ChatColor.GRAY + " or " + ChatColor.RED + "P" + ChatColor.GOLD + "a" + ChatColor.YELLOW + "n" + ChatColor.GREEN + "t" + ChatColor.BLUE + "s" + ChatColor.GRAY + "from");
+                    add(ChatColor.GRAY + "killing players");
+                    add(" ");
+                    add(ChatColor.GRAY + "Enchant these items in the well");
+                    add(ChatColor.GRAY + "for tons of buffs.");
+                    add(" ");
+                    add(ChatColor.LIGHT_PURPLE + "Click an item in your inventory!");
+                }});
+
+                enchantmentTableInfoIdle.setItemMeta(etMeta);
+                playerGui.get(event.getWhoClicked().getUniqueId()).setItem(24, enchantmentTableInfoIdle);
             }
         }
     }
