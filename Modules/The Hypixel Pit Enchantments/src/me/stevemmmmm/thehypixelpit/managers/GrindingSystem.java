@@ -48,7 +48,7 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
     }
 
     public void updateLevel(Player player) {
-        if (playerXP.get(player.getUniqueId()) >= xpPerLevel.get(playerLevels.get(player.getUniqueId()) + 1) * prestigeMultiplier.get(playerPrestiges.get(player.getUniqueId()))) {
+        if (playerXP.get(player.getUniqueId()) >= xpPerLevel.get(playerLevels.get(player.getUniqueId()) + 1) * prestigeMultiplier.getOrDefault(playerPrestiges.get(player.getUniqueId()), 1f)) {
             IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.AQUA + "LEVEL UP!" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
             PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
