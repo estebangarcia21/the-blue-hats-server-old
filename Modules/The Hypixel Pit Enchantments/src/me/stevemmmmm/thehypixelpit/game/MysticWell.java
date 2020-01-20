@@ -19,10 +19,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.Dye;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MysticWell implements Listener {
@@ -30,6 +32,39 @@ public class MysticWell implements Listener {
 
     private HashMap<UUID, Animation> activeAnimations = new HashMap<>();
     private HashMap<UUID, Integer> animationTasks = new HashMap<>();
+
+    private ItemStack enchantmentTableInfoIdle = new ItemStack(Material.ENCHANTMENT_TABLE);
+    private ItemStack enchantmentTableInfoT1 = new ItemStack(Material.ENCHANTMENT_TABLE);
+
+    public MysticWell() {
+        ItemMeta etMeta = enchantmentTableInfoIdle.getItemMeta();
+
+        etMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
+        etMeta.setLore(new ArrayList<String>() {{
+            add(ChatColor.GRAY + "Find a " + ChatColor.AQUA + "Mystic Bow" + ChatColor.GRAY + ", " + ChatColor.YELLOW + "Mystic");
+            add(ChatColor.YELLOW + "Sword" + ChatColor.GRAY + " or " + ChatColor.RED + "P" + ChatColor.GOLD + "a" + ChatColor.YELLOW + "n" + ChatColor.GREEN + "t" + ChatColor.BLUE + "s" + ChatColor.GRAY + "from");
+            add(ChatColor.GRAY + "killing players");
+            add(" ");
+            add(ChatColor.GRAY + "Enchant these items in the well");
+            add(ChatColor.GRAY + "for tons of buffs.");
+            add(" ");
+            add(ChatColor.LIGHT_PURPLE + "Click an item in your inventory!");
+        }});
+
+        enchantmentTableInfoIdle.setItemMeta(etMeta);
+
+        ItemMeta et1Meta = enchantmentTableInfoT1.getItemMeta();
+
+        et1Meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
+        et1Meta.setLore(new ArrayList<String>() {{
+            add(ChatColor.GRAY + "Upgrade:" + ChatColor.GREEN + " Tier I");
+            add(ChatColor.GRAY + "Cost:" + ChatColor.GOLD + " 1000g");
+            add(" ");
+            add(ChatColor.YELLOW + "Click to upgrade!");
+        }});
+
+        enchantmentTableInfoT1.setItemMeta(et1Meta);
+    }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
@@ -61,7 +96,7 @@ public class MysticWell implements Listener {
 
             //Enchantment confirm slot
             if (event.getRawSlot() == 24) {
-                event.getWhoClicked().sendMessage("ENCHANTING!");
+                setMysticWellAnimation((Player) event.getWhoClicked(), Animation.ENCHANTING);
             }
 
             //Target mystic item slot
@@ -84,36 +119,8 @@ public class MysticWell implements Listener {
             }
 
             if (playerGui.get(event.getWhoClicked().getUniqueId()).getItem(20) != null) {
-                ItemStack enchantmentTableInfoT1 = new ItemStack(Material.ENCHANTMENT_TABLE);
-                ItemMeta etMeta = enchantmentTableInfoT1.getItemMeta();
-
-                etMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
-                etMeta.setLore(new ArrayList<String>() {{
-                    add(ChatColor.GRAY + "Upgrade:" + ChatColor.GREEN + " Tier I");
-                    add(ChatColor.GRAY + "Cost:" + ChatColor.GOLD + " 1000g");
-                    add(" ");
-                    add(ChatColor.YELLOW + "Click to upgrade!");
-                }});
-
-                enchantmentTableInfoT1.setItemMeta(etMeta);
                 playerGui.get(event.getWhoClicked().getUniqueId()).setItem(24, enchantmentTableInfoT1);
             } else {
-                ItemStack enchantmentTableInfoIdle = new ItemStack(Material.ENCHANTMENT_TABLE);
-                ItemMeta etMeta = enchantmentTableInfoIdle.getItemMeta();
-
-                etMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
-                etMeta.setLore(new ArrayList<String>() {{
-                    add(ChatColor.GRAY + "Find a " + ChatColor.AQUA + "Mystic Bow" + ChatColor.GRAY + ", " + ChatColor.YELLOW + "Mystic");
-                    add(ChatColor.YELLOW + "Sword" + ChatColor.GRAY + " or " + ChatColor.RED + "P" + ChatColor.GOLD + "a" + ChatColor.YELLOW + "n" + ChatColor.GREEN + "t" + ChatColor.BLUE + "s" + ChatColor.GRAY + "from");
-                    add(ChatColor.GRAY + "killing players");
-                    add(" ");
-                    add(ChatColor.GRAY + "Enchant these items in the well");
-                    add(ChatColor.GRAY + "for tons of buffs.");
-                    add(" ");
-                    add(ChatColor.LIGHT_PURPLE + "Click an item in your inventory!");
-                }});
-
-                enchantmentTableInfoIdle.setItemMeta(etMeta);
                 playerGui.get(event.getWhoClicked().getUniqueId()).setItem(24, enchantmentTableInfoIdle);
             }
         }
@@ -121,12 +128,17 @@ public class MysticWell implements Listener {
 
     private void setMysticWellAnimation(Player player, Animation animation) {
         if (activeAnimations.containsKey(player.getUniqueId())) {
-            if (animation == activeAnimations.get(player.getUniqueId())) return;
+            if (activeAnimations.get(player.getUniqueId()) != animation) {
+                Bukkit.getServer().getScheduler().cancelTask(animationTasks.get(player.getUniqueId()));
+                activeAnimations.put(player.getUniqueId(), animation);
+                animationTasks.remove(player.getUniqueId());
+            } else return;
         } else {
             activeAnimations.put(player.getUniqueId(), animation);
         }
 
         AtomicInteger animationSequenceIndex = new AtomicInteger(0);
+        AtomicInteger sequenceRepititions = new AtomicInteger(0);
 
         ArrayList<Integer> idleIndexs = new ArrayList<Integer>() {{
             add(10);
@@ -139,47 +151,99 @@ public class MysticWell implements Listener {
             add(19);
         }};
 
-        animationTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
-            switch (animation) {
-                case IDLE:
-                    Inventory gui = playerGui.get(player.getUniqueId());
+        Inventory gui = playerGui.get(player.getUniqueId());
 
-                    //TODO Make panes global variables
+        if (animation == Animation.IDLE) {
+            //TODO If item is in the well -> Item in well! Click to get it back.
 
-                    ItemStack grayGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
-                    ItemMeta gpMeta = grayGlassPane.getItemMeta();
+            animationTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+                ItemStack grayGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
+                ItemMeta gpMeta = grayGlassPane.getItemMeta();
+                gpMeta.setDisplayName(ChatColor.GRAY + "Click an item in your inventory!");
+                grayGlassPane.setItemMeta(gpMeta);
 
-                    gpMeta.setDisplayName(ChatColor.GRAY + "Click an item in your inventory!");
+                ItemStack pinkPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 6);
+                ItemMeta pinkPaneMeta = pinkPane.getItemMeta();
+                pinkPaneMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Click an item in your inventory!");
+                pinkPane.setItemMeta(pinkPaneMeta);
 
-                    grayGlassPane.setItemMeta(gpMeta);
+                for (int i = 0; i < gui.getSize(); i++) {
+                    if (gui.getItem(i) == null) continue;
 
-                    ItemStack pinkPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 6);
-                    ItemMeta pinkPaneMeta = pinkPane.getItemMeta();
-
-                    for (int i = 0; i < gui.getSize(); i++) {
-                        if (gui.getItem(i) == null) continue;
-
-                        if (gui.getItem(i).getType() == Material.STAINED_GLASS_PANE) {
-                            gui.setItem(i, grayGlassPane);
-                        }
+                    if (gui.getItem(i).getType() == Material.STAINED_GLASS_PANE) {
+                        gui.setItem(i, grayGlassPane);
                     }
+                }
 
-                    pinkPaneMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Click an item in your inventory!");
+                gui.setItem(idleIndexs.get(animationSequenceIndex.get()), pinkPane);
+                animationSequenceIndex.getAndIncrement();
 
-                    pinkPane.setItemMeta(pinkPaneMeta);
+                if (animationSequenceIndex.get() > 7) {
+                    animationSequenceIndex.set(0);
+                }
+            }, 0L, 3L));
 
-                    gui.setItem(idleIndexs.get(animationSequenceIndex.get()), pinkPane);
-                    animationSequenceIndex.getAndIncrement();
+            return;
+        }
 
-                    if (animationSequenceIndex.get() > 7) {
-                        animationSequenceIndex.set(0);
+        if (animation == Animation.ENCHANTING) {
+            ItemStack[] animationItems = new ItemStack[] { new ItemStack(Material.INK_SACK, 1, (byte) 0),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 1),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 2),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 3),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 4),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 5),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 6),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 7),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 8),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 9),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 10),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 11),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 12),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 13),
+                    new ItemStack(Material.INK_SACK, 1, (byte) 14), };
+
+            ItemStack originalItem = playerGui.get(player.getUniqueId()).getItem(20);
+
+            animationTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+                ItemStack greenGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 13);
+                ItemMeta greenGlassPaneItemMeta = greenGlassPane.getItemMeta();
+
+                greenGlassPaneItemMeta.setDisplayName(ChatColor.GREEN + "Its' rollin!");
+
+                greenGlassPane.setItemMeta(greenGlassPaneItemMeta);
+
+                ItemStack grayGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
+                ItemMeta gpMeta = grayGlassPane.getItemMeta();
+
+                gpMeta.setDisplayName(ChatColor.GRAY + "Its' rollin!");
+
+                grayGlassPane.setItemMeta(gpMeta);
+
+                for (int i = 0; i < gui.getSize(); i++) {
+                    if (gui.getItem(i) == null) continue;
+
+                    if (gui.getItem(i).getType() == Material.STAINED_GLASS_PANE) {
+                        gui.setItem(i, grayGlassPane);
                     }
-                    break;
-                case ENCHANTING:
+                }
 
-                    break;
-            }
-        }, 0L, 3L));
+                gui.setItem(20, animationItems[ThreadLocalRandom.current().nextInt(animationItems.length)]);
+
+                gui.setItem(idleIndexs.get(animationSequenceIndex.get()), greenGlassPane);
+                animationSequenceIndex.getAndIncrement();
+
+                if (animationSequenceIndex.get() > 7) {
+                    sequenceRepititions.getAndIncrement();
+                    animationSequenceIndex.set(0);
+                }
+
+                if (sequenceRepititions.get() > 5) {
+                    gui.setItem(20, tierItem(originalItem));
+                    setMysticWellAnimation(player, Animation.IDLE);
+                }
+            }, 0L, 2L));
+        }
     }
 
     private Inventory createMysticWell() {
@@ -192,23 +256,6 @@ public class MysticWell implements Listener {
 
         grayGlassPane.setItemMeta(gpMeta);
 
-        ItemStack enchantmentTableInfo = new ItemStack(Material.ENCHANTMENT_TABLE);
-        ItemMeta etMeta = enchantmentTableInfo.getItemMeta();
-
-        etMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
-        etMeta.setLore(new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Find a " + ChatColor.AQUA + "Mystic Bow" + ChatColor.GRAY + ", " + ChatColor.YELLOW + "Mystic");
-            add(ChatColor.YELLOW + "Sword" + ChatColor.GRAY + " or " + ChatColor.RED + "P" + ChatColor.GOLD + "a" + ChatColor.YELLOW + "n" + ChatColor.GREEN + "t" + ChatColor.BLUE + "s" + ChatColor.GRAY + "from");
-            add(ChatColor.GRAY + "killing players");
-            add(" ");
-            add(ChatColor.GRAY + "Enchant these items in the well");
-            add(ChatColor.GRAY + "for tons of buffs.");
-            add(" ");
-            add(ChatColor.LIGHT_PURPLE + "Click an item in your inventory!");
-        }});
-
-        enchantmentTableInfo.setItemMeta(etMeta);
-
         gui.setItem(10, grayGlassPane);
         gui.setItem(11, grayGlassPane);
         gui.setItem(12, grayGlassPane);
@@ -216,13 +263,19 @@ public class MysticWell implements Listener {
         gui.setItem(19, grayGlassPane);
         gui.setItem(21, grayGlassPane);
 
-        gui.setItem(24, enchantmentTableInfo);
+        gui.setItem(24, enchantmentTableInfoIdle);
 
         gui.setItem(28, grayGlassPane);
         gui.setItem(29, grayGlassPane);
         gui.setItem(30, grayGlassPane);
 
         return gui;
+    }
+
+    private ItemStack tierItem(ItemStack item) {
+        //TODO Enchantment logic
+
+        return item;
     }
 
     enum Animation {
