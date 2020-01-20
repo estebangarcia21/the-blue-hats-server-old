@@ -32,7 +32,7 @@ public class PitScoreboardManager {
     @SuppressWarnings("deprecated")
     public void sort(Player player) {
         player.setScoreboard(board);
-        tablistSortTeams.get(GrindingSystem.getInstance().getPlayerLevel(player)).addPlayer(player);
+        tablistSortTeams.get(GrindingSystem.getInstance().getPlayerLevel(player)).addEntry(player.getName());
     }
 
     private void init() {
