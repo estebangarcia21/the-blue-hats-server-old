@@ -58,7 +58,6 @@ public class PitScoreboardManager {
             }
 
             Team team = board.registerNewTeam(sortingCharachter + "TabList");
-            team.setPrefix("Bruh");
 
             tablistSortTeams.put(index, team);
             index++;

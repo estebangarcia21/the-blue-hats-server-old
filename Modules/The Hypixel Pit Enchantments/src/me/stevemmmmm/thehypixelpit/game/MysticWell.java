@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -38,6 +39,8 @@ public class MysticWell implements Listener {
     private ItemStack enchantmentTableInfoT3 = new ItemStack(Material.ENCHANTMENT_TABLE);
     private ItemStack enchantmentTableInfoItsRollin = new ItemStack(Material.ENCHANTMENT_TABLE);
     private ItemStack enchantmentTableInfoMaxTier = new ItemStack(Material.ENCHANTMENT_TABLE); //TODO Write the lore for this
+
+    private AtomicInteger animationSequenceIndex = new AtomicInteger(0);
 
     public MysticWell() {
         ItemMeta etMeta = enchantmentTableInfoIdle.getItemMeta();
@@ -85,7 +88,7 @@ public class MysticWell implements Listener {
         et3Meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
         et3Meta.setLore(new ArrayList<String>() {{
             add(ChatColor.GRAY + "Upgrade:" + ChatColor.RED + " Tier III");
-            add(ChatColor.GRAY + "Cost:" + ChatColor.GOLD + " 10,000g");
+            add(ChatColor.GRAY + "Cost:" + ChatColor.GOLD + " 8,000g");
             add(" ");
             add(ChatColor.YELLOW + "Click to upgrade!");
         }});
@@ -93,7 +96,7 @@ public class MysticWell implements Listener {
         enchantmentTableInfoT3.setItemMeta(et3Meta);
 
         ItemMeta enirMeta = enchantmentTableInfoItsRollin.getItemMeta();
-        enirMeta.setDisplayName(ChatColor.GREEN + "Its' rollin!");
+        enirMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Its' rollin!");
         enchantmentTableInfoItsRollin.setItemMeta(enirMeta);
     }
 
@@ -152,6 +155,15 @@ public class MysticWell implements Listener {
         }
     }
 
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent event) {
+        if (event.getInventory().getName().equals(ChatColor.GRAY + "Mystic Well")) {
+            if (activeAnimations.get(event.getPlayer().getUniqueId()) == MysticWellState.ENCHANTING) {
+                animationSequenceIndex.set(7);
+            }
+        }
+    }
+
     private void setMysticWellState(Player player, MysticWellState animation) {
         if (activeAnimations.containsKey(player.getUniqueId())) {
             if (activeAnimations.get(player.getUniqueId()) != animation) {
@@ -163,7 +175,6 @@ public class MysticWell implements Listener {
             activeAnimations.put(player.getUniqueId(), animation);
         }
 
-        AtomicInteger animationSequenceIndex = new AtomicInteger(0);
         AtomicInteger sequenceRepititions = new AtomicInteger(0);
 
         ArrayList<Integer> rotaterIndexs = new ArrayList<Integer>() {{
@@ -222,14 +233,14 @@ public class MysticWell implements Listener {
                 ItemStack greenGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 13);
                 ItemMeta greenGlassPaneItemMeta = greenGlassPane.getItemMeta();
 
-                greenGlassPaneItemMeta.setDisplayName(ChatColor.GREEN + "Its' rollin!");
+                greenGlassPaneItemMeta.setDisplayName("");
 
                 greenGlassPane.setItemMeta(greenGlassPaneItemMeta);
 
                 ItemStack grayGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
                 ItemMeta gpMeta = grayGlassPane.getItemMeta();
 
-                gpMeta.setDisplayName(ChatColor.GRAY + "Its' rollin!");
+                gpMeta.setDisplayName("");
 
                 grayGlassPane.setItemMeta(gpMeta);
 
