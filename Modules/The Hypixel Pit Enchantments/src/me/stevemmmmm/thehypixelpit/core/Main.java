@@ -3,6 +3,7 @@ package me.stevemmmmm.thehypixelpit.core;
 import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.thehypixelpit.chat.Prestiges;
 import me.stevemmmmm.thehypixelpit.commands.EnchantCommand;
+import me.stevemmmmm.thehypixelpit.commands.GiveFreshItemCommand;
 import me.stevemmmmm.thehypixelpit.commands.MysticEnchantsCommand;
 import me.stevemmmmm.thehypixelpit.commands.PitAboutCommand;
 import me.stevemmmmm.thehypixelpit.enchants.*;
@@ -54,6 +55,7 @@ public class Main extends JavaPlugin {
         getCommand("pitenchant").setExecutor(new EnchantCommand());
         getCommand("mysticenchants").setExecutor(new MysticEnchantsCommand());
         getCommand("pitabout").setExecutor(new PitAboutCommand());
+        getCommand("givefreshitem").setExecutor(new GiveFreshItemCommand());
 
         //Game logic
         getServer().getPluginManager().registerEvents(new MysticWell(), this);

@@ -59,7 +59,15 @@ public class MysticWell implements Listener {
         if (event.getInventory().getName().equals(ChatColor.GRAY + "Mystic Well")) {
             event.setCancelled(true);
 
-            event.getWhoClicked().sendMessage(String.valueOf(event.getRawSlot()));
+            //Enchantment confirm slot
+            if (event.getRawSlot() == 24) {
+                event.getWhoClicked().sendMessage("ENCHANTING!");
+            }
+
+            //Target mystic item slot
+            if (event.getRawSlot() == 20) {
+
+            }
         }
     }
 

@@ -11,3 +11,6 @@ commands:
   pitabout:
     description: Information about this plugin
     usage: /pitabout
+  givefreshitem:
+    description: Gives a fresh item
+    usage: /givefreshitem
