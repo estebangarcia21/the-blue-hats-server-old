@@ -81,15 +81,6 @@ public class MysticWell implements Listener {
     }
 
     @EventHandler
-    public void onInventoryClose(InventoryCloseEvent event) {
-        if (event.getInventory().getType() == InventoryType.ENCHANTING) {
-            Bukkit.getServer().getScheduler().cancelTask(animationTasks.get(event.getPlayer().getUniqueId()));
-            activeAnimations.remove(event.getPlayer().getUniqueId());
-            animationTasks.remove(event.getPlayer().getUniqueId());
-        }
-    }
-
-    @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getInventory().getName().equals(ChatColor.GRAY + "Mystic Well")) {
             event.setCancelled(true);
@@ -104,17 +95,17 @@ public class MysticWell implements Listener {
                 for (int i = 0; i < event.getWhoClicked().getInventory().getSize(); i++) {
                     if (event.getWhoClicked().getInventory().getItem(i) == null) {
                         event.getWhoClicked().getInventory().setItem(i, event.getCurrentItem());
-                        playerGui.get(event.getWhoClicked().getUniqueId()).remove(event.getCurrentItem());
+                        playerGui.get(event.getWhoClicked().getUniqueId()).setItem(event.getSlot(), new ItemStack(Material.AIR));
                         break;
                     }
                 }
             } else if (event.getCurrentItem() != null) {
                 String[] itemTokens = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).split(" ");
-                if (itemTokens[0].equalsIgnoreCase("Fresh")) {
+                if (itemTokens[0].equalsIgnoreCase("Fresh") || itemTokens[0].equalsIgnoreCase("Tier")) {
                     //TODO Implement sounds
 
                     playerGui.get(event.getWhoClicked().getUniqueId()).setItem(20, event.getCurrentItem());
-                    event.getWhoClicked().getInventory().remove(event.getCurrentItem());
+                    event.getWhoClicked().getInventory().setItem(event.getSlot(), new ItemStack(Material.AIR));
                 }
             }
 
@@ -152,6 +143,8 @@ public class MysticWell implements Listener {
         }};
 
         Inventory gui = playerGui.get(player.getUniqueId());
+
+        //TODO Handle exit while enchanting
 
         if (animation == Animation.IDLE) {
             //TODO If item is in the well -> Item in well! Click to get it back.
@@ -273,7 +266,31 @@ public class MysticWell implements Listener {
     }
 
     private ItemStack tierItem(ItemStack item) {
-        //TODO Enchantment logic
+        //TODO Enchantments and lives
+
+        ItemMeta meta = item.getItemMeta();
+
+        if (item.getType() == Material.GOLD_SWORD) {
+            if (ChatColor.stripColor(meta.getDisplayName()).equalsIgnoreCase("Fresh Mystic Sword")) {
+                meta.setDisplayName(ChatColor.GREEN + "Tier I Sword");
+            } else if (meta.getDisplayName().equalsIgnoreCase(ChatColor.GREEN + "Tier I Sword")) {
+                meta.setDisplayName(ChatColor.YELLOW + "Tier II Sword");
+            } else if (meta.getDisplayName().equalsIgnoreCase(ChatColor.YELLOW + "Tier II Sword")) {
+                meta.setDisplayName(ChatColor.RED + "Tier III Sword");
+            }
+        } else if (item.getType() == Material.LEATHER_LEGGINGS) {
+            if (ChatColor.stripColor(meta.getDisplayName()).split(" ")[0].equalsIgnoreCase("Fresh")) {
+                meta.setDisplayName(ChatColor.valueOf(meta.getDisplayName().split(" ")[1].toUpperCase()) + "Tier I " + meta.getDisplayName().split(" ")[1] + " Pants");
+            } else {
+                if (ChatColor.stripColor(meta.getDisplayName()).split(" ")[1].equalsIgnoreCase("I")) {
+                    meta.setDisplayName(ChatColor.valueOf(meta.getDisplayName().split(" ")[2].toUpperCase()) + "Tier II " + meta.getDisplayName().split(" ")[2] + " Pants");
+                } else if (ChatColor.stripColor(meta.getDisplayName()).split(" ")[1].equalsIgnoreCase("II")) {
+                    meta.setDisplayName(ChatColor.valueOf(meta.getDisplayName().split(" ")[2].toUpperCase()) + "Tier III " + meta.getDisplayName().split(" ")[2] + " Pants");
+                }
+            }
+        }
+
+        item.setItemMeta(meta);
 
         return item;
     }
