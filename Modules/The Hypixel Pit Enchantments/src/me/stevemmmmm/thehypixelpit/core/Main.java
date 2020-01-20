@@ -6,6 +6,7 @@ import me.stevemmmmm.thehypixelpit.commands.EnchantCommand;
 import me.stevemmmmm.thehypixelpit.commands.MysticEnchantsCommand;
 import me.stevemmmmm.thehypixelpit.commands.PitAboutCommand;
 import me.stevemmmmm.thehypixelpit.enchants.*;
+import me.stevemmmmm.thehypixelpit.game.MysticWell;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.GrindingSystem;
 import me.stevemmmmm.thehypixelpit.perks.Vampire;
@@ -55,6 +56,7 @@ public class Main extends JavaPlugin {
         getCommand("pitabout").setExecutor(new PitAboutCommand());
 
         //Game logic
+        getServer().getPluginManager().registerEvents(new MysticWell(), this);
         getServer().getPluginManager().registerEvents(new Prestiges(), this);
 
         getServer().getPluginManager().registerEvents(GrindingSystem.getInstance(), this);
