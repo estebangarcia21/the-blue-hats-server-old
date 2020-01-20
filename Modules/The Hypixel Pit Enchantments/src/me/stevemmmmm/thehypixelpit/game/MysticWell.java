@@ -40,8 +40,8 @@ public class MysticWell implements Listener {
     private ItemStack enchantmentTableInfoItsRollin = new ItemStack(Material.ENCHANTMENT_TABLE);
     private ItemStack enchantmentTableInfoMaxTier = new ItemStack(Material.ENCHANTMENT_TABLE); //TODO Write the lore for this
 
-    private AtomicInteger animationSequenceIndex = new AtomicInteger();
-    private AtomicInteger sequenceRepititions = new AtomicInteger();
+    private HashMap<UUID, AtomicInteger> animationSequenceIndexs = new HashMap<>();
+    private HashMap<UUID, AtomicInteger> sequenceRepititions = new HashMap<>();
 
     public MysticWell() {
         ItemMeta etMeta = enchantmentTableInfoIdle.getItemMeta();
@@ -104,6 +104,8 @@ public class MysticWell implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!playerGui.containsKey(event.getPlayer().getUniqueId())) playerGui.put(event.getPlayer().getUniqueId(), createMysticWell());
+        if (!animationSequenceIndexs.containsKey(event.getPlayer().getUniqueId())) animationSequenceIndexs.put(event.getPlayer().getUniqueId(), new AtomicInteger());
+        if (!sequenceRepititions.containsKey(event.getPlayer().getUniqueId())) sequenceRepititions.put(event.getPlayer().getUniqueId(), new AtomicInteger());
     }
 
     @EventHandler
@@ -160,7 +162,7 @@ public class MysticWell implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         if (event.getInventory().getName().equals(ChatColor.GRAY + "Mystic Well")) {
             if (activeAnimations.get(event.getPlayer().getUniqueId()) == MysticWellState.ENCHANTING) {
-                sequenceRepititions.set(6);
+                sequenceRepititions.get(event.getPlayer().getUniqueId()).set(6);
             }
         }
     }
@@ -213,11 +215,11 @@ public class MysticWell implements Listener {
                     }
                 }
 
-                gui.setItem(rotaterIndexs.get(animationSequenceIndex.get()), pinkPane);
-                animationSequenceIndex.getAndIncrement();
+                gui.setItem(rotaterIndexs.get(animationSequenceIndexs.get(player.getUniqueId()).get()), pinkPane);
+                animationSequenceIndexs.get(player.getUniqueId()).getAndIncrement();
 
-                if (animationSequenceIndex.get() > 7) {
-                    animationSequenceIndex.set(0);
+                if (animationSequenceIndexs.get(player.getUniqueId()).get() > 7) {
+                    animationSequenceIndexs.get(player.getUniqueId()).set(0);
                 }
             }, 0L, 3L));
 
@@ -232,14 +234,14 @@ public class MysticWell implements Listener {
                 ItemStack greenGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 13);
                 ItemMeta greenGlassPaneItemMeta = greenGlassPane.getItemMeta();
 
-                greenGlassPaneItemMeta.setDisplayName("");
+                greenGlassPaneItemMeta.setDisplayName(" ");
 
                 greenGlassPane.setItemMeta(greenGlassPaneItemMeta);
 
                 ItemStack grayGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
                 ItemMeta gpMeta = grayGlassPane.getItemMeta();
 
-                gpMeta.setDisplayName("");
+                gpMeta.setDisplayName(" ");
 
                 grayGlassPane.setItemMeta(gpMeta);
 
@@ -252,19 +254,20 @@ public class MysticWell implements Listener {
                 }
 
                 gui.setItem(20, animationItems[ThreadLocalRandom.current().nextInt(animationItems.length)]);
-                gui.setItem(rotaterIndexs.get(animationSequenceIndex.get()), greenGlassPane);
+                gui.setItem(rotaterIndexs.get(animationSequenceIndexs.get(player.getUniqueId()).get()), greenGlassPane);
                 gui.setItem(24, enchantmentTableInfoItsRollin);
 
-                animationSequenceIndex.getAndIncrement();
+                animationSequenceIndexs.get(player.getUniqueId()).getAndIncrement();
 
-                if (animationSequenceIndex.get() > 7) {
-                    sequenceRepititions.getAndIncrement();
-                    animationSequenceIndex.set(0);
+                if (animationSequenceIndexs.get(player.getUniqueId()).get() > 7) {
+                    sequenceRepititions.get(player.getUniqueId()).getAndIncrement();
+                    animationSequenceIndexs.get(player.getUniqueId()).set(0);
                 }
 
-                if (sequenceRepititions.get() > 5) {
+                if (sequenceRepititions.get(player.getUniqueId()).get() > 5) {
                     gui.setItem(20, tierItem(originalItem));
                     gui.setItem(24, getInfoFromTier(getItemTier(originalItem)));
+                    sequenceRepititions.get(player.getUniqueId()).set(0);
                     setMysticWellState(player, MysticWellState.IDLE);
                 }
             }, 0L, 2L));
@@ -312,14 +315,23 @@ public class MysticWell implements Listener {
             }
         } else if (item.getType() == Material.LEATHER_LEGGINGS) {
             if (ChatColor.stripColor(meta.getDisplayName()).split(" ")[0].equalsIgnoreCase("Fresh")) {
-                meta.setDisplayName(ChatColor.valueOf(meta.getDisplayName().split(" ")[1].toUpperCase()) + "Tier I " + meta.getDisplayName().split(" ")[1] + " Pants");
+                String color = meta.getDisplayName().split(" ")[1].toUpperCase();
+                if (color.equalsIgnoreCase("Orange")) color = "GOLD";
+
+                meta.setDisplayName(ChatColor.valueOf(color) + "Tier I " + meta.getDisplayName().split(" ")[1] + " Pants");
             } else {
                 ArrayList<String> nameTokens = new ArrayList<>(Arrays.asList(ChatColor.stripColor(meta.getDisplayName()).split(" ")));
 
                 if (nameTokens.contains("I")) {
-                    meta.setDisplayName(ChatColor.valueOf(meta.getDisplayName().split(" ")[2].toUpperCase()) + "Tier II " + meta.getDisplayName().split(" ")[2] + " Pants");
+                    String color = meta.getDisplayName().split(" ")[2].toUpperCase();
+                    if (color.equalsIgnoreCase("Orange")) color = "GOLD";
+
+                    meta.setDisplayName(ChatColor.valueOf(color) + "Tier II " + meta.getDisplayName().split(" ")[2] + " Pants");
                 } else if (nameTokens.contains("II")) {
-                    meta.setDisplayName(ChatColor.valueOf(meta.getDisplayName().split(" ")[2].toUpperCase()) + "Tier III " + meta.getDisplayName().split(" ")[2] + " Pants");
+                    String color = meta.getDisplayName().split(" ")[2].toUpperCase();
+                    if (color.equalsIgnoreCase("Orange")) color = "GOLD";
+
+                    meta.setDisplayName(ChatColor.valueOf(color) + "Tier III " + meta.getDisplayName().split(" ")[2] + " Pants");
                 }
             }
         }
