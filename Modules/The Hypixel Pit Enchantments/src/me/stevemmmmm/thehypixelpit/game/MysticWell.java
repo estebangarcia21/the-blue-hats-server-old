@@ -72,7 +72,7 @@ public class MysticWell implements Listener {
 
         et2Meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
         et2Meta.setLore(new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Upgrade:" + ChatColor.YELLOW + " Tier I");
+            add(ChatColor.GRAY + "Upgrade:" + ChatColor.YELLOW + " Tier II");
             add(ChatColor.GRAY + "Cost:" + ChatColor.GOLD + " 4,000g");
             add(" ");
             add(ChatColor.YELLOW + "Click to upgrade!");
@@ -143,7 +143,7 @@ public class MysticWell implements Listener {
                     if (itemTokens[0].equalsIgnoreCase("Fresh") || itemTokens[0].equalsIgnoreCase("Tier")) {
                         //TODO Implement sounds
 
-                        playerGui.get(event.getWhoClicked().getUniqueId()).setItem(24, enchantmentTableInfoT1);
+                        playerGui.get(event.getWhoClicked().getUniqueId()).setItem(24, getInfoFromTier(getItemTier(event.getCurrentItem())));
                         playerGui.get(event.getWhoClicked().getUniqueId()).setItem(20, event.getCurrentItem());
                         event.getWhoClicked().getInventory().setItem(event.getSlot(), new ItemStack(Material.AIR));
                     }
@@ -215,22 +215,7 @@ public class MysticWell implements Listener {
         }
 
         if (animation == MysticWellState.ENCHANTING) {
-            ItemStack[] animationItems = new ItemStack[] { new ItemStack(Material.INK_SACK, 1, (byte) 0),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 1),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 2),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 3),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 4),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 5),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 6),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 7),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 8),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 9),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 10),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 11),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 12),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 13),
-                    new ItemStack(Material.INK_SACK, 1, (byte) 14), };
-
+            ItemStack[] animationItems = new ItemStack[] { new ItemStack(Material.INK_SACK, 1, (byte) 0), new ItemStack(Material.INK_SACK, 1, (byte) 1), new ItemStack(Material.INK_SACK, 1, (byte) 2), new ItemStack(Material.INK_SACK, 1, (byte) 3), new ItemStack(Material.INK_SACK, 1, (byte) 4), new ItemStack(Material.INK_SACK, 1, (byte) 5), new ItemStack(Material.INK_SACK, 1, (byte) 6), new ItemStack(Material.INK_SACK, 1, (byte) 7), new ItemStack(Material.INK_SACK, 1, (byte) 8), new ItemStack(Material.INK_SACK, 1, (byte) 9), new ItemStack(Material.INK_SACK, 1, (byte) 10), new ItemStack(Material.INK_SACK, 1, (byte) 11), new ItemStack(Material.INK_SACK, 1, (byte) 12), new ItemStack(Material.INK_SACK, 1, (byte) 13), new ItemStack(Material.INK_SACK, 1, (byte) 14) };
             ItemStack originalItem = playerGui.get(player.getUniqueId()).getItem(20);
 
             animationTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
@@ -269,7 +254,7 @@ public class MysticWell implements Listener {
 
                 if (sequenceRepititions.get() > 5) {
                     gui.setItem(20, tierItem(originalItem));
-                    gui.setItem(24, setInfoFromTier(getItemTier(originalItem)));
+                    gui.setItem(24, getInfoFromTier(getItemTier(originalItem)));
                     setMysticWellState(player, MysticWellState.IDLE);
                 }
             }, 0L, 2L));
@@ -352,7 +337,7 @@ public class MysticWell implements Listener {
         return -1;
     }
 
-    private ItemStack setInfoFromTier(int tier) {
+    private ItemStack getInfoFromTier(int tier) {
         switch (tier) {
             case 0:
                 return enchantmentTableInfoT1;
