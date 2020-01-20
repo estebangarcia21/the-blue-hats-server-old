@@ -44,7 +44,7 @@ public class PitScoreboardManager {
             String sortingCharachter = "";
 
             if (index < 10) {
-                sortingCharachter = String.valueOf(Math.abs(index - 9));
+                sortingCharachter = "6" + alphabet.split("")[index].toUpperCase();
             } else if (index < 36) {
                 sortingCharachter = "5" + alphabet.split("")[index - 10].toUpperCase();
             } else if (index < 62) {
