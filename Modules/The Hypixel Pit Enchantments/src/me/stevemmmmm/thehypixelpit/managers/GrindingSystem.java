@@ -68,11 +68,11 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
             playerLevels.put(player.getUniqueId(), playerLevels.get(player.getUniqueId()) + 1);
             PitScoreboardManager.getInstance().sort(player);
 
-            ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevel(player) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] " + player.getName())[0];
+            ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevel(player) + ChatColor.GOLD + " " + player.getName())[0];
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
 
             for (Player p : player.getWorld().getPlayers()) {
-                ((CraftPlayer) p).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevel(player) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] " + player.getName())[0];
+                ((CraftPlayer) p).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevel(player) + ChatColor.GOLD + " " + player.getName())[0];
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
             }
         }
