@@ -40,7 +40,8 @@ public class MysticWell implements Listener {
     private ItemStack enchantmentTableInfoItsRollin = new ItemStack(Material.ENCHANTMENT_TABLE);
     private ItemStack enchantmentTableInfoMaxTier = new ItemStack(Material.ENCHANTMENT_TABLE); //TODO Write the lore for this
 
-    private AtomicInteger animationSequenceIndex = new AtomicInteger(0);
+    private AtomicInteger animationSequenceIndex = new AtomicInteger();
+    private AtomicInteger sequenceRepititions = new AtomicInteger();
 
     public MysticWell() {
         ItemMeta etMeta = enchantmentTableInfoIdle.getItemMeta();
@@ -159,7 +160,7 @@ public class MysticWell implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         if (event.getInventory().getName().equals(ChatColor.GRAY + "Mystic Well")) {
             if (activeAnimations.get(event.getPlayer().getUniqueId()) == MysticWellState.ENCHANTING) {
-                animationSequenceIndex.set(7);
+                sequenceRepititions.set(6);
             }
         }
     }
@@ -174,8 +175,6 @@ public class MysticWell implements Listener {
         } else {
             activeAnimations.put(player.getUniqueId(), animation);
         }
-
-        AtomicInteger sequenceRepititions = new AtomicInteger(0);
 
         ArrayList<Integer> rotaterIndexs = new ArrayList<Integer>() {{
             add(10);
