@@ -66,7 +66,7 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitleLength);
 
             playerLevels.put(player.getUniqueId(), playerLevels.get(player.getUniqueId()) + 1);
-            playerLevels = MapSorter.sortByValue(playerLevels);
+            PitScoreboardManager.getInstance().sort(player);
 
             ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevel(player) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] " + player.getName())[0];
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
