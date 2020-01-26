@@ -253,7 +253,12 @@ public class MysticWell implements Listener {
                     }
                 }
 
-                gui.setItem(20, animationItems[ThreadLocalRandom.current().nextInt(animationItems.length)]);
+                ItemStack item = animationItems[ThreadLocalRandom.current().nextInt(animationItems.length)];
+                ItemMeta itemMeta = item.getItemMeta();
+                itemMeta.setDisplayName(ChatColor.YELLOW + "Its' rollin!");
+                item.setItemMeta(itemMeta);
+
+                gui.setItem(20, item);
                 gui.setItem(rotaterIndexs.get(animationSequenceIndexs.get(player.getUniqueId()).get()), greenGlassPane);
                 gui.setItem(24, enchantmentTableInfoItsRollin);
 

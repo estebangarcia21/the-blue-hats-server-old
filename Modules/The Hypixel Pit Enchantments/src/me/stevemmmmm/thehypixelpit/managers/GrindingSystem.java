@@ -267,11 +267,9 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
 
     public String getFormattedPlayerLevelWithoutPrestige(Player player) {
         if (getPlayerPrestige(player) != 0) {
-            ChatColor color = null;
+            ChatColor color = ChatColor.GRAY;
 
-            if (getPlayerPrestige(player) == 0) {
-                color = ChatColor.GRAY;
-            } else if (getPlayerPrestige(player) < 5) {
+            if (getPlayerPrestige(player) < 5) {
                 color = ChatColor.BLUE;
             } else if (getPlayerPrestige(player) < 10) {
                 color = ChatColor.YELLOW;
@@ -340,7 +338,7 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
             }
         }
 
-        return null;
+        return ChatColor.GRAY + "[" + ChatColor.GRAY + getPlayerLevel(player) + ChatColor.GRAY + "]";
     }
 
     public HashMap<UUID, Integer> getPlayerPrestiges() {
