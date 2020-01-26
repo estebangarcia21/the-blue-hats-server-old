@@ -110,7 +110,7 @@ public abstract class CustomEnchant implements Listener {
     public boolean isOnCooldown(Player player) {
         if (!playerIsOnCooldown.containsKey(player.getUniqueId())) playerIsOnCooldown.put(player.getUniqueId(), false);
 
-        return playerIsOnCooldown.get(player.getUniqueId());
+        return !playerIsOnCooldown.get(player.getUniqueId());
     }
 
     public long getCooldownTime(Player player) {
