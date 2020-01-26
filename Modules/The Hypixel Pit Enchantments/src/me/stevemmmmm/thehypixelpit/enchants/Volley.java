@@ -48,67 +48,58 @@ public class Volley extends CustomEnchant {
         if (itemHasEnchant(sender, 1, this)) {
             Vector originalVelocity = arrow.getVelocity();
 
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
-                volleyTasks.put(arrow,Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
-                    player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
-                    Arrow volleyArrow = player.launchProjectile(Arrow.class);
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> volleyTasks.put(arrow,Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+                player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
+                Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
-                    volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
-                    if (itemHasEnchant(sender, new Robinhood())) robinhood.homeArrows(arrowTasks, volleyArrow, player);
+                volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
+                if (itemHasEnchant(sender, new Robinhood())) robinhood.homeArrows(arrowTasks, volleyArrow, player);
 
-                    arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
-                    if (arrowCount.get(arrow) > 2) {
-                        Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
-                        volleyTasks.remove(arrow);
-                        arrowCount.remove(arrow);
-                        return;
-                    }
-                }, 0L, 3L));
-            }, 3L);
+                arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
+                if (arrowCount.get(arrow) > 2) {
+                    Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
+                    volleyTasks.remove(arrow);
+                    arrowCount.remove(arrow);
+                }
+            }, 0L, 3L)), 3L);
         }
 
         if (itemHasEnchant(sender, 2, this)) {
             Vector originalVelocity = arrow.getVelocity();
 
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
-                volleyTasks.put(arrow,Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
-                    player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
-                    Arrow volleyArrow = player.launchProjectile(Arrow.class);
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> volleyTasks.put(arrow,Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+                player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
+                Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
-                    volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
-                    if (itemHasEnchant(sender, new Robinhood())) robinhood.homeArrows(arrowTasks, volleyArrow, player);
+                volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
+                if (itemHasEnchant(sender, new Robinhood())) robinhood.homeArrows(arrowTasks, volleyArrow, player);
 
-                    arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
-                    if (arrowCount.get(arrow) > 3) {
-                        Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
-                        volleyTasks.remove(arrow);
-                        arrowCount.remove(arrow);
-                        return;
-                    }
-                }, 0L, 3L));
-            }, 3L);
+                arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
+                if (arrowCount.get(arrow) > 3) {
+                    Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
+                    volleyTasks.remove(arrow);
+                    arrowCount.remove(arrow);
+                }
+            }, 0L, 3L)), 3L);
         }
 
         if (itemHasEnchant(sender, 3, this)) {
             Vector originalVelocity = arrow.getVelocity();
 
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
-                volleyTasks.put(arrow,Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
-                    player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
-                    Arrow volleyArrow = player.launchProjectile(Arrow.class);
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> volleyTasks.put(arrow,Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+                player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
+                Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
-                    volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
-                    if (itemHasEnchant(sender, new Robinhood())) robinhood.homeArrows(arrowTasks, volleyArrow, player);
+                volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
+                if (itemHasEnchant(sender, new Robinhood())) robinhood.homeArrows(arrowTasks, volleyArrow, player);
 
-                    arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
-                    if (arrowCount.get(arrow) > 4) {
-                        Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
-                        volleyTasks.remove(arrow);
-                        arrowCount.remove(arrow);
-                        return;
-                    }
-                }, 0L, 3L));
-            }, 3L);
+                arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
+                if (arrowCount.get(arrow) > 4) {
+                    Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
+                    volleyTasks.remove(arrow);
+                    arrowCount.remove(arrow);
+                }
+            }, 0L, 3L)), 3L);
         }
     }
 
@@ -129,6 +120,11 @@ public class Volley extends CustomEnchant {
         return new ArrayList<String>() {{
             add(ChatColor.GRAY + "Shoot " + ChatColor.WHITE + arrow + " arrows " + ChatColor.GRAY + "at once");
         }};
+    }
+
+    @Override
+    public boolean isTierTwoEnchant() {
+        return false;
     }
 
     @Override

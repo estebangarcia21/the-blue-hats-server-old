@@ -31,7 +31,7 @@ public class Megalongbow extends CustomEnchant {
         Player player = (Player) args[1];
 
         if (itemHasEnchant(sender, 1, this)) {
-            if (!isOnCooldown(player)) {
+            if (isOnCooldown(player)) {
                 arrow.setCritical(true);
                 arrow.setVelocity(player.getLocation().getDirection().multiply(2.90));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, 1), true);
@@ -41,7 +41,7 @@ public class Megalongbow extends CustomEnchant {
         }
 
         if (itemHasEnchant(sender, 2, this)) {
-            if (!isOnCooldown(player)) {
+            if (isOnCooldown(player)) {
                 arrow.setCritical(true);
                 arrow.setVelocity(player.getLocation().getDirection().multiply(2.90));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, 2), true);
@@ -51,7 +51,7 @@ public class Megalongbow extends CustomEnchant {
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            if (!isOnCooldown(player)) {
+            if (isOnCooldown(player)) {
                 arrow.setCritical(true);
                 arrow.setVelocity(player.getLocation().getDirection().multiply(2.90));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, 3), true);
@@ -80,6 +80,11 @@ public class Megalongbow extends CustomEnchant {
             add(ChatColor.GRAY + "automatically fully drawn and");
             add(ChatColor.GRAY + "grants " + ChatColor.GREEN + jumpBoost + ChatColor.GRAY + " (2s)");
         }};
+    }
+
+    @Override
+    public boolean isTierTwoEnchant() {
+        return false;
     }
 
     @Override

@@ -46,7 +46,7 @@ public class Assassin extends CustomEnchant {
         Player player = (Player) args[1];
 
         if (itemHasEnchant(sender, 1, this)) {
-            if (!isOnCooldown(player)) {
+            if (isOnCooldown(player)) {
                 Location tpLoc = target.getLocation().subtract(target.getEyeLocation().getDirection().normalize());
                 tpLoc.setY(target.getLocation().getY());
 
@@ -63,7 +63,7 @@ public class Assassin extends CustomEnchant {
         }
 
         if (itemHasEnchant(sender, 2, this)) {
-            if (!isOnCooldown(player)) {
+            if (isOnCooldown(player)) {
                 Location tpLoc = target.getLocation().subtract(target.getEyeLocation().getDirection().normalize());
                 tpLoc.setY(target.getLocation().getY());
 
@@ -80,7 +80,7 @@ public class Assassin extends CustomEnchant {
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            if (!isOnCooldown(player)) {
+            if (isOnCooldown(player)) {
                 Location tpLoc = target.getLocation().subtract(target.getEyeLocation().getDirection().normalize());
                 tpLoc.setY(target.getLocation().getY());
 
@@ -116,6 +116,11 @@ public class Assassin extends CustomEnchant {
             add(ChatColor.GRAY + "your");
             add(ChatColor.GRAY + "attacker. (" + cooldown + " cooldown)");
         }};
+    }
+
+    @Override
+    public boolean isTierTwoEnchant() {
+        return false;
     }
 
     @Override

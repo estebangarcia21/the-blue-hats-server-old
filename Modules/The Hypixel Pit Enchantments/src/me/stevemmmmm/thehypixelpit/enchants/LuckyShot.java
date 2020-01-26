@@ -68,6 +68,11 @@ public class LuckyShot extends CustomEnchant {
     }
 
     @Override
+    public boolean isTierTwoEnchant() {
+        return false;
+    }
+
+    @Override
     public boolean isRareEnchant() {
         return true;
     }

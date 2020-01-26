@@ -39,6 +39,8 @@ public abstract class CustomEnchant implements Listener {
 
     public abstract ArrayList<String> getDescription(int level);
 
+    public abstract boolean isTierTwoEnchant();
+
     public abstract boolean isRareEnchant();
 
     public void startCooldown(Player player, long ticks, boolean isSeconds) {
@@ -66,7 +68,7 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public boolean percentChance(int percent) {
-        if (percent < ThreadLocalRandom.current().nextInt(0, 101)) return false; else return true;
+        return percent >= ThreadLocalRandom.current().nextInt(0, 101);
     }
 
     public boolean itemHasEnchant(ItemStack item, CustomEnchant enchant) {
@@ -99,10 +101,10 @@ public abstract class CustomEnchant implements Listener {
         if (enchant.isRareEnchant()) appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
 
         if (level == 1) {
-            if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName())) return true; else return false;
+            return lore.contains(appendRare + ChatColor.BLUE + enchant.getName());
         }
 
-        if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " " + CustomEnchantManager.getInstance().convertToRomanNumeral(level))) return true; else return false;
+        return lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " " + CustomEnchantManager.getInstance().convertToRomanNumeral(level));
     }
 
     public boolean isOnCooldown(Player player) {
@@ -172,10 +174,6 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public boolean isCriticalHit(Player player) {
-        if (player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE &&
-                player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER &&
-                player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) return true;
-
-        return false;
+        return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
     }
 }

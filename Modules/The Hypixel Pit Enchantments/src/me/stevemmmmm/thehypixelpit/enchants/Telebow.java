@@ -106,7 +106,7 @@ public class Telebow extends CustomEnchant {
         Player player = (Player) args[1];
 
         if (itemHasEnchant(sender, 1, this)) {
-            if (!isOnCooldown(player)) {
+            if (isOnCooldown(player)) {
                 player.teleport(arrow);
             }
 
@@ -114,7 +114,7 @@ public class Telebow extends CustomEnchant {
         }
 
         if (itemHasEnchant(sender, 2, this)) {
-            if (!isOnCooldown(player)) {
+            if (isOnCooldown(player)) {
                 player.teleport(arrow);
             }
 
@@ -122,7 +122,7 @@ public class Telebow extends CustomEnchant {
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            if (!isOnCooldown(player)) {
+            if (isOnCooldown(player)) {
                 player.teleport(arrow);
             }
 
@@ -149,6 +149,11 @@ public class Telebow extends CustomEnchant {
             add(ChatColor.GRAY + "arrow (" + sDelay + " cooldown, -3s per bow");
             add(ChatColor.GRAY + "hit)");
         }};
+    }
+
+    @Override
+    public boolean isTierTwoEnchant() {
+        return false;
     }
 
     @Override
