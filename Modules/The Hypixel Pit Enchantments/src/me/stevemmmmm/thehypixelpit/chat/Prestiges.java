@@ -24,11 +24,11 @@ public class Prestiges implements Listener {
 
         PitScoreboardManager.getInstance().sort(player);
 
-        ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevel(player) + ChatColor.GOLD + " " + player.getName())[0];
+        ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.GOLD + " " + player.getName())[0];
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
 
         for (Player p : player.getWorld().getPlayers()) {
-            ((CraftPlayer) p).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevel(p) + ChatColor.GOLD + " " + p.getName())[0];
+            ((CraftPlayer) p).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(p) + ChatColor.GOLD + " " + p.getName())[0];
             ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) p).getHandle()));
         }
     }

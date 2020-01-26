@@ -68,11 +68,11 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
             playerLevels.put(player.getUniqueId(), playerLevels.get(player.getUniqueId()) + 1);
             PitScoreboardManager.getInstance().sort(player);
 
-            ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevel(player) + ChatColor.GOLD + " " + player.getName())[0];
+            ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.GOLD + " " + player.getName())[0];
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
 
             for (Player p : player.getWorld().getPlayers()) {
-                ((CraftPlayer) p).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevel(player) + ChatColor.GOLD + " " + player.getName())[0];
+                ((CraftPlayer) p).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.GOLD + " " + player.getName())[0];
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
             }
         }
@@ -259,6 +259,84 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
 
             if (getPlayerLevel(player) == 120) {
                 return ChatColor.GRAY + "[" + ChatColor.AQUA.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+            }
+        }
+
+        return null;
+    }
+
+    public String getFormattedPlayerLevelWithoutPrestige(Player player) {
+        if (getPlayerPrestige(player) != 0) {
+            ChatColor color = null;
+
+            if (getPlayerPrestige(player) == 0) {
+                color = ChatColor.GRAY;
+            } else if (getPlayerPrestige(player) < 5) {
+                color = ChatColor.BLUE;
+            } else if (getPlayerPrestige(player) < 10) {
+                color = ChatColor.YELLOW;
+            } else if (getPlayerPrestige(player) < 15) {
+                color = ChatColor.GOLD;
+            } else if (getPlayerPrestige(player) < 20) {
+                color = ChatColor.RED;
+            } else if (getPlayerPrestige(player) < 25) {
+                color = ChatColor.DARK_PURPLE;
+            } else if (getPlayerPrestige(player) < 30) {
+                color = ChatColor.LIGHT_PURPLE;
+            }  else if (getPlayerPrestige(player) == 30) {
+                color = ChatColor.WHITE;
+            }
+
+            if (getPlayerLevel(player) < 10) {
+                return color + "[" + ChatColor.GRAY + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 10 && getPlayerLevel(player) < 20) {
+                return color + "[" + ChatColor.BLUE + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 20 && getPlayerLevel(player) < 30) {
+                return color + "[" + ChatColor.DARK_AQUA + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 30 && getPlayerLevel(player) < 40) {
+                return color + "[" + ChatColor.DARK_GREEN + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 40 && getPlayerLevel(player) < 50) {
+                return color + "[" + ChatColor.GREEN + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 50 && getPlayerLevel(player) < 60) {
+                return color + "[" + ChatColor.YELLOW + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 60 && getPlayerLevel(player) < 70) {
+                return color + "[" + ChatColor.GOLD.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 70 && getPlayerLevel(player) < 80) {
+                return color + "[" + ChatColor.RED.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 80 && getPlayerLevel(player) < 90) {
+                return color + "[" + ChatColor.DARK_RED.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 90 && getPlayerLevel(player) < 100) {
+                return color + "[" + ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 100 && getPlayerLevel(player) < 110) {
+                return color + "[" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) >= 110 && getPlayerLevel(player) < 120) {
+                return color + "[" + ChatColor.WHITE.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
+            }
+
+            if (getPlayerLevel(player) == 120) {
+                return color + "[" + ChatColor.AQUA.toString() + ChatColor.BOLD + getPlayerLevel(player) + color + "]";
             }
         }
 
