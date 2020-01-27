@@ -1,7 +1,7 @@
 package me.stevemmmmm.thehypixelpit.chat;
 
-import me.stevemmmmm.thehypixelpit.managers.GrindingSystem;
-import me.stevemmmmm.thehypixelpit.managers.PitScoreboardManager;
+import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
+import me.stevemmmmm.thehypixelpit.managers.other.PitScoreboardManager;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;

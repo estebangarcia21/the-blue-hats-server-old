@@ -1,6 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.utils.TelebowData;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;

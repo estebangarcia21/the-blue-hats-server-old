@@ -1,6 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 

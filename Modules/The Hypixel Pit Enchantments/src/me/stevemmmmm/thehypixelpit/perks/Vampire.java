@@ -1,11 +1,10 @@
 package me.stevemmmmm.thehypixelpit.perks;
 
-import me.stevemmmmm.thehypixelpit.managers.Perk;
+import me.stevemmmmm.thehypixelpit.managers.other.Perk;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
 
 /*
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.

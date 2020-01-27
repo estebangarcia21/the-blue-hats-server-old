@@ -1,6 +1,6 @@
 package me.stevemmmmm.thehypixelpit.utils;
 
-import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
 
 import java.util.Comparator;
 

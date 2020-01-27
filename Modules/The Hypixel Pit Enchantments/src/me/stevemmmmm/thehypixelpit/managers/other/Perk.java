@@ -1,4 +1,4 @@
-package me.stevemmmmm.thehypixelpit.managers;
+package me.stevemmmmm.thehypixelpit.managers.other;
 
 import org.bukkit.event.Listener;
 

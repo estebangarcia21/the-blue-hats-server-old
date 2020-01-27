@@ -1,12 +1,9 @@
-package me.stevemmmmm.thehypixelpit.managers;
-
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
+package me.stevemmmmm.thehypixelpit.managers.other;
 
 import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.configapi.core.ConfigReader;
 import me.stevemmmmm.configapi.core.ConfigWriter;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.utils.MapSorter;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
@@ -25,6 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+
+/*
+ * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ */
 
 public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
     private static GrindingSystem instance;
@@ -338,7 +339,59 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
             }
         }
 
-        return ChatColor.GRAY + "[" + ChatColor.GRAY + getPlayerLevel(player) + ChatColor.GRAY + "]";
+        if (getPlayerLevel(player) < 10) {
+            return ChatColor.GRAY + "[" + getPlayerLevel(player) + "]";
+        }
+
+        if (getPlayerLevel(player) >= 10 && getPlayerLevel(player) < 20) {
+            return ChatColor.GRAY + "[" + ChatColor.BLUE + getPlayerLevel(player) + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) >= 20 && getPlayerLevel(player) < 30) {
+            return ChatColor.GRAY + "[" + ChatColor.DARK_AQUA + getPlayerLevel(player) + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) >= 30 && getPlayerLevel(player) < 40) {
+            return ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + getPlayerLevel(player) + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) >= 40 && getPlayerLevel(player) < 50) {
+            return ChatColor.GRAY + "[" + ChatColor.GREEN + getPlayerLevel(player) + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) >= 50 && getPlayerLevel(player) < 60) {
+            return ChatColor.GRAY + "[" + ChatColor.YELLOW + getPlayerLevel(player) + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) >= 60 && getPlayerLevel(player) < 70) {
+            return ChatColor.GRAY + "[" + ChatColor.GOLD.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) >= 70 && getPlayerLevel(player) < 80) {
+            return ChatColor.GRAY + "[" + ChatColor.RED.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) >= 80 && getPlayerLevel(player) < 90) {
+            return ChatColor.GRAY + "[" + ChatColor.DARK_RED.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) >= 90 && getPlayerLevel(player) < 100) {
+            return ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) >= 100 && getPlayerLevel(player) < 110) {
+            return ChatColor.GRAY + "[" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) >= 110 && getPlayerLevel(player) < 120) {
+            return ChatColor.GRAY + "[" + ChatColor.WHITE.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+        }
+
+        if (getPlayerLevel(player) == 120) {
+            return ChatColor.GRAY + "[" + ChatColor.AQUA.toString() + ChatColor.BOLD + getPlayerLevel(player) + ChatColor.RESET + ChatColor.GRAY + "]";
+        }
+
+        return null;
     }
 
     public HashMap<UUID, Integer> getPlayerPrestiges() {

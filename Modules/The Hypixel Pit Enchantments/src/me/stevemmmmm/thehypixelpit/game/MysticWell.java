@@ -316,6 +316,7 @@ public class MysticWell implements Listener {
 
     private ItemStack tierItem(ItemStack item) {
         //TODO Enchantments and lives
+        if (item == null) return null;
 
         ItemMeta meta = item.getItemMeta();
 

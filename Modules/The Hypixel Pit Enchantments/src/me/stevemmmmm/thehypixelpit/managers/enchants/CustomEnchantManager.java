@@ -1,4 +1,4 @@
-package me.stevemmmmm.thehypixelpit.managers;
+package me.stevemmmmm.thehypixelpit.managers.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.utils.SortCustomEnchantByName;

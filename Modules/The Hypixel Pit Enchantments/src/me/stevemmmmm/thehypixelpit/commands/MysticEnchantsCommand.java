@@ -1,6 +1,6 @@
 package me.stevemmmmm.thehypixelpit.commands;
 
-import me.stevemmmmm.thehypixelpit.managers.CustomEnchantManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

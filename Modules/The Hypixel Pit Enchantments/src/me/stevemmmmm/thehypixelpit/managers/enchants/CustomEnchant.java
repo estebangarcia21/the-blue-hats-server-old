@@ -1,10 +1,8 @@
-package me.stevemmmmm.thehypixelpit.managers;
+package me.stevemmmmm.thehypixelpit.managers.enchants;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
