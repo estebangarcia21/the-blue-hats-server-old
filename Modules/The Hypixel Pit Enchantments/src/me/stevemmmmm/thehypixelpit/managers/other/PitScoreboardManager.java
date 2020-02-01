@@ -17,6 +17,7 @@ public class PitScoreboardManager {
     private static PitScoreboardManager instance;
 
     private ScoreboardManager manager = Bukkit.getScoreboardManager();
+    private Scoreboard sortBoard = manager.getNewScoreboard();
 
     private HashMap<Integer, Team> tablistSortTeams = new HashMap<>();
 
@@ -31,61 +32,74 @@ public class PitScoreboardManager {
     }
 
     public void sort(Player player) {
-        updateScoreboard();
+        updateStandardScoreboard();
         tablistSortTeams.get(GrindingSystem.getInstance().getPlayerLevel(player)).addEntry(player.getName());
     }
 
     private void init() {
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, this::updateScoreboard, 0L, 20L);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, this::updateStandardScoreboard, 0L, 20L);
+        createSortedTeams(sortBoard);
     }
 
-    private void updateScoreboard() {
+    private void updateStandardScoreboard() {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             Scoreboard board = manager.getNewScoreboard();
-            createSortedTeams(board);
 
             Objective objective = board.registerNewObjective("test", "dummy");
             objective.setDisplayName(ChatColor.YELLOW.toString() + ChatColor.BOLD + "THE HYPIXEL PIT");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-            int index = 12;
+            int index = 11;
+
+            if (CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) index -= 1;
 
             Score dataAndInstance = objective.getScore(ChatColor.GRAY + "01/26/20 " + ChatColor.DARK_GRAY + "mega13E");
-            dataAndInstance.setScore(11);
-
-            Score space1 = objective.getScore(" ");
-            space1.setScore(10);
-
-            if (CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) index -= 2;
-
-            Score prestige = objective.getScore(ChatColor.WHITE + "Prestige: " + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)));
-            prestige.setScore(9);
+            dataAndInstance.setScore(index);
             index--;
 
+            Score space1 = objective.getScore(" ");
+            space1.setScore(index);
+            index--;
+
+            if (!CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) {
+                Score prestige = objective.getScore(ChatColor.WHITE + "Prestige: " + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)));
+                prestige.setScore(index);
+                index--;
+            }
+
             Score level = objective.getScore(ChatColor.WHITE + "Level: " + GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player));
-            level.setScore(8);
+            level.setScore(index);
+            index--;
 
             Score xp = objective.getScore(ChatColor.WHITE + "XP: " + ChatColor.AQUA + "MAXED!");
-            xp.setScore(7);
+            xp.setScore(index);
+            index--;
 
             Score space2 = objective.getScore("  ");
-            space2.setScore(6);
+            space2.setScore(index);
+            index--;
 
-            Score gold = objective.getScore(ChatColor.WHITE + "Gold: " + ChatColor.GOLD + GrindingSystem.getInstance().getPlayerGold(player));
-            gold.setScore(5);
+            Score gold = objective.getScore(ChatColor.WHITE + "Gold: " + ChatColor.GOLD + GrindingSystem.getInstance().getFormattedPlayerGold(player));
+            gold.setScore(index);
+            index--;
 
             Score space3 = objective.getScore("   ");
-            space3.setScore(4);
+            space3.setScore(index);
+            index--;
 
             //TODO Get status w/ combat timer and change color accordingly
             Score status = objective.getScore(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Idling");
-            status.setScore(3);
+            status.setScore(index);
+            index--;
+
+            //TODO If player has bounty... add line
 
             Score space4 = objective.getScore("    ");
-            space4.setScore(2);
+            space4.setScore(index);
+            index--;
 
             Score serverinfo = objective.getScore(ChatColor.YELLOW + "bluehats.ddns.net");
-            serverinfo.setScore(1);
+            serverinfo.setScore(index);
 
             player.setScoreboard(board);
         }
@@ -104,7 +118,7 @@ public class PitScoreboardManager {
             } else if (index < 36) {
                 sortingCharachter = "5" + alphabet.split("")[index - 10].toUpperCase();
             } else if (index < 62) {
-                sortingCharachter = "4" + alphabet.split("")[index - 26 - 10].toUpperCase();
+                sortingCharachter = "4" + alphabet.split("")[index - 36].toUpperCase();
             } else if (index < 88) {
                 sortingCharachter = "3" + alphabet.split("")[index - (26 * 2) - 10].toUpperCase();
             } else if (index < 114) {
