@@ -7,6 +7,7 @@ import me.stevemmmmm.thehypixelpit.commands.GiveFreshItemCommand;
 import me.stevemmmmm.thehypixelpit.commands.MysticEnchantsCommand;
 import me.stevemmmmm.thehypixelpit.commands.PitAboutCommand;
 import me.stevemmmmm.thehypixelpit.enchants.*;
+import me.stevemmmmm.thehypixelpit.game.CombatTimer;
 import me.stevemmmmm.thehypixelpit.game.MysticWell;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
@@ -59,6 +60,7 @@ public class Main extends JavaPlugin {
 
         //Game logic
         getServer().getPluginManager().registerEvents(new MysticWell(), this);
+        getServer().getPluginManager().registerEvents(CombatTimer.getInstance(), this);
         getServer().getPluginManager().registerEvents(new Prestiges(), this);
 
         getServer().getPluginManager().registerEvents(GrindingSystem.getInstance(), this);

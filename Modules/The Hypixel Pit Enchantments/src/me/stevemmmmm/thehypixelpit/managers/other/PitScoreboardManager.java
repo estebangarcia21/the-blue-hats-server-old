@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.managers.other;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
+import me.stevemmmmm.thehypixelpit.game.CombatTimer;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -53,6 +54,7 @@ public class PitScoreboardManager {
 
             if (CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) index -= 1;
 
+            //TODO Dynamic date
             Score dataAndInstance = objective.getScore(ChatColor.GRAY + "01/26/20 " + ChatColor.DARK_GRAY + "mega13E");
             dataAndInstance.setScore(index);
             index--;
@@ -88,7 +90,7 @@ public class PitScoreboardManager {
             index--;
 
             //TODO Get status w/ combat timer and change color accordingly
-            Score status = objective.getScore(ChatColor.WHITE + "Status: " + ChatColor.GREEN + "Idling");
+            Score status = objective.getScore(ChatColor.WHITE + "Status: " + (CombatTimer.getInstance().playerIsInCombat(player) ? ChatColor.GREEN + "Idling" : ChatColor.RED + "Fighting " + ChatColor.GRAY + "(" + CombatTimer.getInstance().getCombatTime(player) + ")"));
             status.setScore(index);
             index--;
 
