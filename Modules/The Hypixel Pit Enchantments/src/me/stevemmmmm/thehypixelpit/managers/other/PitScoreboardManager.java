@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /*
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
@@ -18,12 +19,15 @@ public class PitScoreboardManager {
     private static PitScoreboardManager instance;
 
     private ScoreboardManager manager = Bukkit.getScoreboardManager();
-    private Scoreboard sortBoard = manager.getNewScoreboard();
+    private Scoreboard scoreboard = manager.getNewScoreboard();
+
+    private HashMap<UUID, String> playerObjectives = new HashMap<>();
 
     private HashMap<Integer, Team> tablistSortTeams = new HashMap<>();
 
     private PitScoreboardManager() {
-        init();
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, this::updateStandardScoreboard, 0L, 20L);
+        createSortedTeams(scoreboard);
     }
 
     public static PitScoreboardManager getInstance() {
@@ -37,16 +41,19 @@ public class PitScoreboardManager {
         tablistSortTeams.get(GrindingSystem.getInstance().getPlayerLevel(player)).addEntry(player.getName());
     }
 
-    private void init() {
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, this::updateStandardScoreboard, 0L, 20L);
-        createSortedTeams(sortBoard);
-    }
-
     private void updateStandardScoreboard() {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            Scoreboard board = manager.getNewScoreboard();
+            Scoreboard board = scoreboard;
 
-            Objective objective = board.registerNewObjective("test", "dummy");
+            Objective objective = null;
+
+            if (playerObjectives.containsKey(player.getUniqueId())) {
+                objective = board.getObjective(playerObjectives.get(player.getUniqueId()));
+            } else {
+                objective = board.registerNewObjective(player.getName(), "dummy");
+                playerObjectives.put(player.getUniqueId(), objective.getName());
+            }
+
             objective.setDisplayName(ChatColor.YELLOW.toString() + ChatColor.BOLD + "THE HYPIXEL PIT");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
@@ -90,7 +97,7 @@ public class PitScoreboardManager {
             index--;
 
             //TODO Get status w/ combat timer and change color accordingly
-            Score status = objective.getScore(ChatColor.WHITE + "Status: " + (CombatTimer.getInstance().playerIsInCombat(player) ? ChatColor.GREEN + "Idling" : ChatColor.RED + "Fighting " + ChatColor.GRAY + "(" + CombatTimer.getInstance().getCombatTime(player) + ")"));
+            Score status = objective.getScore(ChatColor.WHITE + "Status: " + (!CombatTimer.getInstance().playerIsInCombat(player) ? ChatColor.GREEN + "Idling" : ChatColor.RED + "Fighting " + ChatColor.GRAY + "(" + CombatTimer.getInstance().getCombatTime(player) + ")"));
             status.setScore(index);
             index--;
 
@@ -102,8 +109,6 @@ public class PitScoreboardManager {
 
             Score serverinfo = objective.getScore(ChatColor.YELLOW + "bluehats.ddns.net");
             serverinfo.setScore(index);
-
-            player.setScoreboard(board);
         }
     }
 

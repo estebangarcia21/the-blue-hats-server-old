@@ -49,7 +49,7 @@ public class CombatTimer implements Listener {
     }
 
     public boolean playerIsInCombat(Player player) {
-        return combatTime.get(player.getUniqueId()) == 0;
+        return combatTime.get(player.getUniqueId()) != 0;
     }
 
     private void combatTag(Player player) {

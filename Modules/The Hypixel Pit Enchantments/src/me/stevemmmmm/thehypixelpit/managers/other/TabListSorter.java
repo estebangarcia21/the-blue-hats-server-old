@@ -1,7 +1,9 @@
-package me.stevemmmmm.thehypixelpit.chat;
+package me.stevemmmmm.thehypixelpit.managers.other;
 
-import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
-import me.stevemmmmm.thehypixelpit.managers.other.PitScoreboardManager;
+/*
+ * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ */
+
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -9,20 +11,20 @@ import org.bukkit.craftbukkit.v1_8_R3.util.CraftChatMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
+public class TabListSorter implements Listener {
+    private static TabListSorter instance;
 
-public class Prestiges implements Listener {
+    public static TabListSorter getInstance() {
+        if (instance == null) instance = new TabListSorter();
+
+        return instance;
+    }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
-        PitScoreboardManager.getInstance().sort(player);
 
         ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.GOLD + " " + player.getName())[0];
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
@@ -31,12 +33,7 @@ public class Prestiges implements Listener {
             ((CraftPlayer) p).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(p) + ChatColor.GOLD + " " + p.getName())[0];
             ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) p).getHandle()));
         }
-    }
 
-    @EventHandler
-    public void onChat(AsyncPlayerChatEvent event) {
-        //TODO Correct values for chat
-
-        event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] %s" + ChatColor.WHITE + ": %s");
+        
     }
 }

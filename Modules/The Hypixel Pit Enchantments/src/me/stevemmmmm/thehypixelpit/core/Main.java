@@ -1,7 +1,7 @@
 package me.stevemmmmm.thehypixelpit.core;
 
 import me.stevemmmmm.configapi.core.ConfigAPI;
-import me.stevemmmmm.thehypixelpit.chat.Prestiges;
+import me.stevemmmmm.thehypixelpit.chat.LevelChatFormatting;
 import me.stevemmmmm.thehypixelpit.commands.EnchantCommand;
 import me.stevemmmmm.thehypixelpit.commands.GiveFreshItemCommand;
 import me.stevemmmmm.thehypixelpit.commands.MysticEnchantsCommand;
@@ -61,7 +61,7 @@ public class Main extends JavaPlugin {
         //Game logic
         getServer().getPluginManager().registerEvents(new MysticWell(), this);
         getServer().getPluginManager().registerEvents(CombatTimer.getInstance(), this);
-        getServer().getPluginManager().registerEvents(new Prestiges(), this);
+        getServer().getPluginManager().registerEvents(new LevelChatFormatting(), this);
 
         getServer().getPluginManager().registerEvents(GrindingSystem.getInstance(), this);
     }

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Animation API/Animation API.iml" filepath="$PROJECT_DIR$/Animation API/Animation API.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Config API/Config API.iml" filepath="$PROJECT_DIR$/../Config API/Config API.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Player Protection/Player Protection.iml" filepath="$PROJECT_DIR$/../Player Protection/Player Protection.iml" />
       <module fileurl="file://$PROJECT_DIR$/The Hypixel Pit Enchantments.iml" filepath="$PROJECT_DIR$/The Hypixel Pit Enchantments.iml" />
