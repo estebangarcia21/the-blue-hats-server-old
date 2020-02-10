@@ -14,3 +14,6 @@ commands:
   givefreshitem:
     description: Gives a fresh item
     usage: /givefreshitem
+  duel:
+    description: Duels a player
+    usage: /duel

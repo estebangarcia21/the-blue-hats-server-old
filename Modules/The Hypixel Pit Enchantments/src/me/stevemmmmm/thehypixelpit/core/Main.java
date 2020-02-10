@@ -2,13 +2,12 @@ package me.stevemmmmm.thehypixelpit.core;
 
 import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.thehypixelpit.chat.LevelChatFormatting;
-import me.stevemmmmm.thehypixelpit.commands.EnchantCommand;
-import me.stevemmmmm.thehypixelpit.commands.GiveFreshItemCommand;
-import me.stevemmmmm.thehypixelpit.commands.MysticEnchantsCommand;
-import me.stevemmmmm.thehypixelpit.commands.PitAboutCommand;
+import me.stevemmmmm.thehypixelpit.commands.*;
 import me.stevemmmmm.thehypixelpit.enchants.*;
 import me.stevemmmmm.thehypixelpit.game.CombatTimer;
 import me.stevemmmmm.thehypixelpit.game.MysticWell;
+import me.stevemmmmm.thehypixelpit.game.duels.Duel;
+import me.stevemmmmm.thehypixelpit.game.duels.DuelingManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
 import me.stevemmmmm.thehypixelpit.perks.Vampire;
@@ -57,9 +56,11 @@ public class Main extends JavaPlugin {
         getCommand("mysticenchants").setExecutor(new MysticEnchantsCommand());
         getCommand("pitabout").setExecutor(new PitAboutCommand());
         getCommand("givefreshitem").setExecutor(new GiveFreshItemCommand());
+        getCommand("duel").setExecutor(new DuelCommand());
 
         //Game logic
         getServer().getPluginManager().registerEvents(new MysticWell(), this);
+        getServer().getPluginManager().registerEvents(DuelingManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(CombatTimer.getInstance(), this);
         getServer().getPluginManager().registerEvents(new LevelChatFormatting(), this);
 

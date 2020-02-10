@@ -16,6 +16,11 @@ public class Duel {
     private Vector playerAPos;
     private Vector playerBPos;
 
+    public Duel(Player playerA, Player playerB) {
+        this.playerA = playerA;
+        this.playerB = playerB;
+    }
+
     public Duel(Player playerA, Player playerB, Vector playerAPos, Vector playerBPos) {
         this.playerA = playerA;
         this.playerB = playerB;
@@ -30,6 +35,14 @@ public class Duel {
 
     public Player getPlayerB() {
         return playerB;
+    }
+
+    public void setPlayerAPos(Vector playerAPos) {
+        this.playerAPos = playerAPos;
+    }
+
+    public void setPlayerBPos(Vector playerBPos) {
+        this.playerBPos = playerBPos;
     }
 
     public Vector getPlayerAPos() {
