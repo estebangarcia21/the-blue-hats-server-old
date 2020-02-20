@@ -92,9 +92,12 @@ public class DuelingManager implements Listener {
             });
 
             addKeyFrame(60,() -> {
-                //TODO Add keyframe
+                sendTitle(duel.getPlayerA(),ChatColor.RED +"FIGHT!",ChatColor.AQUA + "Good luck!");
+                sendTitle(duel.getPlayerB(),ChatColor.RED +"FIGHT!",ChatColor.AQUA + "Good luck!");
             });
+
             setAnimationActions(new AnimationActions() {
+
                 @Override
                 public void onAnimationStart() {
 
