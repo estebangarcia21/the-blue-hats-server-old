@@ -6,4 +6,6 @@ package me.stevemmmmm.thehypixelpit.managers.other;
 
 public interface DamageEnchant {
     double[] getPercentDamageIncreasePerLevel();
+
+    DamageCalculationMode getCalculationMode();
 }

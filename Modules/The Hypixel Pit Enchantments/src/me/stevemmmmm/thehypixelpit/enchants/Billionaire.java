@@ -1,7 +1,10 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.other.DamageCalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.other.DamageEnchant;
+import me.stevemmmmm.thehypixelpit.managers.other.DamageManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -29,6 +32,10 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
     public void triggerEnchant(ItemStack sender, Object... args) {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
 
+        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+            player.sendMessage("INITIAL DAMAGE: " + ChatColor.YELLOW + String.valueOf(event.getDamage()));
+        }
+
         if (itemHasEnchant(sender, 1, this)) {
             event.setDamage(event.getDamage() * 1.33f);
             ((Player) event.getDamager()).playSound(event.getDamager().getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
@@ -40,7 +47,10 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            event.setDamage(event.getDamage() * 2f);
+            event.setDamage(DamageManager.getInstance().calculateDamage(event.getDamage(), sender));
+            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                player.sendMessage("FINAL DAMAGE: " + ChatColor.BLUE + String.valueOf(event.getDamage()));
+            }
             ((Player) event.getDamager()).playSound(event.getDamager().getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
         }
     }
@@ -77,6 +87,11 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
 
     @Override
     public double[] getPercentDamageIncreasePerLevel() {
-        return new double[] { };
+        return new double[] { .33, .66, 1};
+    }
+
+    @Override
+    public DamageCalculationMode getCalculationMode() {
+        return DamageCalculationMode.MULTIPLICATIVE;
     }
 }

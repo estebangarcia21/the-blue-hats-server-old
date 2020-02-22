@@ -6,7 +6,6 @@ import me.stevemmmmm.thehypixelpit.commands.*;
 import me.stevemmmmm.thehypixelpit.enchants.*;
 import me.stevemmmmm.thehypixelpit.game.CombatTimer;
 import me.stevemmmmm.thehypixelpit.game.MysticWell;
-import me.stevemmmmm.thehypixelpit.game.duels.Duel;
 import me.stevemmmmm.thehypixelpit.game.duels.DuelingManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.other.DamageManager;

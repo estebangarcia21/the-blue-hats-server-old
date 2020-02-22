@@ -2,7 +2,10 @@ package me.stevemmmmm.thehypixelpit.managers.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.utils.SortCustomEnchantByName;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -98,8 +101,10 @@ public class CustomEnchantManager {
             StringBuilder enchantName = new StringBuilder();
             int enchantLevel;
 
-            for (String str : enchantData) {
-                ChatColor.stripColor(str);
+            if (enchantData.size() == 0) continue;
+
+            for (int i = 0; i < enchantData.size(); i++) {
+                enchantData.set(i, ChatColor.stripColor(enchantData.get(i)));
             }
 
             if (enchantData.get(0).equalsIgnoreCase("RARE!")) {
@@ -109,7 +114,7 @@ public class CustomEnchantManager {
             for (int i = 0; i < enchantData.size(); i++) {
                 if (i != enchantData.size() - 1) {
                     enchantName.append(enchantData.get(i));
-                    if (i != 0) enchantName.append(" ");
+                    if (i != enchantData.size() - 2) enchantName.append(" ");
                 }
             }
 

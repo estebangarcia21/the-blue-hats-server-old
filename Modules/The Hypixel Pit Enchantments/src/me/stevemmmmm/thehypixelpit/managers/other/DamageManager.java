@@ -6,6 +6,8 @@ package me.stevemmmmm.thehypixelpit.managers.other;
 
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,17 +23,23 @@ public class DamageManager implements Listener {
     }
 
     public double calculateDamage(double eventDamage, ItemStack item) {
-        double percentDamageIncrease = 0;
+        double percentDamageIncrease = 1;
+        double multiplier = 1;
 
         for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(item).keySet()) {
             if (enchant instanceof DamageEnchant) {
-                percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant)];
+                if (((DamageEnchant) enchant).getCalculationMode() == DamageCalculationMode.ADDITIVE) {
+                    percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
+                }
+
+                if (((DamageEnchant) enchant).getCalculationMode() == DamageCalculationMode.MULTIPLICATIVE) {
+                    multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
+                }
             }
         }
+
+        percentDamageIncrease *= multiplier;
+
+        return eventDamage * percentDamageIncrease;
     }
-
-    public void setDamage(float damage) {
-
-    }
-
 }

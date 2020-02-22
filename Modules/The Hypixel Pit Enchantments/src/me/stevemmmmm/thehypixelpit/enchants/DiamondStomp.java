@@ -5,7 +5,10 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.other.DamageCalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.other.DamageEnchant;
+import me.stevemmmmm.thehypixelpit.managers.other.DamageManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,6 +32,10 @@ public class DiamondStomp extends CustomEnchant implements DamageEnchant {
 
         Player damaged = (Player) event.getEntity();
 
+        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+            player.sendMessage("INITIAL DAMAGE: " + ChatColor.RED + String.valueOf(event.getDamage()));
+        }
+
         if (itemHasEnchant(sender, 1, this)) {
             if (playerHasDiamondPiece(damaged)) event.setDamage(event.getDamage() * 1.07f);
         }
@@ -38,7 +45,10 @@ public class DiamondStomp extends CustomEnchant implements DamageEnchant {
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            if (playerHasDiamondPiece(damaged)) event.setDamage(event.getDamage() * 1.25f);
+            if (playerHasDiamondPiece(damaged)) event.setDamage(DamageManager.getInstance().calculateDamage(event.getDamage(), sender));
+            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                player.sendMessage("FINAL DAMAGE: " + ChatColor.BLUE + String.valueOf(event.getDamage()));
+            }
         }
     }
 
@@ -79,19 +89,19 @@ public class DiamondStomp extends CustomEnchant implements DamageEnchant {
             }
         }
 
-        if (player.getInventory().getBoots() != null) {
+        if (player.getInventory().getLeggings() != null) {
             if (player.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS) {
                 return true;
             }
         }
 
-        if (player.getInventory().getBoots() != null) {
+        if (player.getInventory().getChestplate() != null) {
             if (player.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) {
                 return true;
             }
         }
 
-        if (player.getInventory().getBoots() != null) {
+        if (player.getInventory().getHelmet() != null) {
             return player.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET;
         }
 
@@ -101,5 +111,10 @@ public class DiamondStomp extends CustomEnchant implements DamageEnchant {
     @Override
     public double[] getPercentDamageIncreasePerLevel() {
         return new double[] { .07, .12, .25 };
+    }
+
+    @Override
+    public DamageCalculationMode getCalculationMode() {
+        return DamageCalculationMode.ADDITIVE;
     }
 }
