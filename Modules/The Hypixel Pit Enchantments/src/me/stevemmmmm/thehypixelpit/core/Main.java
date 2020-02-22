@@ -9,6 +9,7 @@ import me.stevemmmmm.thehypixelpit.game.MysticWell;
 import me.stevemmmmm.thehypixelpit.game.duels.Duel;
 import me.stevemmmmm.thehypixelpit.game.duels.DuelingManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
+import me.stevemmmmm.thehypixelpit.managers.other.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
 import me.stevemmmmm.thehypixelpit.perks.Vampire;
 import me.stevemmmmm.thehypixelpit.world.AntiFall;
@@ -62,6 +63,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MysticWell(), this);
         getServer().getPluginManager().registerEvents(DuelingManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(CombatTimer.getInstance(), this);
+        getServer().getPluginManager().registerEvents(DamageManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(new LevelChatFormatting(), this);
 
         getServer().getPluginManager().registerEvents(GrindingSystem.getInstance(), this);
@@ -82,6 +84,8 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new Healer());
         CustomEnchantManager.getInstance().registerEnchant(new Perun());
         CustomEnchantManager.getInstance().registerEnchant(new Stun());
+        CustomEnchantManager.getInstance().registerEnchant(new Lifesteal());
+        CustomEnchantManager.getInstance().registerEnchant(new DiamondStomp());
 
         //Bows
         CustomEnchantManager.getInstance().registerEnchant(new Robinhood());

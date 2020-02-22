@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.other.DamageEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Billionaire extends CustomEnchant {
+public class Billionaire extends CustomEnchant implements DamageEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -72,5 +73,10 @@ public class Billionaire extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return true;
+    }
+
+    @Override
+    public double[] getPercentDamageIncreasePerLevel() {
+        return new double[] { };
     }
 }

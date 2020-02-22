@@ -6,9 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /*
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
@@ -33,7 +31,7 @@ public class CustomEnchantManager {
         Main.instance.getServer().getPluginManager().registerEvents(enchant, Main.instance);
 
         enchants.add(enchant);
-        Collections.sort(enchants, new SortCustomEnchantByName());
+        enchants.sort(new SortCustomEnchantByName());
     }
 
     public void applyLore(ItemStack item, CustomEnchant enchant, int level) {
@@ -55,6 +53,12 @@ public class CustomEnchantManager {
         String normal = ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
 
         List<String> enchantLore = enchant.getDescription(level);
+
+        if (enchantLore == null) {
+            System.out.println("This enchant does not have a description!");
+            return;
+        }
+
         enchantLore.add(0, enchant.isRareEnchant() ? rare : normal);
         if (meta.getLore() != null) enchantLore.add(0, " ");
 
@@ -82,6 +86,43 @@ public class CustomEnchantManager {
         }
 
         return false;
+    }
+
+    public HashMap<CustomEnchant, Integer> getItemEnchants(ItemStack item) {
+        HashMap<CustomEnchant, Integer> enchantsToLevels = new HashMap<>();
+
+        if (item.getItemMeta().getLore() == null) return null;
+
+        for (String line : item.getItemMeta().getLore()) {
+            ArrayList<String> enchantData = new ArrayList<>(Arrays.asList(line.split(" ")));
+            StringBuilder enchantName = new StringBuilder();
+            int enchantLevel;
+
+            for (String str : enchantData) {
+                ChatColor.stripColor(str);
+            }
+
+            if (enchantData.get(0).equalsIgnoreCase("RARE!")) {
+                enchantData.remove(0);
+            }
+
+            for (int i = 0; i < enchantData.size(); i++) {
+                if (i != enchantData.size() - 1) {
+                    enchantName.append(enchantData.get(i));
+                    if (i != 0) enchantName.append(" ");
+                }
+            }
+
+            enchantLevel = convertRomanNumeralToInteger(enchantData.get(enchantData.size() - 1));
+
+            for (CustomEnchant enchant : enchants) {
+                if (enchant.getName().equalsIgnoreCase(enchantName.toString())) {
+                    enchantsToLevels.put(enchant, enchantLevel);
+                }
+            }
+        }
+
+        return enchantsToLevels;
     }
 
     public boolean containsEnchant(ItemStack item, int level, CustomEnchant enchant) {
@@ -163,5 +204,18 @@ public class CustomEnchantManager {
         }
 
         return null;
+    }
+
+    public int convertRomanNumeralToInteger(String numeral) {
+        switch (numeral) {
+            case "I":
+                return 1;
+            case "II":
+                return 2;
+            case "III":
+                return 3;
+        }
+
+        return 0;
     }
 }
