@@ -6,7 +6,6 @@ package me.stevemmmmm.thehypixelpit.managers;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -30,6 +29,8 @@ public abstract class CustomEnchant implements Listener {
     private HashMap<UUID, Integer> hitMappings = new HashMap<>();
     private HashMap<UUID, Long> cooldownTimesHitTimer = new HashMap<>();
     private HashMap<UUID, Integer> cooldownResetTasksHitTimer = new HashMap<>();
+
+    public abstract boolean enchantWasExecuted(ItemStack sender, Object executedEvent);
 
     public abstract String getName();
 

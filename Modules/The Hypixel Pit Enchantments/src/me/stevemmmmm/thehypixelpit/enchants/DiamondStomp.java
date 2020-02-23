@@ -4,9 +4,8 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-import me.stevemmmmm.thehypixelpit.managers.other.DamageCalculationMode;
-import me.stevemmmmm.thehypixelpit.managers.other.DamageEnchant;
-import org.bukkit.Bukkit;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageCalculationMode;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

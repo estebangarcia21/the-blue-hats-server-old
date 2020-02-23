@@ -1,9 +1,9 @@
-package me.stevemmmmm.thehypixelpit.managers.other;
+package me.stevemmmmm.thehypixelpit.managers.enchants;
 
 /*
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
 public enum DamageCalculationMode {
-    MULTIPLICATIVE, ADDITIVE
+    MULTIPLICATIVE, ADDITIVE, ABSOLUTE
 }

@@ -1,6 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

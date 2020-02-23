@@ -4,7 +4,6 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;

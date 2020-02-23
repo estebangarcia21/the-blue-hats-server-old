@@ -4,8 +4,8 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
-import me.stevemmmmm.thehypixelpit.managers.other.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,31 +14,34 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class Lifesteal extends EnvironmentalEnchant {
+public class Lifesteal extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            triggerEnchant(((Player) event.getDamager()).getItemInHand(), event);
+            enchantWasExecuted(((Player) event.getDamager()).getItemInHand(), event);
         }
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
+    public boolean enchantWasExecuted(ItemStack sender, Object executedEvent) {
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
 
         Player damager = (Player) event.getDamager();
 
         if (itemHasEnchant(sender, 1, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + event.getDamage() * 0.04f, damager.getMaxHealth()));
+            damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, damager) * 0.04f, damager.getMaxHealth()));
         }
 
         if (itemHasEnchant(sender, 2, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + event.getDamage() * 0.08f, damager.getMaxHealth()));
+            damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, damager) * 0.08f, damager.getMaxHealth()));
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, sender) * 0.13f, damager.getMaxHealth()));
+            damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, damager) * 0.13f, damager.getMaxHealth()));
+            return true;
         }
+
+        return false;
     }
 
     @Override
