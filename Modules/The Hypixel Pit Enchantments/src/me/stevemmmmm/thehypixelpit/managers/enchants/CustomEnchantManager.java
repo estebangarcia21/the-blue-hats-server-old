@@ -128,18 +128,6 @@ public class CustomEnchantManager {
         return enchantsToLevels;
     }
 
-    public boolean containsEnchant(ItemStack item, int level, CustomEnchant enchant) {
-        if (item.getItemMeta().getLore() == null) return false;
-
-        List<String> lore = item.getItemMeta().getLore();
-
-        String appendRare = "";
-
-        if (enchant.isRareEnchant()) appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
-
-        if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + CustomEnchantManager.getInstance().convertToRomanNumeral(level) : ""))) return true; else return false;
-    }
-
     public String convertToRomanNumeral(int value) {
         switch (value) {
             case 0:

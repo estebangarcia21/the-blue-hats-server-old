@@ -29,16 +29,15 @@ public class Lifesteal extends EnvironmentalEnchant {
         Player damager = (Player) event.getDamager();
 
         if (itemHasEnchant(sender, 1, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + event.getDamage() * 0.04f, 20));
+            damager.setHealth(Math.min(damager.getHealth() + event.getDamage() * 0.04f, damager.getMaxHealth()));
         }
 
         if (itemHasEnchant(sender, 2, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + event.getDamage() * 0.08f, 20));
+            damager.setHealth(Math.min(damager.getHealth() + event.getDamage() * 0.08f, damager.getMaxHealth()));
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, sender) * 0.13f, 20));
-            event.getDamager().sendMessage(String.valueOf(DamageManager.getInstance().calculateDamage(event, sender) * 0.13f));
+            damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, sender) * 0.13f, damager.getMaxHealth()));
         }
     }
 

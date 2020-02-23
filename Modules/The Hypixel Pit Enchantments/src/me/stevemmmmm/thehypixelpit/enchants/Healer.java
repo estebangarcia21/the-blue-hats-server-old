@@ -30,18 +30,18 @@ public class Healer extends EnvironmentalEnchant {
         Player damaged = (Player) event.getEntity();
 
         if (itemHasEnchant(sender, 1, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + 2, damager.getHealthScale()));
-            damaged.setHealth(Math.min(damager.getHealth() + 2, damaged.getHealthScale()));
+            damager.setHealth(Math.min(damager.getHealth() + 2, damager.getMaxHealth()));
+            damaged.setHealth(Math.min(damager.getHealth() + 2, damaged.getMaxHealth()));
         }
 
         if (itemHasEnchant(sender, 2, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + 4, damager.getHealthScale()));
-            damaged.setHealth(Math.min(damager.getHealth() + 4, damaged.getHealthScale()));
+            damager.setHealth(Math.min(damager.getHealth() + 4, damager.getMaxHealth()));
+            damaged.setHealth(Math.min(damager.getHealth() + 4, damaged.getMaxHealth()));
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + 6, damager.getHealthScale()));
-            damaged.setHealth(Math.min(damager.getHealth() + 6, damaged.getHealthScale()));
+            damager.setHealth(Math.min(damager.getHealth() + 6, damager.getMaxHealth()));
+            damaged.setHealth(Math.min(damager.getHealth() + 6, damaged.getMaxHealth()));
         }
     }
 

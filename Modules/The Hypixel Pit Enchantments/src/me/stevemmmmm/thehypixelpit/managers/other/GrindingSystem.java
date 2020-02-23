@@ -433,8 +433,6 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
         for (Map.Entry<UUID, String> entry : ConfigAPI.read("Levels").entrySet()) {
             playerLevels.put(entry.getKey(), Integer.parseInt(entry.getValue()));
         }
-
-        playerLevels = MapSorter.sortByValue(playerLevels);
     }
 
     @Override

@@ -60,11 +60,7 @@ public class DamageManager implements Listener {
             }
         }
 
-        percentDamageIncrease *= multiplier;
-
-        //TODO Check if each damage inc meets the requirements
-
-        return event.getDamage() * percentDamageIncrease;
+        return event.getDamage() * percentDamageIncrease * multiplier;
     }
 
     public boolean isCriticalHit(Player player) {
