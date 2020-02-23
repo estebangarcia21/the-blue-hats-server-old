@@ -4,7 +4,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class CriticallyFunky extends CustomEnchant {
+public class CriticallyFunky extends EnvironmentalEnchant {
     private HashMap<UUID, Integer> queue = new HashMap<>();
 
     @EventHandler

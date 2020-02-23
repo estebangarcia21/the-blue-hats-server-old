@@ -4,10 +4,8 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.other.DamageCalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.other.DamageEnchant;
-import me.stevemmmmm.thehypixelpit.managers.other.DamageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class DiamondStomp extends CustomEnchant implements DamageEnchant {
+public class DiamondStomp extends DamageEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
@@ -27,7 +25,7 @@ public class DiamondStomp extends CustomEnchant implements DamageEnchant {
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
+    public boolean triggerEnchant(ItemStack sender, Object... args) {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
 
         Player damaged = (Player) event.getEntity();
@@ -45,11 +43,10 @@ public class DiamondStomp extends CustomEnchant implements DamageEnchant {
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            if (playerHasDiamondPiece(damaged)) event.setDamage(DamageManager.getInstance().calculateDamage(event.getDamage(), sender));
-            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                player.sendMessage("FINAL DAMAGE: " + ChatColor.BLUE + String.valueOf(event.getDamage()));
-            }
+            if (playerHasDiamondPiece(damaged)) return true;
         }
+
+        return false;
     }
 
     @Override

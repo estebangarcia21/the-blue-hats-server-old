@@ -1,6 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Assassin extends CustomEnchant {
+public class Assassin extends EnvironmentalEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

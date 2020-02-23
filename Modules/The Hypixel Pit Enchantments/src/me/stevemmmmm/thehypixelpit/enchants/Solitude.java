@@ -1,6 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import java.util.List;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Solitude extends CustomEnchant {
+public class Solitude extends EnvironmentalEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

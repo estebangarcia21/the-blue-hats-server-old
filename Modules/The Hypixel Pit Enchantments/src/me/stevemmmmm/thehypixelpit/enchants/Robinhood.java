@@ -1,6 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,7 +21,7 @@ import java.util.*;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Robinhood extends CustomEnchant {
+public class Robinhood extends EnvironmentalEnchant {
     private HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
 
     @EventHandler

@@ -1,6 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.ChatColor;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Stun extends CustomEnchant {
+public class Stun extends EnvironmentalEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

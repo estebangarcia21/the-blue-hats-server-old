@@ -1,6 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import me.stevemmmmm.thehypixelpit.utils.TelebowData;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
@@ -22,7 +22,7 @@ import java.util.UUID;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Telebow extends CustomEnchant {
+public class Telebow extends EnvironmentalEnchant {
     private HashMap<UUID, TelebowData> telebowData = new HashMap<>();
 
     @EventHandler

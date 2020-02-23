@@ -1,11 +1,9 @@
 package me.stevemmmmm.thehypixelpit.managers.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.utils.SortCustomEnchantByName;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 

@@ -1,9 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.other.DamageCalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.other.DamageEnchant;
-import me.stevemmmmm.thehypixelpit.managers.other.DamageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -18,7 +16,7 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Billionaire extends CustomEnchant implements DamageEnchant {
+public class Billionaire extends DamageEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -29,7 +27,8 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
         }
     }
 
-    public void triggerEnchant(ItemStack sender, Object... args) {
+    @Override
+    public boolean triggerEnchant(ItemStack sender, Object... args) {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
 
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -47,12 +46,11 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            event.setDamage(DamageManager.getInstance().calculateDamage(event.getDamage(), sender));
-            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                player.sendMessage("FINAL DAMAGE: " + ChatColor.BLUE + String.valueOf(event.getDamage()));
-            }
             ((Player) event.getDamager()).playSound(event.getDamager().getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
+            return true;
         }
+
+        return false;
     }
 
     @Override
@@ -87,7 +85,7 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
 
     @Override
     public double[] getPercentDamageIncreasePerLevel() {
-        return new double[] { .33, .66, 1};
+        return new double[] { 1.33, .166, 2};
     }
 
     @Override

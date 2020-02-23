@@ -1,6 +1,12 @@
-package me.stevemmmmm.thehypixelpit.managers.enchants;
+package me.stevemmmmm.thehypixelpit.managers;
+
+/*
+ * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ */
 
 import me.stevemmmmm.thehypixelpit.core.Main;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,10 +22,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 public abstract class CustomEnchant implements Listener {
     private HashMap<UUID, Boolean> playerIsOnCooldown = new HashMap<>();
     private HashMap<UUID, Long> cooldownTimerTimes = new HashMap<>();
@@ -28,8 +30,6 @@ public abstract class CustomEnchant implements Listener {
     private HashMap<UUID, Integer> hitMappings = new HashMap<>();
     private HashMap<UUID, Long> cooldownTimesHitTimer = new HashMap<>();
     private HashMap<UUID, Integer> cooldownResetTasksHitTimer = new HashMap<>();
-
-    public abstract void triggerEnchant(ItemStack sender, Object... args);
 
     public abstract String getName();
 
