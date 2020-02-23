@@ -5,6 +5,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
+import me.stevemmmmm.thehypixelpit.managers.other.DamageManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,7 +37,7 @@ public class Lifesteal extends EnvironmentalEnchant {
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + event.getDamage() * 0.13f, 20));
+            damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, sender) * 0.13f, 20));
         }
     }
 

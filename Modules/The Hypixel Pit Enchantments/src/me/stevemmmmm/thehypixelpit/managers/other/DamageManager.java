@@ -7,6 +7,8 @@ package me.stevemmmmm.thehypixelpit.managers.other;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -30,25 +32,40 @@ public class DamageManager implements Listener {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            event.setDamage(calculateDamage(event.getDamage(), ((Player) event.getDamager()).getItemInHand()));
+            event.setDamage(calculateDamage(event, ((Player) event.getDamager()).getItemInHand()));
+        }
+
+        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+            player.sendMessage("FINAL DAMAGE: " + ChatColor.RED + String.valueOf(event.getDamage()));
         }
 
         //TODO Implement arrows
     }
 
-    public double calculateDamage(double eventDamage, ItemStack item) {
+    public double calculateDamage(EntityDamageByEntityEvent event, ItemStack item) {
         double percentDamageIncrease = 1;
-        double multiplier = 0;
+        double multiplier = 1;
+
+        if (item.getItemMeta().getLore() == null) return event.getDamage();
 
         for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(item).keySet()) {
             if (enchant instanceof DamageEnchant) {
                 if (((DamageEnchant) enchant).getCalculationMode() == DamageCalculationMode.ADDITIVE) {
-
-                    percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
+                    if (((DamageEnchant) enchant).triggerEnchant(item, event)) {
+                        percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
+                        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                            player.sendMessage("yuh");
+                        }
+                    }
                 }
 
                 if (((DamageEnchant) enchant).getCalculationMode() == DamageCalculationMode.MULTIPLICATIVE) {
-                    multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
+                    if (((DamageEnchant) enchant).triggerEnchant(item, event)) {
+                        percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
+                        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                            player.sendMessage("yuh");
+                        }
+                    }
                 }
             }
         }
@@ -57,7 +74,7 @@ public class DamageManager implements Listener {
 
         //TODO Check if each damage inc meets the requirements
 
-        return eventDamage * percentDamageIncrease;
+        return event.getDamage() * percentDamageIncrease;
     }
 
     public boolean isCriticalHit(Player player) {

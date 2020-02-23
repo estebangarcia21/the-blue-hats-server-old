@@ -28,13 +28,7 @@ public class Billionaire extends DamageEnchant {
     }
 
     @Override
-    public boolean triggerEnchant(ItemStack sender, Object... args) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
-
-        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            player.sendMessage("INITIAL DAMAGE: " + ChatColor.YELLOW + String.valueOf(event.getDamage()));
-        }
-
+    public boolean triggerEnchant(ItemStack sender, EntityDamageByEntityEvent event) {
         if (itemHasEnchant(sender, 1, this)) {
             event.setDamage(event.getDamage() * 1.33f);
             ((Player) event.getDamager()).playSound(event.getDamager().getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
@@ -85,7 +79,7 @@ public class Billionaire extends DamageEnchant {
 
     @Override
     public double[] getPercentDamageIncreasePerLevel() {
-        return new double[] { 1.33, .166, 2};
+        return new double[] { .33, .66, 1};
     }
 
     @Override

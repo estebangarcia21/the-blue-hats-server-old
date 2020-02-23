@@ -6,10 +6,13 @@ package me.stevemmmmm.thehypixelpit.managers.other;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.EnvironmentalEnchant;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class DamageEnchant extends CustomEnchant {
-    public abstract boolean triggerEnchant(ItemStack sender, Object... args);
+    public abstract void onHit(EntityDamageByEntityEvent event);
+
+    public abstract boolean triggerEnchant(ItemStack sender, EntityDamageByEntityEvent event);
 
     public abstract double[] getPercentDamageIncreasePerLevel();
 

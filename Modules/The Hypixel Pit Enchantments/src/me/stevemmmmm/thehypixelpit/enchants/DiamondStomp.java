@@ -25,14 +25,8 @@ public class DiamondStomp extends DamageEnchant {
     }
 
     @Override
-    public boolean triggerEnchant(ItemStack sender, Object... args) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
-
+    public boolean triggerEnchant(ItemStack sender, EntityDamageByEntityEvent event) {
         Player damaged = (Player) event.getEntity();
-
-        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            player.sendMessage("INITIAL DAMAGE: " + ChatColor.RED + String.valueOf(event.getDamage()));
-        }
 
         if (itemHasEnchant(sender, 1, this)) {
             if (playerHasDiamondPiece(damaged)) event.setDamage(event.getDamage() * 1.07f);
@@ -43,7 +37,7 @@ public class DiamondStomp extends DamageEnchant {
         }
 
         if (itemHasEnchant(sender, 3, this)) {
-            if (playerHasDiamondPiece(damaged)) return true;
+            return playerHasDiamondPiece(damaged);
         }
 
         return false;
