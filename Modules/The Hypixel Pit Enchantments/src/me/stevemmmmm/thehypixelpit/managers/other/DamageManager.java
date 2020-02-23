@@ -35,10 +35,6 @@ public class DamageManager implements Listener {
             event.setDamage(calculateDamage(event, ((Player) event.getDamager()).getItemInHand()));
         }
 
-        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            player.sendMessage("FINAL DAMAGE: " + ChatColor.RED + String.valueOf(event.getDamage()));
-        }
-
         //TODO Implement arrows
     }
 
@@ -53,18 +49,12 @@ public class DamageManager implements Listener {
                 if (((DamageEnchant) enchant).getCalculationMode() == DamageCalculationMode.ADDITIVE) {
                     if (((DamageEnchant) enchant).triggerEnchant(item, event)) {
                         percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
-                        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                            player.sendMessage("yuh");
-                        }
                     }
                 }
 
                 if (((DamageEnchant) enchant).getCalculationMode() == DamageCalculationMode.MULTIPLICATIVE) {
                     if (((DamageEnchant) enchant).triggerEnchant(item, event)) {
                         percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
-                        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                            player.sendMessage("yuh");
-                        }
                     }
                 }
             }

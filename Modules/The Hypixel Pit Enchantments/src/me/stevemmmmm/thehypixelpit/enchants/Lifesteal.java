@@ -38,6 +38,7 @@ public class Lifesteal extends EnvironmentalEnchant {
 
         if (itemHasEnchant(sender, 3, this)) {
             damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, sender) * 0.13f, 20));
+            event.getDamager().sendMessage(String.valueOf(DamageManager.getInstance().calculateDamage(event, sender) * 0.13f));
         }
     }
 
