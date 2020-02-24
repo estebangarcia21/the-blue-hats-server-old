@@ -5,7 +5,10 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageReductionEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -17,18 +20,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class CriticallyFunky extends CustomEnchant {
+public class CriticallyFunky extends CustomEnchant implements DamageEnchant, DamageReductionEnchant {
     private HashMap<UUID, Integer> queue = new HashMap<>();
 
     @EventHandler
-    public void onDamage(EntityDamageByEntityEvent event) {
+    public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
             executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                Player player = (Player) ((Arrow) event.getDamager()).getShooter();
                 executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
             }
         }
@@ -111,5 +113,25 @@ public class CriticallyFunky extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return false;
+    }
+
+    @Override
+    public double[] getPercentDamageIncreasePerLevel() {
+        return new double[] { 0, .14, .3 };
+    }
+
+    @Override
+    public double[] getPercentReductionPerLevel() {
+        return new double[] { .4, .5, .6 };
+    }
+
+    @Override
+    public CalculationMode getReductionCalculationMode() {
+        return CalculationMode.ADDITIVE;
+    }
+
+    @Override
+    public CalculationMode getDamageCalculationMode() {
+        return CalculationMode.ADDITIVE;
     }
 }

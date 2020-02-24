@@ -1,7 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DamageCalculationMode;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -31,7 +31,17 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
     public boolean executeEnchant(ItemStack sender, Object executedEvent) {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
 
-        if (itemHasEnchant(sender, this)) {
+        if (itemHasEnchant(sender, 1,this)) {
+            ((Player) event.getDamager()).playSound(event.getDamager().getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
+            return true;
+        }
+
+        if (itemHasEnchant(sender, 2,this)) {
+            ((Player) event.getDamager()).playSound(event.getDamager().getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
+            return true;
+        }
+
+        if (itemHasEnchant(sender, 3,this)) {
             ((Player) event.getDamager()).playSound(event.getDamager().getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
             return true;
         }
@@ -75,7 +85,7 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
     }
 
     @Override
-    public DamageCalculationMode getCalculationMode() {
-        return DamageCalculationMode.MULTIPLICATIVE;
+    public CalculationMode getDamageCalculationMode() {
+        return CalculationMode.MULTIPLICATIVE;
     }
 }

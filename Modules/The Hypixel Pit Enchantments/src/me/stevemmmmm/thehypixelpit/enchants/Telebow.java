@@ -120,9 +120,13 @@ public class Telebow extends CustomEnchant {
             player = (Player) arrow.getShooter();
         }
 
+        if (player == null) return false;
+
         if (itemHasEnchant(sender, 1, this)) {
             if (isOnCooldown(player)) {
                 player.teleport(arrow);
+                startCooldown(player, 90, true);
+
                 return true;
             }
 
@@ -132,6 +136,8 @@ public class Telebow extends CustomEnchant {
         if (itemHasEnchant(sender, 2, this)) {
             if (isOnCooldown(player)) {
                 player.teleport(arrow);
+                startCooldown(player, 45, true);
+
                 return true;
             }
 
@@ -141,6 +147,8 @@ public class Telebow extends CustomEnchant {
         if (itemHasEnchant(sender, 3, this)) {
             if (isOnCooldown(player)) {
                 player.teleport(arrow);
+                startCooldown(player, 20, true);
+
                 return true;
             }
 

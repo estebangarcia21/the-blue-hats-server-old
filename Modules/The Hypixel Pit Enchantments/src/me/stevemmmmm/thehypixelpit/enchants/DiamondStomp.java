@@ -5,7 +5,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DamageCalculationMode;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -96,7 +96,7 @@ public class DiamondStomp extends CustomEnchant implements DamageEnchant {
     }
 
     @Override
-    public DamageCalculationMode getCalculationMode() {
-        return DamageCalculationMode.ADDITIVE;
+    public CalculationMode getDamageCalculationMode() {
+        return CalculationMode.ADDITIVE;
     }
 }

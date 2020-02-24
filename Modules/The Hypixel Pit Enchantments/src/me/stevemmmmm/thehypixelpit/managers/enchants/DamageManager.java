@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -30,7 +29,8 @@ public class DamageManager implements Listener {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            event.setDamage(calculateDamage(event, (Player) event.getDamager()) * calculateDamageReduction(event, (Player) event.getDamager()));
+            event.setDamage(calculateDamage(event, (Player) event.getDamager()));
+            System.out.println(event.getFinalDamage());
         }
 
         //TODO Implement arrows
@@ -41,37 +41,74 @@ public class DamageManager implements Listener {
         double multiplier = 1;
 
         ItemStack attackItem = player.getItemInHand();
-        ItemStack pants = player.getItemInHand();
+        ItemStack pants = player.getInventory().getLeggings();
 
-        if (attackItem.getItemMeta().getLore() == null) return event.getDamage();
-        if (pants.getItemMeta().getLore() == null) return event.getDamage();
-
-        calculateValues(percentDamageIncrease, multiplier, event, attackItem);
-        calculateValues(percentDamageIncrease, multiplier, event, pants);
-
-        return event.getDamage() * percentDamageIncrease * multiplier;
-    }
-
-    public double calculateDamageReduction(EntityDamageByEntityEvent event, Player player) {
-        return 1;
-    }
-
-    private void calculateValues(double percentDamageIncrease, double multiplier, EntityDamageByEntityEvent event, ItemStack item) {
-        for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(item).keySet()) {
-            if (enchant instanceof DamageEnchant) {
-                if (((DamageEnchant) enchant).getCalculationMode() == DamageCalculationMode.ADDITIVE) {
-                    if (enchant.executeEnchant(item, event)) {
-                        percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
+        if (attackItem.getType() != Material.AIR) {
+            for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(attackItem).keySet()) {
+                if (enchant instanceof DamageEnchant) {
+                    if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.ADDITIVE) {
+                        if (enchant.executeEnchant(attackItem, event)) {
+                            System.out.println(enchant.getName());
+                            percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
+                        }
                     }
-                }
 
-                if (((DamageEnchant) enchant).getCalculationMode() == DamageCalculationMode.MULTIPLICATIVE) {
-                    if (enchant.executeEnchant(item, event)) {
-                        multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
+                    if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.MULTIPLICATIVE) {
+                        if (enchant.executeEnchant(attackItem, event)) {
+                            System.out.println(enchant.getName());
+                            multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
+                        }
                     }
                 }
             }
         }
+
+        if (pants != null) {
+            for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(pants).keySet()) {
+                if (enchant instanceof DamageEnchant) {
+                    if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.ADDITIVE) {
+                        if (enchant.executeEnchant(pants, event)) {
+                            percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
+                        }
+                    }
+
+                    if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.MULTIPLICATIVE) {
+                        if (enchant.executeEnchant(pants, event)) {
+                            multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
+                        }
+                    }
+                }
+            }
+        }
+
+        return percentDamageIncrease * multiplier * event.getDamage();
+    }
+
+    public double calculateDamageReduction(EntityDamageByEntityEvent event, Player player) {
+        double percentDamageIncrease = 1;
+        double multiplier = 1;
+
+        ItemStack pants = player.getInventory().getLeggings();
+
+        if (pants == null) return event.getDamage();
+
+        for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(pants).keySet()) {
+            if (enchant instanceof DamageEnchant) {
+                if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.ADDITIVE) {
+                    if (enchant.executeEnchant(pants, event)) {
+                        percentDamageIncrease *= ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(pants).get(enchant) - 1];
+                    }
+                }
+
+                if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.MULTIPLICATIVE) {
+                    if (enchant.executeEnchant(pants, event)) {
+                        multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(pants).get(enchant) - 1];
+                    }
+                }
+            }
+        }
+
+        return 1;
     }
 
     public Player getDamagerFromDamageEvent(EntityDamageByEntityEvent event) {
