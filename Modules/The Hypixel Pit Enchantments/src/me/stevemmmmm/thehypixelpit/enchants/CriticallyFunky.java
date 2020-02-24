@@ -4,6 +4,8 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -15,64 +17,68 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class CriticallyFunky extends EnvironmentalEnchant {
+public class CriticallyFunky extends CustomEnchant {
     private HashMap<UUID, Integer> queue = new HashMap<>();
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            triggerEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event, event.getDamager());
+            executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
                 Player player = (Player) ((Arrow) event.getDamager()).getShooter();
-                triggerEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event, player);
+                executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
             }
         }
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
-        Player damager = (Player) args[1];
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+        Player damager = DamageManager.getInstance().getDamagerFromDamageEvent(event);
 
         if (queue.containsKey(damager.getUniqueId())) {
             if (queue.get(damager.getUniqueId()) == 1) {
                 event.setDamage(event.getDamage() * 1.14f);
                 queue.remove(damager.getUniqueId());
-                return;
+                return false;
             }
 
             if (queue.get(damager.getUniqueId()) == 2) {
                 event.setDamage(event.getDamage() * 1.40f);
                 queue.remove(damager.getUniqueId());
-                return;
+                return false;
             }
         }
 
-        if (sender == null) return;
-        if (!isCriticalHit(damager)) return;
-        if (args.length > 2) {
-            if (args[2] != null) {
-                Arrow arrow = (Arrow) args[2];
-                if (!arrow.isCritical()) return;
-            }
+        if (sender == null) return false;
+        if (!isCriticalHit(damager)) return false;
+        if (event.getDamager() instanceof Arrow) {
+            Arrow arrow = (Arrow) event.getDamager();
+
+            if (!arrow.isCritical()) return false;
         }
 
         if (itemHasEnchant(sender, 1, this)) {
             event.setDamage(event.getDamage() * 0.65f);
+            return true;
         }
 
         if (itemHasEnchant(sender, 2, this)) {
             event.setDamage(event.getDamage() * 0.65f);
             queue.put(event.getEntity().getUniqueId(), 1);
+            return true;
         }
 
         if (itemHasEnchant(sender, 3, this)) {
             event.setDamage(event.getDamage() * 0.4f);
             queue.put(event.getEntity().getUniqueId(), 2);
+            return true;
         }
+
+        return false;
     }
 
     @Override

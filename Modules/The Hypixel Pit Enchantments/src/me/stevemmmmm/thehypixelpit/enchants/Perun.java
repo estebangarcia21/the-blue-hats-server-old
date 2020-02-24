@@ -1,5 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,25 +14,28 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Perun extends EnvironmentalEnchant {
+public class Perun extends CustomEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            triggerEnchant(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event.getEntity());
+            executeEnchant(((Player) event.getDamager()).getItemInHand(), event);
         }
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        Player player = (Player) args[0];
-        Player damaged = (Player) args[1];
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+
+        Player player = (Player) event.getDamager();
+        Player damaged = (Player) event.getEntity();
 
         if (itemHasEnchant(sender, 1, this)) {
             updateHitCount(player);
 
             if (hasRequiredHits(player, 5)) {
                 lightningStrike(damaged, player, 3, false);
+                return true;
             }
         }
 
@@ -40,6 +44,7 @@ public class Perun extends EnvironmentalEnchant {
 
             if (hasRequiredHits(player, 5)) {
                 lightningStrike(damaged, player, 4, false);
+                return true;
             }
         }
 
@@ -48,8 +53,11 @@ public class Perun extends EnvironmentalEnchant {
 
             if (hasRequiredHits(player, 4)) {
                 lightningStrike(damaged, player, 2, true);
+                return true;
             }
         }
+
+        return false;
     }
 
     private void lightningStrike(Player target, Player damager, int damage, boolean increaseDmgByDiamondArmor) {

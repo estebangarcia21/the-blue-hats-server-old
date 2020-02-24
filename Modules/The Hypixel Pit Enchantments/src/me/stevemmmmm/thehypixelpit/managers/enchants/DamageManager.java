@@ -2,11 +2,13 @@ package me.stevemmmmm.thehypixelpit.managers.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -51,25 +53,40 @@ public class DamageManager implements Listener {
     }
 
     public double calculateDamageReduction(EntityDamageByEntityEvent event, Player player) {
-
+        return 1;
     }
 
-    private void calculateValues(double percentDamageIncrease, double multiplier, EntityDamageByEntityEvent event, ItemStack object) {
-        for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(object).keySet()) {
+    private void calculateValues(double percentDamageIncrease, double multiplier, EntityDamageByEntityEvent event, ItemStack item) {
+        for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(item).keySet()) {
             if (enchant instanceof DamageEnchant) {
                 if (((DamageEnchant) enchant).getCalculationMode() == DamageCalculationMode.ADDITIVE) {
-                    if (((DamageEnchant) enchant).triggerEnchant(object, event)) {
-                        percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(player).get(enchant) - 1];
+                    if (enchant.executeEnchant(item, event)) {
+                        percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
                     }
                 }
 
                 if (((DamageEnchant) enchant).getCalculationMode() == DamageCalculationMode.MULTIPLICATIVE) {
-                    if (((DamageEnchant) enchant).triggerEnchant(object, event)) {
-                        percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(player).get(enchant) - 1];
+                    if (enchant.executeEnchant(item, event)) {
+                        multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(item).get(enchant) - 1];
                     }
                 }
             }
         }
+    }
+
+    public Player getDamagerFromDamageEvent(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+            return (Player) event.getDamager();
+        }
+
+        if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
+            if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
+
+                return (Player) ((Arrow) event.getDamager()).getShooter();
+            }
+        }
+
+        return null;
     }
 
     public boolean isCriticalHit(Player player) {

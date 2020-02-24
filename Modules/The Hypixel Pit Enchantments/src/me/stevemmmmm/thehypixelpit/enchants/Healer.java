@@ -1,5 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,18 +13,18 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Healer extends EnvironmentalEnchant {
+public class Healer extends CustomEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            triggerEnchant(((Player) event.getDamager()).getItemInHand(), event);
+            executeEnchant(((Player) event.getDamager()).getItemInHand(), event);
         }
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
 
         Player damager = (Player) event.getDamager();
         Player damaged = (Player) event.getEntity();
@@ -31,17 +32,22 @@ public class Healer extends EnvironmentalEnchant {
         if (itemHasEnchant(sender, 1, this)) {
             damager.setHealth(Math.min(damager.getHealth() + 2, damager.getMaxHealth()));
             damaged.setHealth(Math.min(damager.getHealth() + 2, damaged.getMaxHealth()));
+            return true;
         }
 
         if (itemHasEnchant(sender, 2, this)) {
             damager.setHealth(Math.min(damager.getHealth() + 4, damager.getMaxHealth()));
             damaged.setHealth(Math.min(damager.getHealth() + 4, damaged.getMaxHealth()));
+            return true;
         }
 
         if (itemHasEnchant(sender, 3, this)) {
             damager.setHealth(Math.min(damager.getHealth() + 6, damager.getMaxHealth()));
             damaged.setHealth(Math.min(damager.getHealth() + 6, damaged.getMaxHealth()));
+            return true;
         }
+
+        return false;
     }
 
     @Override

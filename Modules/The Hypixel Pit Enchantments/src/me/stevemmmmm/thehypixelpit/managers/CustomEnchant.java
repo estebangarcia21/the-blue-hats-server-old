@@ -30,7 +30,7 @@ public abstract class CustomEnchant implements Listener {
     private HashMap<UUID, Long> cooldownTimesHitTimer = new HashMap<>();
     private HashMap<UUID, Integer> cooldownResetTasksHitTimer = new HashMap<>();
 
-    public abstract boolean enchantWasExecuted(ItemStack sender, Object executedEvent);
+    public abstract boolean executeEnchant(ItemStack sender, Object executedEvent);
 
     public abstract String getName();
 

@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -18,7 +19,7 @@ import java.util.HashMap;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Volley extends EnvironmentalEnchant {
+public class Volley extends CustomEnchant {
     private HashMap<Arrow, Integer> volleyTasks = new HashMap<>();
     private HashMap<Arrow, Integer> arrowCount = new HashMap<>();
 
@@ -31,15 +32,17 @@ public class Volley extends EnvironmentalEnchant {
             if (((Arrow) event.getProjectile()).getShooter() instanceof Player) {
                 Player player = (Player) ((Arrow) event.getProjectile()).getShooter();
 
-                triggerEnchant(player.getInventory().getItemInHand(), player, event.getProjectile());
+                executeEnchant(player.getInventory().getItemInHand(), event);
             }
         }
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        Player player = (Player) args[0];
-        Arrow arrow = (Arrow) args[1];
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        EntityShootBowEvent event = (EntityShootBowEvent) executedEvent;
+
+        Arrow arrow = (Arrow) event.getProjectile();
+        Player player = (Player) arrow.getShooter();
 
         if (itemHasEnchant(sender, 1, this)) {
             Vector originalVelocity = arrow.getVelocity();
@@ -97,6 +100,8 @@ public class Volley extends EnvironmentalEnchant {
                 }
             }, 0L, 3L)), 3L);
         }
+
+        return false;
     }
 
     @Override

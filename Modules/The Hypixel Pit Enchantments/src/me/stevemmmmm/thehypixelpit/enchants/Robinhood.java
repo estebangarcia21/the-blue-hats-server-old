@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -20,7 +21,7 @@ import java.util.*;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Robinhood extends EnvironmentalEnchant {
+public class Robinhood extends CustomEnchant {
     private HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
 
     @EventHandler
@@ -29,7 +30,7 @@ public class Robinhood extends EnvironmentalEnchant {
             Arrow arrow = (Arrow) event.getProjectile();
             Player player = (Player) event.getEntity();
 
-            triggerEnchant(player.getInventory().getItemInHand(), arrow, player);
+            executeEnchant(player.getInventory().getItemInHand(), event);
         }
     }
 
@@ -69,6 +70,28 @@ public class Robinhood extends EnvironmentalEnchant {
         }
     }
 
+    @Override
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        EntityShootBowEvent event = (EntityShootBowEvent) executedEvent;
+
+        Arrow arrow = (Arrow) event.getProjectile();
+        Player player = (Player) event.getEntity();
+
+        if (itemHasEnchant(sender, 1, this)) {
+            homeArrows(arrowTasks, arrow, player);
+        }
+
+        if (itemHasEnchant(sender, 2, this)) {
+            homeArrows(arrowTasks, arrow, player);
+        }
+
+        if (itemHasEnchant(sender, 3, this)) {
+            homeArrows(arrowTasks, arrow, player);
+        }
+
+        return false;
+    }
+
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow) {
@@ -84,24 +107,6 @@ public class Robinhood extends EnvironmentalEnchant {
             }
 
             if (removal != null) arrowTasks.remove(removal);
-        }
-    }
-
-    @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        Arrow arrow = (Arrow) args[0];
-        Player player = (Player) args[1];
-
-        if (itemHasEnchant(sender, 1, this)) {
-            homeArrows(arrowTasks, arrow, player);
-        }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            homeArrows(arrowTasks, arrow, player);
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            homeArrows(arrowTasks, arrow, player);
         }
     }
 

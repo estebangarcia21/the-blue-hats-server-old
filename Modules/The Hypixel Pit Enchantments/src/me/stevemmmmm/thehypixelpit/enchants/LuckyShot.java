@@ -4,6 +4,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -13,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class LuckyShot extends EnvironmentalEnchant {
+public class LuckyShot extends CustomEnchant {
 
     @EventHandler
     public void onArrowHit(EntityDamageByEntityEvent event) {
@@ -23,26 +24,34 @@ public class LuckyShot extends EnvironmentalEnchant {
             if (arrow.getShooter() instanceof Player) {
                 Player player = (Player) arrow.getShooter();
 
-                triggerEnchant(player.getInventory().getItemInHand(), event);
+                executeEnchant(player.getInventory().getItemInHand(), event);
             }
         }
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
 
         if (itemHasEnchant(sender, 1, this)) {
             if (percentChance(2)) event.setDamage(event.getDamage() * 4);
+            event.getDamager().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
+            return true;
         }
 
         if (itemHasEnchant(sender, 2, this)) {
             if (percentChance(5)) event.setDamage(event.getDamage() * 4);
+            event.getDamager().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
+            return true;
         }
 
         if (itemHasEnchant(sender, 3, this)) {
             if (percentChance(10)) event.setDamage(event.getDamage() * 4);
+            event.getDamager().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
+            return true;
         }
+
+        return false;
     }
 
     @Override

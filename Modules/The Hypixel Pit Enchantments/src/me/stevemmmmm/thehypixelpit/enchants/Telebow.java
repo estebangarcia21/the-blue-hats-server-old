@@ -1,5 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.utils.TelebowData;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +23,7 @@ import java.util.UUID;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Telebow extends EnvironmentalEnchant {
+public class Telebow extends CustomEnchant {
     private HashMap<UUID, TelebowData> telebowData = new HashMap<>();
 
     @EventHandler
@@ -34,7 +36,7 @@ public class Telebow extends EnvironmentalEnchant {
 
                 if (telebowData.containsKey(player.getUniqueId())) {
                     if (itemHasEnchant(telebowData.get(player.getUniqueId()).getBow(), this)) {
-                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) triggerEnchant(telebowData.get(player.getUniqueId()).getBow(), arrow, player);
+                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) executeEnchant(telebowData.get(player.getUniqueId()).getBow(), event);
                     }
                 }
             }
@@ -56,7 +58,7 @@ public class Telebow extends EnvironmentalEnchant {
 
                 if (telebowData.containsKey(player.getUniqueId())) {
                     if (itemHasEnchant(telebowData.get(player.getUniqueId()).getBow(), this)) {
-                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) triggerEnchant(telebowData.get(player.getUniqueId()).getBow(), arrow, player);
+                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) executeEnchant(telebowData.get(player.getUniqueId()).getBow(), event);
                     }
                 }
             }
@@ -100,13 +102,28 @@ public class Telebow extends EnvironmentalEnchant {
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        Arrow arrow = (Arrow) args[0];
-        Player player = (Player) args[1];
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        Arrow arrow = null;
+        Player player = null;
+
+        if (executedEvent instanceof ProjectileHitEvent) {
+            ProjectileHitEvent event = (ProjectileHitEvent) executedEvent;
+
+            arrow = (Arrow) event.getEntity();
+            player = (Player) arrow.getShooter();
+        }
+
+        if (executedEvent instanceof EntityDamageByEntityEvent) {
+            EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+
+            arrow = (Arrow) event.getDamager();
+            player = (Player) arrow.getShooter();
+        }
 
         if (itemHasEnchant(sender, 1, this)) {
             if (isOnCooldown(player)) {
                 player.teleport(arrow);
+                return true;
             }
 
             startCooldown(player, 90, true);
@@ -115,6 +132,7 @@ public class Telebow extends EnvironmentalEnchant {
         if (itemHasEnchant(sender, 2, this)) {
             if (isOnCooldown(player)) {
                 player.teleport(arrow);
+                return true;
             }
 
             startCooldown(player, 45, true);
@@ -123,10 +141,13 @@ public class Telebow extends EnvironmentalEnchant {
         if (itemHasEnchant(sender, 3, this)) {
             if (isOnCooldown(player)) {
                 player.teleport(arrow);
+                return true;
             }
 
             startCooldown(player, 20, true);
         }
+
+        return false;
     }
 
     @Override

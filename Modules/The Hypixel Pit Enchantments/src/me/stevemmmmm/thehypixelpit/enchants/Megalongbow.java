@@ -1,5 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -15,19 +16,21 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Megalongbow extends EnvironmentalEnchant {
+public class Megalongbow extends CustomEnchant {
 
     @EventHandler
     public void onArrowShoot(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player && event.getProjectile() instanceof Arrow) {
-            triggerEnchant(((Player) event.getEntity()).getInventory().getItemInHand(), event.getProjectile(), event.getEntity());
+            executeEnchant(((Player) event.getEntity()).getInventory().getItemInHand(), event);
         }
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        Arrow arrow = (Arrow) args[0];
-        Player player = (Player) args[1];
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        EntityShootBowEvent event = (EntityShootBowEvent) executedEvent;
+
+        Arrow arrow = (Arrow) event.getProjectile();
+        Player player = (Player) event.getEntity();
 
         if (itemHasEnchant(sender, 1, this)) {
             if (isOnCooldown(player)) {
@@ -37,6 +40,7 @@ public class Megalongbow extends EnvironmentalEnchant {
             }
 
             startCooldown(player, 16, false);
+            return true;
         }
 
         if (itemHasEnchant(sender, 2, this)) {
@@ -47,6 +51,7 @@ public class Megalongbow extends EnvironmentalEnchant {
             }
 
             startCooldown(player, 16, false);
+            return true;
         }
 
         if (itemHasEnchant(sender, 3, this)) {
@@ -57,7 +62,10 @@ public class Megalongbow extends EnvironmentalEnchant {
             }
 
             startCooldown(player, 16, false);
+            return true;
         }
+
+        return false;
     }
 
     @Override

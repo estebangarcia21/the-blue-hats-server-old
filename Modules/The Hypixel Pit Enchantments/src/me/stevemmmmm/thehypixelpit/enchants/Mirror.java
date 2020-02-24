@@ -1,5 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,11 +10,11 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Mirror extends EnvironmentalEnchant {
+public class Mirror extends CustomEnchant {
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        return false;
     }
 
     @Override

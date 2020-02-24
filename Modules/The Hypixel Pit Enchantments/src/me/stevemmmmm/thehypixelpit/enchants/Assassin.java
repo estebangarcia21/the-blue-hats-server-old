@@ -1,5 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,33 +18,33 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Assassin extends EnvironmentalEnchant {
+public class Assassin extends CustomEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                Player player = (Player) ((Arrow) event.getDamager()).getShooter();
-
                 if (((Player) event.getEntity()).isSneaking()) {
-                    triggerEnchant(((Player) event.getEntity()).getInventory().getLeggings(), player, event.getEntity());
+                    executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
                 }
             }
         }
 
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
             if (((Player) event.getEntity()).isSneaking()) {
-                triggerEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event.getEntity());
+                executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
             }
         }
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        if (sender == null) return;
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        if (sender == null) return false;
 
-        Player target = (Player) args[0];
-        Player player = (Player) args[1];
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+
+        Player target = DamageManager.getInstance().getDamagerFromDamageEvent(event);
+        Player player = (Player) event.getEntity();
 
         if (itemHasEnchant(sender, 1, this)) {
             if (isOnCooldown(player)) {
@@ -59,6 +61,7 @@ public class Assassin extends EnvironmentalEnchant {
             }
 
             startCooldown(player, 5, true);
+            return true;
         }
 
         if (itemHasEnchant(sender, 2, this)) {
@@ -76,6 +79,7 @@ public class Assassin extends EnvironmentalEnchant {
             }
 
             startCooldown(player, 4, true);
+            return true;
         }
 
         if (itemHasEnchant(sender, 3, this)) {
@@ -93,7 +97,10 @@ public class Assassin extends EnvironmentalEnchant {
             }
 
             startCooldown(player, 3, true);
+            return true;
         }
+
+        return false;
     }
 
     @Override

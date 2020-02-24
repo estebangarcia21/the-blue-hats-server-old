@@ -1,5 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -14,21 +15,22 @@ import java.util.List;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Solitude extends EnvironmentalEnchant {
+public class Solitude extends CustomEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            triggerEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity(), event);
+            executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
         }
     }
 
     @Override
-    public void triggerEnchant(ItemStack sender, Object... args) {
-        if (sender == null) return;
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        if (sender == null) return false;
 
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[1];
-        Player damaged = (Player) args[0];
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+
+        Player damaged = (Player) event.getEntity();
 
         if (itemHasEnchant(sender, 1, this)) {
             List<Entity> entities = damaged.getNearbyEntities(7, 7, 7);
@@ -44,6 +46,7 @@ public class Solitude extends EnvironmentalEnchant {
 
             if (players.size() <= 1) {
                 event.setDamage(event.getDamage() * .60f);
+                return true;
             }
         }
 
@@ -61,6 +64,7 @@ public class Solitude extends EnvironmentalEnchant {
 
             if (players.size() <= 2) {
                 event.setDamage(event.getDamage() * .50f);
+                return true;
             }
         }
 
@@ -78,8 +82,11 @@ public class Solitude extends EnvironmentalEnchant {
 
             if (players.size() <= 2) {
                 event.setDamage(event.getDamage() * .40f);
+                return true;
             }
         }
+
+        return false;
     }
 
     @Override

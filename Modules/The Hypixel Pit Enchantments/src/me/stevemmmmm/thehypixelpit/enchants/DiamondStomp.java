@@ -4,6 +4,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageCalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageEnchant;
 import org.bukkit.ChatColor;
@@ -15,28 +16,19 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-public class DiamondStomp extends DamageEnchant {
+public class DiamondStomp extends CustomEnchant implements DamageEnchant {
+
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            triggerEnchant(((Player) event.getDamager()).getItemInHand(), event);
+            executeEnchant(((Player) event.getDamager()).getItemInHand(), event);
         }
     }
 
     @Override
-    public boolean triggerEnchant(ItemStack sender, EntityDamageByEntityEvent event) {
-        Player damaged = (Player) event.getEntity();
-
-        if (itemHasEnchant(sender, 1, this)) {
-            if (playerHasDiamondPiece(damaged)) event.setDamage(event.getDamage() * 1.07f);
-        }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            if (playerHasDiamondPiece(damaged)) event.setDamage(event.getDamage() * 1.12f);
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            return playerHasDiamondPiece(damaged);
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        if (itemHasEnchant(sender,this)) {
+            return playerHasDiamondPiece((Player) ((EntityDamageByEntityEvent) executedEvent).getEntity());
         }
 
         return false;

@@ -18,22 +18,24 @@ public class Lifesteal extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            enchantWasExecuted(((Player) event.getDamager()).getItemInHand(), event);
+            executeEnchant(((Player) event.getDamager()).getItemInHand(), event);
         }
     }
 
     @Override
-    public boolean enchantWasExecuted(ItemStack sender, Object executedEvent) {
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
 
         Player damager = (Player) event.getDamager();
 
         if (itemHasEnchant(sender, 1, this)) {
             damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, damager) * 0.04f, damager.getMaxHealth()));
+            return true;
         }
 
         if (itemHasEnchant(sender, 2, this)) {
             damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, damager) * 0.08f, damager.getMaxHealth()));
+            return true;
         }
 
         if (itemHasEnchant(sender, 3, this)) {

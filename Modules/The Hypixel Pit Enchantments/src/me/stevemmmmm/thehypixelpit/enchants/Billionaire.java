@@ -23,23 +23,15 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
         //TODO Gold system
 
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            triggerEnchant(((Player) event.getDamager()).getItemInHand(), event);
+            executeEnchant(((Player) event.getDamager()).getItemInHand(), event);
         }
     }
 
     @Override
-    public boolean triggerEnchant(ItemStack sender, EntityDamageByEntityEvent event) {
-        if (itemHasEnchant(sender, 1, this)) {
-            event.setDamage(event.getDamage() * 1.33f);
-            ((Player) event.getDamager()).playSound(event.getDamager().getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
-        }
+    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
 
-        if (itemHasEnchant(sender, 2, this)) {
-            event.setDamage(event.getDamage() * 1.67f);
-            ((Player) event.getDamager()).playSound(event.getDamager().getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
+        if (itemHasEnchant(sender, this)) {
             ((Player) event.getDamager()).playSound(event.getDamager().getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
             return true;
         }
