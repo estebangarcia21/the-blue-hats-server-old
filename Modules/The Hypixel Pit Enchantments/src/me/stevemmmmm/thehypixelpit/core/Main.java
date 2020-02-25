@@ -34,7 +34,7 @@ public class Main extends JavaPlugin {
 
         ConfigAPI.setPlugin(this, "Ranks", "Gold", "XP", "Prestiges", "Levels");
 
-        ConfigAPI.registerConfigReader(GrindingSystem.getInstance());
+        GrindingSystem.getInstance().readConfig();
         ConfigAPI.registerConfigWriter(GrindingSystem.getInstance());
 
         Logger log = Bukkit.getLogger();

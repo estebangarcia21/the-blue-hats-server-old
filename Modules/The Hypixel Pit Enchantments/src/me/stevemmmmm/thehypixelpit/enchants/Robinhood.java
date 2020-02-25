@@ -112,7 +112,10 @@ public class Robinhood extends CustomEnchant {
 
     public void homeArrows(HashMap<Arrow, Integer> arrowTasks, Arrow arrow, Player player) {
         arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
-            List<Entity> closestEntities = arrow.getNearbyEntities(16, 16, 16);
+            List<Entity> closestEntities = player.getNearbyEntities(16, 16, 16);
+
+            if (closestEntities.isEmpty()) closestEntities = arrow.getNearbyEntities(16, 16 ,16);
+
             Player closestPlayer = null;
 
             for (Entity entity : closestEntities) {

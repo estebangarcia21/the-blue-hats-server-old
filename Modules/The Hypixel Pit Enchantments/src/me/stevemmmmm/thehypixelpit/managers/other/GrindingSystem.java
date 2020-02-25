@@ -1,10 +1,8 @@
 package me.stevemmmmm.thehypixelpit.managers.other;
 
 import me.stevemmmmm.configapi.core.ConfigAPI;
-import me.stevemmmmm.configapi.core.ConfigReader;
 import me.stevemmmmm.configapi.core.ConfigWriter;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
-import me.stevemmmmm.thehypixelpit.utils.MapSorter;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -27,7 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
+public class GrindingSystem implements Listener, ConfigWriter {
     private static GrindingSystem instance;
 
     private HashMap<Integer, Integer> xpPerLevel = new HashMap<>();
@@ -416,7 +414,6 @@ public class GrindingSystem implements Listener, ConfigReader, ConfigWriter {
         return new DecimalFormat("###,###,###,##0.00").format(playerGold.get(player.getUniqueId()));
     }
 
-    @Override
     public void readConfig() {
         for (Map.Entry<UUID, String> entry : ConfigAPI.read("Prestiges").entrySet()) {
             playerPrestiges.put(entry.getKey(), Integer.parseInt(entry.getValue()));

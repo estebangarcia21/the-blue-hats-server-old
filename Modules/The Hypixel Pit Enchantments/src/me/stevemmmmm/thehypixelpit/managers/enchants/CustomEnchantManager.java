@@ -56,7 +56,6 @@ public class CustomEnchantManager {
         List<String> enchantLore = enchant.getDescription(level);
 
         if (enchantLore == null) {
-            System.out.println("This enchant does not have a description!");
             return;
         }
 

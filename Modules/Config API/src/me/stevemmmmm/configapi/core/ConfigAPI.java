@@ -19,7 +19,6 @@ public class ConfigAPI extends JavaPlugin {
     private static File file = new File("");
 
     private static ArrayList<ConfigWriter> configWriters = new ArrayList<>();
-    private static ArrayList<ConfigReader> configReaders = new ArrayList<>();
 
     public void onEnable() {
         Logger log = Bukkit.getLogger();
@@ -50,12 +49,6 @@ public class ConfigAPI extends JavaPlugin {
         configWriters.add(writer);
     }
 
-    public static void registerConfigReader(ConfigReader reader) {
-        reader.readConfig();
-        configReaders.add(reader);
-    }
-
-
     public static <T> void write(String dataCategory, HashMap<UUID, T> object) {
         if (!dataCategories.contains(dataCategory)) {
             Bukkit.getLogger().severe("Directory " + dataCategory + " does not exist!");
@@ -69,8 +62,6 @@ public class ConfigAPI extends JavaPlugin {
                 data.add(str);
             }
         }
-
-        //TODO Implement optional data deletion
 
         for (Map.Entry<UUID, T> entry : object.entrySet()) {
             data.add(dataCategory + ":" + entry.getKey().toString() + ":" + entry.getValue().toString());
@@ -93,8 +84,6 @@ public class ConfigAPI extends JavaPlugin {
         for (Map.Entry<UUID, String> entry : read(dataCategory).entrySet()) {
             data.add(entry.getKey() + ":" + entry.getValue());
         }
-
-        //TODO Implement optional data deletion
 
         data.add(player.toString() + ":" + value.toString());
 

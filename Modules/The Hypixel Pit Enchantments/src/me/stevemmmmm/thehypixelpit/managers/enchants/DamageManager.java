@@ -29,8 +29,7 @@ public class DamageManager implements Listener {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            event.setDamage(calculateDamage(event, (Player) event.getDamager()));
-            System.out.println(event.getFinalDamage());
+            event.setDamage(calculateDamage(event, (Player) event.getDamager()) * calculateDamageReduction(event, (Player) event.getDamager()));
         }
 
         //TODO Implement arrows
@@ -108,7 +107,7 @@ public class DamageManager implements Listener {
             }
         }
 
-        return 1;
+        return (1 - percentDamageIncrease) * multiplier;
     }
 
     public Player getDamagerFromDamageEvent(EntityDamageByEntityEvent event) {
