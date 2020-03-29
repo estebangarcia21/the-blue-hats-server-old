@@ -55,8 +55,8 @@ public class CriticallyFunky extends CustomEnchant implements DamageEnchant, Dam
             }
         }
 
-        if (sender == null) return false;
-        if (!isCriticalHit(damager)) return false;
+        if (sender == null || !isCriticalHit(damager)) return false;
+
         if (event.getDamager() instanceof Arrow) {
             Arrow arrow = (Arrow) event.getDamager();
 

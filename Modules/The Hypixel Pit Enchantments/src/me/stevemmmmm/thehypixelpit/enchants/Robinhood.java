@@ -121,8 +121,14 @@ public class Robinhood extends CustomEnchant {
             for (Entity entity : closestEntities) {
                 if (entity instanceof Player) {
                     if (entity != player) {
-                        closestPlayer = (Player) entity;
-                        break;
+                        if (closestPlayer == null) {
+                            closestPlayer = (Player) entity;
+                            continue;
+                        }
+
+                        if (player.getLocation().toVector().distance(entity.getLocation().toVector()) < player.getLocation().toVector().distance(closestPlayer.getLocation().toVector())) {
+                            closestPlayer = (Player) entity;
+                        }
                     }
                 }
             }

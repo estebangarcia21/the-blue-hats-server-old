@@ -4,6 +4,7 @@ import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.utils.SortCustomEnchantByName;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -91,6 +92,7 @@ public class CustomEnchantManager {
     public HashMap<CustomEnchant, Integer> getItemEnchants(ItemStack item) {
         HashMap<CustomEnchant, Integer> enchantsToLevels = new HashMap<>();
 
+        if (item.getType() == Material.AIR) return null;
         if (item.getItemMeta().getLore() == null) return null;
 
         for (String line : item.getItemMeta().getLore()) {

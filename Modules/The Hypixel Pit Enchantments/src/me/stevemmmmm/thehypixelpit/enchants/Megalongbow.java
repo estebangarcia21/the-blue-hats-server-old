@@ -39,7 +39,7 @@ public class Megalongbow extends CustomEnchant {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, 1), true);
             }
 
-            startCooldown(player, 16, false);
+            startCooldown(player, 20, false);
             return true;
         }
 
@@ -50,7 +50,7 @@ public class Megalongbow extends CustomEnchant {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, 2), true);
             }
 
-            startCooldown(player, 16, false);
+            startCooldown(player, 20, false);
             return true;
         }
 
@@ -61,7 +61,7 @@ public class Megalongbow extends CustomEnchant {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, 3), true);
             }
 
-            startCooldown(player, 16, false);
+            startCooldown(player, 20, false);
             return true;
         }
 

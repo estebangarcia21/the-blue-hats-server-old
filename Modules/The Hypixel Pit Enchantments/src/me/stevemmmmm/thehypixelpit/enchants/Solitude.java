@@ -1,6 +1,8 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageReductionEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -15,7 +17,7 @@ import java.util.List;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Solitude extends CustomEnchant {
+public class Solitude extends CustomEnchant implements DamageReductionEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -45,7 +47,7 @@ public class Solitude extends CustomEnchant {
             }
 
             if (players.size() <= 1) {
-                event.setDamage(event.getDamage() * .60f);
+//                event.setDamage(event.getDamage() * .60f);
                 return true;
             }
         }
@@ -63,7 +65,7 @@ public class Solitude extends CustomEnchant {
             }
 
             if (players.size() <= 2) {
-                event.setDamage(event.getDamage() * .50f);
+//                event.setDamage(event.getDamage() * .50f);
                 return true;
             }
         }
@@ -81,7 +83,7 @@ public class Solitude extends CustomEnchant {
             }
 
             if (players.size() <= 2) {
-                event.setDamage(event.getDamage() * .40f);
+//                event.setDamage(event.getDamage() * .40f);
                 return true;
             }
         }
@@ -118,5 +120,15 @@ public class Solitude extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return true;
+    }
+
+    @Override
+    public double[] getPercentReductionPerLevel() {
+        return new double[] { .4, .5, .6 };
+    }
+
+    @Override
+    public CalculationMode getReductionCalculationMode() {
+        return CalculationMode.ADDITIVE;
     }
 }
