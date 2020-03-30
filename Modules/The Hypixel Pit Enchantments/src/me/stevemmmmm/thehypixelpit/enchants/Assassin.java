@@ -2,7 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,21 +19,21 @@ import java.util.ArrayList;
  */
 
 public class Assassin extends CustomEnchant {
-    private EnchantVariable<Integer> cooldownTime = new EnchantVariable<>(5, 4, 3);
+    private LevelVariable<Integer> cooldownTime = new LevelVariable<>(5, 4, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
                 if (((Player) event.getEntity()).isSneaking()) {
-                    tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), DamageManager.getInstance().getDamagerFromDamageEvent(event), event.getEntity());
+                    tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event.getEntity());
                 }
             }
         }
 
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
             if (((Player) event.getEntity()).isSneaking()) {
-                tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), DamageManager.getInstance().getDamagerFromDamageEvent(event), event.getEntity());
+                tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event.getEntity());
             }
         }
     }

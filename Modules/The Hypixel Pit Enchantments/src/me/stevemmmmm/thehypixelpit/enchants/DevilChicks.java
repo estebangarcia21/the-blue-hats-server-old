@@ -7,7 +7,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.animationapi.core.Sequence;
 import me.stevemmmmm.animationapi.core.SequenceAPI;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -22,7 +22,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 
 public class DevilChicks extends CustomEnchant {
-    private EnchantVariable<Integer> amountOfChicks = new EnchantVariable<>(1, 2, 3);
+    private LevelVariable<Integer> amountOfChicks = new LevelVariable<>(1, 2, 3);
 
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {

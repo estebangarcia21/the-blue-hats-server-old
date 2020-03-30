@@ -17,20 +17,20 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class CriticallyFunky extends CustomEnchant implements DamageEnchant, DamageReductionEnchant {
-    private EnchantVariable<Float> damageReduction = new EnchantVariable<>(0.65f, 0.65f, 0.4f);
-    private EnchantVariable<Integer> appliedLevel = new EnchantVariable<>(0, 1, 2);
+    private LevelVariable<Float> damageReduction = new LevelVariable<>(0.65f, 0.65f, 0.4f);
+    private LevelVariable<Integer> appliedLevel = new LevelVariable<>(0, 1, 2);
 
     private HashMap<UUID, Integer> queue = new HashMap<>();
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), DamageManager.getInstance().getDamagerFromDamageEvent(event));
+            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager());
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), DamageManager.getInstance().getDamagerFromDamageEvent(event));
+                tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager());
             }
         }
     }

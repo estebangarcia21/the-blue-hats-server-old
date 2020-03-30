@@ -3,6 +3,8 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -17,13 +19,14 @@ import java.util.ArrayList;
  */
 
 public class Billionaire extends CustomEnchant implements DamageEnchant {
+    private LevelVariable<Double> damageIncrease = new LevelVariable<>(.33, .66, 1D);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         //TODO Gold system
 
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            tryExecutingEnchant(((Player) event.getDamager()).getItemInHand(), event.getDamager());
+            tryExecutingEnchant(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event);
         }
     }
 
@@ -31,6 +34,7 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
     public void applyEnchant(int level, Object... args) {
         Player damager = (Player) args[0];
 
+        DamageManager.getInstance().addDamage((EntityDamageByEntityEvent) args[1], damageIncrease.at(level), CalculationMode.MULTIPLICATIVE);
         damager.playSound(damager.getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
     }
 

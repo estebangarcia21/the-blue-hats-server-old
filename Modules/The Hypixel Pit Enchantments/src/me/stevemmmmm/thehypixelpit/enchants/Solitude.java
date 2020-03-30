@@ -3,13 +3,12 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageReductionEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.List;
  */
 
 public class Solitude extends CustomEnchant implements DamageReductionEnchant {
-    private EnchantVariable<Float> damageReduction = new EnchantVariable<>(.6f, .5f, .4f);
+    private LevelVariable<Float> damageReduction = new LevelVariable<>(.6f, .5f, .4f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

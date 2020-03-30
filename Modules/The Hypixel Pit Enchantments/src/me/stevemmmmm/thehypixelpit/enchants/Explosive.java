@@ -5,7 +5,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 
 public class Explosive extends CustomEnchant {
-    private EnchantVariable<Double> explosionRange = new EnchantVariable<>(1D, 2.5D, 6D);
+    private LevelVariable<Double> explosionRange = new LevelVariable<>(1D, 2.5D, 6D);
 
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {

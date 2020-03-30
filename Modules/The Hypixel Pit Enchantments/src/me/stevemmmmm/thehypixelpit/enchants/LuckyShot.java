@@ -5,7 +5,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class LuckyShot extends CustomEnchant {
-    private EnchantVariable<Integer> percentChance = new EnchantVariable<>(2, 3, 10);
+    private LevelVariable<Integer> percentChance = new LevelVariable<>(2, 3, 10);
 
     @EventHandler
     public void onArrowHit(EntityDamageByEntityEvent event) {

@@ -7,27 +7,33 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
 public class DiamondStomp extends CustomEnchant implements DamageEnchant {
+    private LevelVariable<Double> percentDamageIncrease = new LevelVariable<>(.07, .12, .25);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            tryExecutingEnchant(((Player) event.getDamager()).getItemInHand(), event.getEntity());
+            tryExecutingEnchant(((Player) event.getDamager()).getItemInHand(), event);
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
 
+        if (playerHasDiamondPiece((Player) event.getEntity())) {
+            DamageManager.getInstance().addDamage(event, percentDamageIncrease.at(level), CalculationMode.ADDITIVE);
+        }
     }
 
     @Override

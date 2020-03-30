@@ -2,7 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -22,7 +22,7 @@ import java.util.*;
  */
 
 public class Robinhood extends CustomEnchant {
-    private EnchantVariable<Float> damageReduction = new EnchantVariable<>(.4f, .5f, .6f);
+    private LevelVariable<Float> damageReduction = new LevelVariable<>(.4f, .5f, .6f);
 
     private HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
 
@@ -89,7 +89,7 @@ public class Robinhood extends CustomEnchant {
 
         arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
             List<Entity> closestEntities = player.getNearbyEntities(16, 16, 16);
-            List<Player> closestPlayers = new ArrayList<Player>();
+            List<Player> closestPlayers = new ArrayList<>();
 
             for (Entity entity : closestEntities) {
                 if (entity instanceof Player) {

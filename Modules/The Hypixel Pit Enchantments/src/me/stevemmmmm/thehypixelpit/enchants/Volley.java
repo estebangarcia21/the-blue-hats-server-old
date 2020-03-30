@@ -3,7 +3,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -23,7 +23,7 @@ import java.util.HashMap;
  */
 
 public class Volley extends CustomEnchant {
-    private EnchantVariable<Integer> arrows = new EnchantVariable<>(2, 3, 4);
+    private LevelVariable<Integer> arrows = new LevelVariable<>(2, 3, 4);
 
     private HashMap<Arrow, Integer> volleyTasks = new HashMap<>();
     private HashMap<Arrow, Integer> arrowCount = new HashMap<>();

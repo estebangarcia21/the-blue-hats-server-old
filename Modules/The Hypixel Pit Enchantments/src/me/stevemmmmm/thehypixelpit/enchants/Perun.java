@@ -1,13 +1,12 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
@@ -16,8 +15,8 @@ import java.util.ArrayList;
  */
 
 public class Perun extends CustomEnchant {
-    private EnchantVariable<Integer> perunDamage = new EnchantVariable<>(3, 4, 2);
-    private EnchantVariable<Float> damageReflection = new EnchantVariable<>(0f, .25f, .5f);
+    private LevelVariable<Integer> perunDamage = new LevelVariable<>(3, 4, 2);
+    private LevelVariable<Float> damageReflection = new LevelVariable<>(0f, .25f, .5f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

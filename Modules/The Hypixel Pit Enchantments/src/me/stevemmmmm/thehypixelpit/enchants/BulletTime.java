@@ -5,7 +5,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class BulletTime extends CustomEnchant {
-    private EnchantVariable<Integer> healingAmount = new EnchantVariable<>(0, 2, 3);
+    private LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

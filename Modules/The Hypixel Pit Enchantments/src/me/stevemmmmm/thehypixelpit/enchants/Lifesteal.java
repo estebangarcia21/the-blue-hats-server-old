@@ -6,7 +6,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class Lifesteal extends CustomEnchant {
-    private EnchantVariable<Float> healPercentage = new EnchantVariable<>(0.04f, 0.08f, 0.13f);
+    private LevelVariable<Float> healPercentage = new LevelVariable<>(0.04f, 0.08f, 0.13f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -28,7 +28,7 @@ public class Lifesteal extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player damager = (Player) args[0];
 
-        damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage((EntityDamageByEntityEvent) args[1], damager) * healPercentage.at(level), damager.getMaxHealth()));
+        damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().getDamageFromEvent((EntityDamageByEntityEvent) args[1]) * healPercentage.at(level), damager.getMaxHealth()));
     }
 
     @Override
