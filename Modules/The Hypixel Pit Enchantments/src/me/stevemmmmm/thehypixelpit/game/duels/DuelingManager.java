@@ -1,12 +1,11 @@
 package me.stevemmmmm.thehypixelpit.game.duels;
 
 import javafx.util.Pair;
-import me.stevemmmmm.animationapi.core.Animation;
-import me.stevemmmmm.animationapi.core.AnimationAPI;
-import me.stevemmmmm.animationapi.core.AnimationActions;
+import me.stevemmmmm.animationapi.core.Sequence;
+import me.stevemmmmm.animationapi.core.SequenceAPI;
+import me.stevemmmmm.animationapi.core.SequenceActions;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -75,7 +74,7 @@ public class DuelingManager implements Listener {
         duel.getPlayerA().teleport(new Location(duel.getPlayerA().getWorld(), duel.getPlayerAPos().getX(), duel.getPlayerAPos().getY(), duel.getPlayerAPos().getZ()));
         duel.getPlayerB().teleport(new Location(duel.getPlayerB().getWorld(), duel.getPlayerBPos().getX(), duel.getPlayerBPos().getY(), duel.getPlayerBPos().getZ()));
 
-        AnimationAPI.playAnimation(new Animation() {{
+        SequenceAPI.startSequence(new Sequence() {{
             addKeyFrame(0,() -> {
                 sendTitle(duel.getPlayerA(),ChatColor.RED +"Get Ready!",ChatColor.AQUA + "The duel is starting in" + ChatColor.YELLOW + " 3 " + ChatColor.AQUA + "seconds!");
                 sendTitle(duel.getPlayerB(),ChatColor.RED +"Get Ready!",ChatColor.AQUA + "The duel is starting in" + ChatColor.YELLOW + " 3 " + ChatColor.AQUA + "seconds!");
@@ -96,15 +95,15 @@ public class DuelingManager implements Listener {
                 sendTitle(duel.getPlayerB(),ChatColor.RED +"FIGHT!",ChatColor.AQUA + "Good luck!");
             });
 
-            setAnimationActions(new AnimationActions() {
+            setAnimationActions(new SequenceActions() {
 
                 @Override
-                public void onAnimationStart() {
+                public void onSequenceStart() {
 
                 }
 
                 @Override
-                public void onAnimationEnd() {
+                public void onSequenceEnd() {
 
                 }
             });

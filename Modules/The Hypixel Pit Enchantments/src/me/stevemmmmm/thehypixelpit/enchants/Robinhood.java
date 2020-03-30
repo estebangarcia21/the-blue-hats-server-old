@@ -1,5 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
+import com.google.common.collect.Iterables;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.Bukkit;
@@ -113,8 +114,15 @@ public class Robinhood extends CustomEnchant {
     public void homeArrows(HashMap<Arrow, Integer> arrowTasks, Arrow arrow, Player player) {
         arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
             List<Entity> closestEntities = player.getNearbyEntities(16, 16, 16);
+            List<Player> closestPlayers = new ArrayList<Player>();
 
-            if (closestEntities.isEmpty()) closestEntities = arrow.getNearbyEntities(16, 16 ,16);
+            for (Entity entity : closestEntities) {
+                if (entity instanceof Player) {
+                    closestPlayers.add((Player) entity);
+                }
+            }
+
+            if (closestPlayers.isEmpty()) closestEntities = arrow.getNearbyEntities(16, 16 ,16);
 
             Player closestPlayer = null;
 

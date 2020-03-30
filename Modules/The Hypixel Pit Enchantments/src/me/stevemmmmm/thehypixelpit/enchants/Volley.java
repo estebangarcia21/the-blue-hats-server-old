@@ -2,6 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -23,8 +25,13 @@ public class Volley extends CustomEnchant {
     private HashMap<Arrow, Integer> volleyTasks = new HashMap<>();
     private HashMap<Arrow, Integer> arrowCount = new HashMap<>();
 
+    //Supported volley enchants
     private Robinhood robinhood = new Robinhood();
-    private HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
+    private HashMap<Arrow, Integer> robinhoodArrowTasks = new HashMap<>();
+
+    private DevilChicks devilChicks = new DevilChicks();
+
+    private ArrayList<Arrow> shotArrows = new ArrayList<>();
 
     @EventHandler
     public void onBowShoot(EntityShootBowEvent event) {
@@ -34,6 +41,35 @@ public class Volley extends CustomEnchant {
 
                 executeEnchant(player.getInventory().getItemInHand(), event);
             }
+        }
+    }
+
+    @EventHandler
+    public void onArrowHit(ProjectileHitEvent event) {
+        if (event.getEntity() instanceof Arrow) {
+            Arrow bufferArrow = null;
+
+            for (Arrow shotArrow : shotArrows) {
+                if (shotArrow == event.getEntity()) {
+                    bufferArrow = shotArrow;
+
+                    if (event.getEntity().getShooter() instanceof Player) {
+                        Player player = (Player) event.getEntity().getShooter();
+
+                        ItemStack sender = player.getInventory().getItemInHand();
+
+                        if (itemHasEnchant(sender, 1, devilChicks)) {
+                            devilChicks.spawnDevils(shotArrow.getLocation(), 1);
+                        } else if (itemHasEnchant(sender, 2, devilChicks)) {
+                            devilChicks.spawnDevils(shotArrow.getLocation(), 2);
+                        } else if (itemHasEnchant(sender, 3, devilChicks)) {
+                            devilChicks.spawnDevils(shotArrow.getLocation(), 3);
+                        }
+                    }
+                }
+            }
+
+            if (bufferArrow != null) shotArrows.remove(bufferArrow);
         }
     }
 
@@ -52,7 +88,10 @@ public class Volley extends CustomEnchant {
                 Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
                 volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
-                if (itemHasEnchant(sender, new Robinhood())) robinhood.homeArrows(arrowTasks, volleyArrow, player);
+
+                procSupportedEnchants(sender, volleyArrow, player);
+
+                shotArrows.add(volleyArrow);
 
                 arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
                 if (arrowCount.get(arrow) > 2) {
@@ -60,7 +99,7 @@ public class Volley extends CustomEnchant {
                     volleyTasks.remove(arrow);
                     arrowCount.remove(arrow);
                 }
-            }, 0L, 3L)), 3L);
+            }, 0L, 2L)), 3L);
         }
 
         if (itemHasEnchant(sender, 2, this)) {
@@ -71,7 +110,8 @@ public class Volley extends CustomEnchant {
                 Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
                 volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
-                if (itemHasEnchant(sender, new Robinhood())) robinhood.homeArrows(arrowTasks, volleyArrow, player);
+
+                procSupportedEnchants(sender, volleyArrow, player);
 
                 arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
                 if (arrowCount.get(arrow) > 3) {
@@ -79,7 +119,7 @@ public class Volley extends CustomEnchant {
                     volleyTasks.remove(arrow);
                     arrowCount.remove(arrow);
                 }
-            }, 0L, 3L)), 3L);
+            }, 0L, 2L)), 3L);
         }
 
         if (itemHasEnchant(sender, 3, this)) {
@@ -90,7 +130,8 @@ public class Volley extends CustomEnchant {
                 Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
                 volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
-                if (itemHasEnchant(sender, new Robinhood())) robinhood.homeArrows(arrowTasks, volleyArrow, player);
+
+                procSupportedEnchants(sender, volleyArrow, player);
 
                 arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
                 if (arrowCount.get(arrow) > 4) {
@@ -98,10 +139,14 @@ public class Volley extends CustomEnchant {
                     volleyTasks.remove(arrow);
                     arrowCount.remove(arrow);
                 }
-            }, 0L, 3L)), 3L);
+            }, 0L, 2L)), 3L);
         }
 
         return false;
+    }
+
+    private void procSupportedEnchants(ItemStack sender, Arrow volleyArrow, Player player) {
+        if (itemHasEnchant(sender, robinhood)) robinhood.homeArrows(robinhoodArrowTasks, volleyArrow, player);
     }
 
     @Override

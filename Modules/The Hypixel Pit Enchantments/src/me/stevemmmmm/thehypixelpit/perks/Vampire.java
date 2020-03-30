@@ -14,7 +14,7 @@ public class Vampire extends Perk {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Arrow) {
+        if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
                 Arrow arrow = (Arrow) event.getDamager();
                 Player player = (Player) ((Arrow) event.getDamager()).getShooter();

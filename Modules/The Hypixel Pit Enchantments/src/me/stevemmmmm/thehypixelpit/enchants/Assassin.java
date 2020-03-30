@@ -2,6 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantResults;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;

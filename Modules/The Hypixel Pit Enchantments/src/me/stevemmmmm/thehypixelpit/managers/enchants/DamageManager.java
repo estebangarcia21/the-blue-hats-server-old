@@ -12,12 +12,16 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.HashMap;
+
 /*
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
 public class DamageManager implements Listener {
     private static DamageManager instance;
+
+    private HashMap<EntityDamageByEntityEvent, Float> damageBuffer = new HashMap<>();
 
     private DamageManager() { }
 
@@ -51,6 +55,14 @@ public class DamageManager implements Listener {
         return null;
     }
 
+    public void addDamageToEvent(EntityDamageByEntityEvent event, CalculationMode mode, float value) {
+        if (!damageBuffer.containsKey(event)) {
+            damageBuffer.put(event, 0f);
+        }
+
+
+    }
+
     public boolean isCriticalHit(Player player) {
         return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
     }
@@ -59,7 +71,7 @@ public class DamageManager implements Listener {
         return calculateDamage(event, (Player) event.getDamager()) * calculateDamageReduction(event, (Player) event.getDamager());
     }
 
-    private double calculateDamage(EntityDamageByEntityEvent event, Player player) {
+    public double calculateDamage(EntityDamageByEntityEvent event, Player player) {
         double percentDamageIncrease = 1;
         double multiplier = 1;
 
@@ -110,7 +122,7 @@ public class DamageManager implements Listener {
             }
         }
 
-        return percentDamageIncrease * multiplier * event.getDamage();
+        return percentDamageIncrease * multiplier * event.getDamage() ;
     }
 
     private double calculateDamageReduction(EntityDamageByEntityEvent event, Player player) {
