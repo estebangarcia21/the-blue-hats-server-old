@@ -38,7 +38,7 @@ public class Telebow extends CustomEnchant {
 
                 if (telebowData.containsKey(player.getUniqueId())) {
                     if (itemHasEnchant(telebowData.get(player.getUniqueId()).getBow(), this)) {
-                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) tryExecutingEnchant(telebowData.get(player.getUniqueId()).getBow(), event);
+                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) tryExecutingEnchant(telebowData.get(player.getUniqueId()).getBow(), player, arrow);
                     }
                 }
             }
@@ -60,7 +60,7 @@ public class Telebow extends CustomEnchant {
 
                 if (telebowData.containsKey(player.getUniqueId())) {
                     if (itemHasEnchant(telebowData.get(player.getUniqueId()).getBow(), this)) {
-                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) tryExecutingEnchant(telebowData.get(player.getUniqueId()).getBow(), event);
+                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) tryExecutingEnchant(telebowData.get(player.getUniqueId()).getBow(), player, arrow);
                     }
                 }
             }

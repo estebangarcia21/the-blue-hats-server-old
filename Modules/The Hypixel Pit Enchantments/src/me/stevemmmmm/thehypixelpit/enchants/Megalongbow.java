@@ -31,9 +31,13 @@ public class Megalongbow extends CustomEnchant {
         Arrow arrow = (Arrow) args[0];
         Player player = (Player) args[1];
 
-        arrow.setCritical(true);
-        arrow.setVelocity(player.getLocation().getDirection().multiply(2.90));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, amplifier.at(level)), true);
+        if (isNotOnCooldown(player)) {
+            arrow.setCritical(true);
+            arrow.setVelocity(player.getLocation().getDirection().multiply(2.90));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, amplifier.at(level)), true);
+        }
+
+        setCooldownTime(player, 1, true);
     }
 
     @Override
