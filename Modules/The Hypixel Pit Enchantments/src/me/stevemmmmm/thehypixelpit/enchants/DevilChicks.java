@@ -7,6 +7,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.animationapi.core.Sequence;
 import me.stevemmmmm.animationapi.core.SequenceAPI;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -22,59 +23,23 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 
 public class DevilChicks extends CustomEnchant {
-
-    @EventHandler
-    public void onHit(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
-
-        }
-    }
+    private EnchantVariable<Integer> amountOfChicks = new EnchantVariable<>(1, 2, 3);
 
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow) {
             if (event.getEntity().getShooter() instanceof Player) {
-                executeEnchant(((Player) event.getEntity().getShooter()).getInventory().getItemInHand(), event);
+                tryExecutingEnchant(((Player) event.getEntity().getShooter()).getInventory().getItemInHand(), event.getEntity().getLocation());
             }
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        Arrow arrow = null;
-
-        if (executedEvent instanceof EntityDamageByEntityEvent) {
-            arrow = (Arrow) ((EntityDamageByEntityEvent) executedEvent).getDamager();
-        }
-
-        if (executedEvent instanceof ProjectileHitEvent) {
-            arrow = (Arrow) ((ProjectileHitEvent) executedEvent).getEntity();
-        }
-
-        if (arrow == null) return false;
-
-        if (itemHasEnchant(sender, 1, this)) {
-            spawnDevils(arrow.getLocation(), 1);
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            spawnDevils(arrow.getLocation(), 2);
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            spawnDevils(arrow.getLocation(), 3);
-            return true;
-        }
-
-        return false;
-    }
-
-    public void spawnDevils(Location location, int amountOfChicks) {
+    public void applyEnchant(int level, Object... args) {
+        Location location = (Location) args[0];
         World world = location.getWorld();
 
-        for (int i = 0; i < amountOfChicks; i++) {
+        for (int i = 0; i < amountOfChicks.At(level); i++) {
             Chicken chicken = (Chicken) world.spawnEntity(location, EntityType.CHICKEN);
             chicken.setBaby();
 

@@ -83,13 +83,13 @@ public class DamageManager implements Listener {
                 for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(attackItem).keySet()) {
                     if (enchant instanceof DamageEnchant) {
                         if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.ADDITIVE) {
-                            if (enchant.executeEnchant(attackItem, event)) {
+                            if (enchant.tryExecutingEnchant(attackItem, event)) {
                                 percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
                             }
                         }
 
                         if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.MULTIPLICATIVE) {
-                            if (enchant.executeEnchant(attackItem, event)) {
+                            if (enchant.tryExecutingEnchant(attackItem, event)) {
                                 multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
                             }
                         }
@@ -103,7 +103,7 @@ public class DamageManager implements Listener {
                 for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(pants).keySet()) {
                     if (enchant instanceof DamageEnchant) {
                         if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.ADDITIVE) {
-                            if (enchant.executeEnchant(pants, event)) {
+                            if (enchant.tryExecutingEnchant(pants, event)) {
                                 try {
                                     percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
                                 } catch (NullPointerException e) {
@@ -113,7 +113,7 @@ public class DamageManager implements Listener {
                         }
 
                         if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.MULTIPLICATIVE) {
-                            if (enchant.executeEnchant(pants, event)) {
+                            if (enchant.tryExecutingEnchant(pants, event)) {
                                 multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
                             }
                         }
@@ -143,7 +143,7 @@ public class DamageManager implements Listener {
                 for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(pants).keySet()) {
                     if (enchant instanceof DamageReductionEnchant) {
                         if (((DamageReductionEnchant) enchant).getReductionCalculationMode() == CalculationMode.ADDITIVE) {
-                            if (enchant.executeEnchant(pants, event)) {
+                            if (enchant.tryExecutingEnchant(pants, event)) {
                                 double value = ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(pants).get(enchant) - 1];
 
                                 if (percentDamageIncrease == 0) {
@@ -155,7 +155,7 @@ public class DamageManager implements Listener {
                         }
 
                         if (((DamageReductionEnchant) enchant).getReductionCalculationMode() == CalculationMode.MULTIPLICATIVE) {
-                            if (enchant.executeEnchant(pants, event)) {
+                            if (enchant.tryExecutingEnchant(pants, event)) {
                                 multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(pants).get(enchant) - 1];
                             }
                         }

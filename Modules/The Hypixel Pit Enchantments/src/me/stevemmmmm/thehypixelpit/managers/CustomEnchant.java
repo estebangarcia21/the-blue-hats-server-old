@@ -31,7 +31,16 @@ public abstract class CustomEnchant implements Listener {
     private HashMap<UUID, Long> cooldownTimesHitTimer = new HashMap<>();
     private HashMap<UUID, Integer> cooldownResetTasksHitTimer = new HashMap<>();
 
-    public abstract boolean executeEnchant(ItemStack sender, Object executedEvent);
+    public boolean tryExecutingEnchant(ItemStack source, Object... args) {
+        if (itemHasEnchant(source, this)) {
+            applyEnchant(getEnchantLevel(source, this), args);
+            return true;
+        }
+
+        return false;
+    }
+
+    public abstract void applyEnchant(int level, Object... args);
 
     public abstract String getName();
 
@@ -90,7 +99,7 @@ public abstract class CustomEnchant implements Listener {
         return false;
     }
 
-    public boolean itemHasEnchant(ItemStack item, int level, CustomEnchant enchant) {
+    public boolean itemHasEnchant(ItemStack item, CustomEnchant enchant, int level) {
         if (item == null || item.getType() == Material.AIR) return false;
         if (item.getItemMeta().getLore() == null) return false;
 
@@ -105,6 +114,25 @@ public abstract class CustomEnchant implements Listener {
         }
 
         return lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " " + CustomEnchantManager.getInstance().convertToRomanNumeral(level));
+    }
+
+    public int getEnchantLevel(ItemStack item, CustomEnchant enchant) {
+        if (item == null || item.getType() == Material.AIR) return 0;
+        if (item.getItemMeta().getLore() == null) return 0;
+
+        List<String> lore = item.getItemMeta().getLore();
+
+        String appendRare = "";
+
+        if (enchant.isRareEnchant()) appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
+
+        if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName())) return 1;
+
+        for (int i = 2; i <= 3; i++) {
+            if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " " + CustomEnchantManager.getInstance().convertToRomanNumeral(i))) return i;
+        }
+
+        return 0;
     }
 
     public boolean isOnCooldown(Player player) {
