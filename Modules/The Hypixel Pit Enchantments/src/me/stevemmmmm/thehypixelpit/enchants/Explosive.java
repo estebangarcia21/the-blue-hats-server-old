@@ -5,72 +5,40 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 
 public class Explosive extends CustomEnchant {
+    private EnchantVariable<Double> explosionRange = new EnchantVariable<>(1D, 2.5D, 6D);
 
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow) {
             if (event.getEntity().getShooter() instanceof Player) {
-                executeEnchant(((Player) event.getEntity().getShooter()).getInventory().getItemInHand(), event);
+                tryExecutingEnchant(((Player) event.getEntity().getShooter()).getInventory().getItemInHand(), event.getEntity());
             }
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        ProjectileHitEvent event = (ProjectileHitEvent) executedEvent;
+    public void applyEnchant(int level, Object... args) {
+        Arrow arrow = (Arrow) args[0];
 
-        if (itemHasEnchant(sender, 1, this)) {
-            for (Entity entity : event.getEntity().getNearbyEntities(1, 1, 1)) {
-                if (entity instanceof Player) {
-                    Player player = (Player) entity;
+        for (Entity entity : arrow.getNearbyEntities(explosionRange.at(level), explosionRange.at(level), explosionRange.at(level))) {
+            if (entity instanceof Player) {
+                Player player = (Player) entity;
 
-                    Vector force = player.getLocation().toVector().subtract(event.getEntity().getLocation().toVector()).normalize().multiply(1.25);
-                    player.setVelocity(force);
-                }
+                Vector force = player.getLocation().toVector().subtract(arrow.getLocation().toVector()).normalize().multiply(1.25);
+                player.setVelocity(force);
             }
-
-            return true;
         }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            for (Entity entity : event.getEntity().getNearbyEntities(2.5, 2.5, 2.5)) {
-                if (entity instanceof Player) {
-                    Player player = (Player) entity;
-
-                    Vector force = player.getLocation().toVector().subtract(event.getEntity().getLocation().toVector()).normalize().multiply(1.25);
-                    player.setVelocity(force);
-                }
-            }
-
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            for (Entity entity : event.getEntity().getNearbyEntities(6, 6, 6)) {
-                if (entity instanceof Player) {
-                    Player player = (Player) entity;
-
-                    Vector force = player.getLocation().toVector().subtract(event.getEntity().getLocation().toVector()).normalize().multiply(1.25);
-                    player.setVelocity(force);
-                }
-            }
-
-            return true;
-        }
-
-        return false;
     }
 
     @Override

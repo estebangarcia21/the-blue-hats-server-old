@@ -83,13 +83,13 @@ public class DamageManager implements Listener {
                 for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(attackItem).keySet()) {
                     if (enchant instanceof DamageEnchant) {
                         if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.ADDITIVE) {
-                            if (enchant.tryExecutingEnchant(attackItem, event)) {
+                            if (enchant.tryExecutingEnchant(attackItem, "feedback")) {
                                 percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
                             }
                         }
 
                         if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.MULTIPLICATIVE) {
-                            if (enchant.tryExecutingEnchant(attackItem, event)) {
+                            if (enchant.tryExecutingEnchant(attackItem, "feedback")) {
                                 multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
                             }
                         }
@@ -103,17 +103,17 @@ public class DamageManager implements Listener {
                 for (CustomEnchant enchant : CustomEnchantManager.getInstance().getItemEnchants(pants).keySet()) {
                     if (enchant instanceof DamageEnchant) {
                         if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.ADDITIVE) {
-                            if (enchant.tryExecutingEnchant(pants, event)) {
+                            if (enchant.tryExecutingEnchant(pants, "feedback")) {
                                 try {
                                     percentDamageIncrease += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
                                 } catch (NullPointerException e) {
-                                    System.out.println(enchant.getName() + "hsa caused an error!");
+                                    System.out.println(enchant.getName() + " has caused an error!");
                                 }
                             }
                         }
 
                         if (((DamageEnchant) enchant).getDamageCalculationMode() == CalculationMode.MULTIPLICATIVE) {
-                            if (enchant.tryExecutingEnchant(pants, event)) {
+                            if (enchant.tryExecutingEnchant(pants, "feedback")) {
                                 multiplier += ((DamageEnchant) enchant).getPercentDamageIncreasePerLevel()[CustomEnchantManager.getInstance().getItemEnchants(attackItem).get(enchant) - 1];
                             }
                         }

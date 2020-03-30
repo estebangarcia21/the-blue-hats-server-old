@@ -5,16 +5,17 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
 public class LuckyShot extends CustomEnchant {
+    private EnchantVariable<Integer> percentChance = new EnchantVariable<>(2, 3, 10);
 
     @EventHandler
     public void onArrowHit(EntityDamageByEntityEvent event) {
@@ -24,34 +25,19 @@ public class LuckyShot extends CustomEnchant {
             if (arrow.getShooter() instanceof Player) {
                 Player player = (Player) arrow.getShooter();
 
-                executeEnchant(player.getInventory().getItemInHand(), event);
+                tryExecutingEnchant(player.getInventory().getItemInHand(), event);
             }
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+    public void applyEnchant(int level, Object... args) {
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
 
-        if (itemHasEnchant(sender, 1, this)) {
-            if (percentChance(2)) event.setDamage(event.getDamage() * 4);
-            event.getDamager().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
-            return true;
+        if (percentChance(percentChance.at(level))) {
+            event.setDamage(event.getDamage() * 4);
+            ((Player) ((Arrow) event.getDamager()).getShooter()).sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
         }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            if (percentChance(5)) event.setDamage(event.getDamage() * 4);
-            event.getDamager().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            if (percentChance(10)) event.setDamage(event.getDamage() * 4);
-            event.getDamager().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
-            return true;
-        }
-
-        return false;
     }
 
     @Override

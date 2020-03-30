@@ -2,7 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantResults;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,7 +11,6 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
@@ -20,88 +19,45 @@ import java.util.ArrayList;
  */
 
 public class Assassin extends CustomEnchant {
+    private EnchantVariable<Integer> cooldownTime = new EnchantVariable<>(5, 4, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
                 if (((Player) event.getEntity()).isSneaking()) {
-                    executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
+                    tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), DamageManager.getInstance().getDamagerFromDamageEvent(event), event.getEntity());
                 }
             }
         }
 
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
             if (((Player) event.getEntity()).isSneaking()) {
-                executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
+                tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), DamageManager.getInstance().getDamagerFromDamageEvent(event), event.getEntity());
             }
         }
     }
 
+
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        if (sender == null) return false;
+    public void applyEnchant(int level, Object... args) {
+        Player target = (Player) args[0];
+        Player player = (Player) args[1];
 
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+        if (isNotOnCooldown(player)) {
+            Location tpLoc = target.getLocation().subtract(target.getEyeLocation().getDirection().normalize());
+            tpLoc.setY(target.getLocation().getY());
 
-        Player target = DamageManager.getInstance().getDamagerFromDamageEvent(event);
-        Player player = (Player) event.getEntity();
-
-        if (itemHasEnchant(sender, 1, this)) {
-            if (isOnCooldown(player)) {
-                Location tpLoc = target.getLocation().subtract(target.getEyeLocation().getDirection().normalize());
-                tpLoc.setY(target.getLocation().getY());
-
-                if (tpLoc.getBlock().getType() == Material.AIR) {
-                    player.teleport(tpLoc);
-                } else {
-                    player.teleport(target);
-                }
-
-                player.getWorld().playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 2);
+            if (tpLoc.getBlock().getType() == Material.AIR) {
+                player.teleport(tpLoc);
+            } else {
+                player.teleport(target);
             }
 
-            startCooldown(player, 5, true);
-            return true;
+            player.getWorld().playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 2);
         }
 
-        if (itemHasEnchant(sender, 2, this)) {
-            if (isOnCooldown(player)) {
-                Location tpLoc = target.getLocation().subtract(target.getEyeLocation().getDirection().normalize());
-                tpLoc.setY(target.getLocation().getY());
-
-                if (tpLoc.getBlock().getType() == Material.AIR) {
-                    player.teleport(tpLoc);
-                } else {
-                    player.teleport(target);
-                }
-
-                player.getWorld().playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 2);
-            }
-
-            startCooldown(player, 4, true);
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            if (isOnCooldown(player)) {
-                Location tpLoc = target.getLocation().subtract(target.getEyeLocation().getDirection().normalize());
-                tpLoc.setY(target.getLocation().getY());
-
-                if (tpLoc.getBlock().getType() == Material.AIR) {
-                    player.teleport(tpLoc);
-                } else {
-                    player.teleport(target);
-                }
-
-                player.getWorld().playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 2);
-            }
-
-            startCooldown(player, 3, true);
-            return true;
-        }
-
-        return false;
+        startCooldown(player, cooldownTime.at(level), true);
     }
 
     @Override

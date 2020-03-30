@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,76 +16,33 @@ import java.util.ArrayList;
  */
 
 public class Perun extends CustomEnchant {
+    private EnchantVariable<Integer> perunDamage = new EnchantVariable<>(3, 4, 2);
+    private EnchantVariable<Float> damageReflection = new EnchantVariable<>(0f, .25f, .5f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            executeEnchant(((Player) event.getDamager()).getItemInHand(), event);
+            tryExecutingEnchant(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event.getEntity());
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+    public void applyEnchant(int level, Object... args) {
+        Player damager = (Player) args[0];
+        Player target = (Player) args[1];
 
-        Player player = (Player) event.getDamager();
-        Player damaged = (Player) event.getEntity();
+        int damage = perunDamage.at(level);
 
-        if (itemHasEnchant(sender, 1, this)) {
-            updateHitCount(player);
-
-            if (hasRequiredHits(player, 5)) {
-                lightningStrike(damaged, player, 3, false);
-                return true;
-            }
-        }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            updateHitCount(player);
-
-            if (hasRequiredHits(player, 5)) {
-                lightningStrike(damaged, player, 4, false);
-                return true;
-            }
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            updateHitCount(player);
-
-            if (hasRequiredHits(player, 4)) {
-                lightningStrike(damaged, player, 2, true);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void lightningStrike(Player target, Player damager, int damage, boolean increaseDmgByDiamondArmor) {
-        if (increaseDmgByDiamondArmor) {
+        if (level == 3) {
             if (target.getInventory().getBoots() != null) if (target.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) damage += 2;
             if (target.getInventory().getChestplate() != null) if (target.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) damage += 2;
             if (target.getInventory().getLeggings() != null) if (target.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS) damage += 2;
             if (target.getInventory().getHelmet() != null) if (target.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET) damage += 2;
         }
 
-        target.getWorld().strikeLightningEffect(target.getLocation());
-
-        if (itemHasEnchant(target.getInventory().getLeggings(), 1, new Mirror())) {
-            return;
+        if (itemHasEnchant(target.getInventory().getLeggings(), new Mirror())) {
+            damager.setHealth(Math.max(damager.getHealth() - (damage * damageReflection.at(getEnchantLevel(target.getInventory().getLeggings(), new Mirror()))), 0));
         }
-
-        if (itemHasEnchant(target.getInventory().getLeggings(), 2, new Mirror())) {
-            damager.setHealth(Math.max(damager.getHealth() - (damage * 0.25f), 0));
-            return;
-        }
-
-        if (itemHasEnchant(target.getInventory().getLeggings(), 3, new Mirror())) {
-            damager.setHealth(Math.max(damager.getHealth() - (damage * 0.5f), 0));
-            return;
-        }
-
-        target.setHealth(Math.max(target.getHealth() - damage, 0));
     }
 
     @Override

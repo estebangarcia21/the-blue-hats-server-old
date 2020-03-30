@@ -21,17 +21,13 @@ public class DiamondStomp extends CustomEnchant implements DamageEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            executeEnchant(((Player) event.getDamager()).getItemInHand(), event);
+            tryExecutingEnchant(((Player) event.getDamager()).getItemInHand(), event.getEntity());
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        if (itemHasEnchant(sender,this)) {
-            return playerHasDiamondPiece((Player) ((EntityDamageByEntityEvent) executedEvent).getEntity());
-        }
+    public void applyEnchant(int level, Object... args) {
 
-        return false;
     }
 
     @Override

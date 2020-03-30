@@ -1,12 +1,12 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -17,55 +17,23 @@ import java.util.ArrayList;
  */
 
 public class Megalongbow extends CustomEnchant {
+    private EnchantVariable<Integer> amplifier = new EnchantVariable<>(1, 2, 3);
 
     @EventHandler
     public void onArrowShoot(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player && event.getProjectile() instanceof Arrow) {
-            executeEnchant(((Player) event.getEntity()).getInventory().getItemInHand(), event);
+            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getItemInHand(), event.getProjectile(), event.getEntity());
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        EntityShootBowEvent event = (EntityShootBowEvent) executedEvent;
+    public void applyEnchant(int level, Object... args) {
+        Arrow arrow = (Arrow) args[0];
+        Player player = (Player) args[1];
 
-        Arrow arrow = (Arrow) event.getProjectile();
-        Player player = (Player) event.getEntity();
-
-        if (itemHasEnchant(sender, 1, this)) {
-            if (isOnCooldown(player)) {
-                arrow.setCritical(true);
-                arrow.setVelocity(player.getLocation().getDirection().multiply(2.90));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, 1), true);
-            }
-
-            startCooldown(player, 20, false);
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            if (isOnCooldown(player)) {
-                arrow.setCritical(true);
-                arrow.setVelocity(player.getLocation().getDirection().multiply(2.90));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, 2), true);
-            }
-
-            startCooldown(player, 20, false);
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            if (isOnCooldown(player)) {
-                arrow.setCritical(true);
-                arrow.setVelocity(player.getLocation().getDirection().multiply(2.90));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, 3), true);
-            }
-
-            startCooldown(player, 20, false);
-            return true;
-        }
-
-        return false;
+        arrow.setCritical(true);
+        arrow.setVelocity(player.getLocation().getDirection().multiply(2.90));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, amplifier.at(level)), true);
     }
 
     @Override

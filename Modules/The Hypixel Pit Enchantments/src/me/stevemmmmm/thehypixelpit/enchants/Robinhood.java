@@ -1,8 +1,8 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-import com.google.common.collect.Iterables;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -13,7 +13,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.*;
@@ -23,6 +22,8 @@ import java.util.*;
  */
 
 public class Robinhood extends CustomEnchant {
+    private EnchantVariable<Float> damageReduction = new EnchantVariable<>(.4f, .5f, .6f);
+
     private HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
 
     @EventHandler
@@ -31,7 +32,7 @@ public class Robinhood extends CustomEnchant {
             Arrow arrow = (Arrow) event.getProjectile();
             Player player = (Player) event.getEntity();
 
-            executeEnchant(player.getInventory().getItemInHand(), event);
+            tryExecutingEnchant(player.getInventory().getItemInHand(), arrow, player);
         }
     }
 
@@ -47,16 +48,8 @@ public class Robinhood extends CustomEnchant {
                     if (arrow.getShooter() instanceof Player) {
                         Player player = (Player) arrow.getShooter();
 
-                        if (itemHasEnchant(player.getInventory().getItemInHand(), 1, this)) {
-                            event.setDamage(event.getDamage() * .40f);
-                        }
-
-                        if (itemHasEnchant(player.getInventory().getItemInHand(), 2, this)) {
-                            event.setDamage(event.getDamage() * .50f);
-                        }
-
-                        if (itemHasEnchant(player.getInventory().getItemInHand(), 3, this)) {
-                            event.setDamage(event.getDamage() * .60f);
+                        if (itemHasEnchant(player.getInventory().getItemInHand(), this)) {
+                            event.setDamage(event.getDamage() * damageReduction.at(getEnchantLevel(player.getInventory().getItemInHand(), this)));
                         }
                     }
 
@@ -69,28 +62,6 @@ public class Robinhood extends CustomEnchant {
 
             if (removal != null) arrowTasks.remove(removal);
         }
-    }
-
-    @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        EntityShootBowEvent event = (EntityShootBowEvent) executedEvent;
-
-        Arrow arrow = (Arrow) event.getProjectile();
-        Player player = (Player) event.getEntity();
-
-        if (itemHasEnchant(sender, 1, this)) {
-            homeArrows(arrowTasks, arrow, player);
-        }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            homeArrows(arrowTasks, arrow, player);
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            homeArrows(arrowTasks, arrow, player);
-        }
-
-        return false;
     }
 
     @EventHandler
@@ -111,7 +82,11 @@ public class Robinhood extends CustomEnchant {
         }
     }
 
-    public void homeArrows(HashMap<Arrow, Integer> arrowTasks, Arrow arrow, Player player) {
+    @Override
+    public void applyEnchant(int level, Object... args) {
+        Arrow arrow = (Arrow) args[0];
+        Player player = (Player) args[1];
+
         arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
             List<Entity> closestEntities = player.getNearbyEntities(16, 16, 16);
             List<Player> closestPlayers = new ArrayList<Player>();

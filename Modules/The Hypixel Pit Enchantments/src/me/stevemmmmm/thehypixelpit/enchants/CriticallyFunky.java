@@ -5,82 +5,66 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DamageEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DamageReductionEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class CriticallyFunky extends CustomEnchant implements DamageEnchant, DamageReductionEnchant {
+    private EnchantVariable<Float> damageReduction = new EnchantVariable<>(0.65f, 0.65f, 0.4f);
+    private EnchantVariable<Integer> appliedLevel = new EnchantVariable<>(0, 1, 2);
+
     private HashMap<UUID, Integer> queue = new HashMap<>();
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
+            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), DamageManager.getInstance().getDamagerFromDamageEvent(event));
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
+                tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), DamageManager.getInstance().getDamagerFromDamageEvent(event));
             }
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
-        Player damager = DamageManager.getInstance().getDamagerFromDamageEvent(event);
+    public void applyEnchant(int level, Object... args) {
+        Player damager = (Player) args[0];
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[1];
 
         if (queue.containsKey(damager.getUniqueId())) {
             if (queue.get(damager.getUniqueId()) == 1) {
                 event.setDamage(event.getDamage() * 1.14f);
                 queue.remove(damager.getUniqueId());
-                return false;
             }
 
             if (queue.get(damager.getUniqueId()) == 2) {
                 event.setDamage(event.getDamage() * 1.40f);
                 queue.remove(damager.getUniqueId());
-                return false;
             }
         }
 
-        if (sender == null || !isCriticalHit(damager)) return false;
+        if (!isCriticalHit(damager)) return;
 
         if (event.getDamager() instanceof Arrow) {
             Arrow arrow = (Arrow) event.getDamager();
 
-            if (!arrow.isCritical()) return false;
+            if (!arrow.isCritical()) return;
         }
 
-        if (itemHasEnchant(sender, 1, this)) {
-            event.setDamage(event.getDamage() * 0.65f);
-            return true;
+        if (level != 1) {
+            queue.put(event.getEntity().getUniqueId(), appliedLevel.at(level));
         }
 
-        if (itemHasEnchant(sender, 2, this)) {
-            event.setDamage(event.getDamage() * 0.65f);
-            queue.put(event.getEntity().getUniqueId(), 1);
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            event.setDamage(event.getDamage() * 0.4f);
-            queue.put(event.getEntity().getUniqueId(), 2);
-            return true;
-        }
-
-        return false;
+        event.setDamage(event.getDamage() * damageReduction.at(level));
     }
 
     @Override

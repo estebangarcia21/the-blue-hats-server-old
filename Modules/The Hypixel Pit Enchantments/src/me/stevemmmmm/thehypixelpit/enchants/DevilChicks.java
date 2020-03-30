@@ -13,7 +13,6 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -39,7 +38,7 @@ public class DevilChicks extends CustomEnchant {
         Location location = (Location) args[0];
         World world = location.getWorld();
 
-        for (int i = 0; i < amountOfChicks.At(level); i++) {
+        for (int i = 0; i < amountOfChicks.at(level); i++) {
             Chicken chicken = (Chicken) world.spawnEntity(location, EntityType.CHICKEN);
             chicken.setBaby();
 

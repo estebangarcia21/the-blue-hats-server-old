@@ -12,7 +12,7 @@ public class EnchantVariable<T> {
         this.values = values;
     }
 
-    public T At(int level) {
-        return values[level];
+    public T at(int level) {
+        return values[level - 1];
     }
 }

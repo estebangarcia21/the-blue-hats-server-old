@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.ChatColor;
@@ -20,58 +21,29 @@ import java.util.ArrayList;
  */
 
 public class Stun extends CustomEnchant {
+    private EnchantVariable<Integer> duration = new EnchantVariable<>(10, 20, 30);
+    private EnchantVariable<Integer> hitsNeeded = new EnchantVariable<>(5, 4, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            executeEnchant(((Player) event.getDamager()).getInventory().getItemInHand(), event);
+            tryExecutingEnchant(((Player) event.getDamager()).getInventory().getItemInHand(), event);
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+    public void applyEnchant(int level, Object... args) {
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
 
-        if (itemHasEnchant(sender, 1, this)) {
-            updateHitCount((Player) event.getEntity());
+        updateHitCount((Player) event.getEntity());
 
-            if (hasRequiredHits((Player) event.getEntity(), 5)) {
-                ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10, 8), true);
-                ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 10, -8), true);
-                event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.ANVIL_LAND, 1, 0.1f);
+        if (hasRequiredHits((Player) event.getEntity(), hitsNeeded.at(level))) {
+            ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, duration.at(level), 8), true);
+            ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, duration.at(level), -8), true);
+            event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.ANVIL_LAND, 1, 0.1f);
 
-                sendPackets((Player) event.getEntity());
-                return true;
-            }
+            sendPackets((Player) event.getEntity());
         }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            updateHitCount((Player) event.getEntity());
-
-            if (hasRequiredHits((Player) event.getEntity(), 4)) {
-                ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 8), true);
-                ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20, -8), true);
-                event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.ANVIL_LAND, 1, 0.1f);
-
-                sendPackets((Player) event.getEntity());
-                return true;
-            }
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            updateHitCount((Player) event.getEntity());
-
-            if (hasRequiredHits((Player) event.getEntity(), 4)) {
-                ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30, 8), true);
-                ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, -8), true);
-                event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.ANVIL_LAND, 1, 0.1f);
-
-                sendPackets((Player) event.getEntity());
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private void sendPackets(Player player) {

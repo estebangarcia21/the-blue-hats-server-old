@@ -6,44 +6,29 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
 public class Lifesteal extends CustomEnchant {
+    private EnchantVariable<Float> healPercentage = new EnchantVariable<>(0.04f, 0.08f, 0.13f);
+
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            executeEnchant(((Player) event.getDamager()).getItemInHand(), event);
+            tryExecutingEnchant(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event);
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+    public void applyEnchant(int level, Object... args) {
+        Player damager = (Player) args[0];
 
-        Player damager = (Player) event.getDamager();
-
-        if (itemHasEnchant(sender, 1, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, damager) * 0.04f, damager.getMaxHealth()));
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, damager) * 0.08f, damager.getMaxHealth()));
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage(event, damager) * 0.13f, damager.getMaxHealth()));
-            return true;
-        }
-
-        return false;
+        damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().calculateDamage((EntityDamageByEntityEvent) args[1], damager) * healPercentage.at(level), damager.getMaxHealth()));
     }
 
     @Override

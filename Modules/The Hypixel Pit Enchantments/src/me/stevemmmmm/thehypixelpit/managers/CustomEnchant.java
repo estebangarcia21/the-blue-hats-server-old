@@ -33,6 +33,15 @@ public abstract class CustomEnchant implements Listener {
 
     public boolean tryExecutingEnchant(ItemStack source, Object... args) {
         if (itemHasEnchant(source, this)) {
+            if (args.length > 0) {
+                if (!args[0].equals("feedback")) {
+                    applyEnchant(getEnchantLevel(source, this), args);
+                    return true;
+                }
+
+                return true;
+            }
+
             applyEnchant(getEnchantLevel(source, this), args);
             return true;
         }
@@ -40,7 +49,7 @@ public abstract class CustomEnchant implements Listener {
         return false;
     }
 
-    public abstract void applyEnchant(int level, Object... args);
+    public abstract void applyEnchant(int level, Object... args) ;
 
     public abstract String getName();
 
@@ -135,7 +144,7 @@ public abstract class CustomEnchant implements Listener {
         return 0;
     }
 
-    public boolean isOnCooldown(Player player) {
+    public boolean isNotOnCooldown(Player player) {
         if (!playerIsOnCooldown.containsKey(player.getUniqueId())) playerIsOnCooldown.put(player.getUniqueId(), false);
 
         return !playerIsOnCooldown.get(player.getUniqueId());

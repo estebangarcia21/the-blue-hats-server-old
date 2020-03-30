@@ -5,59 +5,30 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
 public class BulletTime extends CustomEnchant {
-
-    @EventHandler
-    public void onArrowHit(ProjectileHitEvent event) {
-
-    }
+    private EnchantVariable<Integer> healingAmount = new EnchantVariable<>(0, 2, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
-            executeEnchant(((Player) event.getEntity()).getInventory().getItemInHand(), event);
+            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity());
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+    public void applyEnchant(int level, Object... args) {
+        Player hitPlayer = (Player) args[0];
 
-        Player hitPlayer = (Player) event.getEntity();
-        Arrow arrow = (Arrow) event.getDamager();
-
-        if (hitPlayer.isBlocking()) {
-            if (itemHasEnchant(sender, 1, this)) {
-                arrow.remove();
-                event.setCancelled(true);
-                return true;
-            }
-
-            if (itemHasEnchant(sender, 2, this)) {
-                event.setCancelled(true);
-                hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + 2, hitPlayer.getMaxHealth()));
-                return true;
-            }
-
-            if (itemHasEnchant(sender, 3, this)) {
-                event.setCancelled(true);
-                arrow.remove();
-                hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + 3, hitPlayer.getMaxHealth()));
-                return true;
-            }
-        }
-
-        return false;
+        hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + healingAmount.at(level), hitPlayer.getMaxHealth()));
     }
 
     @Override

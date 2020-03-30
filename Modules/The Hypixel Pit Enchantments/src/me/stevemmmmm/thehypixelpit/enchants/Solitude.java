@@ -3,6 +3,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageReductionEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -18,77 +19,34 @@ import java.util.List;
  */
 
 public class Solitude extends CustomEnchant implements DamageReductionEnchant {
+    private EnchantVariable<Float> damageReduction = new EnchantVariable<>(.6f, .5f, .4f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            executeEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event);
+            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity(), event);
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        if (sender == null) return false;
+    public void applyEnchant(int level, Object... args)  {
+        Player damaged = (Player) args[0];
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[1];
 
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+        List<Entity> entities = damaged.getNearbyEntities(7, 7, 7);
+        List<Player> players = new ArrayList<>();
 
-        Player damaged = (Player) event.getEntity();
-
-        if (itemHasEnchant(sender, 1, this)) {
-            List<Entity> entities = damaged.getNearbyEntities(7, 7, 7);
-            List<Player> players = new ArrayList<>();
-
-            for (Entity entity : entities) {
-                if (entity instanceof Player) {
-                    if (entity != damaged) {
-                        players.add((Player) entity);
-                    }
+        for (Entity entity : entities) {
+            if (entity instanceof Player) {
+                if (entity != damaged) {
+                    players.add((Player) entity);
                 }
-            }
-
-            if (players.size() <= 1) {
-//                event.setDamage(event.getDamage() * .60f);
-                return true;
             }
         }
 
-        if (itemHasEnchant(sender, 2, this)) {
-            List<Entity> entities = damaged.getNearbyEntities(7, 7, 7);
-            List<Player> players = new ArrayList<>();
-
-            for (Entity entity : entities) {
-                if (entity instanceof Player) {
-                    if (entity != damaged) {
-                        players.add((Player) entity);
-                    }
-                }
-            }
-
-            if (players.size() <= 2) {
-//                event.setDamage(event.getDamage() * .50f);
-                return true;
-            }
+        if (players.size() <= 2) {
+            event.setDamage(event.getDamage() * damageReduction.at(level));
         }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            List<Entity> entities = damaged.getNearbyEntities(7, 7, 7);
-            List<Player> players = new ArrayList<>();
-
-            for (Entity entity : entities) {
-                if (entity instanceof Player) {
-                    if (entity != damaged) {
-                        players.add((Player) entity);
-                    }
-                }
-            }
-
-            if (players.size() <= 2) {
-//                event.setDamage(event.getDamage() * .40f);
-                return true;
-            }
-        }
-
-        return false;
     }
 
     @Override

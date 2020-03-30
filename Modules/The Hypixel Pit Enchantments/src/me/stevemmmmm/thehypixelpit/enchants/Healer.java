@@ -1,11 +1,11 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
@@ -14,40 +14,22 @@ import java.util.ArrayList;
  */
 
 public class Healer extends CustomEnchant {
+    private EnchantVariable<Integer> healAmount = new EnchantVariable<>(2, 4, 6);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            executeEnchant(((Player) event.getDamager()).getItemInHand(), event);
+            tryExecutingEnchant(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event.getEntity());
         }
     }
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) executedEvent;
+    public void applyEnchant(int level, Object... args) {
+        Player damager = (Player) args[0];
+        Player damaged = (Player) args[1];
 
-        Player damager = (Player) event.getDamager();
-        Player damaged = (Player) event.getEntity();
-
-        if (itemHasEnchant(sender, 1, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + 2, damager.getMaxHealth()));
-            damaged.setHealth(Math.min(damager.getHealth() + 2, damaged.getMaxHealth()));
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 2, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + 4, damager.getMaxHealth()));
-            damaged.setHealth(Math.min(damager.getHealth() + 4, damaged.getMaxHealth()));
-            return true;
-        }
-
-        if (itemHasEnchant(sender, 3, this)) {
-            damager.setHealth(Math.min(damager.getHealth() + 6, damager.getMaxHealth()));
-            damaged.setHealth(Math.min(damager.getHealth() + 6, damaged.getMaxHealth()));
-            return true;
-        }
-
-        return false;
+        damager.setHealth(Math.min(damager.getHealth() + healAmount.at(level), damager.getMaxHealth()));
+        damaged.setHealth(Math.min(damager.getHealth() + healAmount.at(level), damaged.getMaxHealth()));
     }
 
     @Override

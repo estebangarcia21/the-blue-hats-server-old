@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class Mirror extends CustomEnchant {
 
     @Override
-    public boolean executeEnchant(ItemStack sender, Object executedEvent) {
-        return false;
+    public void applyEnchant(int level, Object... args) {
+
     }
 
     @Override
