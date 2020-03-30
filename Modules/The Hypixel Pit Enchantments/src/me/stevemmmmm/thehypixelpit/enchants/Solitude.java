@@ -2,7 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DamageReductionEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
@@ -17,8 +17,9 @@ import java.util.List;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Solitude extends CustomEnchant implements DamageReductionEnchant {
-    private LevelVariable<Float> damageReduction = new LevelVariable<>(.6f, .5f, .4f);
+public class Solitude extends CustomEnchant {
+    private LevelVariable<Float> damageReduction = new LevelVariable<>(.4f, .5f, .6f);
+    private LevelVariable<Integer> playersNeeded = new LevelVariable<>(1, 2, 2);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -43,8 +44,8 @@ public class Solitude extends CustomEnchant implements DamageReductionEnchant {
             }
         }
 
-        if (players.size() <= 2) {
-            event.setDamage(event.getDamage() * damageReduction.at(level));
+        if (players.size() <= playersNeeded.at(level)) {
+            DamageManager.getInstance().reduceDamage(event, damageReduction.at(level));
         }
     }
 
@@ -77,15 +78,5 @@ public class Solitude extends CustomEnchant implements DamageReductionEnchant {
     @Override
     public boolean isRareEnchant() {
         return true;
-    }
-
-    @Override
-    public double[] getPercentReductionPerLevel() {
-        return new double[] { .4, .5, .6 };
-    }
-
-    @Override
-    public CalculationMode getReductionCalculationMode() {
-        return CalculationMode.ADDITIVE;
     }
 }

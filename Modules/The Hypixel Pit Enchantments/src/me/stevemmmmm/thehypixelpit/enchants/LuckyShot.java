@@ -5,6 +5,8 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
@@ -35,7 +37,7 @@ public class LuckyShot extends CustomEnchant {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
 
         if (percentChance(percentChance.at(level))) {
-            event.setDamage(event.getDamage() * 4);
+            DamageManager.getInstance().addDamage(event, 4, CalculationMode.MULTIPLICATIVE);
             ((Player) ((Arrow) event.getDamager()).getShooter()).sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
         }
     }

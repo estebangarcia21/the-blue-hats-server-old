@@ -2,7 +2,6 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DamageEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
@@ -10,7 +9,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
@@ -18,7 +16,7 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Billionaire extends CustomEnchant implements DamageEnchant {
+public class Billionaire extends CustomEnchant {
     private LevelVariable<Double> damageIncrease = new LevelVariable<>(.33, .66, 1D);
 
     @EventHandler
@@ -66,15 +64,5 @@ public class Billionaire extends CustomEnchant implements DamageEnchant {
     @Override
     public boolean isRareEnchant() {
         return true;
-    }
-
-    @Override
-    public double[] getPercentDamageIncreasePerLevel() {
-        return new double[] { .33, .66, 1};
-    }
-
-    @Override
-    public CalculationMode getDamageCalculationMode() {
-        return CalculationMode.MULTIPLICATIVE;
     }
 }

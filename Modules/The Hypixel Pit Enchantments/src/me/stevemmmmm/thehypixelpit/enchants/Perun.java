@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class Perun extends CustomEnchant {
     private LevelVariable<Integer> perunDamage = new LevelVariable<>(3, 4, 2);
-    private LevelVariable<Float> damageReflection = new LevelVariable<>(0f, .25f, .5f);
+    private LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -32,15 +33,18 @@ public class Perun extends CustomEnchant {
 
         int damage = perunDamage.at(level);
 
-        if (level == 3) {
-            if (target.getInventory().getBoots() != null) if (target.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) damage += 2;
-            if (target.getInventory().getChestplate() != null) if (target.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) damage += 2;
-            if (target.getInventory().getLeggings() != null) if (target.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS) damage += 2;
-            if (target.getInventory().getHelmet() != null) if (target.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET) damage += 2;
-        }
+        updateHitCount(damager);
 
-        if (itemHasEnchant(target.getInventory().getLeggings(), new Mirror())) {
-            damager.setHealth(Math.max(damager.getHealth() - (damage * damageReflection.at(getEnchantLevel(target.getInventory().getLeggings(), new Mirror()))), 0));
+        if (hasRequiredHits(damager, hitsNeeded.at(level))) {
+            if (level == 3) {
+                if (target.getInventory().getBoots() != null) if (target.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) damage += 2;
+                if (target.getInventory().getChestplate() != null) if (target.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) damage += 2;
+                if (target.getInventory().getLeggings() != null) if (target.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS) damage += 2;
+                if (target.getInventory().getHelmet() != null) if (target.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET) damage += 2;
+            }
+
+            damager.getWorld().strikeLightningEffect(target.getLocation());
+            DamageManager.getInstance().doTrueDamage(target, damage, damager);
         }
     }
 

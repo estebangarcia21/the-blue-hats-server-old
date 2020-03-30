@@ -89,7 +89,7 @@ public abstract class CustomEnchant implements Listener {
         return percent >= ThreadLocalRandom.current().nextInt(0, 101);
     }
 
-    public boolean itemHasEnchant(ItemStack item, CustomEnchant enchant) {
+    public static boolean itemHasEnchant(ItemStack item, CustomEnchant enchant) {
         if (item == null || item.getType() == Material.AIR) return false;
         if (item.getItemMeta().getLore() == null) return false;
 
@@ -108,7 +108,7 @@ public abstract class CustomEnchant implements Listener {
         return false;
     }
 
-    public boolean itemHasEnchant(ItemStack item, CustomEnchant enchant, int level) {
+    public static boolean itemHasEnchant(ItemStack item, CustomEnchant enchant, int level) {
         if (item == null || item.getType() == Material.AIR) return false;
         if (item.getItemMeta().getLore() == null) return false;
 
@@ -125,7 +125,7 @@ public abstract class CustomEnchant implements Listener {
         return lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " " + CustomEnchantManager.getInstance().convertToRomanNumeral(level));
     }
 
-    public int getEnchantLevel(ItemStack item, CustomEnchant enchant) {
+    public static int getEnchantLevel(ItemStack item, CustomEnchant enchant) {
         if (item == null || item.getType() == Material.AIR) return 0;
         if (item.getItemMeta().getLore() == null) return 0;
 

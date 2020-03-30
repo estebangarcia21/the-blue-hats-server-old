@@ -1,5 +1,7 @@
 package me.stevemmmmm.thehypixelpit.managers.enchants;
 
+import me.stevemmmmm.thehypixelpit.enchants.Mirror;
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -9,7 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /*
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
@@ -23,6 +27,8 @@ public class DamageManager implements Listener {
 
     private HashMap<EntityDamageByEntityEvent, Double> reductionBuffer = new HashMap<>();
 
+    private List<EntityDamageByEntityEvent> removeCriticalDamage = new ArrayList<>();
+
     private DamageManager() { }
 
     public static DamageManager getInstance() {
@@ -33,17 +39,32 @@ public class DamageManager implements Listener {
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onHit(EntityDamageByEntityEvent event) {
+        System.out.println(event.getDamager());
+        System.out.println(reductionBuffer.get(event));
+        System.out.println(additiveDamageBuffer.get(event));
+        System.out.println(multiplicativeDamageBuffer.get(event));
+        System.out.println(getDamageFromEvent(event));
+
         event.setDamage(getDamageFromEvent(event));
 
         additiveDamageBuffer.remove(event);
         multiplicativeDamageBuffer.remove(event);
+        reductionBuffer.remove(event);
+        removeCriticalDamage.remove(event);
     }
 
     public double getDamageFromEvent(EntityDamageByEntityEvent event) {
         if (!additiveDamageBuffer.containsKey(event)) additiveDamageBuffer.put(event, 1D);
         if (!multiplicativeDamageBuffer.containsKey(event)) multiplicativeDamageBuffer.put(event, 1D);
+        if (!reductionBuffer.containsKey(event)) reductionBuffer.put(event, 1D);
 
-        return event.getDamage() * additiveDamageBuffer.get(event) * multiplicativeDamageBuffer.get(event);
+        double damage = event.getDamage() * additiveDamageBuffer.get(event) * multiplicativeDamageBuffer.get(event) * reductionBuffer.get(event);
+
+        if (removeCriticalDamage.contains(event)) {
+            damage *= .667;
+        }
+
+        return damage;
     }
 
     public void addDamage(EntityDamageByEntityEvent event, double value, CalculationMode mode) {
@@ -56,6 +77,39 @@ public class DamageManager implements Listener {
 
         if (mode == CalculationMode.MULTIPLICATIVE) {
             multiplicativeDamageBuffer.put(event, multiplicativeDamageBuffer.get(event) + value);
+        }
+    }
+
+    public void reduceDamage(EntityDamageByEntityEvent event, double value) {
+        if (!reductionBuffer.containsKey(event)) reductionBuffer.put(event, 1D);
+
+        if (reductionBuffer.get(event) == 1) {
+            reductionBuffer.put(event, reductionBuffer.get(event) - (1 - value));
+            return;
+        }
+
+        reductionBuffer.put(event, 1 - reductionBuffer.get(event) * value);
+    }
+
+    public void removeExtraCriticalDamage(EntityDamageByEntityEvent event) {
+        removeCriticalDamage.add(event);
+    }
+
+    public void doTrueDamage(Player target, double damage) {
+        Mirror mirror = new Mirror();
+
+        if (!CustomEnchant.itemHasEnchant(target.getInventory().getLeggings(), mirror)) {
+            target.setHealth(Math.max(0, target.getHealth() - damage));
+        }
+    }
+
+    public void doTrueDamage(Player target, double damage, Player reflectTo) {
+        Mirror mirror = new Mirror();
+
+        if (!CustomEnchant.itemHasEnchant(target.getInventory().getLeggings(), mirror)) {
+            target.setHealth(Math.max(0, target.getHealth() - damage));
+        } else if (CustomEnchant.itemHasEnchant(target.getInventory().getLeggings(), mirror)) {
+            reflectTo.setHealth(Math.max(0, target.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
         }
     }
 

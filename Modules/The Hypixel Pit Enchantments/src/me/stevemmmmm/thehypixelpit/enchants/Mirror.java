@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
  */
 
 public class Mirror extends CustomEnchant {
+    public LevelVariable<Float> damageReflection = new LevelVariable<>(0f, .25f, .5f);
 
     @Override
     public void applyEnchant(int level, Object... args) {

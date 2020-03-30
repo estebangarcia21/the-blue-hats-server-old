@@ -14,57 +14,58 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
-public class CriticallyFunky extends CustomEnchant implements DamageEnchant, DamageReductionEnchant {
-    private LevelVariable<Float> damageReduction = new LevelVariable<>(0.65f, 0.65f, 0.4f);
-    private LevelVariable<Integer> appliedLevel = new LevelVariable<>(0, 1, 2);
+public class CriticallyFunky extends CustomEnchant {
+    private LevelVariable<Float> damageReduction = new LevelVariable<>(0.35f, 0.35f, 0.6f);
+    private LevelVariable<Float> damageIncrease = new LevelVariable<>(0f, .14f, .3f);
 
-    private HashMap<UUID, Integer> queue = new HashMap<>();
+    private List<UUID> queue = new ArrayList<>();
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager());
+            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event);
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager());
+                tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event);
             }
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        Player damager = (Player) args[0];
+        Player damager = null;
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[1];
-
-        if (queue.containsKey(damager.getUniqueId())) {
-            if (queue.get(damager.getUniqueId()) == 1) {
-                event.setDamage(event.getDamage() * 1.14f);
-                queue.remove(damager.getUniqueId());
-            }
-
-            if (queue.get(damager.getUniqueId()) == 2) {
-                event.setDamage(event.getDamage() * 1.40f);
-                queue.remove(damager.getUniqueId());
-            }
-        }
-
-        if (!isCriticalHit(damager)) return;
 
         if (event.getDamager() instanceof Arrow) {
             Arrow arrow = (Arrow) event.getDamager();
 
             if (!arrow.isCritical()) return;
+        } else if (args[0] instanceof Player) {
+            damager = (Player) args[0];
+        }
+
+        if (damager == null) return;
+
+        if (!isCriticalHit(damager)) return;
+
+        if (queue.contains(damager.getUniqueId())) {
+            System.out.println("did more damage to" + damager.getName());
+            DamageManager.getInstance().addDamage(event, damageIncrease.at(level), CalculationMode.ADDITIVE);
+            queue.remove(damager.getUniqueId());
         }
 
         if (level != 1) {
-            queue.put(event.getEntity().getUniqueId(), appliedLevel.at(level));
+            queue.add(event.getEntity().getUniqueId());
         }
 
-        event.setDamage(event.getDamage() * damageReduction.at(level));
+        System.out.println("REduced damage CF");
+        DamageManager.getInstance().reduceDamage(event, damageReduction.at(level));
+        DamageManager.getInstance().removeExtraCriticalDamage(event);
     }
 
     @Override
@@ -97,25 +98,5 @@ public class CriticallyFunky extends CustomEnchant implements DamageEnchant, Dam
     @Override
     public boolean isRareEnchant() {
         return false;
-    }
-
-    @Override
-    public double[] getPercentDamageIncreasePerLevel() {
-        return new double[] { 0, .14, .3 };
-    }
-
-    @Override
-    public double[] getPercentReductionPerLevel() {
-        return new double[] { .4, .5, .6 };
-    }
-
-    @Override
-    public CalculationMode getReductionCalculationMode() {
-        return CalculationMode.ADDITIVE;
-    }
-
-    @Override
-    public CalculationMode getDamageCalculationMode() {
-        return CalculationMode.ADDITIVE;
     }
 }

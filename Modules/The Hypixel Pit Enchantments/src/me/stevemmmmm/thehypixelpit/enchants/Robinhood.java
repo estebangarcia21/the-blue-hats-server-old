@@ -2,6 +2,9 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -49,7 +52,7 @@ public class Robinhood extends CustomEnchant {
                         Player player = (Player) arrow.getShooter();
 
                         if (itemHasEnchant(player.getInventory().getItemInHand(), this)) {
-                            event.setDamage(event.getDamage() * damageReduction.at(getEnchantLevel(player.getInventory().getItemInHand(), this)));
+                            DamageManager.getInstance().addDamage(event, damageReduction.at(getEnchantLevel(player.getInventory().getItemInHand(), this)), CalculationMode.ADDITIVE);
                         }
                     }
 
@@ -86,6 +89,8 @@ public class Robinhood extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Arrow arrow = (Arrow) args[0];
         Player player = (Player) args[1];
+
+        //TODO Volley arrows damage not reduced
 
         arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
             List<Entity> closestEntities = player.getNearbyEntities(16, 16, 16);

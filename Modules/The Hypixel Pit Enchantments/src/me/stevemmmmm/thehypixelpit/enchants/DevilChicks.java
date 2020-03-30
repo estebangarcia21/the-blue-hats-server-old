@@ -7,6 +7,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.animationapi.core.Sequence;
 import me.stevemmmmm.animationapi.core.SequenceAPI;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -55,9 +56,9 @@ public class DevilChicks extends CustomEnchant {
                             if (player.getInventory().getLeggings() != null) {
                                 ItemStack pants = player.getInventory().getLeggings();
 
-                                if (!itemHasEnchant(pants, new Mirror())) player.setHealth(Math.max(0, player.getHealth() - 2.4));
+                                if (!itemHasEnchant(pants, new Mirror())) DamageManager.getInstance().doTrueDamage(player, 2.4, player);
                             } else {
-                                player.setHealth(Math.max(0, player.getHealth() - 2.4));
+                                DamageManager.getInstance().doTrueDamage(player, 2.4, player);
                             }
 
                             createExplosion(player, chicken.getLocation());
