@@ -6,6 +6,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -69,19 +70,11 @@ public class Explosive extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new ArrayList<String>() {{
-            switch (level) {
-                case 1:
-                    add(ChatColor.GRAY + "Arrows go POP! (5s cooldown)");
-                    break;
-                case 2:
-                    add(ChatColor.GRAY + "Arrows go BANG! (3s cooldown).");
-                    break;
-                case 3:
-                    add(ChatColor.GRAY + "Arrows go BOOM! (5s cooldown).");
-                    break;
-            }
-        }};
+        return new DescriptionBuilder()
+                .addParamater("Keywords", "POP", "BANG", "BOOM")
+                .setColor(ChatColor.GRAY)
+                .write("Arrows go ").writeParamater("Keywords", level).write("! (" + cooldownTime.at(level) + "s cooldown)")
+                .build();
     }
 
     @Override
