@@ -26,8 +26,8 @@ public class PitScoreboardManager {
     private HashMap<Integer, Team> tablistSortTeams = new HashMap<>();
 
     private PitScoreboardManager() {
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, this::updateStandardScoreboard, 0L, 20L);
-        createSortedTeams(scoreboard);
+        //Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, this::updateStandardScoreboard, 0L, 50L);
+        //createSortedTeams(scoreboard);
     }
 
     public static PitScoreboardManager getInstance() {
@@ -37,8 +37,8 @@ public class PitScoreboardManager {
     }
 
     public void sort(Player player) {
-        updateStandardScoreboard();
-        tablistSortTeams.get(GrindingSystem.getInstance().getPlayerLevel(player)).addEntry(player.getName());
+        //updateStandardScoreboard();
+        //tablistSortTeams.get(GrindingSystem.getInstance().getPlayerLevel(player)).addEntry(player.getName());
     }
 
     private void updateStandardScoreboard() {
@@ -62,7 +62,7 @@ public class PitScoreboardManager {
             if (CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) index -= 1;
 
             //TODO Dynamic date
-            Score dataAndInstance = objective.getScore(ChatColor.GRAY + "01/26/20 " + ChatColor.DARK_GRAY + "mega13E");
+            Score dataAndInstance = objective.getScore(ChatColor.GRAY + "3/30/2020 " + ChatColor.DARK_GRAY + "mega13E");
             dataAndInstance.setScore(index);
             index--;
 
@@ -109,6 +109,8 @@ public class PitScoreboardManager {
 
             Score serverinfo = objective.getScore(ChatColor.YELLOW + "bluehats.ddns.net");
             serverinfo.setScore(index);
+
+            player.setScoreboard(scoreboard);
         }
     }
 
