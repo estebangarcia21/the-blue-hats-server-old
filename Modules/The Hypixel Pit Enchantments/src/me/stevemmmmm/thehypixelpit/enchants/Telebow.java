@@ -42,6 +42,19 @@ public class Telebow extends CustomEnchant {
                 }
             }
         }
+
+        if (event.getEntity() instanceof Arrow) {
+            Arrow arrow = (Arrow) event.getEntity();
+
+            if (arrow.getShooter() instanceof Player) {
+                Player player = (Player) arrow.getShooter();
+
+                if (itemHasEnchant(player.getInventory().getItemInHand(), this) && getCooldownTime(player) != 0 && player.isSneaking()) {
+                    PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + ChatColor.RED + "Telebow Cooldown: " + getCooldownTime(player) + "(s)" + "\"}"), (byte) 2);
+                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -83,11 +96,6 @@ public class Telebow extends CustomEnchant {
         if (event.getEntity() instanceof Player && event.getProjectile() instanceof Arrow) {
             Player player = (Player) event.getEntity();
             Arrow arrow = (Arrow) event.getProjectile();
-
-            if (itemHasEnchant(player.getInventory().getItemInHand(), this) && getCooldownTime(player) != 0 && player.isSneaking()) {
-                PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + ChatColor.RED + "Telebow Cooldown: " + getCooldownTime(player) + "(s)" + "\"}"), (byte) 2);
-                ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-            }
 
             if (itemHasEnchant(player.getInventory().getItemInHand(), this)) {
                 if (player.isSneaking()) {
