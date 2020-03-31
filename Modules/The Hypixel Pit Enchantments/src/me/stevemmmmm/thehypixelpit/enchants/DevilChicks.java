@@ -29,14 +29,15 @@ public class DevilChicks extends CustomEnchant {
     public void onArrowLand(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow) {
             if (event.getEntity().getShooter() instanceof Player) {
-                tryExecutingEnchant(((Player) event.getEntity().getShooter()).getInventory().getItemInHand(), event.getEntity().getLocation());
+                tryExecutingEnchant(((Player) event.getEntity().getShooter()).getInventory().getItemInHand(), event.getEntity());
             }
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        Location location = (Location) args[0];
+        Arrow arrow = (Arrow) args[0];
+        Location location = arrow.getLocation();
         World world = location.getWorld();
 
         for (int i = 0; i < amountOfChicks.at(level); i++) {
@@ -71,7 +72,7 @@ public class DevilChicks extends CustomEnchant {
                         if (entity instanceof Player) {
                             Player player = (Player) entity;
 
-                            DamageManager.getInstance().doTrueDamage(player, 2.4, player);
+                            DamageManager.getInstance().doTrueDamage(player, 2.4, (Player) arrow.getShooter());
 
                             createExplosion(player, chicken.getLocation());
                         }

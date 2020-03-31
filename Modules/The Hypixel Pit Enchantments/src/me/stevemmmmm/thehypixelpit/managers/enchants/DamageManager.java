@@ -111,13 +111,11 @@ public class DamageManager implements Listener {
             }
         } else if (CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror) != 1) {
             try {
-                reflectTo.setHealth(Math.max(0, target.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
+                reflectTo.setHealth(Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
             } catch (IllegalArgumentException ignored) {
 
             }
 
-            reflectTo.damage(0);
-        } else {
             reflectTo.damage(0);
         }
     }

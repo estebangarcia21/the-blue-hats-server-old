@@ -60,7 +60,7 @@ public class Main extends JavaPlugin {
         getCommand("duel").setExecutor(new DuelCommand());
 
         //Game logic
-        getServer().getPluginManager().registerEvents(new MysticWell(), this);
+        //getServer().getPluginManager().registerEvents(new MysticWell(), this);
         getServer().getPluginManager().registerEvents(DuelingManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(CombatTimer.getInstance(), this);
         getServer().getPluginManager().registerEvents(DamageManager.getInstance(), this);

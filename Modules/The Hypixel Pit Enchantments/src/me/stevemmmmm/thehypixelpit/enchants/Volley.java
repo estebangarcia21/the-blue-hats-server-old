@@ -30,9 +30,6 @@ public class Volley extends CustomEnchant {
 
     //Supported volley enchants
     private Robinhood robinhood = new Robinhood();
-    private DevilChicks devilChicks = new DevilChicks();
-
-    private ArrayList<Arrow> shotArrows = new ArrayList<>();
 
     @EventHandler
     public void onBowShoot(EntityShootBowEvent event) {
@@ -42,31 +39,6 @@ public class Volley extends CustomEnchant {
 
                 tryExecutingEnchant(player.getInventory().getItemInHand(), event.getProjectile(), player);
             }
-        }
-    }
-
-    @EventHandler
-    public void onArrowHit(ProjectileHitEvent event) {
-        if (event.getEntity() instanceof Arrow) {
-            Arrow bufferArrow = null;
-
-            for (Arrow shotArrow : shotArrows) {
-                if (shotArrow == event.getEntity()) {
-                    bufferArrow = shotArrow;
-
-                    if (event.getEntity().getShooter() instanceof Player) {
-                        Player player = (Player) event.getEntity().getShooter();
-
-                        ItemStack sender = player.getInventory().getItemInHand();
-
-                        if (itemHasEnchant(sender, devilChicks)) {
-                            devilChicks.applyEnchant(getEnchantLevel(sender, devilChicks), shotArrow.getLocation());
-                        }
-                    }
-                }
-            }
-
-            if (bufferArrow != null) shotArrows.remove(bufferArrow);
         }
     }
 
@@ -84,8 +56,6 @@ public class Volley extends CustomEnchant {
             Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
             volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
-
-            shotArrows.add(volleyArrow);
 
             for (CustomEnchant customEnchant : CustomEnchantManager.getInstance().getItemEnchants(item).keySet()) {
                 if (customEnchant instanceof Robinhood) {

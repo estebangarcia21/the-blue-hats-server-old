@@ -42,7 +42,7 @@ public class Explosive extends CustomEnchant {
 
                     if (player != shooter) {
                         Vector force = player.getLocation().toVector().subtract(arrow.getLocation().toVector()).normalize().multiply(1.25);
-                        force.setY(.35f);
+                        force.setY(.85f);
 
                         player.setVelocity(force);
                     }

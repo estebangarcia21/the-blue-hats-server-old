@@ -54,7 +54,6 @@ public class CriticallyFunky extends CustomEnchant {
         if (!isCriticalHit(damager)) return;
 
         if (queue.contains(damager.getUniqueId())) {
-            System.out.println("did more damage to" + damager.getName());
             DamageManager.getInstance().addDamage(event, damageIncrease.at(level), CalculationMode.ADDITIVE);
             queue.remove(damager.getUniqueId());
         }
