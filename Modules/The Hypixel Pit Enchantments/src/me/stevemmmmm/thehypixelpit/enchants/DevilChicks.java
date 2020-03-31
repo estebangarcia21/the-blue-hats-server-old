@@ -7,6 +7,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.animationapi.core.Sequence;
 import me.stevemmmmm.animationapi.core.SequenceAPI;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
@@ -15,6 +16,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -22,6 +24,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DevilChicks extends CustomEnchant {
     private LevelVariable<Integer> amountOfChicks = new LevelVariable<>(1, 2, 3);
@@ -30,7 +33,7 @@ public class DevilChicks extends CustomEnchant {
     public void onArrowLand(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow) {
             if (event.getEntity().getShooter() instanceof Player) {
-                tryExecutingEnchant(((Player) event.getEntity().getShooter()).getInventory().getItemInHand(), event.getEntity());
+                tryExecutingEnchant(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getEntity()), event.getEntity());
             }
         }
     }

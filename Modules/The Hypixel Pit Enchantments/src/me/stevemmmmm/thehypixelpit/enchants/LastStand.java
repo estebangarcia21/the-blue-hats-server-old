@@ -49,7 +49,7 @@ public class LastStand extends CustomEnchant {
         final String resistance = level == 1 ? "I" : level == 2 ? "II" : level == 3 ? "III" : "";
 
         return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Gain" + ChatColor.BLUE + "Resistance " + resistance + "(4");
+            add(ChatColor.GRAY + "Gain " + ChatColor.BLUE + "Resistance " + resistance + ChatColor.GRAY + " (4");
             add(ChatColor.GRAY + "seconds) when reaching " + ChatColor.RED + "3❤");
         }};
     }

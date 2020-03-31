@@ -2,6 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Bukkit;
@@ -11,7 +12,6 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -56,6 +56,8 @@ public class Volley extends CustomEnchant {
             Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
             volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
+
+            ArrowManager.getInstance().registerArrow(volleyArrow, item);
 
             for (CustomEnchant customEnchant : CustomEnchantManager.getInstance().getItemEnchants(item).keySet()) {
                 if (customEnchant instanceof Robinhood) {

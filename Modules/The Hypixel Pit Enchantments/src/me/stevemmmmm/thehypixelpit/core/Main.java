@@ -8,6 +8,7 @@ import me.stevemmmmm.thehypixelpit.game.CombatTimer;
 import me.stevemmmmm.thehypixelpit.game.MysticWell;
 import me.stevemmmmm.thehypixelpit.game.duels.DuelingManager;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
@@ -64,6 +65,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(DuelingManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(CombatTimer.getInstance(), this);
         getServer().getPluginManager().registerEvents(DamageManager.getInstance(), this);
+        getServer().getPluginManager().registerEvents(ArrowManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(new LevelChatFormatting(), this);
 
         getServer().getPluginManager().registerEvents(GrindingSystem.getInstance(), this);

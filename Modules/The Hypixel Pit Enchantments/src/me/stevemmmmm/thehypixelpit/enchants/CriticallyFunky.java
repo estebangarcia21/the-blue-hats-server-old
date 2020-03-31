@@ -84,7 +84,7 @@ public class CriticallyFunky extends CustomEnchant {
             add(ChatColor.GRAY + "Critical hits against you deal");
             add(ChatColor.BLUE + data.split(":")[0] + ChatColor.GRAY + " of the damage they");
             add(ChatColor.GRAY + "normally would" + (level != 1 ? "and empower your" : ""));
-            if (level != 0) add(ChatColor.GRAY + "next strike for " + ChatColor.RED + data.split(":")[1] + ChatColor.GRAY + " damage");
+            if (level != 1) add(ChatColor.GRAY + "next strike for " + ChatColor.RED + data.split(":")[1] + ChatColor.GRAY + " damage");
         }};
     }
 
