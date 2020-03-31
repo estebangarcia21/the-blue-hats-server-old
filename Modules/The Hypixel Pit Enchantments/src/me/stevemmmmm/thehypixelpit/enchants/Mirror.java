@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
@@ -31,17 +32,15 @@ public class Mirror extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String percentAmount = level == 1 ? "" : level == 2 ? "25%" : level == 3 ? "50%" : "";
-
-        return new ArrayList<String>() {{
-            if (level == 1) {
-                add(ChatColor.GRAY + "You are immune to true damage");
-            } else {
-                add(ChatColor.GRAY + "You do not take true damage and");
-                add(ChatColor.GRAY + "instead reflect " + ChatColor.YELLOW + percentAmount + ChatColor.GRAY + " of it to");
-                add(ChatColor.GRAY + "your attacker");
-            }
-        }};
+        return new DescriptionBuilder()
+                .addVariable("", "25%", "50%")
+                .setWriteCondition(level == 1)
+                .write("You are immune to true damage")
+                .setWriteCondition(level != 1)
+                .write("You do not take true damage and").nextLine()
+                .write("instead reflect ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" of it to").nextLine()
+                .write("your attacker")
+                .build();
     }
 
     @Override

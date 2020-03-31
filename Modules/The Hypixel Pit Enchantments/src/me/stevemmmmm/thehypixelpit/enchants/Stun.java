@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  */
 
 public class Stun extends CustomEnchant {
-    private LevelVariable<Integer> duration = new LevelVariable<>(10, 20, 30);
+    private LevelVariable<Integer> duration = new LevelVariable<>(10, 16, 30);
     private LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
 
     @EventHandler
@@ -76,13 +77,12 @@ public class Stun extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String strikes = level == 1 ? "fifth" : level == 2 ? "fourth" : level == 3 ? "fourth" : "";
-        final String duration = level == 1 ? "0.5" : level == 2 ? "1.0" : level == 3 ? "1.5" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Every " + ChatColor.YELLOW + strikes + ChatColor.GRAY + " strike on an enemy");
-            add(ChatColor.GRAY + "stuns them for " + duration + " seconds");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("fifth", "fourth", "fourth")
+                .addVariable("0.5", "0.8", "1.5")
+                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetCondition().write(" strike on an enemy").nextLine()
+                .write("stuns them for ").writeVariable(1, level).write(" seconds")
+                .build();
     }
 
     @Override

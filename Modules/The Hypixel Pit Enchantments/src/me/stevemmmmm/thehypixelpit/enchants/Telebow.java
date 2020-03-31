@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.utils.TelebowData;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -131,13 +132,12 @@ public class Telebow extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String sDelay = level == 1 ? "90s" : level == 2 ? "45s" : level == 3 ? "20s" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Sneak to shoot a teleportation");
-            add(ChatColor.GRAY + "arrow (" + sDelay + " cooldown, -3s per bow");
-            add(ChatColor.GRAY + "hit)");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("90s", "45s", "20s")
+                .write("Sneak to shoot a teleportation").nextLine()
+                .write("arrow (").writeVariable(0, level).write(" cooldown, -3 per bow").nextLine()
+                .write("hit)")
+                .build();
     }
 
     @Override

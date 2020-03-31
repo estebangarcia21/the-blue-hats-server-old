@@ -3,6 +3,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
@@ -61,13 +62,12 @@ public class Solitude extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String percent = level == 1 ? "-40%" : level == 2 ? "-50%" : level == 3 ? "-60%" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Receive " + ChatColor.BLUE + percent + ChatColor.GRAY + " damage when two");
-            add(ChatColor.GRAY + "or less players are within 7");
-            add(ChatColor.GRAY + "blocks");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("-40%", "-50%", "-60%")
+                .write("Recieve ").setColor(ChatColor.BLUE).writeVariable(0, level).resetColor().write(" damage when ")
+                .setWriteCondition(level == 1).write("only").nextLine().write("one other player is within 7").nextLine().write("blocks").resetCondition()
+                .setWriteCondition(level != 1).write("two").nextLine().write("or less players are within 7").nextLine().write("blocks")
+                .build();
     }
 
     @Override

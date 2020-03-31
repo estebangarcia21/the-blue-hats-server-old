@@ -6,6 +6,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -43,11 +44,10 @@ public class Lifesteal extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String healAmount = level == 1 ? "4%" : level == 2 ? "8%" : level == 3 ? "13%" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Heal for " + ChatColor.RED + healAmount + ChatColor.GRAY + " of damage dealt");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("4%", "8%", "13%")
+                .write("Heal for ").setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" of damage dealt")
+                .build();
     }
 
     @Override

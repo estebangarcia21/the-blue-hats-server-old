@@ -13,7 +13,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,14 +77,16 @@ public class CriticallyFunky extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String data = level == 1 ? "65%:" : level == 2 ? "65%:14%" : level == 3 ? "40%:30%" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Critical hits against you deal");
-            add(ChatColor.BLUE + data.split(":")[0] + ChatColor.GRAY + " of the damage they");
-            add(ChatColor.GRAY + "normally would" + (level != 1 ? "and empower your" : ""));
-            if (level != 1) add(ChatColor.GRAY + "next strike for " + ChatColor.RED + data.split(":")[1] + ChatColor.GRAY + " damage");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("65%", "65%", "40%")
+                .addVariable("", "14%", "30%")
+                .write("Critical hits against you deal").nextLine()
+                .setColor(ChatColor.BLUE).writeVariable(0, level).resetColor().write(" of the damage they").nextLine()
+                .write("normally would")
+                .setWriteCondition(level != 1)
+                .write(" and empower your").nextLine()
+                .write("next strike for ").setColor(ChatColor.RED).writeVariable(1, level).resetColor().write(" damage")
+                .build();
     }
 
     @Override

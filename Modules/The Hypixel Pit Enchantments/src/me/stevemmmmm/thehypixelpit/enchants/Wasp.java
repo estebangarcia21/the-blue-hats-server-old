@@ -51,7 +51,7 @@ public class Wasp extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new DescriptionBuilder()
-                .declareVariable("II", "III", "IV")
+                .addVariable("II", "III", "IV")
                 .setColor(ChatColor.GRAY).write("Apply ").setColor(ChatColor.RED).write("Weakness ").writeVariable(0, level).setColor(ChatColor.GRAY).write(" (" + duration.at(level) + "s) on hit")
                 .build();
     }

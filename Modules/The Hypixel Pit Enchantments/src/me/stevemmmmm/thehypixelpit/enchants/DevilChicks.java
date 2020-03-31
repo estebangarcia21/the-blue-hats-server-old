@@ -9,6 +9,7 @@ import me.stevemmmmm.animationapi.core.SequenceAPI;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,15 +17,12 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DevilChicks extends CustomEnchant {
     private LevelVariable<Integer> amountOfChicks = new LevelVariable<>(1, 2, 3);
@@ -109,19 +107,11 @@ public class DevilChicks extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new ArrayList<String>() {{
-            switch (level) {
-                case 1:
-                    add(ChatColor.GRAY + "Arrows spawn with explosive chicken.");
-                    break;
-                case 2:
-                    add(ChatColor.GRAY + "Arrows spawn many explosive chickens.");
-                    break;
-                case 3:
-                    add(ChatColor.GRAY + "Arrows spawn too many explosive chickens.");
-                    break;
-            }
-        }};
+        return new DescriptionBuilder()
+                .writeOnlyIf(level == 1, "Arrows spawn with explosive chicken.")
+                .writeOnlyIf(level == 2, "Arrows spawn many explosive chickens.")
+                .writeOnlyIf(level == 3, "Arrows spawn too many explosive chickens.")
+                .build();
     }
 
     @Override

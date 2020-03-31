@@ -4,6 +4,7 @@ import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -86,11 +87,10 @@ public class Volley extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String arrow = level == 1 ? "3" : level == 2 ? "4" : level == 3 ? "5" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Shoot " + ChatColor.WHITE + arrow + " arrows " + ChatColor.GRAY + "at once");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("3", "4", "5")
+                .write("Shoot ").setColor(ChatColor.WHITE).writeVariable(0, level).write(" arrows ").resetCondition().write(" at once")
+                .build();
     }
 
     @Override

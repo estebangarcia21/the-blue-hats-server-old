@@ -7,6 +7,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
@@ -54,12 +55,11 @@ public class LuckyShot extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String percentChance = level == 1 ? "2%" : level == 2 ? "5%" : level == 3 ? "10%" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.YELLOW + percentChance + ChatColor.GRAY + " chance for a shot to deal");
-            add(ChatColor.GRAY + "quadruple damage");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("2%", "5%", "10%")
+                .setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" chance for a shot to deal").nextLine()
+                .write("quadruple damage")
+                .build();
     }
 
     @Override

@@ -5,6 +5,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -46,12 +47,11 @@ public class LastStand extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String resistance = level == 1 ? "I" : level == 2 ? "II" : level == 3 ? "III" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Gain " + ChatColor.BLUE + "Resistance " + resistance + ChatColor.GRAY + " (4");
-            add(ChatColor.GRAY + "seconds) when reaching " + ChatColor.RED + "3❤");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("I", "II", "III")
+                .write("Gain ").setColor(ChatColor.BLUE).write("Resistance ").writeVariable(0, level).resetColor().write(" (4").nextLine()
+                .write("seconds) when reaching ").setColor(ChatColor.RED).write("3❤")
+                .build();
     }
 
     @Override

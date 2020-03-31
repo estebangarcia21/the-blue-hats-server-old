@@ -2,10 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
-import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
+import me.stevemmmmm.thehypixelpit.managers.enchants.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -147,12 +144,11 @@ public class Robinhood extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String dmgAmount = level == 1 ? "40%" : level == 2 ? "50%" : level == 3 ? "60%" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "All your shots are homing but deal");
-            add(ChatColor.RED + dmgAmount + ChatColor.GRAY + " damage");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("40%", "50%", "60%")
+                .write("All your shots are homing but deal").nextLine()
+                .setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" damage")
+                .build();
     }
 
     @Override

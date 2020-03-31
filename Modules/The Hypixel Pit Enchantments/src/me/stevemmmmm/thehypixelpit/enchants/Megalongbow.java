@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
@@ -52,13 +53,12 @@ public class Megalongbow extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String jumpBoost = level == 1 ? "Jump Boost II" : level == 2 ? "Jump Boost III" : level == 3 ? "Jump Boost IV" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "One shot per second, this bow is");
-            add(ChatColor.GRAY + "automatically fully drawn and");
-            add(ChatColor.GRAY + "grants " + ChatColor.GREEN + jumpBoost + ChatColor.GRAY + " (2s)");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("II", "III", "IV")
+                .write("One shot per second, this bow is").nextLine()
+                .write("automatically fully drawn and").nextLine()
+                .write("grants ").setColor(ChatColor.GREEN).write(" Jump Boost").writeVariable(0, level).resetColor().write(" (2s)")
+                .build();
     }
 
     @Override

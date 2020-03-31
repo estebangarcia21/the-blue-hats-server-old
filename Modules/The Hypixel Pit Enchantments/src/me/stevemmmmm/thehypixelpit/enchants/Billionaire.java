@@ -50,7 +50,7 @@ public class Billionaire extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new DescriptionBuilder()
-                .declareVariable("1.33", "1.67", "2")
+                .addVariable("1.33", "1.67", "2")
                 .setColor(ChatColor.GRAY)
                 .write("Hits with this sword deals ").setColor(ChatColor.RED).writeVariable(0, level).write("x").nextLine()
                 .setColor(ChatColor.RED).write("damage ").setColor(ChatColor.GRAY).write("but costs ").setColor(ChatColor.GOLD).write("gold")

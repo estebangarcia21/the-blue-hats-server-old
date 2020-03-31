@@ -7,6 +7,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -47,12 +48,11 @@ public class DiamondStomp extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String damageAmount = level == 1 ? "7%" : level == 2 ? "12%" : level == 3 ? "25%" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Deal " + ChatColor.RED + "+" + damageAmount + ChatColor.GRAY + " damage vs. players");
-            add(ChatColor.GRAY + "wearing diamond armor");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("7%", "12%", "25%")
+                .write("Deal ").setColor(ChatColor.RED).write("+").writeVariable(0, level).resetColor().write(" damage vs. players").nextLine()
+                .write("wearing diamond armor")
+                .build();
     }
 
     @Override

@@ -2,6 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -60,16 +61,18 @@ public class Perun extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String dmgAmount = level == 1 ? "1.5❤" : level == 2 ? "2❤" : level == 3 ? "ext" : "";
-        final String strike = level == 1 ? "fifth" : level == 2 ? "fourth" : level == 3 ? "fourth" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Every " + ChatColor.YELLOW + strike + ChatColor.GRAY + " hit strikes");
-            add(ChatColor.YELLOW + "lightning" + ChatColor.GRAY + " for " + ChatColor.RED + (!dmgAmount.equalsIgnoreCase("ext") ? dmgAmount + ChatColor.GRAY + "." : "1❤ + 1❤"));
-            if (dmgAmount.equalsIgnoreCase("ext")) add(ChatColor.GRAY + "per " + ChatColor.AQUA + "diamond piece" + ChatColor.GRAY + " on your victim");
-            if (dmgAmount.equalsIgnoreCase("ext")) add(ChatColor.GRAY + "victim.");
-            add(ChatColor.GRAY.toString() + ChatColor.ITALIC + "Lightning deals true damage");
-        }};
+        return new DescriptionBuilder()
+                .addVariable("1.5❤", "2❤", "1 + 1❤")
+                .addVariable("fifth", "fourth", "fourth")
+                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(1, level).resetColor().write(" hit strikes").nextLine()
+                .setColor(ChatColor.YELLOW).write("lightning").resetColor().write(" for ").setColor(ChatColor.RED)
+                .writeVariable(0, level).resetColor().writeOnlyIf(level != 3, ".").nextLine()
+                .setWriteCondition(level == 3)
+                .write("per ").setColor(ChatColor.AQUA).write("diamond piece").resetColor().write(" on your victim").nextLine()
+                .write("victim.").nextLine()
+                .resetCondition()
+                .write(ChatColor.ITALIC + "Lightning deals true damage")
+                .build();
     }
 
     @Override

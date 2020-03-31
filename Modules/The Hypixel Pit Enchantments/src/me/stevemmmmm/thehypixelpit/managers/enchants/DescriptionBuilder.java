@@ -12,12 +12,18 @@ import java.util.List;
 
 public class DescriptionBuilder {
     private ArrayList<String> description = new ArrayList<>();
-
     private List<String[]> parameters = new ArrayList<>();
 
+    private boolean condition = true;
     private int lineIndex;
 
-    public DescriptionBuilder declareVariable(String... values) {
+    private ChatColor color = ChatColor.GRAY;
+
+    public DescriptionBuilder() {
+        description.add("");
+    }
+
+    public DescriptionBuilder addVariable(String... values) {
         this.parameters.add(values);
 
         return this;
@@ -25,31 +31,55 @@ public class DescriptionBuilder {
 
     public DescriptionBuilder writeVariable(int id, int level) {
         if (parameters.get(id) != null) {
-            description.set(lineIndex, description.get(lineIndex) + parameters.get(id)[level - 1]);
+            if (condition) description.set(lineIndex, description.get(lineIndex) + parameters.get(id)[level - 1]);
         }
 
         return this;
     }
 
     public DescriptionBuilder nextLine() {
-        lineIndex++;
-        description.add("");
+        if (condition) {
+            lineIndex++;
+            description.add("");
+        }
 
         return this;
     }
 
     public DescriptionBuilder write(String value) {
-        if (description.size() == 0) description.add("");
-
-        description.set(lineIndex, description.get(lineIndex) + value);
+        if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + value);
 
         return this;
     }
 
     public DescriptionBuilder setColor(ChatColor color) {
-        if (description.size() == 0) description.add("");
+        this.color = color;
 
-        description.set(lineIndex, description.get(lineIndex) + color.toString());
+        if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString());
+
+        return this;
+    }
+
+    public DescriptionBuilder resetColor() {
+        this.color = ChatColor.GRAY;
+
+        return this;
+    }
+
+    public DescriptionBuilder writeOnlyIf(boolean condition, String value) {
+        if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + value);
+
+        return this;
+    }
+
+    public DescriptionBuilder setWriteCondition(boolean condition) {
+        this.condition = condition;
+
+        return this;
+    }
+
+    public DescriptionBuilder resetCondition() {
+        condition = true;
 
         return this;
     }
