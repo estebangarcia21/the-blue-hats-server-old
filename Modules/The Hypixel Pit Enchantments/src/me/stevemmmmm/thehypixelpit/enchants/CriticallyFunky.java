@@ -63,7 +63,6 @@ public class CriticallyFunky extends CustomEnchant {
             queue.add(event.getEntity().getUniqueId());
         }
 
-        System.out.println("REduced damage CF");
         DamageManager.getInstance().reduceDamage(event, damageReduction.at(level));
         DamageManager.getInstance().removeExtraCriticalDamage(event);
     }

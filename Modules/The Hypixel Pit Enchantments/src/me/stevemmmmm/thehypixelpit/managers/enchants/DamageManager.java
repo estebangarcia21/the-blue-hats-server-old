@@ -39,12 +39,6 @@ public class DamageManager implements Listener {
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onHit(EntityDamageByEntityEvent event) {
-        System.out.println(event.getDamager());
-        System.out.println(reductionBuffer.get(event));
-        System.out.println(additiveDamageBuffer.get(event));
-        System.out.println(multiplicativeDamageBuffer.get(event));
-        System.out.println(getDamageFromEvent(event));
-
         event.setDamage(getDamageFromEvent(event));
 
         additiveDamageBuffer.remove(event);
@@ -100,16 +94,31 @@ public class DamageManager implements Listener {
 
         if (!CustomEnchant.itemHasEnchant(target.getInventory().getLeggings(), mirror)) {
             target.setHealth(Math.max(0, target.getHealth() - damage));
+            target.damage(0);
         }
     }
 
     public void doTrueDamage(Player target, double damage, Player reflectTo) {
         Mirror mirror = new Mirror();
 
+        target.damage(0);
+
         if (!CustomEnchant.itemHasEnchant(target.getInventory().getLeggings(), mirror)) {
-            target.setHealth(Math.max(0, target.getHealth() - damage));
-        } else if (CustomEnchant.itemHasEnchant(target.getInventory().getLeggings(), mirror)) {
-            reflectTo.setHealth(Math.max(0, target.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
+            try {
+                target.setHealth(Math.max(0, target.getHealth() - damage));
+            } catch (IllegalArgumentException ignored) {
+
+            }
+        } else if (CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror) != 1) {
+            try {
+                reflectTo.setHealth(Math.max(0, target.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
+            } catch (IllegalArgumentException ignored) {
+
+            }
+
+            reflectTo.damage(0);
+        } else {
+            reflectTo.damage(0);
         }
     }
 

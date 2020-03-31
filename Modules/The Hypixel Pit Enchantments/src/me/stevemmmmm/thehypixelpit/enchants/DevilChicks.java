@@ -40,12 +40,30 @@ public class DevilChicks extends CustomEnchant {
         World world = location.getWorld();
 
         for (int i = 0; i < amountOfChicks.at(level); i++) {
-            Chicken chicken = (Chicken) world.spawnEntity(location, EntityType.CHICKEN);
+            Vector direction = new Vector();
+
+            direction.setX(location.getX() + Math.random() - Math.random());
+            direction.setY(location.getY());
+            direction.setZ(location.getZ() + Math.random() - Math.random());
+
+            Chicken chicken = (Chicken) world.spawnEntity(direction.toLocation(location.getWorld()), EntityType.CHICKEN);
             chicken.setBaby();
 
             chicken.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 3, 5));
 
+            float volume = 1.75f;
+
             Sequence soundAnimation = new Sequence() {{
+                addKeyFrame(1, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.6f));
+                addKeyFrame(2, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.7f));
+                addKeyFrame(3, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.8f));
+                addKeyFrame(4, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.9f));
+                addKeyFrame(5, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.0f));
+                addKeyFrame(6, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.1f));
+                addKeyFrame(7, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.2f));
+                addKeyFrame(8, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.3f));
+                addKeyFrame(9, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.4f));
+
                 addKeyFrame(10, () -> {
                     world.playSound(location, Sound.CHICKEN_HURT, 1, 2);
 
@@ -53,18 +71,13 @@ public class DevilChicks extends CustomEnchant {
                         if (entity instanceof Player) {
                             Player player = (Player) entity;
 
-                            if (player.getInventory().getLeggings() != null) {
-                                ItemStack pants = player.getInventory().getLeggings();
-
-                                if (!itemHasEnchant(pants, new Mirror())) DamageManager.getInstance().doTrueDamage(player, 2.4, player);
-                            } else {
-                                DamageManager.getInstance().doTrueDamage(player, 2.4, player);
-                            }
+                            DamageManager.getInstance().doTrueDamage(player, 2.4, player);
 
                             createExplosion(player, chicken.getLocation());
                         }
                     }
 
+                    world.playSound(location, Sound.EXPLODE, volume, 1.6f);
                     chicken.remove();
                 });
             }};

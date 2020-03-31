@@ -6,6 +6,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
+import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 
 public class Explosive extends CustomEnchant {
     private LevelVariable<Double> explosionRange = new LevelVariable<>(1D, 2.5D, 6D);
+    private LevelVariable<Integer> cooldownTime = new LevelVariable<>(3, 3, 5);
+    private LevelVariable<Float> explosionPitch = new LevelVariable<>(2f, 1f, 1.4f);
 
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {
@@ -30,15 +33,26 @@ public class Explosive extends CustomEnchant {
     @Override
     public void applyEnchant(int level, Object... args) {
         Arrow arrow = (Arrow) args[0];
+        Player shooter = (Player) arrow.getShooter();
 
-        for (Entity entity : arrow.getNearbyEntities(explosionRange.at(level), explosionRange.at(level), explosionRange.at(level))) {
-            if (entity instanceof Player) {
-                Player player = (Player) entity;
+        if (isNotOnCooldown(shooter)) {
+            for (Entity entity : arrow.getNearbyEntities(explosionRange.at(level), explosionRange.at(level), explosionRange.at(level))) {
+                if (entity instanceof Player) {
+                    Player player = (Player) entity;
 
-                Vector force = player.getLocation().toVector().subtract(arrow.getLocation().toVector()).normalize().multiply(1.25);
-                player.setVelocity(force);
+                    if (player != shooter) {
+                        Vector force = player.getLocation().toVector().subtract(arrow.getLocation().toVector()).normalize().multiply(1.25);
+                        force.setY(.35f);
+
+                        player.setVelocity(force);
+                    }
+                }
             }
+
+            arrow.getWorld().playSound(arrow.getLocation(), Sound.EXPLODE, 1, explosionPitch.at(level));
         }
+
+        startCooldown(shooter, cooldownTime.at(level), true);
     }
 
     @Override

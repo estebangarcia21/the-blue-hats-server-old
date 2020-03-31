@@ -37,7 +37,7 @@ public class Megalongbow extends CustomEnchant {
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, amplifier.at(level)), true);
         }
 
-        setCooldownTime(player, 1, true);
+        startCooldown(player, 1, true);
     }
 
     @Override
