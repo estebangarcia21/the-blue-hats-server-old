@@ -8,23 +8,24 @@ import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DescriptionBuilder {
     private ArrayList<String> description = new ArrayList<>();
 
-    private HashMap<String, String[]> parameters = new HashMap<>();
+    private List<String[]> parameters = new ArrayList<>();
 
     private int lineIndex;
 
-    public <T> DescriptionBuilder defineVariable(String name, String... parameters) {
-        this.parameters.put(name, parameters);
+    public DescriptionBuilder declareVariable(String... values) {
+        this.parameters.add(values);
 
         return this;
     }
 
-    public DescriptionBuilder writeVariable(String name, int level) {
-        if (parameters.get(name) != null) {
-            description.set(lineIndex, description.get(lineIndex) + parameters.get(name)[level - 1]);
+    public DescriptionBuilder writeVariable(int id, int level) {
+        if (parameters.get(id) != null) {
+            description.set(lineIndex, description.get(lineIndex) + parameters.get(id)[level - 1]);
         }
 
         return this;

@@ -73,11 +73,11 @@ public class Assassin extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new DescriptionBuilder()
-                .defineVariable("Level", "5s", "4s", "3s")
+                .declareVariable("5s", "4s", "3s")
                 .setColor(ChatColor.GRAY)
                 .write("Sneaking teleports you behind").nextLine()
                 .write("your").nextLine()
-                .write("attacker. (").writeVariable("Level", level).write(" cooldown)")
+                .write("attacker. (").writeVariable(0, level).write(" cooldown)")
                 .build();
     }
 

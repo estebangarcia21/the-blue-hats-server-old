@@ -52,10 +52,10 @@ public class BulletTime extends CustomEnchant {
         }
 
         return new DescriptionBuilder()
-                .defineVariable("healthAmount", "", "1❤", "1.5❤")
+                .declareVariable("", "1❤", "1.5❤")
                 .setColor(ChatColor.GRAY).write("Blocking destroys arrows hitting").nextLine()
                 .setColor(ChatColor.GRAY).write("you. Destroying arrows this way").nextLine()
-                .setColor(ChatColor.GRAY).write("heals ").setColor(ChatColor.RED).writeVariable("healthAmount", level)
+                .setColor(ChatColor.GRAY).write("heals ").setColor(ChatColor.RED).writeVariable(0, level)
                 .build();
     }
 
