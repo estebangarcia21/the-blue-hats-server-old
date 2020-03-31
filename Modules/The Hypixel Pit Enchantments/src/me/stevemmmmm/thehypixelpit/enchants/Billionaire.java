@@ -3,6 +3,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  */
 
 public class Billionaire extends CustomEnchant {
-    private LevelVariable<Double> damageIncrease = new LevelVariable<>(.33, .66, 1D);
+    private LevelVariable<Double> damageIncrease = new LevelVariable<>(.33, .67, 1D);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -48,12 +49,12 @@ public class Billionaire extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String dmgAmount = level == 1 ? "1.33" : level == 2 ? "1.67" : level == 3 ? "2" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Hits with this sword deals " + ChatColor.RED + dmgAmount + "x");
-            add(ChatColor.RED + "damage " + ChatColor.GRAY + "but costs " + ChatColor.GOLD + "gold");
-        }};
+        return new DescriptionBuilder()
+                .defineVariable("Dmgamount", "1.33", "1.67", "2")
+                .setColor(ChatColor.GRAY)
+                .write("Hits with this sword deals ").setColor(ChatColor.RED).writeVariable("Dmgamount", level).write("x").nextLine()
+                .setColor(ChatColor.RED).write("damage ").setColor(ChatColor.GRAY).write("but costs ").setColor(ChatColor.GOLD).write("gold")
+                .build();
     }
 
     @Override

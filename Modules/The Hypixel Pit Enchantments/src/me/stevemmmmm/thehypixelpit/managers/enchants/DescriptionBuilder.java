@@ -16,13 +16,13 @@ public class DescriptionBuilder {
 
     private int lineIndex;
 
-    public <T> DescriptionBuilder addParamater(String name, String... parameters) {
+    public <T> DescriptionBuilder defineVariable(String name, String... parameters) {
         this.parameters.put(name, parameters);
 
         return this;
     }
 
-    public DescriptionBuilder writeParamater(String name, int level) {
+    public DescriptionBuilder writeVariable(String name, int level) {
         if (parameters.get(name) != null) {
             description.set(lineIndex, description.get(lineIndex) + parameters.get(name)[level - 1]);
         }

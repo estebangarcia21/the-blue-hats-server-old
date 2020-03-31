@@ -1,7 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -72,13 +72,13 @@ public class Assassin extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        final String cooldown = level == 1 ? "5s" : level == 2 ? "4s" : level == 3 ? "3s" : "";
-
-        return new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Sneaking teleports you behind");
-            add(ChatColor.GRAY + "your");
-            add(ChatColor.GRAY + "attacker. (" + cooldown + " cooldown)");
-        }};
+        return new DescriptionBuilder()
+                .defineVariable("Level", "5s", "4s", "3s")
+                .setColor(ChatColor.GRAY)
+                .write("Sneaking teleports you behind").nextLine()
+                .write("your").nextLine()
+                .write("attacker. (").writeVariable("Level", level).write(" cooldown)")
+                .build();
     }
 
     @Override

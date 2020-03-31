@@ -5,6 +5,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
@@ -12,50 +13,46 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
-public class BulletTime extends CustomEnchant {
-    private LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
+public class Wasp extends CustomEnchant {
+    private LevelVariable<Integer> weaknessAmplifier = new LevelVariable<>(1, 2, 3);
+    private LevelVariable<Integer> duration = new LevelVariable<>(6, 11, 16);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
-            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity());
+            if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
+                tryExecutingEnchant(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getDamager()), event.getEntity());
+            }
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        Player hitPlayer = (Player) args[0];
+        Player hit = (Player) args[0];
 
-        hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + healingAmount.at(level), hitPlayer.getMaxHealth()));
+        hit.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, duration.at(level) * 20, weaknessAmplifier.at(level)), true);
     }
 
     @Override
     public String getName() {
-        return "Bullet Time";
+        return "Wasp";
     }
 
     @Override
     public String getEnchantReferenceName() {
-        return "Bullettime";
+        return "Wasp";
     }
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        if (level == 1) {
-            return new DescriptionBuilder()
-                    .setColor(ChatColor.GRAY).write("Blocking destroys arrows that").nextLine()
-                    .setColor(ChatColor.GRAY).write("hit you")
-                    .build();
-        }
-
         return new DescriptionBuilder()
-                .defineVariable("healthAmount", "", "1❤", "1.5❤")
-                .setColor(ChatColor.GRAY).write("Blocking destroys arrows hitting").nextLine()
-                .setColor(ChatColor.GRAY).write("you. Destroying arrows this way").nextLine()
-                .setColor(ChatColor.GRAY).write("heals ").setColor(ChatColor.RED).writeVariable("healthAmount", level)
+                .defineVariable("Level", "II", "III", "IV")
+                .setColor(ChatColor.GRAY).write("Apply ").setColor(ChatColor.RED).write("Weakness ").writeVariable("Level", level).setColor(ChatColor.GRAY).write(" (" + duration.at(level) + "s) on hit")
                 .build();
     }
 

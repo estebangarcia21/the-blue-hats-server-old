@@ -98,6 +98,7 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new LuckyShot());
         CustomEnchantManager.getInstance().registerEnchant(new DevilChicks());
         CustomEnchantManager.getInstance().registerEnchant(new Explosive());
+        CustomEnchantManager.getInstance().registerEnchant(new Wasp());
 
         //Pants
         CustomEnchantManager.getInstance().registerEnchant(new Mirror());
