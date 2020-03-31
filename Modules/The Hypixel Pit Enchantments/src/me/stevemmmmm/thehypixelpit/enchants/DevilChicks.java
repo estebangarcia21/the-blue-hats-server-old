@@ -9,6 +9,7 @@ import me.stevemmmmm.animationapi.core.SequenceAPI;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -105,9 +106,19 @@ public class DevilChicks extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new ArrayList<String>() {
-            //TODO DC Desc
-        };
+        return new ArrayList<String>() {{
+            switch (level) {
+                case 1:
+                    add(ChatColor.GRAY + "Arrows spawn with explosive chicken.");
+                    break;
+                case 2:
+                    add(ChatColor.GRAY + "Arrows spawn many explosive chickens.");
+                    break;
+                case 3:
+                    add(ChatColor.GRAY + "Arrows spawn too many explosive chickens.");
+                    break;
+            }
+        }};
     }
 
     @Override

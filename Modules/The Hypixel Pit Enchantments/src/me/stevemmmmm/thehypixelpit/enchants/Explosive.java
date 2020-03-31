@@ -6,6 +6,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class Explosive extends CustomEnchant {
     private LevelVariable<Double> explosionRange = new LevelVariable<>(1D, 2.5D, 6D);
-    private LevelVariable<Integer> cooldownTime = new LevelVariable<>(3, 3, 5);
+    private LevelVariable<Integer> cooldownTime = new LevelVariable<>(5, 3, 5);
     private LevelVariable<Float> explosionPitch = new LevelVariable<>(2f, 1f, 1.4f);
 
     @EventHandler
@@ -68,7 +69,17 @@ public class Explosive extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new ArrayList<String>() {{
-
+            switch (level) {
+                case 1:
+                    add(ChatColor.GRAY + "Arrows go POP! (5s cooldown)");
+                    break;
+                case 2:
+                    add(ChatColor.GRAY + "Arrows go BANG! (3s cooldown).");
+                    break;
+                case 3:
+                    add(ChatColor.GRAY + "Arrows go BOOM! (5s cooldown).");
+                    break;
+            }
         }};
     }
 

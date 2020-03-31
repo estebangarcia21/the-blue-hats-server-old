@@ -41,34 +41,43 @@ public class GiveFreshItemCommand implements CommandExecutor {
                     LeatherArmorMeta freshPantsMeta = (LeatherArmorMeta) freshPants.getItemMeta();
 
                     if (object.equalsIgnoreCase("Red")) {
-                        freshPantsMeta.setColor(Color.RED);
+                        freshPantsMeta.setColor(Color.fromRGB(0xFF5555));
 
                         addPantsLore(freshPantsMeta, "Red", ChatColor.RED);
                     }
 
                     if (object.equalsIgnoreCase("Green")) {
-                        freshPantsMeta.setColor(Color.GREEN);
+                        freshPantsMeta.setColor(Color.fromRGB(0x55FF55));
 
                         addPantsLore(freshPantsMeta, "Green", ChatColor.GREEN);
                     }
 
                     if (object.equalsIgnoreCase("Blue")) {
-                        freshPantsMeta.setColor(Color.BLUE);
+                        freshPantsMeta.setColor(Color.fromRGB(0x5555FF));
 
                         addPantsLore(freshPantsMeta, "Blue", ChatColor.BLUE);
                     }
 
                     if (object.equalsIgnoreCase("Yellow")) {
-                        freshPantsMeta.setColor(Color.YELLOW);
+                        freshPantsMeta.setColor(Color.fromRGB(0xFFFF55));
 
                         addPantsLore(freshPantsMeta, "Yellow", ChatColor.YELLOW);
                     }
 
                     if (object.equalsIgnoreCase("Orange")) {
-                        freshPantsMeta.setColor(Color.ORANGE);
+                        freshPantsMeta.setColor(Color.fromRGB(0xFFAA00));
 
                         addPantsLore(freshPantsMeta, "Orange", ChatColor.GOLD);
                     }
+
+                    if (object.equalsIgnoreCase("Dark")) {
+                        freshPantsMeta.setColor(Color.fromRGB(0x000000));
+
+                        addPantsLore(freshPantsMeta, "Dark", ChatColor.DARK_PURPLE);
+                    }
+
+                    //TODO Aqua pants 0x55FFFF
+                    //TODO Sewer pants 0x7DC383
 
                     freshPants.setItemMeta(freshPantsMeta);
 

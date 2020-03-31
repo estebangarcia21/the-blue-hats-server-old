@@ -102,5 +102,6 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new Solitude());
         CustomEnchantManager.getInstance().registerEnchant(new Assassin());
         CustomEnchantManager.getInstance().registerEnchant(new CriticallyFunky());
+        CustomEnchantManager.getInstance().registerEnchant(new LastStand());
     }
 }
