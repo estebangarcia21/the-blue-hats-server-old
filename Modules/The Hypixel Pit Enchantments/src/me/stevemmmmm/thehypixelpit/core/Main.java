@@ -5,6 +5,7 @@ import me.stevemmmmm.thehypixelpit.chat.LevelChatFormatting;
 import me.stevemmmmm.thehypixelpit.commands.*;
 import me.stevemmmmm.thehypixelpit.enchants.*;
 import me.stevemmmmm.thehypixelpit.game.CombatTimer;
+import me.stevemmmmm.thehypixelpit.game.DamageIndicator;
 import me.stevemmmmm.thehypixelpit.game.MysticWell;
 import me.stevemmmmm.thehypixelpit.game.duels.DuelingManager;
 import me.stevemmmmm.thehypixelpit.game.duels.GameUtility;
@@ -13,6 +14,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
+import me.stevemmmmm.thehypixelpit.managers.other.PitScoreboardManager;
 import me.stevemmmmm.thehypixelpit.perks.Vampire;
 import me.stevemmmmm.thehypixelpit.world.AntiFall;
 import me.stevemmmmm.thehypixelpit.world.AutoRespawn;
@@ -67,7 +69,9 @@ public class Main extends JavaPlugin {
 
         //Game logic
         //getServer().getPluginManager().registerEvents(new MysticWell(), this);
+        getServer().getPluginManager().registerEvents(PitScoreboardManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(DuelingManager.getInstance(), this);
+        getServer().getPluginManager().registerEvents(DamageIndicator.getInstance(), this);
         getServer().getPluginManager().registerEvents(CombatTimer.getInstance(), this);
         getServer().getPluginManager().registerEvents(DamageManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(ArrowManager.getInstance(), this);

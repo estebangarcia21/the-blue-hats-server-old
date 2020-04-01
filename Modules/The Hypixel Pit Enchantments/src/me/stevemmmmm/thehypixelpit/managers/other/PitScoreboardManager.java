@@ -1,14 +1,28 @@
 package me.stevemmmmm.thehypixelpit.managers.other;
 
+import com.mojang.authlib.GameProfile;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.game.CombatTimer;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.util.CraftChatMessage;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scoreboard.*;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -19,17 +33,8 @@ import java.util.UUID;
 public class PitScoreboardManager implements Listener {
     private static PitScoreboardManager instance;
 
-    private ScoreboardManager manager = Bukkit.getScoreboardManager();
-    private Scoreboard scoreboard = manager.getNewScoreboard();
-
-    private HashMap<UUID, String> playerObjectives = new HashMap<>();
-
-    private HashMap<Integer, Team> tablistSortTeams = new HashMap<>();
-
-    private PitScoreboardManager() {
-        //Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, this::updateStandardScoreboard, 0L, 50L);
-        //createSortedTeams(scoreboard);
-    }
+    private HashMap<UUID, Integer> scoreboardTasks = new HashMap<>();
+    private HashMap<UUID, Team> teams = new HashMap<>();
 
     public static PitScoreboardManager getInstance() {
         if (instance == null) instance = new PitScoreboardManager();
@@ -37,110 +42,92 @@ public class PitScoreboardManager implements Listener {
         return instance;
     }
 
-    public void sort(Player player) {
-        //updateStandardScoreboard();
-        //tablistSortTeams.get(GrindingSystem.getInstance().getPlayerLevel(player)).addEntry(player.getName());
-    }
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
 
-    private void updateScoreboard() {
-        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            Scoreboard board = scoreboard;
-
-            Objective objective = null;
-
-            if (playerObjectives.containsKey(player.getUniqueId())) {
-                objective = board.getObjective(playerObjectives.get(player.getUniqueId()));
-            } else {
-                objective = board.registerNewObjective(player.getName(), "dummy");
-                playerObjectives.put(player.getUniqueId(), objective.getName());
-            }
-
-            objective.setDisplayName(ChatColor.YELLOW.toString() + ChatColor.BOLD + "THE HYPIXEL PIT");
-            objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-            int index = 11;
-
-            if (CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) index -= 1;
-
-            //TODO Dynamic date
-            Score dataAndInstance = objective.getScore(ChatColor.GRAY + "3/30/2020 " + ChatColor.DARK_GRAY + "mega13E");
-            dataAndInstance.setScore(index);
-            index--;
-
-            Score space1 = objective.getScore(" ");
-            space1.setScore(index);
-            index--;
-
-            if (!CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) {
-                Score prestige = objective.getScore(ChatColor.WHITE + "Prestige: " + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)));
-                prestige.setScore(index);
-                index--;
-            }
-
-            Score level = objective.getScore(ChatColor.WHITE + "Level: " + GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player));
-            level.setScore(index);
-            index--;
-
-            Score xp = objective.getScore(ChatColor.WHITE + "XP: " + ChatColor.AQUA + "MAXED!");
-            xp.setScore(index);
-            index--;
-
-            Score space2 = objective.getScore("  ");
-            space2.setScore(index);
-            index--;
-
-            Score gold = objective.getScore(ChatColor.WHITE + "Gold: " + ChatColor.GOLD + GrindingSystem.getInstance().getFormattedPlayerGold(player));
-            gold.setScore(index);
-            index--;
-
-            Score space3 = objective.getScore("   ");
-            space3.setScore(index);
-            index--;
-
-            //TODO Get status w/ combat timer and change color accordingly
-            Score status = objective.getScore(ChatColor.WHITE + "Status: " + (!CombatTimer.getInstance().playerIsInCombat(player) ? ChatColor.GREEN + "Idling" : ChatColor.RED + "Fighting " + ChatColor.GRAY + "(" + CombatTimer.getInstance().getCombatTime(player) + ")"));
-            status.setScore(index);
-            index--;
-
-            //TODO If player has bounty... add line
-
-            Score space4 = objective.getScore("    ");
-            space4.setScore(index);
-            index--;
-
-            Score serverinfo = objective.getScore(ChatColor.YELLOW + "bluehats.ddns.net");
-            serverinfo.setScore(index);
-
-            player.setScoreboard(scoreboard);
+        if (!scoreboardTasks.containsKey(player.getUniqueId())) {
+            scoreboardTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> updateScoreboard(player), 0L, 20L));
         }
     }
 
-    private void createSortedTeams(Scoreboard board) {
-        int index = 0;
+    private void updateScoreboard(Player player) {
+        Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
+        Objective objective = board.registerNewObjective("test", "dummy");
 
-        String alphabet = "zyxwvutsrqponmlkjihgfedcba";
+        objective.setDisplayName(ChatColor.YELLOW.toString() + ChatColor.BOLD + "THE BLUE HATS PIT");
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        for (int i = 120; i >= 0; i--) {
-            String sortingCharachter = "";
+        int index = 11;
 
-            if (index < 10) {
-                sortingCharachter = "6" + alphabet.split("")[index].toUpperCase();
-            } else if (index < 36) {
-                sortingCharachter = "5" + alphabet.split("")[index - 10].toUpperCase();
-            } else if (index < 62) {
-                sortingCharachter = "4" + alphabet.split("")[index - 36].toUpperCase();
-            } else if (index < 88) {
-                sortingCharachter = "3" + alphabet.split("")[index - (26 * 2) - 10].toUpperCase();
-            } else if (index < 114) {
-                sortingCharachter = "2" + alphabet.split("")[index - (26 * 3) - 10].toUpperCase();
-            } else if (index < 130) {
-                sortingCharachter = "1" + alphabet.split("")[index - (26 * 4) - 10].toUpperCase();
-            }
+        if (CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) index -= 1;
 
-            Team team = board.registerNewTeam(sortingCharachter + "TabList");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = new Date();
 
-            tablistSortTeams.put(index, team);
-            index++;
+        Score dataAndInstance = objective.getScore(ChatColor.GRAY + simpleDateFormat.format(date) + ChatColor.DARK_GRAY + " mega69L");
+        dataAndInstance.setScore(index);
+        index--;
+
+        Score space1 = objective.getScore(" ");
+        space1.setScore(index);
+        index--;
+
+        if (!CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) {
+            Score prestige = objective.getScore(ChatColor.WHITE + "Prestige: " + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)));
+            prestige.setScore(index);
+            index--;
         }
+
+        Score level = objective.getScore(ChatColor.WHITE + "Level: " + GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player));
+        level.setScore(index);
+        index--;
+
+        Score xp = objective.getScore(ChatColor.WHITE + "XP: " + ChatColor.AQUA + "MAXED!");
+        xp.setScore(index);
+        index--;
+
+        Score space2 = objective.getScore("  ");
+        space2.setScore(index);
+        index--;
+
+        Score gold = objective.getScore(ChatColor.WHITE + "Gold: " + ChatColor.GOLD + GrindingSystem.getInstance().getFormattedPlayerGold(player));
+        gold.setScore(index);
+        index--;
+
+        Score space3 = objective.getScore("   ");
+        space3.setScore(index);
+        index--;
+
+        //TODO Get status w/ combat timer and change color accordingly
+        Score status = objective.getScore(ChatColor.WHITE + "Status: " + (!CombatTimer.getInstance().playerIsInCombat(player) ? ChatColor.GREEN + "Idling" : ChatColor.RED + "Fighting " + ChatColor.GRAY + "(" + CombatTimer.getInstance().getCombatTime(player) + ")"));
+        status.setScore(index);
+        index--;
+
+        //TODO If player has bounty... add line
+
+        Score space4 = objective.getScore("    ");
+        space4.setScore(index);
+        index--;
+
+        Score serverinfo = objective.getScore(ChatColor.YELLOW + "bluehats.ddns.net");
+        serverinfo.setScore(index);
+
+        updateNametag(player, board);
+
+        player.setScoreboard(board);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void updateNametag(Player player, Scoreboard board) {
+        if (teams.get(player.getUniqueId()) == null) {
+            teams.put(player.getUniqueId(), board.registerNewTeam(player.getName()));
+        }
+
+        Team team = teams.get(player.getUniqueId());
+        team.setPrefix(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + " " + ChatColor.GOLD);
+        team.setDisplayName("XD");
+
+        team.addPlayer(player);
     }
 }

@@ -14,9 +14,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+@SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {
-    @SuppressWarnings("all")
-    private final String update = "Added /giveprot command!";
+    private final String update = "Fixed a minor bug in the damage indicator!";
+    private final String testMessage = "Working on the damage indicator!";
+    private final boolean isTesting = false;
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
@@ -24,21 +26,40 @@ public class DeveloperUpdates implements Listener {
     }
 
     private void displayUpdate(Player player) {
-        IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "Whats new?" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+        if (isTesting) {
+            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "⚠ " + ChatColor.YELLOW + "Testing! Expect many restarts..." + ChatColor.RED + " ⚠" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
-        PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
-        PacketPlayOutTitle length = new PacketPlayOutTitle(20, 5 * 20, 20);
+            PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
+            PacketPlayOutTitle length = new PacketPlayOutTitle(20, 5 * 20, 20);
 
-        IChatBaseComponent chatSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.GREEN + update + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+            IChatBaseComponent chatSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.WHITE + testMessage + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
-        PacketPlayOutTitle subTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, chatSubTitle);
-        PacketPlayOutTitle subTitleLength = new PacketPlayOutTitle(20, 5 * 20, 20);
+            PacketPlayOutTitle subTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, chatSubTitle);
+            PacketPlayOutTitle subTitleLength = new PacketPlayOutTitle(20, 5 * 20, 20);
 
 
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
 
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitle);
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitleLength);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitle);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitleLength);
+        } else {
+            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "Whats new?" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+
+            PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
+            PacketPlayOutTitle length = new PacketPlayOutTitle(20, 5 * 20, 20);
+
+            IChatBaseComponent chatSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.GREEN + update + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+
+            PacketPlayOutTitle subTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, chatSubTitle);
+            PacketPlayOutTitle subTitleLength = new PacketPlayOutTitle(20, 5 * 20, 20);
+
+
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
+
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitle);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitleLength);
+        }
     }
 }

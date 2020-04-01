@@ -48,5 +48,27 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../Player Protection/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../Player Protection/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../Config API/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../Config API/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

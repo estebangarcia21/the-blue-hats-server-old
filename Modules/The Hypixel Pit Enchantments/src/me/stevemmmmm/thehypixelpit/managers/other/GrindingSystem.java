@@ -67,7 +67,6 @@ public class GrindingSystem implements Listener, ConfigWriter {
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitleLength);
 
             playerLevels.put(player.getUniqueId(), playerLevels.get(player.getUniqueId()) + 1);
-            PitScoreboardManager.getInstance().sort(player);
 
             ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.GOLD + " " + player.getName())[0];
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
@@ -116,7 +115,7 @@ public class GrindingSystem implements Listener, ConfigWriter {
     public void onPlayerKill(PlayerDeathEvent event) {
         DecimalFormat df = new DecimalFormat("##0.00");
         if (event.getEntity().getKiller() != null) {
-            event.getEntity().getKiller().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "KILL!" + ChatColor.GRAY + " on " + event.getEntity().getName() + ChatColor.AQUA + " +" + giveRandomXP(event.getEntity().getKiller()) + "XP" + ChatColor.GOLD + " +" + df.format(giveRandomGold(event.getEntity().getKiller())) + "g");
+            event.getEntity().getKiller().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "KILL!" + ChatColor.GRAY + " on " + ChatColor.GOLD + event.getEntity().getName() + ChatColor.AQUA + " +" + giveRandomXP(event.getEntity().getKiller()) + "XP" + ChatColor.GOLD + " +" + df.format(giveRandomGold(event.getEntity().getKiller())) + "g");
             updateLevel(event.getEntity().getKiller());
         }
     }
@@ -403,15 +402,15 @@ public class GrindingSystem implements Listener, ConfigWriter {
     }
 
     public int getPlayerXP(Player player) {
-        return playerXP.get(player.getUniqueId());
+        return playerXP.getOrDefault(player.getUniqueId(), 0);
     }
 
     public double getPlayerGold(Player player) {
-        return playerGold.get(player.getUniqueId());
+        return playerGold.getOrDefault(player.getUniqueId(), 0.00D);
     }
 
     public String getFormattedPlayerGold(Player player) {
-        return new DecimalFormat("###,###,###,##0.00").format(playerGold.get(player.getUniqueId()));
+        return new DecimalFormat("###,###,###,##0.00").format(playerGold.getOrDefault(player.getUniqueId(), 0D));
     }
 
     public void readConfig() {

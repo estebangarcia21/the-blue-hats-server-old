@@ -1,6 +1,8 @@
 package me.stevemmmmm.thehypixelpit.managers.enchants;
 
+import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.enchants.Mirror;
+import me.stevemmmmm.thehypixelpit.game.DamageIndicator;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -9,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
@@ -48,11 +51,17 @@ public class DamageManager implements Listener {
     }
 
     public double getDamageFromEvent(EntityDamageByEntityEvent event) {
-        if (!additiveDamageBuffer.containsKey(event)) additiveDamageBuffer.put(event, 1D);
-        if (!multiplicativeDamageBuffer.containsKey(event)) multiplicativeDamageBuffer.put(event, 1D);
-        if (!reductionBuffer.containsKey(event)) reductionBuffer.put(event, 1D);
+        double damage = event.getDamage() * additiveDamageBuffer.getOrDefault(event, 1D) * multiplicativeDamageBuffer.getOrDefault(event, 1D) * reductionBuffer.getOrDefault(event, 1D);
 
-        double damage = event.getDamage() * additiveDamageBuffer.get(event) * multiplicativeDamageBuffer.get(event) * reductionBuffer.get(event);
+        if (removeCriticalDamage.contains(event)) {
+            damage *= .667;
+        }
+
+        return damage;
+    }
+
+    public double getFinalDamageFromEvent(EntityDamageByEntityEvent event) {
+        double damage = event.getFinalDamage() * additiveDamageBuffer.getOrDefault(event, 1D) * multiplicativeDamageBuffer.getOrDefault(event, 1D) * reductionBuffer.getOrDefault(event, 1D);
 
         if (removeCriticalDamage.contains(event)) {
             damage *= .667;
@@ -62,15 +71,12 @@ public class DamageManager implements Listener {
     }
 
     public void addDamage(EntityDamageByEntityEvent event, double value, CalculationMode mode) {
-        if (!additiveDamageBuffer.containsKey(event)) additiveDamageBuffer.put(event, 1D);
-        if (!multiplicativeDamageBuffer.containsKey(event)) multiplicativeDamageBuffer.put(event, 1D);
-
         if (mode == CalculationMode.ADDITIVE) {
-            additiveDamageBuffer.put(event, additiveDamageBuffer.get(event) + value);
+            additiveDamageBuffer.put(event, additiveDamageBuffer.getOrDefault(event, 1D) + value);
         }
 
         if (mode == CalculationMode.MULTIPLICATIVE) {
-            multiplicativeDamageBuffer.put(event, multiplicativeDamageBuffer.get(event) + value);
+            multiplicativeDamageBuffer.put(event, multiplicativeDamageBuffer.getOrDefault(event, 0D) + value);
         }
     }
 
@@ -104,23 +110,28 @@ public class DamageManager implements Listener {
         target.damage(0);
 
         if (!CustomEnchant.itemHasEnchant(target.getInventory().getLeggings(), mirror)) {
-            try {
-                target.setHealth(Math.max(0, target.getHealth() - damage));
-            } catch (IllegalArgumentException ignored) {
-
+            if (target.getHealth() - damage < 0) {
+                target.setHealth(target.getMaxHealth());
+                manuallyCallDeathEvent(target);
+            } else {
+                target.setHealth(target.getMaxHealth() - damage);
             }
         } else if (CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror) != 1) {
-            try {
+            if (reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
+                reflectTo.setMaxHealth(reflectTo.getMaxHealth());
+                manuallyCallDeathEvent(reflectTo);
+            } else {
                 reflectTo.setHealth(Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
-            } catch (IllegalArgumentException ignored) {
-
             }
-
-            reflectTo.damage(0);
         }
     }
 
     public boolean isCriticalHit(Player player) {
         return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
+    }
+
+    private void manuallyCallDeathEvent(Player target) {
+        PlayerDeathEvent manualEvent = new PlayerDeathEvent(target, new ArrayList<>(), 0,  "");
+        Main.instance.getServer().getPluginManager().callEvent(manualEvent);
     }
 }

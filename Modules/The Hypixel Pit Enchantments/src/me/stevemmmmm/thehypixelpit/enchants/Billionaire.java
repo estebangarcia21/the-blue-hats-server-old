@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 
 public class Billionaire extends CustomEnchant {
-    private LevelVariable<Double> damageIncrease = new LevelVariable<>(.33, .67, 1D);
+    private LevelVariable<Double> damageIncrease = new LevelVariable<>(1.33D, 1.67D, 2D);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

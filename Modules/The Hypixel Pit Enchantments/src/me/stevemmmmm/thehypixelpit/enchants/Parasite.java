@@ -5,6 +5,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
@@ -16,13 +17,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class Parasite extends CustomEnchant {
-    private LevelVariable<Integer> healAmount = new LevelVariable<>(1, 2, 3);
+    private LevelVariable<Double> healAmount = new LevelVariable<>(0.5D, 1D, 2D);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(((Player) ((Arrow) event.getDamager()).getShooter()).getInventory().getItemInHand(), ((Arrow) event.getDamager()).getShooter());
+                attemptEnchantExecution(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getDamager()), ((Arrow) event.getDamager()).getShooter());
             }
         }
     }
@@ -47,7 +48,7 @@ public class Parasite extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new DescriptionBuilder()
-                .addVariable("0.5❤", "1.0❤", "1.5❤")
+                .addVariable("0.25❤", "0.5❤", "1.0❤")
                 .write("Heal ").setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" on arrow hit")
                 .build();
     }

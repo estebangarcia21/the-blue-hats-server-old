@@ -26,11 +26,11 @@ public class ConfigAPI extends JavaPlugin {
         log.info("ConfigAPI by Stevemmmmm");
         log.info("------------------------------------------");
 
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            for (ConfigWriter writer : configWriters) {
-                writer.writeToConfig();
-            }
-        }, 36000L, 36000L);
+//        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+//            for (ConfigWriter writer : configWriters) {
+//                writer.writeToConfig();
+//            }
+//        }, 36000L, 36000L);
     }
 
     public void onDisable() {
