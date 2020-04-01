@@ -27,7 +27,7 @@ public class Stun extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            tryExecutingEnchant(((Player) event.getDamager()).getInventory().getItemInHand(), event);
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event);
         }
     }
 
@@ -80,7 +80,7 @@ public class Stun extends CustomEnchant {
         return new DescriptionBuilder()
                 .addVariable("fifth", "fourth", "fourth")
                 .addVariable("0.5", "0.8", "1.5")
-                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetCondition().write(" strike on an enemy").nextLine()
+                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" strike on an enemy").nextLine()
                 .write("stuns them for ").writeVariable(1, level).write(" seconds")
                 .build();
     }

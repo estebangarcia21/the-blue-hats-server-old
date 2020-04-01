@@ -6,6 +6,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.scoreboard.*;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import java.util.UUID;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class PitScoreboardManager {
+public class PitScoreboardManager implements Listener {
     private static PitScoreboardManager instance;
 
     private ScoreboardManager manager = Bukkit.getScoreboardManager();
@@ -41,7 +42,7 @@ public class PitScoreboardManager {
         //tablistSortTeams.get(GrindingSystem.getInstance().getPlayerLevel(player)).addEntry(player.getName());
     }
 
-    private void updateStandardScoreboard() {
+    private void updateScoreboard() {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             Scoreboard board = scoreboard;
 

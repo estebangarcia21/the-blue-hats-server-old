@@ -38,7 +38,7 @@ public class Volley extends CustomEnchant {
             if (((Arrow) event.getProjectile()).getShooter() instanceof Player) {
                 Player player = (Player) ((Arrow) event.getProjectile()).getShooter();
 
-                tryExecutingEnchant(player.getInventory().getItemInHand(), event.getProjectile(), player);
+                attemptEnchantExecution(player.getInventory().getItemInHand(), event.getProjectile(), player);
             }
         }
     }
@@ -62,7 +62,7 @@ public class Volley extends CustomEnchant {
 
             for (CustomEnchant customEnchant : CustomEnchantManager.getInstance().getItemEnchants(item).keySet()) {
                 if (customEnchant instanceof Robinhood) {
-                    robinhood.tryExecutingEnchant(item, volleyArrow, player);
+                    robinhood.attemptEnchantExecution(item, volleyArrow, player);
                 }
             }
 
@@ -89,7 +89,7 @@ public class Volley extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new DescriptionBuilder()
                 .addVariable("3", "4", "5")
-                .write("Shoot ").setColor(ChatColor.WHITE).writeVariable(0, level).write(" arrows ").resetCondition().write(" at once")
+                .write("Shoot ").setColor(ChatColor.WHITE).writeVariable(0, level).write(" arrows ").resetColor().write("at once")
                 .build();
     }
 

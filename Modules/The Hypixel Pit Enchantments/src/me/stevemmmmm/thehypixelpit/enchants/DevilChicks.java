@@ -11,10 +11,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -31,7 +28,7 @@ public class DevilChicks extends CustomEnchant {
     public void onArrowLand(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow) {
             if (event.getEntity().getShooter() instanceof Player) {
-                tryExecutingEnchant(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getEntity()), event.getEntity());
+                attemptEnchantExecution(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getEntity()), event.getEntity());
             }
         }
     }
@@ -45,9 +42,11 @@ public class DevilChicks extends CustomEnchant {
         for (int i = 0; i < amountOfChicks.at(level); i++) {
             Vector direction = new Vector();
 
-            direction.setX(location.getX() + Math.random() - Math.random());
+            float radius = 0.75f;
+
+            direction.setX(location.getX() + (Math.random() - Math.random()) * radius);
             direction.setY(location.getY());
-            direction.setZ(location.getZ() + Math.random() - Math.random());
+            direction.setZ(location.getZ() + (Math.random() - Math.random()) * radius);
 
             Chicken chicken = (Chicken) world.spawnEntity(direction.toLocation(location.getWorld()), EntityType.CHICKEN);
             chicken.setBaby();
@@ -81,6 +80,7 @@ public class DevilChicks extends CustomEnchant {
                     }
 
                     world.playSound(location, Sound.EXPLODE, volume, 1.6f);
+                    world.playEffect(chicken.getLocation(), Effect.EXPLOSION_LARGE, Effect.EXPLOSION_LARGE.getData(), 100);
                     chicken.remove();
                 });
             }};
@@ -97,7 +97,7 @@ public class DevilChicks extends CustomEnchant {
 
     @Override
     public String getName() {
-        return "Devil Chicks";
+        return "Devil Chicks!";
     }
 
     @Override

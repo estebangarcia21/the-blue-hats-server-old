@@ -5,52 +5,53 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
-public class LastStand extends CustomEnchant {
-    private LevelVariable<Integer> amplifier = new LevelVariable<>(0, 1, 2);
+public class PainFocus extends CustomEnchant {
+    private LevelVariable<Float> damageIncreasePerHeartLost = new LevelVariable<>(.01f, .02f, .05f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity());
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager(), event);
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        Player damaged = (Player) args[0];
+        Player player = (Player) args[0];
+        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[1];
 
-        if (damaged.getHealth() < 10) {
-            damaged.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, amplifier.at(level)));
-        }
+        int heartsLost = (int) (player.getMaxHealth() - player.getHealth()) / 2;
+
+        DamageManager.getInstance().addDamage(event, damageIncreasePerHeartLost.at(level) * heartsLost, CalculationMode.ADDITIVE);
     }
 
     @Override
     public String getName() {
-        return "Last Stand";
+        return "Pain Focus";
     }
 
     @Override
     public String getEnchantReferenceName() {
-        return "Laststand";
+        return "Painfocus";
     }
 
     @Override
     public ArrayList<String> getDescription(int level) {
         return new DescriptionBuilder()
-                .addVariable("I", "II", "III")
-                .write("Gain ").setColor(ChatColor.BLUE).write("Resistance ").writeVariable(0, level).resetColor().write(" (4").nextLine()
-                .write("seconds) when reaching ").setColor(ChatColor.RED).write("3❤")
+                .addVariable("+1%", "+2%", "+5%")
+                .write("Deal ").setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" damage per ").setColor(ChatColor.RED).write("❤").resetColor().nextLine()
+                .write("you're missing")
                 .build();
     }
 

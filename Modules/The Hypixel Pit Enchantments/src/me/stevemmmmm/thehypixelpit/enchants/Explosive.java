@@ -9,6 +9,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -24,11 +25,13 @@ public class Explosive extends CustomEnchant {
     private LevelVariable<Integer> cooldownTime = new LevelVariable<>(5, 3, 5);
     private LevelVariable<Float> explosionPitch = new LevelVariable<>(2f, 1f, 1.4f);
 
+    private LevelVariable<Effect> explosionParticle = new LevelVariable<>(Effect.EXPLOSION_LARGE, Effect.EXPLOSION_HUGE, Effect.EXPLOSION_HUGE);
+
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow) {
             if (event.getEntity().getShooter() instanceof Player) {
-                tryExecutingEnchant(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getEntity()), event.getEntity());
+                attemptEnchantExecution(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getEntity()), event.getEntity());
             }
         }
     }
@@ -53,6 +56,7 @@ public class Explosive extends CustomEnchant {
             }
 
             arrow.getWorld().playSound(arrow.getLocation(), Sound.EXPLODE, 1, explosionPitch.at(level));
+            arrow.getWorld().playEffect(arrow.getLocation(), explosionParticle.at(level), explosionParticle.at(level).getData(), 100);
         }
 
         startCooldown(shooter, cooldownTime.at(level), true);

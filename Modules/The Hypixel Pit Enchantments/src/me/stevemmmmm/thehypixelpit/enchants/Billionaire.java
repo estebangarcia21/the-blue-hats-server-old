@@ -25,7 +25,7 @@ public class Billionaire extends CustomEnchant {
         //TODO Gold system
 
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            tryExecutingEnchant(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event);
+            attemptEnchantExecution(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event);
         }
     }
 
@@ -34,7 +34,7 @@ public class Billionaire extends CustomEnchant {
         Player damager = (Player) args[0];
 
         DamageManager.getInstance().addDamage((EntityDamageByEntityEvent) args[1], damageIncrease.at(level), CalculationMode.MULTIPLICATIVE);
-        damager.playSound(damager.getLocation(), Sound.ORB_PICKUP, 1, 0.1f);
+        damager.playSound(damager.getLocation(), Sound.ORB_PICKUP, 1, 0.5f);
     }
 
     @Override

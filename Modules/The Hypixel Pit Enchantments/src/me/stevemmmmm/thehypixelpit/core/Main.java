@@ -7,6 +7,7 @@ import me.stevemmmmm.thehypixelpit.enchants.*;
 import me.stevemmmmm.thehypixelpit.game.CombatTimer;
 import me.stevemmmmm.thehypixelpit.game.MysticWell;
 import me.stevemmmmm.thehypixelpit.game.duels.DuelingManager;
+import me.stevemmmmm.thehypixelpit.game.duels.GameUtility;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
@@ -15,6 +16,7 @@ import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
 import me.stevemmmmm.thehypixelpit.perks.Vampire;
 import me.stevemmmmm.thehypixelpit.world.AntiFall;
 import me.stevemmmmm.thehypixelpit.world.AutoRespawn;
+import me.stevemmmmm.thehypixelpit.world.DeveloperUpdates;
 import me.stevemmmmm.thehypixelpit.world.PlayerUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,9 +51,11 @@ public class Main extends JavaPlugin {
         registerPerks();
 
         //Utility
+        getServer().getPluginManager().registerEvents(new GameUtility(), this);
         getServer().getPluginManager().registerEvents(new AntiFall(), this);
         getServer().getPluginManager().registerEvents(new AutoRespawn(), this);
         getServer().getPluginManager().registerEvents(new PlayerUtility(), this);
+        getServer().getPluginManager().registerEvents(new DeveloperUpdates(), this);
 
         //Commands
         getCommand("pitenchant").setExecutor(new EnchantCommand());
@@ -59,6 +63,7 @@ public class Main extends JavaPlugin {
         getCommand("pitabout").setExecutor(new PitAboutCommand());
         getCommand("givefreshitem").setExecutor(new GiveFreshItemCommand());
         getCommand("duel").setExecutor(new DuelCommand());
+        getCommand("giveprot").setExecutor(new GiveProtCommand());
 
         //Game logic
         //getServer().getPluginManager().registerEvents(new MysticWell(), this);
@@ -89,6 +94,8 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new Lifesteal());
         CustomEnchantManager.getInstance().registerEnchant(new DiamondStomp());
         CustomEnchantManager.getInstance().registerEnchant(new BulletTime());
+        CustomEnchantManager.getInstance().registerEnchant(new ComboDamage());
+        CustomEnchantManager.getInstance().registerEnchant(new PainFocus());
 
         //Bows
         CustomEnchantManager.getInstance().registerEnchant(new Robinhood());
@@ -99,6 +106,7 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new DevilChicks());
         CustomEnchantManager.getInstance().registerEnchant(new Explosive());
         CustomEnchantManager.getInstance().registerEnchant(new Wasp());
+        CustomEnchantManager.getInstance().registerEnchant(new Parasite());
 
         //Pants
         CustomEnchantManager.getInstance().registerEnchant(new Mirror());

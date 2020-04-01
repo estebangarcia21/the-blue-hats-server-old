@@ -28,7 +28,7 @@ public class LuckyShot extends CustomEnchant {
             if (arrow.getShooter() instanceof Player) {
                 Player player = (Player) arrow.getShooter();
 
-                tryExecutingEnchant(player.getInventory().getItemInHand(), event);
+                attemptEnchantExecution(player.getInventory().getItemInHand(), event);
             }
         }
     }

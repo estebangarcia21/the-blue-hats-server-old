@@ -26,7 +26,7 @@ public class Wasp extends CustomEnchant {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                tryExecutingEnchant(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getDamager()), event.getEntity());
+                attemptEnchantExecution(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getDamager()), event.getEntity());
             }
         }
     }

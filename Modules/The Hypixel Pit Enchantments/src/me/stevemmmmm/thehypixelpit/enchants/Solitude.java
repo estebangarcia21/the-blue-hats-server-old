@@ -1,7 +1,6 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
@@ -25,7 +24,7 @@ public class Solitude extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity(), event);
+            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity(), event);
         }
     }
 

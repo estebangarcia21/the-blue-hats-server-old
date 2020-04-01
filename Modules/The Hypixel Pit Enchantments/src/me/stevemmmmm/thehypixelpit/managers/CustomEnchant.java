@@ -30,7 +30,7 @@ public abstract class CustomEnchant implements Listener {
     private HashMap<UUID, Long> cooldownTimesHitTimer = new HashMap<>();
     private HashMap<UUID, Integer> cooldownResetTasksHitTimer = new HashMap<>();
 
-    public boolean tryExecutingEnchant(ItemStack source, Object... args) {
+    public boolean attemptEnchantExecution(ItemStack source, Object... args) {
         if (itemHasEnchant(source, this)) {
             if (args.length > 0) {
                 if (!args[0].equals("feedback")) {

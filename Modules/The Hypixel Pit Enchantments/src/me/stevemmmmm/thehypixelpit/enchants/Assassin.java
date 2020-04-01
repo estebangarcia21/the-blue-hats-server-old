@@ -26,14 +26,14 @@ public class Assassin extends CustomEnchant {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
                 if (((Player) event.getEntity()).isSneaking()) {
-                    tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), ((Arrow) event.getDamager()).getShooter(), event.getEntity());
+                    attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), ((Arrow) event.getDamager()).getShooter(), event.getEntity());
                 }
             }
         }
 
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
             if (((Player) event.getEntity()).isSneaking()) {
-                tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event.getEntity());
+                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event.getEntity());
             }
         }
     }

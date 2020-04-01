@@ -15,47 +15,40 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
 
-public class BulletTime extends CustomEnchant {
-    private LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
+public class Parasite extends CustomEnchant {
+    private LevelVariable<Integer> healAmount = new LevelVariable<>(1, 2, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity());
+            if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
+                attemptEnchantExecution(((Player) ((Arrow) event.getDamager()).getShooter()).getInventory().getItemInHand(), ((Arrow) event.getDamager()).getShooter());
+            }
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        Player hitPlayer = (Player) args[0];
+        Player player = (Player) args[0];
 
-        hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + healingAmount.at(level), hitPlayer.getMaxHealth()));
+        player.setHealth(Math.min(player.getHealth() + healAmount.at(level), player.getMaxHealth()));
     }
 
     @Override
     public String getName() {
-        return "Bullet Time";
+        return "Parasite";
     }
 
     @Override
     public String getEnchantReferenceName() {
-        return "Bullettime";
+        return "Parasite";
     }
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        if (level == 1) {
-            return new DescriptionBuilder()
-                    .setColor(ChatColor.GRAY).write("Blocking destroys arrows that").nextLine()
-                    .setColor(ChatColor.GRAY).write("hit you")
-                    .build();
-        }
-
         return new DescriptionBuilder()
-                .addVariable("", "1❤", "1.5❤")
-                .setColor(ChatColor.GRAY).write("Blocking destroys arrows hitting").nextLine()
-                .setColor(ChatColor.GRAY).write("you. Destroying arrows this way").nextLine()
-                .setColor(ChatColor.GRAY).write("heals ").setColor(ChatColor.RED).writeVariable(0, level)
+                .addVariable("0.5❤", "1.0❤", "1.5❤")
+                .write("Heal ").setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" on arrow hit")
                 .build();
     }
 

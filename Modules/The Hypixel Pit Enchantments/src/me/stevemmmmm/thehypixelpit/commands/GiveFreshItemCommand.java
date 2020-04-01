@@ -16,6 +16,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -37,53 +38,80 @@ public class GiveFreshItemCommand implements CommandExecutor {
                 if (args.length == 1) {
                     String object = args[0];
 
-                    ItemStack freshPants = new ItemStack(Material.LEATHER_LEGGINGS, 1);
-                    LeatherArmorMeta freshPantsMeta = (LeatherArmorMeta) freshPants.getItemMeta();
+                    ItemStack item = null;
+                    LeatherArmorMeta freshPantsMeta = null;
 
-                    if (object.equalsIgnoreCase("Red")) {
-                        freshPantsMeta.setColor(Color.fromRGB(0xFF5555));
+                    if (object.equalsIgnoreCase("Sword")) {
+                        item = new ItemStack(Material.GOLD_SWORD, 1);
 
-                        addPantsLore(freshPantsMeta, "Red", ChatColor.RED);
+                        ItemMeta meta = item.getItemMeta();
+
+                        meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
+                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        meta.spigot().setUnbreakable(true);
+
+                        item.setItemMeta(meta);
+                    } else if (object.equalsIgnoreCase("Bow")) {
+                        item = new ItemStack(Material.BOW, 1);
+
+                        ItemMeta meta = item.getItemMeta();
+
+                        meta.addEnchant(Enchantment.DURABILITY, 1, true);
+                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        meta.spigot().setUnbreakable(true);
+
+                        item.setItemMeta(meta);
+                    } else {
+                        item = new ItemStack(Material.LEATHER_LEGGINGS, 1);
+                        freshPantsMeta = (LeatherArmorMeta) item.getItemMeta();
                     }
 
-                    if (object.equalsIgnoreCase("Green")) {
-                        freshPantsMeta.setColor(Color.fromRGB(0x55FF55));
+                    if (freshPantsMeta != null) {
+                        if (object.equalsIgnoreCase("Red")) {
+                            freshPantsMeta.setColor(Color.fromRGB(0xFF5555));
 
-                        addPantsLore(freshPantsMeta, "Green", ChatColor.GREEN);
-                    }
+                            addPantsLore(freshPantsMeta, "Red", ChatColor.RED);
+                        }
 
-                    if (object.equalsIgnoreCase("Blue")) {
-                        freshPantsMeta.setColor(Color.fromRGB(0x5555FF));
+                        if (object.equalsIgnoreCase("Green")) {
+                            freshPantsMeta.setColor(Color.fromRGB(0x55FF55));
 
-                        addPantsLore(freshPantsMeta, "Blue", ChatColor.BLUE);
-                    }
+                            addPantsLore(freshPantsMeta, "Green", ChatColor.GREEN);
+                        }
 
-                    if (object.equalsIgnoreCase("Yellow")) {
-                        freshPantsMeta.setColor(Color.fromRGB(0xFFFF55));
+                        if (object.equalsIgnoreCase("Blue")) {
+                            freshPantsMeta.setColor(Color.fromRGB(0x5555FF));
 
-                        addPantsLore(freshPantsMeta, "Yellow", ChatColor.YELLOW);
-                    }
+                            addPantsLore(freshPantsMeta, "Blue", ChatColor.BLUE);
+                        }
 
-                    if (object.equalsIgnoreCase("Orange")) {
-                        freshPantsMeta.setColor(Color.fromRGB(0xFFAA00));
+                        if (object.equalsIgnoreCase("Yellow")) {
+                            freshPantsMeta.setColor(Color.fromRGB(0xFFFF55));
 
-                        addPantsLore(freshPantsMeta, "Orange", ChatColor.GOLD);
-                    }
+                            addPantsLore(freshPantsMeta, "Yellow", ChatColor.YELLOW);
+                        }
 
-                    if (object.equalsIgnoreCase("Dark")) {
-                        freshPantsMeta.setColor(Color.fromRGB(0x000000));
+                        if (object.equalsIgnoreCase("Orange")) {
+                            freshPantsMeta.setColor(Color.fromRGB(0xFFAA00));
 
-                        addPantsLore(freshPantsMeta, "Dark", ChatColor.DARK_PURPLE);
+                            addPantsLore(freshPantsMeta, "Orange", ChatColor.GOLD);
+                        }
+
+                        if (object.equalsIgnoreCase("Dark")) {
+                            freshPantsMeta.setColor(Color.fromRGB(0x000000));
+
+                            addPantsLore(freshPantsMeta, "Dark", ChatColor.DARK_PURPLE);
+                        }
+
+                        item.setItemMeta(freshPantsMeta);
                     }
 
                     //TODO Aqua pants 0x55FFFF
                     //TODO Sewer pants 0x7DC383
 
-                    freshPants.setItemMeta(freshPantsMeta);
-
                     for (int i = 0; i < player.getInventory().getSize(); i++) {
                         if (player.getInventory().getItem(i) == null) {
-                            player.getInventory().setItem(i, freshPants);
+                            player.getInventory().setItem(i, item);
                             return true;
                         }
                     }

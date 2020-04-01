@@ -25,12 +25,12 @@ public class CriticallyFunky extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event);
+            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event);
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                tryExecutingEnchant(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event);
+                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event);
             }
         }
     }

@@ -1,12 +1,14 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.utils.TelebowData;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -38,7 +40,7 @@ public class Telebow extends CustomEnchant {
 
                 if (telebowData.containsKey(player.getUniqueId())) {
                     if (itemHasEnchant(telebowData.get(player.getUniqueId()).getBow(), this)) {
-                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) tryExecutingEnchant(telebowData.get(player.getUniqueId()).getBow(), player, arrow);
+                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) attemptEnchantExecution(telebowData.get(player.getUniqueId()).getBow(), player, arrow);
                     }
                 }
             }
@@ -50,7 +52,7 @@ public class Telebow extends CustomEnchant {
             if (arrow.getShooter() instanceof Player) {
                 Player player = (Player) arrow.getShooter();
 
-                if (itemHasEnchant(player.getInventory().getItemInHand(), this) && getCooldownTime(player) != 0 && player.isSneaking()) {
+                if (itemHasEnchant(ArrowManager.getInstance().getItemStackFromArrow(arrow), this) && getCooldownTime(player) != 0 && telebowData.get(player.getUniqueId()).isSneaking() && getCooldownTime(player) != 20) {
                     PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + ChatColor.RED + "Telebow Cooldown: " + getCooldownTime(player) + "(s)" + "\"}"), (byte) 2);
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
                 }
@@ -73,7 +75,7 @@ public class Telebow extends CustomEnchant {
 
                 if (telebowData.containsKey(player.getUniqueId())) {
                     if (itemHasEnchant(telebowData.get(player.getUniqueId()).getBow(), this)) {
-                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) tryExecutingEnchant(telebowData.get(player.getUniqueId()).getBow(), player, arrow);
+                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) attemptEnchantExecution(telebowData.get(player.getUniqueId()).getBow(), player, arrow);
                     }
                 }
             }
@@ -115,6 +117,7 @@ public class Telebow extends CustomEnchant {
 
         if (isNotOnCooldown(player)) {
             player.teleport(arrow);
+            player.getWorld().playSound(arrow.getLocation(), Sound.ENDERMAN_TELEPORT, 1f, 2f);
         }
 
         startCooldown(player, cooldownTimes.at(level), true);
