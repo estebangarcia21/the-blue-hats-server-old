@@ -5,7 +5,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
@@ -26,7 +26,7 @@ public class Wasp extends CustomEnchant {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getDamager()), event.getEntity());
+                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getDamager()), event.getEntity());
             }
         }
     }

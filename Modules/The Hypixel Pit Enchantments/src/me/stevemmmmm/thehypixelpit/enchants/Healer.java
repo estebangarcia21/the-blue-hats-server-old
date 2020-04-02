@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
@@ -20,7 +21,7 @@ public class Healer extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event.getEntity());
+            attemptEnchantExecution(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event.getEntity(), event);
         }
     }
 
@@ -30,7 +31,7 @@ public class Healer extends CustomEnchant {
         Player damaged = (Player) args[1];
 
         damager.setHealth(Math.min(damager.getHealth() + healAmount.at(level), damager.getMaxHealth()));
-        damaged.setHealth(Math.min(damager.getHealth() + healAmount.at(level), damaged.getMaxHealth()));
+        damaged.setHealth(Math.min(damaged.getHealth() + healAmount.at(level), damaged.getMaxHealth()));
     }
 
     @Override

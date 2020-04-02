@@ -33,7 +33,7 @@ public class Robinhood extends CustomEnchant {
             Arrow arrow = (Arrow) event.getProjectile();
             Player player = (Player) event.getEntity();
 
-            attemptEnchantExecution(event.getBow(), arrow, player);
+            attemptEnchantExecution(event.getBow(), arrow, player, event.getForce());
         }
     }
 
@@ -53,8 +53,6 @@ public class Robinhood extends CustomEnchant {
                             DamageManager.getInstance().addDamage(event, damageReduction.at(getEnchantLevel(player.getInventory().getItemInHand(), this)), CalculationMode.ADDITIVE);
                         }
                     }
-
-                    //TODO Check the robin levels and implement damage reductions
 
                     if (!arrow.isValid()) {
                         Bukkit.getServer().getScheduler().cancelTask(arrowTasks.get(arrow));
@@ -91,6 +89,11 @@ public class Robinhood extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Arrow arrow = (Arrow) args[0];
         Player player = (Player) args[1];
+        float force = (float) args[2];
+
+        if (level == 1) {
+            if (force < 1) return;
+        }
 
         arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
             List<Entity> closestEntities = player.getNearbyEntities(16, 16, 16);

@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class GiveProtCommand implements CommandExecutor {
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -32,7 +33,15 @@ public class GiveProtCommand implements CommandExecutor {
                 ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS, 1);
                 enchantToProt(boots);
 
-                player.getInventory().addItem(helmet, chestplate, leggings, boots);
+                ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+                ItemMeta swordMeta = sword.getItemMeta();
+
+                swordMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
+                swordMeta.spigot().setUnbreakable(true);
+
+                sword.setItemMeta(swordMeta);
+
+                player.getInventory().addItem(helmet, chestplate, leggings, boots, sword);
             }
         }
 

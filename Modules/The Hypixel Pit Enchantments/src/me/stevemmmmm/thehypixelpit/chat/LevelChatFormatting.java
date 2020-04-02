@@ -22,12 +22,15 @@ public class LevelChatFormatting implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.GOLD + " " + player.getName())[0];
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
+        GrindingSystem.getInstance().setPlayerLevel(player, 120);
+        GrindingSystem.getInstance().setPlayerPrestige(player, 30);
 
-        for (Player p : player.getWorld().getPlayers()) {
-            ((CraftPlayer) p).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(p) + ChatColor.GOLD + " " + p.getName())[0];
-            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) p).getHandle()));
+        if (event.getPlayer().getName().equalsIgnoreCase("Stevemmmmmmm") || event.getPlayer().getName().equalsIgnoreCase("SUNDEWS") || event.getPlayer().getName().equalsIgnoreCase("OVEREXERTED")) {
+            ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.RED + " " + player.getName())[0];
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
+        } else {
+            ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.GOLD + " " + player.getName())[0];
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
         }
     }
 
@@ -35,8 +38,8 @@ public class LevelChatFormatting implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         //TODO Correct values for chat
 
-        if (event.getPlayer().getName().equalsIgnoreCase("TheBlueHats")) {
-            event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.RED + " [Owner] " + ChatColor.RED + "%s" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "%s");
+        if (event.getPlayer().getName().equalsIgnoreCase("Stevemmmmmmm") || event.getPlayer().getName().equalsIgnoreCase("SUNDEWS") || event.getPlayer().getName().equalsIgnoreCase("OVEREXERTED")) {
+            event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.RED + " [ADMIN] " + ChatColor.RED + "%s" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "%s");
         } else {
             event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] %s" + ChatColor.WHITE + ": %s");
         }

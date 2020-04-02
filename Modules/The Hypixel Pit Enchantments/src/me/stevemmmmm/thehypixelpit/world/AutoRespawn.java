@@ -14,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+
 public class AutoRespawn implements Listener {
 
     @EventHandler
@@ -21,12 +23,12 @@ public class AutoRespawn implements Listener {
         event.setDeathMessage("");
         Player player = event.getEntity();
 
-        player.setVelocity(new Vector(0, 0, 0));
         player.setHealth(player.getMaxHealth());
         player.setMaxHealth(24);
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
             player.teleport(new Location(player.getWorld(), 0.5, 115.5, -7.5));
+            player.setVelocity(new Vector(0, 0, 0));
             player.setFireTicks(0);
         }, 1);
     }

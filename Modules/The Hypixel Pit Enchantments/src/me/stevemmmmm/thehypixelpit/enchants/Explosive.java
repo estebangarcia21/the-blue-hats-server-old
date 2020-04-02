@@ -5,7 +5,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
@@ -31,7 +31,7 @@ public class Explosive extends CustomEnchant {
     public void onArrowLand(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow) {
             if (event.getEntity().getShooter() instanceof Player) {
-                attemptEnchantExecution(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getEntity()), event.getEntity());
+                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getEntity()), event.getEntity());
             }
         }
     }

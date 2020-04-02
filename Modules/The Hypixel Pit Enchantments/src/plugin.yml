@@ -17,6 +17,9 @@ commands:
   giveprot:
     description: Gives prot
     usage: /giveprot
+  setgold:
+    description: Sets gold
+    usage: /setgold
   duel:
     description: Duels a player
     usage: /duel

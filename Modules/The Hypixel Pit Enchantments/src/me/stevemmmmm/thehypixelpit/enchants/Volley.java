@@ -2,8 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Bukkit;
@@ -31,13 +30,19 @@ public class Volley extends CustomEnchant {
 
     @EventHandler
     public void onBowShoot(EntityShootBowEvent event) {
-        if (event.getForce() == -1f) return;
-
         if (event.getProjectile() instanceof Arrow) {
+            Arrow eventArrow = (Arrow) event.getProjectile();
+
+            for (Arrow arrow : volleyTasks.keySet()) {
+                if (eventArrow.getShooter().equals(arrow.getShooter())) {
+                    return;
+                }
+            }
+
             if (((Arrow) event.getProjectile()).getShooter() instanceof Player) {
                 Player player = (Player) ((Arrow) event.getProjectile()).getShooter();
 
-                attemptEnchantExecution(player.getInventory().getItemInHand(), event.getProjectile(), player);
+                attemptEnchantExecution(player.getInventory().getItemInHand(), event.getProjectile(), player, event);
             }
         }
     }
@@ -46,6 +51,8 @@ public class Volley extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Arrow arrow = (Arrow) args[0];
         Player player = (Player) args[1];
+        EntityShootBowEvent e = (EntityShootBowEvent) args[2];
+        float force = e.getForce();
 
         ItemStack item = player.getInventory().getItemInHand();
 
@@ -57,10 +64,10 @@ public class Volley extends CustomEnchant {
 
             volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
 
-            EntityShootBowEvent event = new EntityShootBowEvent(player, item, volleyArrow, -1f);
+            EntityShootBowEvent event = new EntityShootBowEvent(player, item, volleyArrow, force);
             Main.instance.getServer().getPluginManager().callEvent(event);
 
-            ArrowManager.getInstance().registerArrow(volleyArrow, item);
+            BowManager.getInstance().registerArrow(volleyArrow, player);
 
             arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
             if (arrowCount.get(arrow) > arrows.at(level)) {

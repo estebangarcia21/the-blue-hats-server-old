@@ -38,7 +38,9 @@ public class MysticWell implements Listener {
     private ItemStack enchantmentTableInfoT2 = new ItemStack(Material.ENCHANTMENT_TABLE);
     private ItemStack enchantmentTableInfoT3 = new ItemStack(Material.ENCHANTMENT_TABLE);
     private ItemStack enchantmentTableInfoItsRollin = new ItemStack(Material.ENCHANTMENT_TABLE);
-    private ItemStack enchantmentTableInfoMaxTier = new ItemStack(Material.STAINED_CLAY, 1, (byte) 14); //TODO Write the lore for this
+    private ItemStack enchantmentTableInfoMaxTier = new ItemStack(Material.STAINED_CLAY, 1, (byte) 14);
+
+    //TODO Rewrite the mystic well
 
     private HashMap<UUID, AtomicInteger> animationSequenceIndexs = new HashMap<>();
     private HashMap<UUID, AtomicInteger> sequenceRepititions = new HashMap<>();
@@ -157,8 +159,6 @@ public class MysticWell implements Listener {
                 if (event.getCurrentItem().getItemMeta().getDisplayName() != null) {
                     String[] itemTokens = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).split(" ");
                     if (itemTokens[0].equalsIgnoreCase("Fresh") || itemTokens[0].equalsIgnoreCase("Tier")) {
-                        //TODO Implement sounds
-
                         playerGui.get(event.getWhoClicked().getUniqueId()).setItem(24, getInfoFromTier(getItemTier(event.getCurrentItem())));
                         playerGui.get(event.getWhoClicked().getUniqueId()).setItem(20, event.getCurrentItem());
                         event.getWhoClicked().getInventory().setItem(event.getSlot(), new ItemStack(Material.AIR));
@@ -202,8 +202,6 @@ public class MysticWell implements Listener {
         Inventory gui = playerGui.get(player.getUniqueId());
 
         if (animation == MysticWellState.IDLE) {
-            //TODO If item is in the well -> Item in well! Click to get it back.
-
             animationTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
                 ItemStack grayGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
                 ItemMeta gpMeta = grayGlassPane.getItemMeta();
@@ -315,7 +313,6 @@ public class MysticWell implements Listener {
     }
 
     private ItemStack tierItem(ItemStack item) {
-        //TODO Enchantments and lives
         if (item == null) return null;
 
         ItemMeta meta = item.getItemMeta();

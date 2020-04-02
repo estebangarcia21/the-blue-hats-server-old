@@ -36,7 +36,7 @@ public class ComboDamage extends CustomEnchant {
         updateHitCount(player);
 
         if (hasRequiredHits(player, hitsNeeded.at(level))) {
-            player.playSound(player.getLocation(), Sound.DONKEY_HIT, 1, 1);
+            player.playSound(player.getLocation(), Sound.DONKEY_HIT, 1, 0.5f);
             DamageManager.getInstance().addDamage(event, damageAmount.at(level), CalculationMode.ADDITIVE);
         }
     }

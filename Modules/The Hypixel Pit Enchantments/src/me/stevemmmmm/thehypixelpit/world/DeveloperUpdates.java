@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 @SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {
-    private final String update = "Added player nametags!";
+    private final String update = "Fixed a Perun and Healer bug!";
     private final String testMessage = "Working on changing the name above players heads!";
     private final boolean isTesting = false;
 

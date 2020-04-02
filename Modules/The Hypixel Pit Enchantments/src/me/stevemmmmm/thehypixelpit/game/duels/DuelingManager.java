@@ -37,7 +37,6 @@ public class DuelingManager implements Listener {
     }
 
     private void init() {
-        //TODO Maps right here
         duelPositions.add(new Pair<>(new Vector(0, 100, 0), new Vector(0, 100, 0)));
     }
 

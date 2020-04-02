@@ -33,8 +33,6 @@ public class GiveFreshItemCommand implements CommandExecutor {
             Player player = (Player) sender;
 
             if (label.equalsIgnoreCase("givefreshitem")) {
-                //TODO Removed dyed lore
-
                 if (args.length == 1) {
                     String object = args[0];
 
@@ -103,18 +101,22 @@ public class GiveFreshItemCommand implements CommandExecutor {
                             addPantsLore(freshPantsMeta, "Dark", ChatColor.DARK_PURPLE);
                         }
 
+                        if (object.equalsIgnoreCase("0x7DC383")) {
+                            freshPantsMeta.setColor(Color.fromRGB(0x000000));
+
+                            addPantsLore(freshPantsMeta, "Sewer", ChatColor.DARK_PURPLE);
+                        }
+
+                        if (object.equalsIgnoreCase("Aqua")) {
+                            freshPantsMeta.setColor(Color.fromRGB(0x000000));
+
+                            addPantsLore(freshPantsMeta, "Aqua", ChatColor.DARK_PURPLE);
+                        }
+
                         item.setItemMeta(freshPantsMeta);
                     }
 
-                    //TODO Aqua pants 0x55FFFF
-                    //TODO Sewer pants 0x7DC383
-
-                    for (int i = 0; i < player.getInventory().getSize(); i++) {
-                        if (player.getInventory().getItem(i) == null) {
-                            player.getInventory().setItem(i, item);
-                            return true;
-                        }
-                    }
+                    player.getInventory().addItem(item);
                 } else {
                     player.sendMessage(ChatColor.DARK_PURPLE + "Usage:" + ChatColor.RED + " /givefreshitem <type>");
                 }

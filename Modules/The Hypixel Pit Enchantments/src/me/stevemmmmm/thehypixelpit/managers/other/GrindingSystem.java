@@ -420,7 +420,21 @@ public class GrindingSystem implements Listener, ConfigWriter {
     }
 
     public String getFormattedPlayerGold(Player player) {
-        return new DecimalFormat("###,###,###,##0.00").format(playerGold.getOrDefault(player.getUniqueId(), 0D));
+        return new DecimalFormat("###,###,###,###,###,##0.00").format(playerGold.getOrDefault(player.getUniqueId(), 0D));
+    }
+
+    public void setPlayerLevel(Player player, int value) {
+        playerLevels.put(player.getUniqueId(), value);
+    }
+
+    public void setPlayerGold(Player player, double value) {
+        if (value < 0) value = 0;
+
+        playerGold.put(player.getUniqueId(), value);
+    }
+
+    public void setPlayerPrestige(Player player, int value) {
+        playerPrestiges.put(player.getUniqueId(), value);
     }
 
     public void readConfig() {

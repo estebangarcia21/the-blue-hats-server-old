@@ -11,15 +11,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +34,7 @@ public class LuckyShot extends CustomEnchant {
             hitLuckyShotArrows.add(arrow);
 
             if (arrow.getShooter() instanceof Player) {
-                attemptEnchantExecution(ArrowManager.getInstance().getItemStackFromArrow(arrow), event);
+                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow(arrow), event);
             }
         }
     }
@@ -49,7 +46,7 @@ public class LuckyShot extends CustomEnchant {
                 Arrow arrow = (Arrow) event.getEntity();
 
                 if (event.getEntity().getShooter() instanceof Player) {
-                    if (getAttemptedEnchantExecutionFeedback(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getEntity()))) {
+                    if (getAttemptedEnchantExecutionFeedback(BowManager.getInstance().getBowFromArrow((Arrow) event.getEntity()))) {
                         if (!hitLuckyShotArrows.contains(arrow)) {
                             canLuckyShot.remove(((Player) (event.getEntity()).getShooter()).getUniqueId());
                         }

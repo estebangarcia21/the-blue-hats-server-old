@@ -1,7 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.ArrowManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.utils.TelebowData;
@@ -52,7 +52,7 @@ public class Telebow extends CustomEnchant {
             if (arrow.getShooter() instanceof Player) {
                 Player player = (Player) arrow.getShooter();
 
-                if (itemHasEnchant(ArrowManager.getInstance().getItemStackFromArrow(arrow), this) && getCooldownTime(player) != 0 && telebowData.get(player.getUniqueId()).isSneaking() && getCooldownTime(player) != 20) {
+                if (itemHasEnchant(BowManager.getInstance().getBowFromArrow(arrow), this) && getCooldownTime(player) != 0 && telebowData.get(player.getUniqueId()).isSneaking() && getCooldownTime(player) != 20) {
                     PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + ChatColor.RED + "Telebow Cooldown: " + getCooldownTime(player) + "(s)" + "\"}"), (byte) 2);
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
                 }

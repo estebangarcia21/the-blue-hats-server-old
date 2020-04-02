@@ -6,6 +6,7 @@ package me.stevemmmmm.thehypixelpit.game;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,6 +42,13 @@ public class CombatTimer implements Listener {
             combatTag((Player) event.getDamager());
             combatTag((Player) event.getEntity());
         }
+
+        if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
+            if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
+                combatTag(((Player) ((Arrow) event.getDamager()).getShooter()));
+                combatTag((Player) event.getEntity());
+            }
+        }
     }
 
     @EventHandler
@@ -49,7 +57,7 @@ public class CombatTimer implements Listener {
     }
 
     public boolean playerIsInCombat(Player player) {
-        return combatTime.get(player.getUniqueId()) != 0;
+        return combatTime.getOrDefault(player.getUniqueId(), 0) != 0;
     }
 
     private void combatTag(Player player) {

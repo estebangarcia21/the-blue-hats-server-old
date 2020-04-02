@@ -28,6 +28,8 @@ public class DamageManager implements Listener {
     private HashMap<EntityDamageByEntityEvent, Double> additiveDamageBuffer = new HashMap<>();
     private HashMap<EntityDamageByEntityEvent, Double> multiplicativeDamageBuffer = new HashMap<>();
 
+    private ArrayList<EntityDamageByEntityEvent> noEventDamage = new ArrayList<>();
+
     private HashMap<EntityDamageByEntityEvent, Double> reductionBuffer = new HashMap<>();
 
     private List<EntityDamageByEntityEvent> removeCriticalDamage = new ArrayList<>();
@@ -42,8 +44,13 @@ public class DamageManager implements Listener {
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onHit(EntityDamageByEntityEvent event) {
-        event.setDamage(getDamageFromEvent(event));
+        if (noEventDamage.contains(event)) {
+            event.setDamage(0);
+        } else {
+            event.setDamage(getDamageFromEvent(event));
+        }
 
+        noEventDamage.remove(event);
         additiveDamageBuffer.remove(event);
         multiplicativeDamageBuffer.remove(event);
         reductionBuffer.remove(event);
@@ -80,6 +87,10 @@ public class DamageManager implements Listener {
         }
     }
 
+    public void setNoEventDamage(EntityDamageByEntityEvent event) {
+        noEventDamage.add(event);
+    }
+
     public void reduceDamage(EntityDamageByEntityEvent event, double value) {
         if (!reductionBuffer.containsKey(event)) reductionBuffer.put(event, 1D);
 
@@ -107,21 +118,21 @@ public class DamageManager implements Listener {
     public void doTrueDamage(Player target, double damage, Player reflectTo) {
         Mirror mirror = new Mirror();
 
-        target.damage(0);
-
         if (!CustomEnchant.itemHasEnchant(target.getInventory().getLeggings(), mirror)) {
             if (target.getHealth() - damage < 0) {
-                target.setHealth(target.getMaxHealth());
+                target.setMaxHealth(target.getMaxHealth());
                 manuallyCallDeathEvent(target);
             } else {
-                target.setHealth(target.getMaxHealth() - damage);
+                target.damage(0);
+                target.setHealth(target.getHealth() - damage);
             }
         } else if (CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror) != 1) {
             if (reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
-                reflectTo.setMaxHealth(reflectTo.getMaxHealth());
+                reflectTo.setMaxHealth(target.getMaxHealth());
                 manuallyCallDeathEvent(reflectTo);
             } else {
-                reflectTo.setHealth(reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))));
+                reflectTo.damage(0);
+                reflectTo.setHealth(Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
             }
         }
     }
