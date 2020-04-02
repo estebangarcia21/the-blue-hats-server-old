@@ -32,20 +32,15 @@ public abstract class CustomEnchant implements Listener {
 
     public boolean attemptEnchantExecution(ItemStack source, Object... args) {
         if (itemHasEnchant(source, this)) {
-            if (args.length > 0) {
-                if (!args[0].equals("feedback")) {
-                    applyEnchant(getEnchantLevel(source, this), args);
-                    return true;
-                }
-
-                return true;
-            }
-
             applyEnchant(getEnchantLevel(source, this), args);
             return true;
         }
 
         return false;
+    }
+
+    public boolean getAttemptedEnchantExecutionFeedback(ItemStack source) {
+        return itemHasEnchant(source, this);
     }
 
     public abstract void applyEnchant(int level, Object... args) ;
@@ -70,16 +65,15 @@ public abstract class CustomEnchant implements Listener {
             cooldownTimerTimes.put(player.getUniqueId(), ticks);
 
             cooldownTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+                playerIsOnCooldown.put(player.getUniqueId(), true);
+                cooldownTimerTimes.put(player.getUniqueId(), cooldownTimerTimes.get(player.getUniqueId()) - 1);
+
                 if (cooldownTimerTimes.get(player.getUniqueId()) <= 0f) {
                     playerIsOnCooldown.put(player.getUniqueId(), false);
                     cooldownTimerTimes.put(player.getUniqueId(), 0L);
                     Bukkit.getServer().getScheduler().cancelTask(cooldownTasks.get(player.getUniqueId()));
                     cooldownTasks.remove(player.getUniqueId());
-                    return;
                 }
-
-                playerIsOnCooldown.put(player.getUniqueId(), true);
-                cooldownTimerTimes.put(player.getUniqueId(), cooldownTimerTimes.get(player.getUniqueId()) - 1);
             }, 0L, 1L));
         }
     }

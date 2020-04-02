@@ -121,7 +121,7 @@ public class DamageManager implements Listener {
                 reflectTo.setMaxHealth(reflectTo.getMaxHealth());
                 manuallyCallDeathEvent(reflectTo);
             } else {
-                reflectTo.setHealth(Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
+                reflectTo.setHealth(reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))));
             }
         }
     }

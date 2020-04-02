@@ -16,8 +16,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 @SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {
-    private final String update = "Fixed a minor bug in the damage indicator!";
-    private final String testMessage = "Working on the damage indicator!";
+    private final String update = "Added player nametags!";
+    private final String testMessage = "Working on changing the name above players heads!";
     private final boolean isTesting = false;
 
     @EventHandler
@@ -27,7 +27,7 @@ public class DeveloperUpdates implements Listener {
 
     private void displayUpdate(Player player) {
         if (isTesting) {
-            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "⚠ " + ChatColor.YELLOW + "Testing! Expect many restarts..." + ChatColor.RED + " ⚠" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "⚠ " + ChatColor.YELLOW + "Testing! Expect restarts..." + ChatColor.RED + " ⚠" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
             PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
             PacketPlayOutTitle length = new PacketPlayOutTitle(20, 5 * 20, 20);
@@ -44,7 +44,7 @@ public class DeveloperUpdates implements Listener {
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitle);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitleLength);
         } else {
-            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "Whats new?" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "What's new?" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
             PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
             PacketPlayOutTitle length = new PacketPlayOutTitle(20, 5 * 20, 20);

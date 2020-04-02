@@ -53,7 +53,7 @@ public class DevilChicks extends CustomEnchant {
 
             chicken.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 3, 5));
 
-            float volume = 1.75f;
+            float volume = 0.5f;
 
             Sequence soundAnimation = new Sequence() {{
                 addKeyFrame(1, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.6f));
@@ -72,6 +72,8 @@ public class DevilChicks extends CustomEnchant {
                     for (Entity entity : chicken.getNearbyEntities(1, 1, 1)) {
                         if (entity instanceof Player) {
                             Player player = (Player) entity;
+
+                            //TODO Update check to prevent multi-death
 
                             DamageManager.getInstance().doTrueDamage(player, 2.4, (Player) arrow.getShooter());
 

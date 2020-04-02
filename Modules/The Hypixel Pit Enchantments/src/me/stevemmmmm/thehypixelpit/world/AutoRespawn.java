@@ -23,6 +23,7 @@ public class AutoRespawn implements Listener {
 
         player.setVelocity(new Vector(0, 0, 0));
         player.setHealth(player.getMaxHealth());
+        player.setMaxHealth(24);
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
             player.teleport(new Location(player.getWorld(), 0.5, 115.5, -7.5));

@@ -55,7 +55,7 @@ public class Explosive extends CustomEnchant {
                 }
             }
 
-            arrow.getWorld().playSound(arrow.getLocation(), Sound.EXPLODE, 1, explosionPitch.at(level));
+            arrow.getWorld().playSound(arrow.getLocation(), Sound.EXPLODE, 0.75f, explosionPitch.at(level));
             arrow.getWorld().playEffect(arrow.getLocation(), explosionParticle.at(level), explosionParticle.at(level).getData(), 100);
         }
 

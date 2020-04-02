@@ -31,7 +31,19 @@ public class DescriptionBuilder {
 
     public DescriptionBuilder writeVariable(int id, int level) {
         if (parameters.get(id) != null) {
-            if (condition) description.set(lineIndex, description.get(lineIndex) + parameters.get(id)[level - 1]);
+            try {
+                if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + parameters.get(id)[level - 1]);
+            } catch (NullPointerException ignored) {
+
+            }
+        }
+
+        return this;
+    }
+
+    public DescriptionBuilder writeVariable(ChatColor color, int id, int level) {
+        if (parameters.get(id) != null) {
+            if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + parameters.get(id)[level - 1]);
         }
 
         return this;
@@ -47,6 +59,12 @@ public class DescriptionBuilder {
     }
 
     public DescriptionBuilder write(String value) {
+        if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + value);
+
+        return this;
+    }
+
+    public DescriptionBuilder write(ChatColor color, String value) {
         if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + value);
 
         return this;

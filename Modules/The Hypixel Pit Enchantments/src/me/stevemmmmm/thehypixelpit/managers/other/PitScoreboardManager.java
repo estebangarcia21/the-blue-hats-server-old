@@ -34,7 +34,6 @@ public class PitScoreboardManager implements Listener {
     private static PitScoreboardManager instance;
 
     private HashMap<UUID, Integer> scoreboardTasks = new HashMap<>();
-    private HashMap<UUID, Team> teams = new HashMap<>();
 
     public static PitScoreboardManager getInstance() {
         if (instance == null) instance = new PitScoreboardManager();
@@ -113,20 +112,24 @@ public class PitScoreboardManager implements Listener {
         Score serverinfo = objective.getScore(ChatColor.YELLOW + "bluehats.ddns.net");
         serverinfo.setScore(index);
 
-        updateNametag(player, board);
+        for (Player p : player.getWorld().getPlayers()) {
+            updateNametag(p, board);
+        }
 
         player.setScoreboard(board);
     }
 
     @SuppressWarnings("deprecation")
     private void updateNametag(Player player, Scoreboard board) {
-        if (teams.get(player.getUniqueId()) == null) {
-            teams.put(player.getUniqueId(), board.registerNewTeam(player.getName()));
-        }
+        Team team = board.registerNewTeam(player.getPlayer().getName());
 
-        Team team = teams.get(player.getUniqueId());
-        team.setPrefix(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + " " + ChatColor.GOLD);
-        team.setDisplayName("XD");
+        //TODO Fix lazy calling
+
+        if (player.getName().equalsIgnoreCase("TheBlueHats")) {
+            team.setPrefix(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + " " + ChatColor.RED);
+        } else {
+            team.setPrefix(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + " " + ChatColor.GOLD);
+        }
 
         team.addPlayer(player);
     }

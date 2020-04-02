@@ -113,6 +113,16 @@ public class GrindingSystem implements Listener, ConfigWriter {
 
     @EventHandler
     public void onPlayerKill(PlayerDeathEvent event) {
+        if (event.getEntity().getKiller() == null) {
+            event.getEntity().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "DEATH!");
+            return;
+        }
+
+        if (event.getEntity().getName().equalsIgnoreCase(event.getEntity().getKiller().getName())) {
+            event.getEntity().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "DEATH!");
+            return;
+        }
+
         DecimalFormat df = new DecimalFormat("##0.00");
         if (event.getEntity().getKiller() != null) {
             event.getEntity().getKiller().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "KILL!" + ChatColor.GRAY + " on " + ChatColor.GOLD + event.getEntity().getName() + ChatColor.AQUA + " +" + giveRandomXP(event.getEntity().getKiller()) + "XP" + ChatColor.GOLD + " +" + df.format(giveRandomGold(event.getEntity().getKiller())) + "g");

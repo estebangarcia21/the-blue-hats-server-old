@@ -90,7 +90,7 @@ public class Main extends JavaPlugin {
     }
 
     private void registerEnchants() {
-        //Weapons
+        //Swords
         CustomEnchantManager.getInstance().registerEnchant(new Billionaire());
         CustomEnchantManager.getInstance().registerEnchant(new Healer());
         CustomEnchantManager.getInstance().registerEnchant(new Perun());
@@ -100,6 +100,8 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new BulletTime());
         CustomEnchantManager.getInstance().registerEnchant(new ComboDamage());
         CustomEnchantManager.getInstance().registerEnchant(new PainFocus());
+        CustomEnchantManager.getInstance().registerEnchant(new KingBuster());
+        CustomEnchantManager.getInstance().registerEnchant(new Punisher());
 
         //Bows
         CustomEnchantManager.getInstance().registerEnchant(new Robinhood());

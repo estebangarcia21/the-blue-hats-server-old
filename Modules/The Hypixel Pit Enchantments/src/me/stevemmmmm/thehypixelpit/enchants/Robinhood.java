@@ -25,6 +25,7 @@ public class Robinhood extends CustomEnchant {
     private LevelVariable<Float> damageReduction = new LevelVariable<>(.4f, .5f, .6f);
 
     private HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
+    private HashMap<Arrow, Player> arrowToHomingLocation = new HashMap<>();
 
     @EventHandler
     public void onShoot(EntityShootBowEvent event) {
@@ -32,7 +33,7 @@ public class Robinhood extends CustomEnchant {
             Arrow arrow = (Arrow) event.getProjectile();
             Player player = (Player) event.getEntity();
 
-            attemptEnchantExecution(player.getInventory().getItemInHand(), arrow, player);
+            attemptEnchantExecution(event.getBow(), arrow, player);
         }
     }
 
@@ -55,8 +56,10 @@ public class Robinhood extends CustomEnchant {
 
                     //TODO Check the robin levels and implement damage reductions
 
-                    Bukkit.getServer().getScheduler().cancelTask(arrowTasks.get(arrow));
-                    removal = arrow;
+                    if (!arrow.isValid()) {
+                        Bukkit.getServer().getScheduler().cancelTask(arrowTasks.get(arrow));
+                        removal = arrow;
+                    }
                 }
             }
 
@@ -73,8 +76,10 @@ public class Robinhood extends CustomEnchant {
                 if (entry.getKey() == event.getEntity()) {
                     Arrow arrow = (Arrow) event.getEntity();
 
-                    Bukkit.getServer().getScheduler().cancelTask(arrowTasks.get(arrow));
-                    removal = arrow;
+                    if (!arrow.isValid()) {
+                        Bukkit.getServer().getScheduler().cancelTask(arrowTasks.get(arrow));
+                        removal = arrow;
+                    }
                 }
             }
 
@@ -86,8 +91,6 @@ public class Robinhood extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Arrow arrow = (Arrow) args[0];
         Player player = (Player) args[1];
-
-        //TODO Volley arrows damage not reduced
 
         arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
             List<Entity> closestEntities = player.getNearbyEntities(16, 16, 16);
@@ -120,14 +123,30 @@ public class Robinhood extends CustomEnchant {
 
             if (closestPlayer == null) return;
 
-            Location arrowLocation = arrow.getLocation();
-            Location closestPlayerLoc = closestPlayer.getLocation();
+            Vector direction = null;
 
-            Vector arrowVector = arrowLocation.toVector();
-            Vector closestPlayerVector = closestPlayerLoc.toVector();
-            closestPlayerVector.setY(closestPlayerVector.getY() + 2);
+            if (!arrowToHomingLocation.containsKey(arrow)) {
+                Location arrowLocation = arrow.getLocation();
+                Location closestPlayerLoc = closestPlayer.getLocation();
 
-            Vector direction = arrowVector.subtract(closestPlayerVector).normalize().multiply(-1);
+                Vector arrowVector = arrowLocation.toVector();
+                Vector closestPlayerVector = closestPlayerLoc.toVector();
+                closestPlayerVector.setY(closestPlayerVector.getY() + 2);
+
+                direction = arrowVector.subtract(closestPlayerVector).normalize().multiply(-1);
+                arrowToHomingLocation.put(arrow, closestPlayer);
+            } else {
+                Vector closestPlayerVector = arrowToHomingLocation.get(arrow).getLocation().toVector();
+                closestPlayerVector.setY(closestPlayerVector.getY() + 2);
+
+                if (arrow.getLocation().toVector().distance(closestPlayerVector) > 16) {
+                    Bukkit.getServer().getScheduler().cancelTask(arrowTasks.get(arrow));
+                    return;
+                }
+
+                direction = arrow.getLocation().toVector().subtract(closestPlayerVector).normalize().multiply(-1);
+            }
+
             arrow.setVelocity(direction);
         }, 0L, 1L));
     }

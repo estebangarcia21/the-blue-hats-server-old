@@ -29,11 +29,10 @@ public class Volley extends CustomEnchant {
     private HashMap<Arrow, Integer> volleyTasks = new HashMap<>();
     private HashMap<Arrow, Integer> arrowCount = new HashMap<>();
 
-    //Supported volley enchants
-    private Robinhood robinhood = new Robinhood();
-
     @EventHandler
     public void onBowShoot(EntityShootBowEvent event) {
+        if (event.getForce() == -1f) return;
+
         if (event.getProjectile() instanceof Arrow) {
             if (((Arrow) event.getProjectile()).getShooter() instanceof Player) {
                 Player player = (Player) ((Arrow) event.getProjectile()).getShooter();
@@ -58,13 +57,10 @@ public class Volley extends CustomEnchant {
 
             volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
 
-            ArrowManager.getInstance().registerArrow(volleyArrow, item);
+            EntityShootBowEvent event = new EntityShootBowEvent(player, item, volleyArrow, -1f);
+            Main.instance.getServer().getPluginManager().callEvent(event);
 
-            for (CustomEnchant customEnchant : CustomEnchantManager.getInstance().getItemEnchants(item).keySet()) {
-                if (customEnchant instanceof Robinhood) {
-                    robinhood.attemptEnchantExecution(item, volleyArrow, player);
-                }
-            }
+            ArrowManager.getInstance().registerArrow(volleyArrow, item);
 
             arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
             if (arrowCount.get(arrow) > arrows.at(level)) {

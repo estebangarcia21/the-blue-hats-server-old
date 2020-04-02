@@ -4,14 +4,19 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.*;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,17 +26,37 @@ import java.util.UUID;
 public class LuckyShot extends CustomEnchant {
     private LevelVariable<Integer> percentChance = new LevelVariable<>(2, 3, 10);
 
+    private ArrayList<Arrow> hitLuckyShotArrows = new ArrayList<>();
+
     private List<UUID> canLuckyShot = new ArrayList<>();
 
     @EventHandler
     public void onArrowHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             Arrow arrow = (Arrow) event.getDamager();
+            hitLuckyShotArrows.add(arrow);
 
             if (arrow.getShooter() instanceof Player) {
                 attemptEnchantExecution(ArrowManager.getInstance().getItemStackFromArrow(arrow), event);
             }
         }
+    }
+
+    @EventHandler
+    public void onProjectileHit(ProjectileHitEvent event) {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+            if (event.getEntity() instanceof Arrow) {
+                Arrow arrow = (Arrow) event.getEntity();
+
+                if (event.getEntity().getShooter() instanceof Player) {
+                    if (getAttemptedEnchantExecutionFeedback(ArrowManager.getInstance().getItemStackFromArrow((Arrow) event.getEntity()))) {
+                        if (!hitLuckyShotArrows.contains(arrow)) {
+                            canLuckyShot.remove(((Player) (event.getEntity()).getShooter()).getUniqueId());
+                        }
+                    }
+                }
+            }
+        }, 1L);
     }
 
     @EventHandler
@@ -53,9 +78,11 @@ public class LuckyShot extends CustomEnchant {
     @Override
     public void applyEnchant(int level, Object... args) {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
+        Arrow arrow = (Arrow) event.getDamager();
 
         if (canLuckyShot.contains(((Player) ((Arrow) event.getDamager()).getShooter()).getUniqueId())) {
-            canLuckyShot.remove(((Player) ((Arrow) event.getDamager()).getShooter()).getUniqueId());
+            hitLuckyShotArrows.remove(arrow);
+            canLuckyShot.remove(((Player) arrow.getShooter()).getUniqueId());
             DamageManager.getInstance().addDamage(event, 4, CalculationMode.MULTIPLICATIVE);
         }
     }

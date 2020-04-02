@@ -35,6 +35,10 @@ public class LevelChatFormatting implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         //TODO Correct values for chat
 
-        event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] %s" + ChatColor.WHITE + ": %s");
+        if (event.getPlayer().getName().equalsIgnoreCase("TheBlueHats")) {
+            event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.RED + " [Owner] " + ChatColor.RED + "%s" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "%s");
+        } else {
+            event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] %s" + ChatColor.WHITE + ": %s");
+        }
     }
 }

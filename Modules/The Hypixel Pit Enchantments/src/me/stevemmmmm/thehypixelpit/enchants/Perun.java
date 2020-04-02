@@ -62,7 +62,7 @@ public class Perun extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new DescriptionBuilder()
-                .addVariable("1.5❤", "2❤", "1 + 1❤")
+                .addVariable("1.5❤", "2❤", "1❤ + 1❤")
                 .addVariable("fifth", "fourth", "fourth")
                 .write("Every ").setColor(ChatColor.YELLOW).writeVariable(1, level).resetColor().write(" hit strikes").nextLine()
                 .setColor(ChatColor.YELLOW).write("lightning").resetColor().write(" for ").setColor(ChatColor.RED)
