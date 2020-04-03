@@ -63,6 +63,11 @@ public class EnchantCommand implements CommandExecutor {
                         return true;
                     }
 
+                    if (item.getType() != Material.LEATHER_LEGGINGS && item.getType() != Material.GOLD_SWORD && item.getType() != Material.BOW) {
+                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You can not enchant this item!");
+                        return true;
+                    }
+
                     CustomEnchantManager.getInstance().applyLore(item, customEnchant, Integer.parseInt(args[1]));
                     player.sendMessage(ChatColor.DARK_PURPLE + "Success!" + ChatColor.RED + " You applied the enchantment successfully!");
                 }

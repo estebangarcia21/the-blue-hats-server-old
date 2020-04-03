@@ -3,7 +3,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
 import org.bukkit.ChatColor;
@@ -53,7 +53,7 @@ public class Billionaire extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("1.33", "1.67", "2")
                 .addVariable("100g", "200g", "350g")
                 .setColor(ChatColor.GRAY)

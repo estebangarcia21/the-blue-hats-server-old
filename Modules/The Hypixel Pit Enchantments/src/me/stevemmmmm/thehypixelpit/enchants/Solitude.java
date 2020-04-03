@@ -2,7 +2,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
@@ -61,7 +61,7 @@ public class Solitude extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("-40%", "-50%", "-60%")
                 .write("Recieve ").setColor(ChatColor.BLUE).writeVariable(0, level).resetColor().write(" damage when ")
                 .setWriteCondition(level == 1).write("only").nextLine().write("one other player is within 7").nextLine().write("blocks").resetCondition()

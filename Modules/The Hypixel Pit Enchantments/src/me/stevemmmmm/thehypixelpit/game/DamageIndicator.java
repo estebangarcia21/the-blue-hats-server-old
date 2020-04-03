@@ -5,6 +5,7 @@ package me.stevemmmmm.thehypixelpit.game;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.ChatColor;
@@ -32,7 +33,7 @@ public class DamageIndicator implements Listener {
             Player damager = (Player) event.getDamager();
             Player attacked = (Player) event.getEntity();
 
-            displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
+            if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
@@ -40,21 +41,23 @@ public class DamageIndicator implements Listener {
                 Player damager = (Player) ((Arrow) event.getDamager()).getShooter();
                 Player attacked = (Player) event.getEntity();
 
-                displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
+                if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
             }
         }
     }
 
     public void displayIndicator(Player damager, Player attacked, double damage) {
-        PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + new IndicatorBuilder(attacked.getName(), (int) attacked.getHealth(), damage, (int) attacked.getMaxHealth()).build() + "\"}"), (byte) 2);
+        PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + new IndicatorBuilder(attacked, (int) attacked.getHealth(), damage, (int) attacked.getMaxHealth()).build() + "\"}"), (byte) 2);
         ((CraftPlayer) damager).getHandle().playerConnection.sendPacket(packet);
     }
 
     static class IndicatorBuilder {
         private StringBuilder output = new StringBuilder();
 
-        public IndicatorBuilder(String damagedName, int originalHealth, double damageTaken, int maxHealth) {
-            output.append(ChatColor.GOLD.toString()).append(damagedName).append(" ");
+        public IndicatorBuilder(Player damaged, int originalHealth, double damageTaken, int maxHealth) {
+            output.append(ChatColor.GOLD.toString()).append(damaged.getName()).append(" ");
+
+            EntityPlayer player = ((CraftPlayer) damaged).getHandle();
 
             int roundedDamageTaken = (int) damageTaken / 2;
 
@@ -63,10 +66,14 @@ public class DamageIndicator implements Listener {
 
             int result = Math.max(originalHealth - roundedDamageTaken, 0);
 
+            int redHeartsDamageTaken = Math.max(0, roundedDamageTaken - (int) player.getAbsorptionHearts() / 2);
+
             if (result == 0) {
                 roundedDamageTaken = 0;
+                redHeartsDamageTaken = 0;
 
                 for (int i = 0; i < originalHealth; i++) {
+                    redHeartsDamageTaken++;
                     roundedDamageTaken++;
                 }
             }
@@ -75,12 +82,16 @@ public class DamageIndicator implements Listener {
                 output.append(ChatColor.DARK_RED.toString()).append("❤");
             }
 
-            for (int i = 0; i < roundedDamageTaken; i++) {
+            for (int i = 0; i < redHeartsDamageTaken; i++) {
                 output.append(ChatColor.RED.toString()).append("❤");
             }
 
             for (int i = originalHealth; i < maxHealth; i++) {
                 output.append(ChatColor.BLACK.toString()).append("❤");
+            }
+
+            for (int i = 0; i < (int) player.getAbsorptionHearts() / 2; i++) {
+                output.append(ChatColor.YELLOW.toString()).append("❤");
             }
 
             output.append(ChatColor.RED.toString()).append(" ").append(new DecimalFormat("###0.000").format(damageTaken / 2)).append("HP");

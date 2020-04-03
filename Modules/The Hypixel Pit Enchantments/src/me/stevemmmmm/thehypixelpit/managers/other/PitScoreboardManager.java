@@ -1,29 +1,18 @@
 package me.stevemmmmm.thehypixelpit.managers.other;
 
-import com.mojang.authlib.GameProfile;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.game.CombatTimer;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.util.CraftChatMessage;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.*;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
@@ -49,7 +38,7 @@ public class PitScoreboardManager implements Listener {
         Player player = event.getPlayer();
 
         if (!scoreboardTasks.containsKey(player.getUniqueId())) {
-            scoreboardTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, new Runnable() {
+            scoreboardTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, new Runnable() {
                 @Override
                 public void run() {
                     Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();

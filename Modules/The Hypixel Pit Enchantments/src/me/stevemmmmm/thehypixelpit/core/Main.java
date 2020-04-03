@@ -1,11 +1,15 @@
 package me.stevemmmmm.thehypixelpit.core;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.thehypixelpit.chat.LevelChatFormatting;
 import me.stevemmmmm.thehypixelpit.commands.*;
 import me.stevemmmmm.thehypixelpit.enchants.*;
+import me.stevemmmmm.thehypixelpit.game.Bread;
 import me.stevemmmmm.thehypixelpit.game.CombatTimer;
 import me.stevemmmmm.thehypixelpit.game.DamageIndicator;
+import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.game.duels.DuelingManager;
 import me.stevemmmmm.thehypixelpit.game.duels.GameUtility;
 import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
@@ -28,13 +32,15 @@ import java.util.logging.Logger;
  */
 
 public class Main extends JavaPlugin {
-    public static Main instance;
+    public static Main INSTANCE;
+    public static ProtocolManager protocolManager;
 
     public static String version = "v1.0";
 
     @Override
     public void onEnable() {
-        instance = this;
+        INSTANCE = this;
+        protocolManager = ProtocolLibrary.getProtocolManager();
 
         ConfigAPI.setPlugin(this, "Ranks", "Gold", "XP", "Prestiges", "Levels");
 
@@ -65,6 +71,11 @@ public class Main extends JavaPlugin {
         getCommand("duel").setExecutor(new DuelCommand());
         getCommand("giveprot").setExecutor(new GiveProtCommand());
         getCommand("setgold").setExecutor(new SetGoldCommand());
+        getCommand("givebread").setExecutor(new GiveBreadCommand());
+
+        SpawnCommand spawnCommand = new SpawnCommand();
+        getCommand("spawn").setExecutor(spawnCommand);
+        getCommand("respawn").setExecutor(spawnCommand);
 
         //Game logic
         //getServer().getPluginManager().registerEvents(new MysticWell(), this);
@@ -75,8 +86,9 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(DamageManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(BowManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(new LevelChatFormatting(), this);
-
+        getServer().getPluginManager().registerEvents(new Bread(), this);
         getServer().getPluginManager().registerEvents(GrindingSystem.getInstance(), this);
+        getServer().getPluginManager().registerEvents(RegionManager.getInstance(), this);
     }
 
     @Override
@@ -93,7 +105,7 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new Billionaire());
         CustomEnchantManager.getInstance().registerEnchant(new Healer());
         CustomEnchantManager.getInstance().registerEnchant(new Perun());
-        CustomEnchantManager.getInstance().registerEnchant(new Stun());
+        CustomEnchantManager.getInstance().registerEnchant(new ComboStun());
         CustomEnchantManager.getInstance().registerEnchant(new Lifesteal());
         CustomEnchantManager.getInstance().registerEnchant(new DiamondStomp());
         CustomEnchantManager.getInstance().registerEnchant(new BulletTime());
@@ -101,6 +113,7 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new PainFocus());
         CustomEnchantManager.getInstance().registerEnchant(new KingBuster());
         CustomEnchantManager.getInstance().registerEnchant(new Punisher());
+        CustomEnchantManager.getInstance().registerEnchant(new ComboSwift());
 
         //Bows
         CustomEnchantManager.getInstance().registerEnchant(new Robinhood());
@@ -112,6 +125,7 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new Explosive());
         CustomEnchantManager.getInstance().registerEnchant(new Wasp());
         CustomEnchantManager.getInstance().registerEnchant(new Parasite());
+        CustomEnchantManager.getInstance().registerEnchant(new PushComesToShove());
 
         //Pants
         CustomEnchantManager.getInstance().registerEnchant(new Mirror());

@@ -77,7 +77,7 @@ public class CriticallyFunky extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("65%", "65%", "40%")
                 .addVariable("", "14%", "30%")
                 .write("Critical hits against you deal").nextLine()

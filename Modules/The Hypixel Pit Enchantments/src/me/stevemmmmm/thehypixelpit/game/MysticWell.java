@@ -202,7 +202,7 @@ public class MysticWell implements Listener {
         Inventory gui = playerGui.get(player.getUniqueId());
 
         if (animation == MysticWellState.IDLE) {
-            animationTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+            animationTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
                 ItemStack grayGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
                 ItemMeta gpMeta = grayGlassPane.getItemMeta();
                 gpMeta.setDisplayName(ChatColor.GRAY + "Click an item in your inventory!");
@@ -238,7 +238,7 @@ public class MysticWell implements Listener {
 
             gui.setItem(24, enchantmentTableInfoItsRollin);
 
-            animationTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+            animationTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
                 ItemStack greenGlassPane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 13);
                 ItemMeta greenGlassPaneItemMeta = greenGlassPane.getItemMeta();
 

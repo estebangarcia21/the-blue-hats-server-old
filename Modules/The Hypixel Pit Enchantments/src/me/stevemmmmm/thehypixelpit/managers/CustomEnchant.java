@@ -5,16 +5,14 @@ package me.stevemmmmm.thehypixelpit.managers;
  */
 
 import me.stevemmmmm.thehypixelpit.core.Main;
+import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -32,6 +30,14 @@ public abstract class CustomEnchant implements Listener {
 
     public boolean attemptEnchantExecution(ItemStack source, Object... args) {
         if (itemHasEnchant(source, this)) {
+            for (Object object : args) {
+                if (object instanceof Player) {
+                    if (RegionManager.getInstance().playerIsInRegion((Player) object, RegionManager.RegionType.SPAWN)) {
+                        return false;
+                    }
+                }
+            }
+
             applyEnchant(getEnchantLevel(source, this), args);
             return true;
         }
@@ -64,7 +70,7 @@ public abstract class CustomEnchant implements Listener {
         if (!cooldownTasks.containsKey(player.getUniqueId())) {
             cooldownTimerTimes.put(player.getUniqueId(), ticks);
 
-            cooldownTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+            cooldownTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
                 playerIsOnCooldown.put(player.getUniqueId(), true);
                 cooldownTimerTimes.put(player.getUniqueId(), cooldownTimerTimes.get(player.getUniqueId()) - 1);
 
@@ -187,8 +193,8 @@ public abstract class CustomEnchant implements Listener {
         if (!cooldownTimesHitTimer.containsKey(player.getUniqueId())) cooldownTimesHitTimer.put(player.getUniqueId(), 0L);
 
         if (!cooldownResetTasksHitTimer.containsKey(player.getUniqueId())) {
-            cooldownResetTasksHitTimer.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
-                if (cooldownTimesHitTimer.get(player.getUniqueId()) >= 3) {
+            cooldownResetTasksHitTimer.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                if (cooldownTimesHitTimer.get(player.getUniqueId()) >= 5) {
                     hitMappings.put(player.getUniqueId(), 0);
                     cooldownTimesHitTimer.put(player.getUniqueId(), 0L);
                     Bukkit.getServer().getScheduler().cancelTask(cooldownResetTasksHitTimer.get(player.getUniqueId()));

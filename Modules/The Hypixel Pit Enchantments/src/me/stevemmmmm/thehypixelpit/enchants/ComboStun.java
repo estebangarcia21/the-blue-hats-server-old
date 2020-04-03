@@ -1,7 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
@@ -20,29 +20,30 @@ import java.util.ArrayList;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Stun extends CustomEnchant {
+public class ComboStun extends CustomEnchant {
     private LevelVariable<Integer> duration = new LevelVariable<>(10, 16, 30);
     private LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event);
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager(), event.getEntity());
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
+        Player damager = (Player) args[0];
+        Player hit = (Player) args[1];
 
-        updateHitCount((Player) event.getEntity());
+        updateHitCount(damager);
 
-        if (hasRequiredHits((Player) event.getEntity(), hitsNeeded.at(level))) {
-            ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, duration.at(level), 8), true);
-            ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.JUMP, duration.at(level), -8), true);
-            event.getEntity().getWorld().playSound(event.getEntity().getLocation(), Sound.ANVIL_LAND, 1, 0.1f);
+        if (hasRequiredHits(damager, hitsNeeded.at(level))) {
+            hit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, duration.at(level), 8), true);
+            hit.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, duration.at(level), -8), true);
+            hit.getWorld().playSound(hit.getLocation(), Sound.ANVIL_LAND, 1, 0.1f);
 
-            sendPackets((Player) event.getEntity());
+            sendPackets(hit);
         }
     }
 
@@ -77,7 +78,7 @@ public class Stun extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("fifth", "fourth", "fourth")
                 .addVariable("0.5", "0.8", "1.5")
                 .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" strike on an enemy").nextLine()

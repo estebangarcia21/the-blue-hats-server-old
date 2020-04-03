@@ -30,7 +30,7 @@ public class CustomEnchantManager {
     }
 
     public void registerEnchant(CustomEnchant enchant) {
-        Main.instance.getServer().getPluginManager().registerEvents(enchant, Main.instance);
+        Main.INSTANCE.getServer().getPluginManager().registerEvents(enchant, Main.INSTANCE);
 
         enchants.add(enchant);
         enchants.sort(new SortCustomEnchantByName());

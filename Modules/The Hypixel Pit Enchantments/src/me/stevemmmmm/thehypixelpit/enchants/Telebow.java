@@ -1,8 +1,9 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
+import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.utils.TelebowData;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -87,7 +88,7 @@ public class Telebow extends CustomEnchant {
             if (arrow.getShooter() instanceof Player) {
                 Player shooter = (Player) arrow.getShooter();
 
-                if (itemHasEnchant(shooter.getInventory().getItemInHand(), this)) {
+                if (itemHasEnchant(BowManager.getInstance().getBowFromArrow(arrow), this)) {
                     setCooldownTime(shooter, getCooldownTime(shooter) - 3, true);
                 }
             }
@@ -115,7 +116,7 @@ public class Telebow extends CustomEnchant {
         Player player = (Player) args[0];
         Arrow arrow = (Arrow) args[1];
 
-        if (isNotOnCooldown(player)) {
+        if (isNotOnCooldown(player) && !RegionManager.getInstance().locationIsInRegion(arrow.getLocation(), RegionManager.RegionType.SPAWN)) {
             player.teleport(arrow);
             player.getWorld().playSound(arrow.getLocation(), Sound.ENDERMAN_TELEPORT, 1f, 2f);
         }
@@ -135,7 +136,7 @@ public class Telebow extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("90s", "45s", "20s")
                 .write("Sneak to shoot a teleportation").nextLine()
                 .write("arrow (").writeVariable(0, level).write(" cooldown, -3 per bow").nextLine()

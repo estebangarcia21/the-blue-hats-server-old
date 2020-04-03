@@ -4,6 +4,7 @@ package me.stevemmmmm.thehypixelpit.managers.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,7 +41,13 @@ public class BowManager implements Listener {
     }
 
     public ItemStack getBowFromArrow(Arrow arrow) {
-        return data.get(arrow).getItemInHand();
+        for (Arrow arr : data.keySet()) {
+            if (arr.equals(arrow)) {
+                return data.get(arr).getItemInHand();
+            }
+        }
+
+        return new ItemStack(Material.BOW);
     }
 
     public ItemStack getLeggingsFromArrow(Arrow arrow) {

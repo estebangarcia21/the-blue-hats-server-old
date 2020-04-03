@@ -20,6 +20,15 @@ commands:
   setgold:
     description: Sets gold
     usage: /setgold
+  givebread:
+    description: Gives bread
+    usage: /givebread
+  spawn:
+    description: Sends the player to spawn
+    usage: /spawn
+  respawn:
+    description: Sends the player to spawn
+    usage: /respawn
   duel:
     description: Duels a player
     usage: /duel

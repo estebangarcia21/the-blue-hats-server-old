@@ -1,7 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
@@ -53,7 +53,7 @@ public class Megalongbow extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("II", "III", "IV")
                 .write("One shot per second, this bow is").nextLine()
                 .write("automatically fully drawn and").nextLine()

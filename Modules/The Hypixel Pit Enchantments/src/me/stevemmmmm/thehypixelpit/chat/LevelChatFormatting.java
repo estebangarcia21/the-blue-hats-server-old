@@ -38,8 +38,10 @@ public class LevelChatFormatting implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         //TODO Correct values for chat
 
-        if (event.getPlayer().getName().equalsIgnoreCase("Stevemmmmmmm") || event.getPlayer().getName().equalsIgnoreCase("SUNDEWS") || event.getPlayer().getName().equalsIgnoreCase("OVEREXERTED")) {
-            event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.RED + " [ADMIN] " + ChatColor.RED + "%s" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "%s");
+        if (event.getPlayer().getName().equalsIgnoreCase("Stevemmmmmmm")) {
+            event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.RED + " [OWNER] " + ChatColor.RED + "%s" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "%s");
+        } else if (event.getPlayer().getName().equalsIgnoreCase("SUNDEWS") || event.getPlayer().getName().equalsIgnoreCase("OVEREXERTED")) {
+            event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.RED + " [ADMIN] " + ChatColor.RED + "%s" + ChatColor.WHITE + ": " + ChatColor.WHITE + "%s");
         } else {
             event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] %s" + ChatColor.WHITE + ": %s");
         }

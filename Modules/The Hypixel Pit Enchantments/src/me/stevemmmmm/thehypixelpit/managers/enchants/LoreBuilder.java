@@ -7,10 +7,9 @@ package me.stevemmmmm.thehypixelpit.managers.enchants;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class DescriptionBuilder {
+public class LoreBuilder {
     private ArrayList<String> description = new ArrayList<>();
     private List<String[]> parameters = new ArrayList<>();
 
@@ -19,17 +18,17 @@ public class DescriptionBuilder {
 
     private ChatColor color = ChatColor.GRAY;
 
-    public DescriptionBuilder() {
+    public LoreBuilder() {
         description.add("");
     }
 
-    public DescriptionBuilder addVariable(String... values) {
+    public LoreBuilder addVariable(String... values) {
         this.parameters.add(values);
 
         return this;
     }
 
-    public DescriptionBuilder writeVariable(int id, int level) {
+    public LoreBuilder writeVariable(int id, int level) {
         if (parameters.get(id) != null) {
             try {
                 if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + parameters.get(id)[level - 1]);
@@ -41,7 +40,7 @@ public class DescriptionBuilder {
         return this;
     }
 
-    public DescriptionBuilder writeVariable(ChatColor color, int id, int level) {
+    public LoreBuilder writeVariable(ChatColor color, int id, int level) {
         if (parameters.get(id) != null) {
             if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + parameters.get(id)[level - 1]);
         }
@@ -49,7 +48,7 @@ public class DescriptionBuilder {
         return this;
     }
 
-    public DescriptionBuilder nextLine() {
+    public LoreBuilder nextLine() {
         if (condition) {
             lineIndex++;
             description.add("");
@@ -58,19 +57,19 @@ public class DescriptionBuilder {
         return this;
     }
 
-    public DescriptionBuilder write(String value) {
+    public LoreBuilder write(String value) {
         if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + value);
 
         return this;
     }
 
-    public DescriptionBuilder write(ChatColor color, String value) {
+    public LoreBuilder write(ChatColor color, String value) {
         if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + value);
 
         return this;
     }
 
-    public DescriptionBuilder setColor(ChatColor color) {
+    public LoreBuilder setColor(ChatColor color) {
         this.color = color;
 
         if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString());
@@ -78,25 +77,25 @@ public class DescriptionBuilder {
         return this;
     }
 
-    public DescriptionBuilder resetColor() {
+    public LoreBuilder resetColor() {
         this.color = ChatColor.GRAY;
 
         return this;
     }
 
-    public DescriptionBuilder writeOnlyIf(boolean condition, String value) {
+    public LoreBuilder writeOnlyIf(boolean condition, String value) {
         if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + value);
 
         return this;
     }
 
-    public DescriptionBuilder setWriteCondition(boolean condition) {
+    public LoreBuilder setWriteCondition(boolean condition) {
         this.condition = condition;
 
         return this;
     }
 
-    public DescriptionBuilder resetCondition() {
+    public LoreBuilder resetCondition() {
         condition = true;
 
         return this;

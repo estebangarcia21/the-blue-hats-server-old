@@ -61,9 +61,11 @@ public class CombatTimer implements Listener {
     }
 
     private void combatTag(Player player) {
+        if (RegionManager.getInstance().playerIsInRegion(player, RegionManager.RegionType.SPAWN)) return;
+
         combatTime.put(player.getUniqueId(), calculateCombatTime(player));
 
-        if (!combatTasks.containsKey(player.getUniqueId())) combatTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+        if (!combatTasks.containsKey(player.getUniqueId())) combatTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
             if (combatTime.get(player.getUniqueId()) == 0) {
                 Bukkit.getServer().getScheduler().cancelTask(combatTasks.get(player.getUniqueId()));
                 combatTasks.remove(player.getUniqueId());

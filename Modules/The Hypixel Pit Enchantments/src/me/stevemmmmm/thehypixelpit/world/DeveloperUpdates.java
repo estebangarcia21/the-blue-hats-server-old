@@ -16,8 +16,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 @SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {
-    private final String update = "Fixed a Perun and Healer bug!";
-    private final String testMessage = "Working on changing the name above players heads!";
+    private final String update = "Added /spawn!";
+    private final String testMessage = "Working on Push Comes to Shove!";
     private final boolean isTesting = false;
 
     @EventHandler

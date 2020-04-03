@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
+import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.*;
 import org.bukkit.Bukkit;
@@ -25,7 +26,7 @@ public class Robinhood extends CustomEnchant {
     private LevelVariable<Float> damageReduction = new LevelVariable<>(.4f, .5f, .6f);
 
     private HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
-    private HashMap<Arrow, Player> arrowToHomingLocation = new HashMap<>();
+    private HashMap<Arrow, Player> arrowToHomingPlayer = new HashMap<>();
 
     @EventHandler
     public void onShoot(EntityShootBowEvent event) {
@@ -95,7 +96,7 @@ public class Robinhood extends CustomEnchant {
             if (force < 1) return;
         }
 
-        arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+        arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
             List<Entity> closestEntities = player.getNearbyEntities(16, 16, 16);
             List<Player> closestPlayers = new ArrayList<>();
 
@@ -128,7 +129,7 @@ public class Robinhood extends CustomEnchant {
 
             Vector direction = null;
 
-            if (!arrowToHomingLocation.containsKey(arrow)) {
+            if (!arrowToHomingPlayer.containsKey(arrow)) {
                 Location arrowLocation = arrow.getLocation();
                 Location closestPlayerLoc = closestPlayer.getLocation();
 
@@ -137,12 +138,12 @@ public class Robinhood extends CustomEnchant {
                 closestPlayerVector.setY(closestPlayerVector.getY() + 2);
 
                 direction = arrowVector.subtract(closestPlayerVector).normalize().multiply(-1);
-                arrowToHomingLocation.put(arrow, closestPlayer);
+                arrowToHomingPlayer.put(arrow, closestPlayer);
             } else {
-                Vector closestPlayerVector = arrowToHomingLocation.get(arrow).getLocation().toVector();
+                Vector closestPlayerVector = arrowToHomingPlayer.get(arrow).getLocation().toVector();
                 closestPlayerVector.setY(closestPlayerVector.getY() + 2);
 
-                if (arrow.getLocation().toVector().distance(closestPlayerVector) > 16) {
+                if (RegionManager.getInstance().playerIsInRegion(arrowToHomingPlayer.get(arrow), RegionManager.RegionType.SPAWN)) {
                     Bukkit.getServer().getScheduler().cancelTask(arrowTasks.get(arrow));
                     return;
                 }
@@ -166,8 +167,13 @@ public class Robinhood extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("40%", "50%", "60%")
+                .setWriteCondition(level == 1)
+                .write("Your charged shots are homing but").nextLine()
+                .write("deal ").writeVariable(ChatColor.RED, 0, level).write(" damage")
+                .resetCondition()
+                .setWriteCondition(level != 1)
                 .write("All your shots are homing but deal").nextLine()
                 .setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" damage")
                 .build();

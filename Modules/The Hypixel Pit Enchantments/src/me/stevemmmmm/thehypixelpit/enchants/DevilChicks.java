@@ -9,7 +9,7 @@ import me.stevemmmmm.animationapi.core.SequenceAPI;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -109,7 +109,7 @@ public class DevilChicks extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .writeOnlyIf(level == 1, "Arrows spawn with explosive chicken.")
                 .writeOnlyIf(level == 2, "Arrows spawn many explosive chickens.")
                 .writeOnlyIf(level == 3, "Arrows spawn too many explosive chickens.")

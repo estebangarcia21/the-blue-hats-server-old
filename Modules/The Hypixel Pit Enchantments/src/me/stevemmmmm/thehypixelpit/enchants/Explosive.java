@@ -4,9 +4,10 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -46,6 +47,8 @@ public class Explosive extends CustomEnchant {
                 if (entity instanceof Player) {
                     Player player = (Player) entity;
 
+                    if (RegionManager.getInstance().playerIsInRegion(player, RegionManager.RegionType.SPAWN)) continue;
+
                     if (player != shooter) {
                         Vector force = player.getLocation().toVector().subtract(arrow.getLocation().toVector()).normalize().multiply(1.25);
                         force.setY(.85f);
@@ -74,7 +77,7 @@ public class Explosive extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("POP", "BANG", "BOOM")
                 .setColor(ChatColor.GRAY)
                 .write("Arrows go ").writeVariable(0, level).write("! (" + cooldownTime.at(level) + "s cooldown)")

@@ -6,15 +6,12 @@ package me.stevemmmmm.thehypixelpit.world;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.util.Vector;
-
-import java.util.ArrayList;
 
 public class AutoRespawn implements Listener {
 
@@ -26,8 +23,8 @@ public class AutoRespawn implements Listener {
         player.setHealth(player.getMaxHealth());
         player.setMaxHealth(24);
 
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
-            player.teleport(new Location(player.getWorld(), 0.5, 115.5, -7.5));
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> {
+            player.teleport(new Location(player.getWorld(),0.5, 86.5, 11.5, -180, 0));
             player.setVelocity(new Vector(0, 0, 0));
             player.setFireTicks(0);
         }, 1);

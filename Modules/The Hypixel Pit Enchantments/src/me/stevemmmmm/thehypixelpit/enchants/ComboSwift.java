@@ -16,41 +16,47 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
-public class LastStand extends CustomEnchant {
-    private LevelVariable<Integer> amplifier = new LevelVariable<>(0, 1, 2);
+public class ComboSwift extends CustomEnchant {
+    private LevelVariable<Integer> hitsNeeded = new LevelVariable<>(4, 3, 3);
+    private LevelVariable<Integer> speedTime = new LevelVariable<>(3, 4, 5);
+    private LevelVariable<Integer> speedAmplifier = new LevelVariable<>(0, 1, 1);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity());
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager());
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        Player damaged = (Player) args[0];
+        Player player = (Player) args[0];
 
-        if (damaged.getHealth() < 10) {
-            damaged.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, amplifier.at(level)));
+        updateHitCount(player);
+
+        if (hasRequiredHits(player, hitsNeeded.at(level))) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, speedTime.at(level) * 20, speedAmplifier.at(level)), true);
         }
     }
 
     @Override
     public String getName() {
-        return "Last Stand";
+        return "Combo: Swift";
     }
 
     @Override
     public String getEnchantReferenceName() {
-        return "Laststand";
+        return "Comboswift";
     }
 
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("I", "II", "III")
-                .write("Gain ").setColor(ChatColor.BLUE).write("Resistance ").writeVariable(0, level).resetColor().write(" (4").nextLine()
-                .write("seconds) when reaching ").setColor(ChatColor.RED).write("3❤")
+                .addVariable("fourth", "third", "third")
+                .addVariable("Speed I", "Speed II", "Speed III")
+                .addVariable("3", "4", "5")
+                .write("Every ").writeVariable(ChatColor.YELLOW, 0, level).write(" strike gain").nextLine()
+                .writeVariable(ChatColor.YELLOW, 1, level).write(" (").writeVariable(2, level).write("s)")
                 .build();
     }
 

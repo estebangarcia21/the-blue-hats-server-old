@@ -3,7 +3,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -58,14 +58,14 @@ public class Volley extends CustomEnchant {
 
         Vector originalVelocity = arrow.getVelocity();
 
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> volleyTasks.put(arrow,Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> volleyTasks.put(arrow,Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
             player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
             Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
             volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
 
             EntityShootBowEvent event = new EntityShootBowEvent(player, item, volleyArrow, force);
-            Main.instance.getServer().getPluginManager().callEvent(event);
+            Main.INSTANCE.getServer().getPluginManager().callEvent(event);
 
             BowManager.getInstance().registerArrow(volleyArrow, player);
 
@@ -90,7 +90,7 @@ public class Volley extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("3", "4", "5")
                 .write("Shoot ").setColor(ChatColor.WHITE).writeVariable(0, level).write(" arrows ").resetColor().write("at once")
                 .build();

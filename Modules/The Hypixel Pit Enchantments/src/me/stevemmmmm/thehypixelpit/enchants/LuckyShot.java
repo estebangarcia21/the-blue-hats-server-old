@@ -41,7 +41,7 @@ public class LuckyShot extends CustomEnchant {
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> {
             if (event.getEntity() instanceof Arrow) {
                 Arrow arrow = (Arrow) event.getEntity();
 
@@ -96,7 +96,7 @@ public class LuckyShot extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("2%", "5%", "10%")
                 .setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" chance for a shot to deal").nextLine()
                 .write("quadruple damage")

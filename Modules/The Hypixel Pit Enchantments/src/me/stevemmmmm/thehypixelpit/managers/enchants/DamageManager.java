@@ -2,7 +2,6 @@ package me.stevemmmmm.thehypixelpit.managers.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.enchants.Mirror;
-import me.stevemmmmm.thehypixelpit.game.DamageIndicator;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -143,6 +142,6 @@ public class DamageManager implements Listener {
 
     private void manuallyCallDeathEvent(Player target) {
         PlayerDeathEvent manualEvent = new PlayerDeathEvent(target, new ArrayList<>(), 0,  "");
-        Main.instance.getServer().getPluginManager().callEvent(manualEvent);
+        Main.INSTANCE.getServer().getPluginManager().callEvent(manualEvent);
     }
 }

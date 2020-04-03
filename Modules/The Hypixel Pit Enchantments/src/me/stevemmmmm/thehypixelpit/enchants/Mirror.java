@@ -1,10 +1,9 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.DescriptionBuilder;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,7 @@ public class Mirror extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new DescriptionBuilder()
+        return new LoreBuilder()
                 .addVariable("", "25%", "50%")
                 .setWriteCondition(level == 1)
                 .write("You are immune to true damage")

@@ -101,16 +101,16 @@ public class GiveFreshItemCommand implements CommandExecutor {
                             addPantsLore(freshPantsMeta, "Dark", ChatColor.DARK_PURPLE);
                         }
 
-                        if (object.equalsIgnoreCase("0x7DC383")) {
-                            freshPantsMeta.setColor(Color.fromRGB(0x000000));
+                        if (object.equalsIgnoreCase("Sewer")) {
+                            freshPantsMeta.setColor(Color.fromRGB(0x7DC383));
 
-                            addPantsLore(freshPantsMeta, "Sewer", ChatColor.DARK_PURPLE);
+                            addPantsLore(freshPantsMeta, "Sewer", ChatColor.DARK_GREEN);
                         }
 
                         if (object.equalsIgnoreCase("Aqua")) {
-                            freshPantsMeta.setColor(Color.fromRGB(0x000000));
+                            freshPantsMeta.setColor(Color.fromRGB(0x55FFFF ));
 
-                            addPantsLore(freshPantsMeta, "Aqua", ChatColor.DARK_PURPLE);
+                            addPantsLore(freshPantsMeta, "Aqua", ChatColor.AQUA);
                         }
 
                         item.setItemMeta(freshPantsMeta);
