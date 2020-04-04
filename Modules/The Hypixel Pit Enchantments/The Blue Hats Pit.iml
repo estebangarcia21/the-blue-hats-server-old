@@ -73,7 +73,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/ProtocolLib.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../Projects/The Blue Hats Server/Console/plugins/ProtocolLib.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

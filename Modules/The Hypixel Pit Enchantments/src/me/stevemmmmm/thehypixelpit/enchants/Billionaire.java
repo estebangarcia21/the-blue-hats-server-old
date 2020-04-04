@@ -33,7 +33,7 @@ public class Billionaire extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player damager = (Player) args[0];
 
-        if (GrindingSystem.getInstance().getPlayerGold(damager) > goldNeeded.at(level)) {
+        if (GrindingSystem.getInstance().getPlayerGold(damager) >= goldNeeded.at(level)) {
             GrindingSystem.getInstance().setPlayerGold(damager, GrindingSystem.getInstance().getPlayerGold(damager) - goldNeeded.at(level));
 
             DamageManager.getInstance().addDamage((EntityDamageByEntityEvent) args[1], damageIncrease.at(level), CalculationMode.MULTIPLICATIVE);

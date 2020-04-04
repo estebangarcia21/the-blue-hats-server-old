@@ -5,12 +5,14 @@ package me.stevemmmmm.thehypixelpit.game;
  */
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ public class RegionManager implements Listener {
         if (event.getProjectile() instanceof Arrow) {
             if (((Arrow) event.getProjectile()).getShooter() instanceof Player) {
                 if (playerIsInRegion(((Player) ((Arrow) event.getProjectile()).getShooter()), RegionType.SPAWN)) {
+                    ((Player) ((Arrow) event.getProjectile()).getShooter()).getInventory().addItem(new ItemStack(Material.ARROW));
                     event.setCancelled(true);
                 }
             }

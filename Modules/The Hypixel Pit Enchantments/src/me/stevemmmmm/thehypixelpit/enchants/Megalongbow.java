@@ -57,7 +57,7 @@ public class Megalongbow extends CustomEnchant {
                 .addVariable("II", "III", "IV")
                 .write("One shot per second, this bow is").nextLine()
                 .write("automatically fully drawn and").nextLine()
-                .write("grants ").setColor(ChatColor.GREEN).write(" Jump Boost").writeVariable(0, level).resetColor().write(" (2s)")
+                .write("grants ").setColor(ChatColor.GREEN).write("Jump Boost ").writeVariable(0, level).resetColor().write(" (2s)")
                 .build();
     }
 

@@ -126,12 +126,16 @@ public class DamageManager implements Listener {
                 target.setHealth(target.getHealth() - damage);
             }
         } else if (CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror) != 1) {
-            if (reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
-                reflectTo.setMaxHealth(target.getMaxHealth());
-                manuallyCallDeathEvent(reflectTo);
-            } else {
-                reflectTo.damage(0);
-                reflectTo.setHealth(Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
+            try {
+                if (reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
+                    reflectTo.setMaxHealth(target.getMaxHealth());
+                    manuallyCallDeathEvent(reflectTo);
+                } else {
+                    reflectTo.damage(0);
+                    reflectTo.setHealth(Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
+                }
+            } catch (NullPointerException ignored) {
+
             }
         }
     }

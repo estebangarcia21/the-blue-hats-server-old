@@ -1,4 +1,4 @@
-name: TheHypixelPitRemake
+name: TheBlueHatsPit
 main: me.stevemmmmm.thehypixelpit.core.Main
 version: 1.0
 depend: [ProtocolLib]

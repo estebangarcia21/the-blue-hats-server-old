@@ -28,6 +28,8 @@ public class Robinhood extends CustomEnchant {
     private HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
     private HashMap<Arrow, Player> arrowToHomingPlayer = new HashMap<>();
 
+    private double range = 8;
+
     @EventHandler
     public void onShoot(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player) {
@@ -97,7 +99,7 @@ public class Robinhood extends CustomEnchant {
         }
 
         arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-            List<Entity> closestEntities = player.getNearbyEntities(16, 16, 16);
+            List<Entity> closestEntities = player.getNearbyEntities(range, range, range);
             List<Player> closestPlayers = new ArrayList<>();
 
             for (Entity entity : closestEntities) {
@@ -106,7 +108,7 @@ public class Robinhood extends CustomEnchant {
                 }
             }
 
-            if (closestPlayers.isEmpty()) closestEntities = arrow.getNearbyEntities(16, 16 ,16);
+            if (closestPlayers.isEmpty()) closestEntities = arrow.getNearbyEntities(range, range ,range);
 
             Player closestPlayer = null;
 

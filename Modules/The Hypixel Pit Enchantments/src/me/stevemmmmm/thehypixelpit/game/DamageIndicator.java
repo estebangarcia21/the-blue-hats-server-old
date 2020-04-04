@@ -66,14 +66,10 @@ public class DamageIndicator implements Listener {
 
             int result = Math.max(originalHealth - roundedDamageTaken, 0);
 
-            int redHeartsDamageTaken = Math.max(0, roundedDamageTaken - (int) player.getAbsorptionHearts() / 2);
-
             if (result == 0) {
                 roundedDamageTaken = 0;
-                redHeartsDamageTaken = 0;
 
                 for (int i = 0; i < originalHealth; i++) {
-                    redHeartsDamageTaken++;
                     roundedDamageTaken++;
                 }
             }
@@ -82,7 +78,7 @@ public class DamageIndicator implements Listener {
                 output.append(ChatColor.DARK_RED.toString()).append("❤");
             }
 
-            for (int i = 0; i < redHeartsDamageTaken; i++) {
+            for (int i = 0; i < roundedDamageTaken - (int) player.getAbsorptionHearts() / 2; i++) {
                 output.append(ChatColor.RED.toString()).append("❤");
             }
 
