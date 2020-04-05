@@ -5,9 +5,7 @@ package me.stevemmmmm.thehypixelpit.commands;
  */
 
 import me.stevemmmmm.thehypixelpit.core.Main;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagInt;
-import net.minecraft.server.v1_8_R3.NBTTagList;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -15,8 +13,11 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Horse;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -36,7 +37,7 @@ public class GiveFreshItemCommand implements CommandExecutor {
                 if (args.length == 1) {
                     String object = args[0];
 
-                    ItemStack item = null;
+                    ItemStack item;
                     LeatherArmorMeta freshPantsMeta = null;
 
                     if (object.equalsIgnoreCase("Sword")) {
@@ -104,13 +105,13 @@ public class GiveFreshItemCommand implements CommandExecutor {
                         if (object.equalsIgnoreCase("Sewer")) {
                             freshPantsMeta.setColor(Color.fromRGB(0x7DC383));
 
-                            addPantsLore(freshPantsMeta, "Sewer", ChatColor.DARK_GREEN);
+                            addPantsLore(freshPantsMeta, "Sewer", ChatColor.DARK_AQUA);
                         }
 
                         if (object.equalsIgnoreCase("Aqua")) {
                             freshPantsMeta.setColor(Color.fromRGB(0x55FFFF ));
 
-                            addPantsLore(freshPantsMeta, "Aqua", ChatColor.AQUA);
+                            addPantsLore(freshPantsMeta,"Aqua", ChatColor.AQUA);
                         }
 
                         item.setItemMeta(freshPantsMeta);
@@ -126,11 +127,13 @@ public class GiveFreshItemCommand implements CommandExecutor {
         return true;
     }
 
-    private void addPantsLore(LeatherArmorMeta itemMeta, String name, ChatColor color) {
-        itemMeta.setDisplayName(color + "Fresh " + name + " Pants");
-        itemMeta.spigot().setUnbreakable(true);
+    private void addPantsLore(LeatherArmorMeta newMeta, String name, ChatColor color) {
+        newMeta.setDisplayName(color + "Fresh " + name + " Pants");
+        newMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 
-        itemMeta.setLore(new ArrayList<String>() {{
+        newMeta.spigot().setUnbreakable(true);
+
+        newMeta.setLore(new ArrayList<String>() {{
             add(ChatColor.GRAY + "Kept on death");
             add(" ");
             add(color + "Used in the mystic well");

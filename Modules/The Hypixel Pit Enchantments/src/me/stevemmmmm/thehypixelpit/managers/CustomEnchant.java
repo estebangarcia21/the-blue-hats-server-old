@@ -7,9 +7,11 @@ package me.stevemmmmm.thehypixelpit.managers;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -32,7 +34,17 @@ public abstract class CustomEnchant implements Listener {
         if (itemHasEnchant(source, this)) {
             for (Object object : args) {
                 if (object instanceof Player) {
+                    if (DamageManager.getInstance().playerIsInCanceledEvent((Player) object)) {
+                        return false;
+                    }
+
                     if (RegionManager.getInstance().playerIsInRegion((Player) object, RegionManager.RegionType.SPAWN)) {
+                        return false;
+                    }
+                }
+
+                if (object instanceof Arrow) {
+                    if (RegionManager.getInstance().locationIsInRegion(((Arrow) object).getLocation(), RegionManager.RegionType.SPAWN)) {
                         return false;
                     }
                 }

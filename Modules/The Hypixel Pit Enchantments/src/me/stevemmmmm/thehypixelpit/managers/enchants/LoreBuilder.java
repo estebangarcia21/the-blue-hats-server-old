@@ -32,7 +32,7 @@ public class LoreBuilder {
         if (parameters.get(id) != null) {
             try {
                 if (condition) description.set(lineIndex, description.get(lineIndex) + color.toString() + parameters.get(id)[level - 1]);
-            } catch (NullPointerException ignored) {
+            } catch (NullPointerException | IndexOutOfBoundsException ignored) {
 
             }
         }

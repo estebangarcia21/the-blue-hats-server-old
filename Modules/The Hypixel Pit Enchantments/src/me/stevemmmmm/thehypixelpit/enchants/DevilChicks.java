@@ -6,6 +6,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.animationapi.core.Sequence;
 import me.stevemmmmm.animationapi.core.SequenceAPI;
+import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
@@ -48,6 +49,8 @@ public class DevilChicks extends CustomEnchant {
             direction.setY(location.getY());
             direction.setZ(location.getZ() + (Math.random() - Math.random()) * radius);
 
+            if (RegionManager.getInstance().locationIsInRegion(direction.toLocation(location.getWorld()), RegionManager.RegionType.SPAWN)) return;
+
             Chicken chicken = (Chicken) world.spawnEntity(direction.toLocation(location.getWorld()), EntityType.CHICKEN);
             chicken.setBaby();
 
@@ -72,8 +75,6 @@ public class DevilChicks extends CustomEnchant {
                     for (Entity entity : chicken.getNearbyEntities(1, 1, 1)) {
                         if (entity instanceof Player) {
                             Player player = (Player) entity;
-
-                            //TODO Update check to prevent multi-death
 
                             DamageManager.getInstance().doTrueDamage(player, 2.4, (Player) arrow.getShooter());
 

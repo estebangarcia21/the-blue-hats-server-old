@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
+import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
@@ -59,21 +60,23 @@ public class Volley extends CustomEnchant {
         Vector originalVelocity = arrow.getVelocity();
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> volleyTasks.put(arrow,Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-            player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
-            Arrow volleyArrow = player.launchProjectile(Arrow.class);
+            if (!RegionManager.getInstance().playerIsInRegion(player, RegionManager.RegionType.SPAWN)) {
+                player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
+                Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
-            volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
+                volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
 
-            EntityShootBowEvent event = new EntityShootBowEvent(player, item, volleyArrow, force);
-            Main.INSTANCE.getServer().getPluginManager().callEvent(event);
+                EntityShootBowEvent event = new EntityShootBowEvent(player, item, volleyArrow, force);
+                Main.INSTANCE.getServer().getPluginManager().callEvent(event);
 
-            BowManager.getInstance().registerArrow(volleyArrow, player);
+                BowManager.getInstance().registerArrow(volleyArrow, player);
 
-            arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
-            if (arrowCount.get(arrow) > arrows.at(level)) {
-                Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
-                volleyTasks.remove(arrow);
-                arrowCount.remove(arrow);
+                arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
+                if (arrowCount.get(arrow) > arrows.at(level)) {
+                    Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
+                    volleyTasks.remove(arrow);
+                    arrowCount.remove(arrow);
+                }
             }
         }, 0L, 2L)), 3L);
     }

@@ -92,8 +92,8 @@ public class CustomEnchantManager {
     public HashMap<CustomEnchant, Integer> getItemEnchants(ItemStack item) {
         HashMap<CustomEnchant, Integer> enchantsToLevels = new HashMap<>();
 
-        if (item.getType() == Material.AIR) return null;
-        if (item.getItemMeta().getLore() == null) return null;
+        if (item.getType() == Material.AIR) return enchantsToLevels;
+        if (item.getItemMeta().getLore() == null) return enchantsToLevels;
 
         for (String line : item.getItemMeta().getLore()) {
             ArrayList<String> enchantData = new ArrayList<>(Arrays.asList(line.split(" ")));

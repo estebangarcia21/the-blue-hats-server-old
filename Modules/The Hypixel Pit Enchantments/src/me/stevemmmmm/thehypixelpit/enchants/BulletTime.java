@@ -6,6 +6,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Bukkit;
@@ -16,75 +17,31 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
 import java.util.UUID;
 
 public class BulletTime extends CustomEnchant {
     private LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
-    private double range = 3.25;
 
-    private HashMap<UUID, Integer> bulletTimeTasks = new HashMap<>();
-
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        bulletTimeTasks.put(event.getPlayer().getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-            for (Entity entity : event.getPlayer().getNearbyEntities(range, 1, range)) {
-                if (entity instanceof Arrow) {
-                    Arrow arrow = (Arrow) entity;
-
-                    if (event.getPlayer().isBlocking()) {
-                        attemptEnchantExecution(event.getPlayer().getInventory().getItemInHand(), event.getPlayer(), arrow);
-                        break;
-                    }
-                }
+    @EventHandler (priority = EventPriority.HIGH)
+    public void onHit(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
+            if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
+                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(), event.getDamager(), event);
             }
-        }, 0L, 1L));
+        }
     }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        Bukkit.getServer().getScheduler().cancelTask(bulletTimeTasks.get(event.getPlayer().getUniqueId()));
-        bulletTimeTasks.remove(event.getPlayer().getUniqueId());
-    }
-
-//    @EventHandler
-//    public void onBowShoot(EntityShootBowEvent event) {
-//        if (event.getProjectile() instanceof Arrow) {
-//            Arrow arrow = (Arrow) event.getProjectile();
-//
-//            if (arrow.getShooter() instanceof Player) {
-//                bulletTimeTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-//                    for (Entity entity : arrow.getNearbyEntities(range, 1, range)) {
-//                        if (entity instanceof Player) {
-//                            Player player = (Player) entity;
-//                            if (player.isBlocking()) {
-//                                attemptEnchantExecution(player.getInventory().getItemInHand(), player, arrow);
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }, 0L, 1L));
-//            }
-//        }
-//    }
-
-//    @EventHandler
-//    public void onArrowLand(ProjectileHitEvent event) {
-//        if (event.getEntity() instanceof Arrow) {
-//            Arrow arrow = (Arrow) event.getEntity();
-//
-//            if (bulletTimeTasks.containsKey(arrow)) {
-//                Bukkit.getServer().getScheduler().cancelTask(bulletTimeTasks.get(arrow));
-//                bulletTimeTasks.remove(arrow);
-//            }
-//        }
-//    }
 
     @Override
     public void applyEnchant(int level, Object... args) {
@@ -92,17 +49,17 @@ public class BulletTime extends CustomEnchant {
         Arrow arrow = (Arrow) args[1];
 
         if (hitPlayer.isBlocking()) {
+            DamageManager.getInstance().setEventAsCanceled((EntityDamageByEntityEvent) args[2]);
+
+            arrow.setKnockbackStrength(0);
+            arrow.setBounce(true);
+
             hitPlayer.getWorld().playSound(hitPlayer.getLocation(), Sound.FIZZ, 1f, 1.5f);
             arrow.getWorld().playEffect(arrow.getLocation(), Effect.EXPLOSION, 0, 30);
 
-            for (Entity entity : hitPlayer.getNearbyEntities(range, 1, range)) {
-                if (entity instanceof Arrow) {
-                    Arrow nearby = (Arrow) entity;
+            arrow.remove();
 
-                    nearby.remove();
-                    hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + healingAmount.at(level), hitPlayer.getMaxHealth()));
-                }
-            }
+            hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + healingAmount.at(level), hitPlayer.getMaxHealth()));
         }
     }
 

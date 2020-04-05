@@ -4,6 +4,7 @@ package me.stevemmmmm.thehypixelpit.game.duels;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;

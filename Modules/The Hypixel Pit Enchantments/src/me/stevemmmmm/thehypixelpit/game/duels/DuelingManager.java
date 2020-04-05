@@ -24,7 +24,7 @@ public class DuelingManager implements Listener {
     private static DuelingManager instance;
 
     private ArrayList<Duel> activeDuels = new ArrayList<>();
-    private ArrayList<Pair<Vector, Vector>> duelPositions = new ArrayList<>();
+//    private ArrayList<Pair<Vector, Vector>> duelPositions = new ArrayList<>();
 
     private DuelingManager() {
         init();
@@ -37,7 +37,7 @@ public class DuelingManager implements Listener {
     }
 
     private void init() {
-        duelPositions.add(new Pair<>(new Vector(0, 100, 0), new Vector(0, 100, 0)));
+//        duelPositions.add(new Pair<>(new Vector(0, 100, 0), new Vector(0, 100, 0)));
     }
 
     public void startDuel(Duel duel) {
@@ -64,10 +64,10 @@ public class DuelingManager implements Listener {
 
     private void initializeDuel(Duel duel) {
         if (duel.getPlayerAPos() == null || duel.getPlayerBPos() == null) {
-            Pair<Vector, Vector> positions = duelPositions.get(ThreadLocalRandom.current().nextInt(duelPositions.size()));
+//            Pair<Vector, Vector> positions = duelPositions.get(ThreadLocalRandom.current().nextInt(duelPositions.size()));
 
-            duel.setPlayerAPos(positions.getKey());
-            duel.setPlayerBPos(positions.getValue());
+//            duel.setPlayerAPos(positions.getKey());
+//            duel.setPlayerBPos(positions.getValue());
         }
 
         duel.getPlayerA().teleport(new Location(duel.getPlayerA().getWorld(), duel.getPlayerAPos().getX(), duel.getPlayerAPos().getY(), duel.getPlayerAPos().getZ()));

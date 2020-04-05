@@ -30,6 +30,12 @@ commands:
   respawn:
     description: Sends the player to spawn
     usage: /respawn
+  givearrows:
+    description: Gives arrows
+    usage: /givearrows
+  giveobsidian:
+    description: Gives obby
+    usage: /giveobsidian
   duel:
     description: Duels a player
     usage: /duel

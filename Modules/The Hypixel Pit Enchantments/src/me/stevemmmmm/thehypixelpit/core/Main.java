@@ -6,22 +6,18 @@ import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.thehypixelpit.chat.LevelChatFormatting;
 import me.stevemmmmm.thehypixelpit.commands.*;
 import me.stevemmmmm.thehypixelpit.enchants.*;
-import me.stevemmmmm.thehypixelpit.game.Bread;
-import me.stevemmmmm.thehypixelpit.game.CombatTimer;
-import me.stevemmmmm.thehypixelpit.game.DamageIndicator;
-import me.stevemmmmm.thehypixelpit.game.RegionManager;
+import me.stevemmmmm.thehypixelpit.game.*;
 import me.stevemmmmm.thehypixelpit.game.duels.DuelingManager;
 import me.stevemmmmm.thehypixelpit.game.duels.GameUtility;
+import me.stevemmmmm.thehypixelpit.managers.ServerMOTDInitializer;
 import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
 import me.stevemmmmm.thehypixelpit.managers.other.PitScoreboardManager;
 import me.stevemmmmm.thehypixelpit.perks.Vampire;
-import me.stevemmmmm.thehypixelpit.world.AntiFall;
-import me.stevemmmmm.thehypixelpit.world.AutoRespawn;
-import me.stevemmmmm.thehypixelpit.world.DeveloperUpdates;
-import me.stevemmmmm.thehypixelpit.world.PlayerUtility;
+import me.stevemmmmm.thehypixelpit.utils.DevelopmentMode;
+import me.stevemmmmm.thehypixelpit.world.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -62,6 +58,10 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new AutoRespawn(), this);
         getServer().getPluginManager().registerEvents(new PlayerUtility(), this);
         getServer().getPluginManager().registerEvents(new DeveloperUpdates(), this);
+        getServer().getPluginManager().registerEvents(new WorldProtection(), this);
+        getServer().getPluginManager().registerEvents(RegionManager.getInstance(), this);
+        getServer().getPluginManager().registerEvents(new DevelopmentMode(), this);
+        getServer().getPluginManager().registerEvents(new ServerMOTDInitializer(), this);
 
         //Commands
         getCommand("pitenchant").setExecutor(new EnchantCommand());
@@ -72,23 +72,25 @@ public class Main extends JavaPlugin {
         getCommand("giveprot").setExecutor(new GiveProtCommand());
         getCommand("setgold").setExecutor(new SetGoldCommand());
         getCommand("givebread").setExecutor(new GiveBreadCommand());
+        getCommand("givearrows").setExecutor(new GiveArrowCommand());
+        getCommand("giveobsidian").setExecutor(new GiveObsidianCommand());
 
         SpawnCommand spawnCommand = new SpawnCommand();
         getCommand("spawn").setExecutor(spawnCommand);
         getCommand("respawn").setExecutor(spawnCommand);
 
-        //Game logic
+        //Game
         //getServer().getPluginManager().registerEvents(new MysticWell(), this);
         getServer().getPluginManager().registerEvents(PitScoreboardManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(DuelingManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(DamageIndicator.getInstance(), this);
-        getServer().getPluginManager().registerEvents(CombatTimer.getInstance(), this);
+        getServer().getPluginManager().registerEvents(CombatManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(DamageManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(BowManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(new LevelChatFormatting(), this);
         getServer().getPluginManager().registerEvents(new Bread(), this);
         getServer().getPluginManager().registerEvents(GrindingSystem.getInstance(), this);
-        getServer().getPluginManager().registerEvents(RegionManager.getInstance(), this);
+        getServer().getPluginManager().registerEvents(new Obsidian(), this);
     }
 
     @Override

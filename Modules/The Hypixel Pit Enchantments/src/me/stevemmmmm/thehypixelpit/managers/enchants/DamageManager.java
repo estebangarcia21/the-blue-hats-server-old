@@ -2,10 +2,14 @@ package me.stevemmmmm.thehypixelpit.managers.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.enchants.Mirror;
+import me.stevemmmmm.thehypixelpit.game.CombatManager;
+import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -27,7 +31,7 @@ public class DamageManager implements Listener {
     private HashMap<EntityDamageByEntityEvent, Double> additiveDamageBuffer = new HashMap<>();
     private HashMap<EntityDamageByEntityEvent, Double> multiplicativeDamageBuffer = new HashMap<>();
 
-    private ArrayList<EntityDamageByEntityEvent> noEventDamage = new ArrayList<>();
+    private ArrayList<EntityDamageByEntityEvent> canceledEvents = new ArrayList<>();
 
     private HashMap<EntityDamageByEntityEvent, Double> reductionBuffer = new HashMap<>();
 
@@ -43,13 +47,13 @@ public class DamageManager implements Listener {
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onHit(EntityDamageByEntityEvent event) {
-        if (noEventDamage.contains(event)) {
-            event.setDamage(0);
+        if (canceledEvents.contains(event)) {
+            event.setCancelled(true);
         } else {
             event.setDamage(getDamageFromEvent(event));
         }
 
-        noEventDamage.remove(event);
+        canceledEvents.remove(event);
         additiveDamageBuffer.remove(event);
         multiplicativeDamageBuffer.remove(event);
         reductionBuffer.remove(event);
@@ -63,6 +67,18 @@ public class DamageManager implements Listener {
             damage *= .667;
         }
 
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+
+            if (player.getInventory().getLeggings() != null) {
+                if (player.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
+                    if (!CustomEnchantManager.getInstance().getItemEnchants(player.getInventory().getLeggings()).isEmpty()) {
+                        damage *= 0.871;
+                    }
+                }
+            }
+        }
+
         return damage;
     }
 
@@ -71,6 +87,18 @@ public class DamageManager implements Listener {
 
         if (removeCriticalDamage.contains(event)) {
             damage *= .667;
+        }
+
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+
+            if (player.getInventory().getLeggings() != null) {
+                if (player.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
+                    if (!CustomEnchantManager.getInstance().getItemEnchants(player.getInventory().getLeggings()).isEmpty()) {
+                        damage *= 0.871;
+                    }
+                }
+            }
         }
 
         return damage;
@@ -86,8 +114,58 @@ public class DamageManager implements Listener {
         }
     }
 
-    public void setNoEventDamage(EntityDamageByEntityEvent event) {
-        noEventDamage.add(event);
+    public void setEventAsCanceled(EntityDamageByEntityEvent event) {
+        canceledEvents.add(event);
+    }
+
+    public boolean isEventCancelled(EntityDamageByEntityEvent event) {
+        return canceledEvents.contains(event);
+    }
+
+    public boolean playerIsInCanceledEvent(Player player) {
+        for (EntityDamageByEntityEvent event : canceledEvents) {
+            if (event.getDamager() instanceof Projectile) {
+                if (((Projectile) event.getDamager()).getShooter() instanceof Player) {
+                    if (((Projectile) event.getDamager()).getShooter().equals(player)) {
+                        return true;
+                    }
+                }
+            }
+
+            if (event.getDamager() instanceof Player) {
+                if (event.getDamager().equals(player)) {
+                    return true;
+                }
+            }
+
+            if (event.getEntity() instanceof Player) {
+                if (event.getEntity().equals(player)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean arrowIsInCanceledEvent(Arrow projectile) {
+        for (EntityDamageByEntityEvent event : canceledEvents) {
+            if (event.getDamager() instanceof Arrow) {
+                if (event.getDamager().equals(projectile)) {
+                    System.out.println("Arrow is in canceled vent");
+                    return true;
+                }
+            }
+
+            if (event.getEntity() instanceof Arrow) {
+                if (event.getEntity().equals(projectile)) {
+                    System.out.println("Arrow is in canceled vent");
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public void reduceDamage(EntityDamageByEntityEvent event, double value) {
@@ -117,7 +195,11 @@ public class DamageManager implements Listener {
     public void doTrueDamage(Player target, double damage, Player reflectTo) {
         Mirror mirror = new Mirror();
 
+        CombatManager.getInstance().combatTag(target);
+
         if (!CustomEnchant.itemHasEnchant(target.getInventory().getLeggings(), mirror)) {
+            if (RegionManager.getInstance().playerIsInRegion(target, RegionManager.RegionType.SPAWN)) return;
+
             if (target.getHealth() - damage < 0) {
                 target.setMaxHealth(target.getMaxHealth());
                 manuallyCallDeathEvent(target);
@@ -126,12 +208,16 @@ public class DamageManager implements Listener {
                 target.setHealth(target.getHealth() - damage);
             }
         } else if (CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror) != 1) {
+            if (RegionManager.getInstance().playerIsInRegion(reflectTo, RegionManager.RegionType.SPAWN)) return;
+
             try {
                 if (reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
                     reflectTo.setMaxHealth(target.getMaxHealth());
                     manuallyCallDeathEvent(reflectTo);
                 } else {
                     reflectTo.damage(0);
+
+                    CombatManager.getInstance().combatTag(target);
                     reflectTo.setHealth(Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
                 }
             } catch (NullPointerException ignored) {

@@ -1,5 +1,9 @@
 package me.stevemmmmm.thehypixelpit.commands;
 
+/*
+ * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ */
+
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
@@ -8,19 +12,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
-public class MysticEnchantsCommand implements CommandExecutor {
+public class TutorialCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if (label.equalsIgnoreCase("mysticenchants")) {
-                int pages = CustomEnchantManager.getInstance().getEnchants().size() / 9;
+            if (label.equalsIgnoreCase("tutorial")) {
+                int pages = 1;
 
                 int page = 1;
 
@@ -39,7 +39,7 @@ public class MysticEnchantsCommand implements CommandExecutor {
                 }
 
                 //ChatColor.RED.toString() + ChatColor.BOLD + "M" + ChatColor.YELLOW.toString() + ChatColor.BOLD + "y" + ChatColor.GREEN.toString() + ChatColor.BOLD + "s" + ChatColor.AQUA.toString() + ChatColor.BOLD + "t" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "i" + ChatColor.BLUE.toString() + ChatColor.BOLD + "c"
-                player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Mystic Enchants (" + page + "/" + (pages + 1) + ")");
+                player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "TUTORIAL! (" + page + "/" + (pages + 1) + ")");
 
                 for (int i = 0; i < 9; i++) {
                     int index = i + ((page - 1) * 9);

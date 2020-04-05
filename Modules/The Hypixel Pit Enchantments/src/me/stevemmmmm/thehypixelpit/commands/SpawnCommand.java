@@ -5,7 +5,7 @@ package me.stevemmmmm.thehypixelpit.commands;
  */
 
 import me.stevemmmmm.thehypixelpit.core.Main;
-import me.stevemmmmm.thehypixelpit.game.CombatTimer;
+import me.stevemmmmm.thehypixelpit.game.CombatManager;
 import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -36,7 +36,7 @@ public class SpawnCommand implements CommandExecutor {
                     return true;
                 }
 
-                if (!CombatTimer.getInstance().playerIsInCombat(player)) {
+                if (!CombatManager.getInstance().playerIsInCombat(player)) {
                     if (!cooldownTasks.containsKey(player.getUniqueId())) {
                         player.setHealth(player.getMaxHealth());
                         player.teleport(new Location(player.getWorld(), spawn.getX(), spawn.getY(), spawn.getZ(), -180, 0));
@@ -56,7 +56,7 @@ public class SpawnCommand implements CommandExecutor {
                         player.sendMessage(ChatColor.RED + "You may only /respawn every 10 seconds");
                     }
                 } else {
-                    player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "HOLD UP! " + ChatColor.GRAY + "Can't /respawn while fighting (" + ChatColor.RED + CombatTimer.getInstance().getCombatTime(player) + "s" + ChatColor.GRAY + " left)");
+                    player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "HOLD UP! " + ChatColor.GRAY + "Can't /respawn while fighting (" + ChatColor.RED + CombatManager.getInstance().getCombatTime(player) + "s" + ChatColor.GRAY + " left)");
                 }
             }
         }

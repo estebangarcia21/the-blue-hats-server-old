@@ -52,8 +52,8 @@ public class RegionManager implements Listener {
         if (event.getProjectile() instanceof Arrow) {
             if (((Arrow) event.getProjectile()).getShooter() instanceof Player) {
                 if (playerIsInRegion(((Player) ((Arrow) event.getProjectile()).getShooter()), RegionType.SPAWN)) {
-                    ((Player) ((Arrow) event.getProjectile()).getShooter()).getInventory().addItem(new ItemStack(Material.ARROW));
                     event.setCancelled(true);
+                    ((Player) ((Arrow) event.getProjectile()).getShooter()).updateInventory();
                 }
             }
         }

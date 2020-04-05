@@ -147,6 +147,7 @@ public class Robinhood extends CustomEnchant {
 
                 if (RegionManager.getInstance().playerIsInRegion(arrowToHomingPlayer.get(arrow), RegionManager.RegionType.SPAWN)) {
                     Bukkit.getServer().getScheduler().cancelTask(arrowTasks.get(arrow));
+                    arrowTasks.remove(arrow);
                     return;
                 }
 

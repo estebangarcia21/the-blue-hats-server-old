@@ -5,6 +5,7 @@ package me.stevemmmmm.thehypixelpit.game;
  */
 
 import me.stevemmmmm.thehypixelpit.core.Main;
+import me.stevemmmmm.thehypixelpit.managers.other.PitScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -17,16 +18,16 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class CombatTimer implements Listener {
-    private static CombatTimer instance;
+public class CombatManager implements Listener {
+    private static CombatManager instance;
 
     private HashMap<UUID, Integer> combatTasks = new HashMap<>();
     private HashMap<UUID, Integer> combatTime = new HashMap<>();
 
-    private CombatTimer() { }
+    private CombatManager() { }
 
-    public static CombatTimer getInstance() {
-        if (instance == null) instance = new CombatTimer();
+    public static CombatManager getInstance() {
+        if (instance == null) instance = new CombatManager();
 
         return instance;
     }
@@ -60,7 +61,7 @@ public class CombatTimer implements Listener {
         return combatTime.getOrDefault(player.getUniqueId(), 0) != 0;
     }
 
-    private void combatTag(Player player) {
+    public void combatTag(Player player) {
         if (RegionManager.getInstance().playerIsInRegion(player, RegionManager.RegionType.SPAWN)) return;
 
         combatTime.put(player.getUniqueId(), calculateCombatTime(player));
@@ -77,7 +78,8 @@ public class CombatTimer implements Listener {
     }
 
     private void combatTag(Player playerA, Player playerB) {
-
+        combatTag(playerA);
+        combatTag(playerB);
     }
 
     public int getCombatTime(Player player) {
