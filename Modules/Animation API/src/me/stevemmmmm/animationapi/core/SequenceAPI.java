@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class SequenceAPI extends JavaPlugin {
@@ -31,16 +32,13 @@ public class SequenceAPI extends JavaPlugin {
 
         endSequencerTicks.put(sequence, new AtomicLong());
 
-        ArrayList<Long> values = new ArrayList<>();
-        for (Pair<Long, Frame> keyframe : sequence.getAnimationSequence()) {
-            values.add(keyframe.getKey());
-        }
+        ArrayList<Long> values = new ArrayList<>(sequence.getAnimationSequence().keySet());
 
         Collections.sort(values);
         endSequencerTicks.get(sequence).set(values.get(values.size() - 1));
 
         animationTaskIndexs.put(sequence, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(instance, () -> {
-            for (Pair<Long, Frame> keyframe : sequence.getAnimationSequence()) {
+            for (Map.Entry<Long, Frame> keyframe : sequence.getAnimationSequence().entrySet()) {
                 if (keyframe.getKey().equals(sequencers.get(sequence))) {
                     keyframe.getValue().play();
                 }

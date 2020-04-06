@@ -7,16 +7,17 @@ package me.stevemmmmm.animationapi.core;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Sequence {
-    private ArrayList<Pair<Long, Frame>> animationSequence = new ArrayList<>();
+    private HashMap<Long, Frame> animationSequence = new HashMap<>();
     private SequenceActions animationActions;
 
     public void addKeyFrame(long time, Frame frame) {
-        animationSequence.add(new Pair<>(time, frame));
+        animationSequence.put(time, frame);
     }
 
-    public ArrayList<Pair<Long, Frame>> getAnimationSequence() {
+    public HashMap<Long, Frame> getAnimationSequence() {
         return animationSequence;
     }
 
