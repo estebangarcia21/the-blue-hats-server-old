@@ -4,40 +4,30 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-import me.stevemmmmm.thehypixelpit.core.Main;
-import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
-import org.bukkit.Bukkit;
+import me.stevemmmmm.thehypixelpit.managers.other.CancelerEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Timer;
-import java.util.UUID;
 
-public class BulletTime extends CustomEnchant {
+public class BulletTime extends CancelerEnchant<EntityDamageByEntityEvent> {
     private LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
 
     @EventHandler (priority = EventPriority.HIGH)
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
+                attemptEnchantCancellation(event);
+
                 attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(), event.getDamager(), event);
             }
         }
@@ -60,6 +50,15 @@ public class BulletTime extends CustomEnchant {
             arrow.remove();
 
             hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + healingAmount.at(level), hitPlayer.getMaxHealth()));
+        }
+    }
+
+    @Override
+    public void attemptEnchantCancellation(EntityDamageByEntityEvent event) {
+        Player hitPlayer = (Player) event.getEntity();
+
+        if (hitPlayer.isBlocking()) {
+            cancelEnchants(this);
         }
     }
 

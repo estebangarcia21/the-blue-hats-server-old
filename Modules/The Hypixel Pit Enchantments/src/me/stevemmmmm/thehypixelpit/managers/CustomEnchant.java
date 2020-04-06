@@ -8,6 +8,7 @@ import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
+import me.stevemmmmm.thehypixelpit.managers.other.CancelerEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,6 +33,20 @@ public abstract class CustomEnchant implements Listener {
 
     public boolean attemptEnchantExecution(ItemStack source, Object... args) {
         if (itemHasEnchant(source, this)) {
+            for (CustomEnchant enchant : CustomEnchantManager.getInstance().getEnchants()) {
+                if (enchant instanceof CancelerEnchant) {
+                    CancelerEnchant<?> enchantCanceler = (CancelerEnchant<?>) enchant;
+
+                    if (enchantCanceler.cancelledEnchants()) {
+                        if (!enchantCanceler.getCaller().getClass().getName().equals(new Exception().getStackTrace()[1].getClassName())) {
+                            return false;
+                        }
+                    }
+
+                    enchantCanceler.reset();
+                }
+            }
+
             for (Object object : args) {
                 if (object instanceof Player) {
                     if (DamageManager.getInstance().playerIsInCanceledEvent((Player) object)) {
