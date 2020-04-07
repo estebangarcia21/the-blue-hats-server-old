@@ -61,7 +61,7 @@ public class CustomEnchantManager {
             if (enchant instanceof CancelEnchant) {
                 CancelEnchant cancelEnchant = (CancelEnchant) enchant;
 
-                if (cancelEnchant.isCanceled(player) ) return true;
+                if (cancelEnchant.isCanceled(player)) return true;
             }
         }
 

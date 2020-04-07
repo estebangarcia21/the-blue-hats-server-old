@@ -24,12 +24,12 @@ public class Peroxide extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity());
+            attemptEnchantExecution(this, ((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity());
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity());
+                attemptEnchantExecution(this, ((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity());
             }
         }
     }

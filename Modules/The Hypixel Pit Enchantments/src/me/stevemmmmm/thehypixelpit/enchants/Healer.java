@@ -20,7 +20,7 @@ public class Healer extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event.getEntity(), event);
+            attemptEnchantExecution(this, ((Player) event.getDamager()).getItemInHand(), event.getDamager(), event.getEntity(), event);
         }
     }
 

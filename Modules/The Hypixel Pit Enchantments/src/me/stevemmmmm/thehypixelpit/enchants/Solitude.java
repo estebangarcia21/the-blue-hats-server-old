@@ -24,7 +24,7 @@ public class Solitude extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity(), event);
+            attemptEnchantExecution(this, ((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity(), event);
         }
     }
 

@@ -21,7 +21,7 @@ public class Lifesteal extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event);
+            attemptEnchantExecution(this, ((Player) event.getDamager()).getItemInHand(), event.getDamager(), event);
         }
     }
 

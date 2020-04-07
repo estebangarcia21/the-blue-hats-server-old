@@ -24,7 +24,7 @@ public class ComboDamage extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager(), event);
+            attemptEnchantExecution(this, ((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager(), event);
         }
     }
 

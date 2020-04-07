@@ -43,7 +43,7 @@ public class Volley extends CustomEnchant {
             if (((Arrow) event.getProjectile()).getShooter() instanceof Player) {
                 Player player = (Player) ((Arrow) event.getProjectile()).getShooter();
 
-                attemptEnchantExecution(player.getInventory().getItemInHand(), event.getProjectile(), player, event);
+                attemptEnchantExecution(this, player.getInventory().getItemInHand(), event.getProjectile(), player, event);
             }
         }
     }
