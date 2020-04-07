@@ -5,23 +5,21 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.enchants.CancelEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantCanceler;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
-import me.stevemmmmm.thehypixelpit.managers.other.CancelerEnchant;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
 
-public class BulletTime extends CustomEnchant implements CancelEnchant {
+public class BulletTime extends CustomEnchant implements EnchantCanceler {
     private LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
 
     @EventHandler
@@ -52,19 +50,6 @@ public class BulletTime extends CustomEnchant implements CancelEnchant {
             hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + healingAmount.at(level), hitPlayer.getMaxHealth()));
         }
     }
-
-//    @Override
-//    public void attemptEnchantCancellation(EntityDamageByEntityEvent event) {
-//        super.attemptEnchantCancellation(event);
-//
-//        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
-//            Player hitPlayer = (Player) event.getEntity();
-//
-//            if (hitPlayer.isBlocking()) {
-//                cancelEnchants(this);
-//            }
-//        }
-//    }
 
     @Override
     public boolean isCanceled(Player player) {

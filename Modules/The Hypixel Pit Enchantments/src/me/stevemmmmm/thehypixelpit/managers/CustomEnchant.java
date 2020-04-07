@@ -6,7 +6,7 @@ package me.stevemmmmm.thehypixelpit.managers;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.game.RegionManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.CancelEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantCanceler;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import org.bukkit.Bukkit;
@@ -36,8 +36,8 @@ public abstract class CustomEnchant implements Listener {
             for (Object object : args) {
                 if (object instanceof Player) {
                     for (CustomEnchant enchant : CustomEnchantManager.getInstance().getEnchants()) {
-                        if (enchant instanceof CancelEnchant) {
-                            CancelEnchant cancelEnchant = (CancelEnchant) enchant;
+                        if (enchant instanceof EnchantCanceler) {
+                            EnchantCanceler cancelEnchant = (EnchantCanceler) enchant;
 
                             if (cancelEnchant.isCanceled((Player) object) && cancelEnchant.getEnchant() != target) {
                                 return true;

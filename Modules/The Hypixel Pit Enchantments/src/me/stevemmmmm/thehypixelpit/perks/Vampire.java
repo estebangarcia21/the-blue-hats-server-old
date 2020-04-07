@@ -20,14 +20,14 @@ public class Vampire extends Perk {
                 Arrow arrow = (Arrow) event.getDamager();
                 Player player = (Player) ((Arrow) event.getDamager()).getShooter();
 
-                if (!CustomEnchantManager.getInstance().playerEnchantProcIsCanceled(player)) player.setHealth(Math.min(arrow.isCritical() ? player.getHealth() + 3 : player.getHealth() + 1, player.getMaxHealth()));
+                if (CustomEnchantManager.getInstance().playerEnchantProcIsNotCanceled(((Player) event.getEntity()))) player.setHealth(Math.min(arrow.isCritical() ? player.getHealth() + 3 : player.getHealth() + 1, player.getMaxHealth()));
             }
         }
 
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
             Player player = (Player) event.getDamager();
 
-            if (!CustomEnchantManager.getInstance().playerEnchantProcIsCanceled(player)) player.setHealth(Math.min((player.getHealth() + 1), player.getMaxHealth()));
+            if (CustomEnchantManager.getInstance().playerEnchantProcIsNotCanceled(((Player) event.getEntity()))) player.setHealth(Math.min((player.getHealth() + 1), player.getMaxHealth()));
         }
     }
 }

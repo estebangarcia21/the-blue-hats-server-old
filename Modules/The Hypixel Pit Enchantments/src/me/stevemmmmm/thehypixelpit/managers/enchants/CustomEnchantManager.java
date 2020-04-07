@@ -2,7 +2,6 @@ package me.stevemmmmm.thehypixelpit.managers.enchants;
 
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
-import me.stevemmmmm.thehypixelpit.managers.other.CancelerEnchant;
 import me.stevemmmmm.thehypixelpit.utils.SortCustomEnchantByName;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -38,34 +37,16 @@ public class CustomEnchantManager {
         enchants.sort(new SortCustomEnchantByName());
     }
 
-    public boolean playerEnchantProcIsCanceled(Player player) {
-//        for (CustomEnchant enchant : getEnchants()) {
-//            if (enchant instanceof CancelerEnchant) {
-//                CancelerEnchant<?> enchantCanceler = (CancelerEnchant<?>) enchant;
-//
-//                if (enchantCanceler.cancelledEnchants()) {
-//                    System.out.println(enchantCanceler.getCaller().getClass().getName() + " | " + new Exception().getStackTrace()[1].getClassName());
-//
-//                    if (new Exception().getStackTrace()[1].getClass().subisInstance(enchantCanceler.getClass().getS)) {
-//                        System.out.println("Enchants cancelled!");
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
-//
-//        System.out.println("Enchants not cancelled!");
-//        return true;
-
+    public boolean playerEnchantProcIsNotCanceled(Player player) {
         for (CustomEnchant enchant : getEnchants()) {
-            if (enchant instanceof CancelEnchant) {
-                CancelEnchant cancelEnchant = (CancelEnchant) enchant;
+            if (enchant instanceof EnchantCanceler) {
+                EnchantCanceler cancelEnchant = (EnchantCanceler) enchant;
 
-                if (cancelEnchant.isCanceled(player)) return true;
+                if (cancelEnchant.isCanceled(player)) return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     public void applyLore(ItemStack item, CustomEnchant enchant, int level) {

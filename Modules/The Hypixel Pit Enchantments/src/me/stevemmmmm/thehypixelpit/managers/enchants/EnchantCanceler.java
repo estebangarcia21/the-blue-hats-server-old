@@ -7,7 +7,7 @@ package me.stevemmmmm.thehypixelpit.managers.enchants;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.entity.Player;
 
-public interface CancelEnchant {
+public interface EnchantCanceler {
     boolean isCanceled(Player player);
 
     CustomEnchant getEnchant();

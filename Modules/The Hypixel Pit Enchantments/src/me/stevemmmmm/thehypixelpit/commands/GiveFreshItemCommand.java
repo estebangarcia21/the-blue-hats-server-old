@@ -114,6 +114,11 @@ public class GiveFreshItemCommand implements CommandExecutor {
                             addPantsLore(freshPantsMeta,"Aqua", ChatColor.AQUA);
                         }
 
+                        if (freshPantsMeta.getLore() == null) {
+                            sender.sendMessage(ChatColor.RED + "Bruh you typed something in wrong...");
+                            return true;
+                        }
+
                         item.setItemMeta(freshPantsMeta);
                     }
 
