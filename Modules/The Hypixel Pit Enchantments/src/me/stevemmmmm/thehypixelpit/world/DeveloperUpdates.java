@@ -16,9 +16,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 @SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {
-    private final String update = "Added Obsidian, /givearrows, and /giveobsidian!";
+    private final String update = "Added Peroxide and Boo-boo!";
     private final String testMessage = "Working on Canceling Player!";
-    private final boolean isTesting = true;
+    private final boolean isTesting = false;
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {

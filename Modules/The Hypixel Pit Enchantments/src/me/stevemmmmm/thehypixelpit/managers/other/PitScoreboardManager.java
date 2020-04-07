@@ -65,15 +65,9 @@ public class PitScoreboardManager implements Listener {
     }
 
     private void updateScoreboard(Player player) {
-        Scoreboard board = playerToScoreboard.get(player.getUniqueId());
+        Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
 
-        Objective objective;
-
-        if (board.getObjective("test") == null) {
-            board.registerNewObjective("test", "dummy");
-        }
-
-        objective = board.getObjective("test");
+        Objective objective = board.registerNewObjective("test", "dummy");
 
         objective.setDisplayName(ChatColor.YELLOW.toString() + ChatColor.BOLD + "THE BLUE HATS PIT");
 
@@ -132,6 +126,8 @@ public class PitScoreboardManager implements Listener {
         updateNametag(player, board);
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+        player.setScoreboard(board);
     }
 
     public Objective getScoreboardObjective(Scoreboard board, Player player) {

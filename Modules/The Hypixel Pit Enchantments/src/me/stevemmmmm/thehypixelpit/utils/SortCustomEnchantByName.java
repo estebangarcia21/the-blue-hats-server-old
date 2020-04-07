@@ -12,6 +12,12 @@ public class SortCustomEnchantByName implements Comparator<CustomEnchant> {
 
     @Override
     public int compare(CustomEnchant a, CustomEnchant b) {
-        return a.getName().compareTo(b.getName());
+        try {
+            return a.getName().compareTo(b.getName());
+        } catch (NullPointerException exception) {
+            System.out.println("Error! You forgot to set a name to an enchant!");
+        }
+
+        return 0;
     }
 }

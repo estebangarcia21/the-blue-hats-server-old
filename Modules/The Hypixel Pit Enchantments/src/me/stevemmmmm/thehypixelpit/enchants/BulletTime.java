@@ -4,6 +4,8 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
+import me.stevemmmmm.thehypixelpit.managers.enchants.CancelEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
@@ -19,15 +21,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
 
-public class BulletTime extends CancelerEnchant<EntityDamageByEntityEvent> {
+public class BulletTime extends CustomEnchant implements CancelEnchant {
     private LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
 
-    @EventHandler (priority = EventPriority.HIGH)
+    @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantCancellation(event);
-
                 attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(), event.getDamager(), event);
             }
         }
@@ -53,13 +53,27 @@ public class BulletTime extends CancelerEnchant<EntityDamageByEntityEvent> {
         }
     }
 
-    @Override
-    public void attemptEnchantCancellation(EntityDamageByEntityEvent event) {
-        Player hitPlayer = (Player) event.getEntity();
+//    @Override
+//    public void attemptEnchantCancellation(EntityDamageByEntityEvent event) {
+//        super.attemptEnchantCancellation(event);
+//
+//        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
+//            Player hitPlayer = (Player) event.getEntity();
+//
+//            if (hitPlayer.isBlocking()) {
+//                cancelEnchants(this);
+//            }
+//        }
+//    }
 
-        if (hitPlayer.isBlocking()) {
-            cancelEnchants(this);
-        }
+    @Override
+    public boolean isCanceled(Player player) {
+        return itemHasEnchant(player.getInventory().getItemInHand(), this) && player.isBlocking();
+    }
+
+    @Override
+    public CustomEnchant getEnchant() {
+        return this;
     }
 
     @Override

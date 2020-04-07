@@ -2,12 +2,16 @@ package me.stevemmmmm.thehypixelpit.managers.other;
 
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
 
 public abstract class CancelerEnchant<T extends Event> extends CustomEnchant {
     private CancelerEnchant<T> caller;
     private boolean enchantsWereCancelled = false;
 
-    public abstract void attemptEnchantCancellation(T event);
+    public void attemptEnchantCancellation(T event) {
+        caller = null;
+        enchantsWereCancelled = false;
+    }
 
     public void cancelEnchants(CancelerEnchant<T> caller) {
         enchantsWereCancelled = true;
@@ -20,10 +24,5 @@ public abstract class CancelerEnchant<T extends Event> extends CustomEnchant {
 
     public CancelerEnchant<T> getCaller() {
         return caller;
-    }
-
-    public void reset() {
-        caller = null;
-        enchantsWereCancelled = false;
     }
 }

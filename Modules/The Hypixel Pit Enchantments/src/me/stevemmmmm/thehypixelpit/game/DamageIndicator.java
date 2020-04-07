@@ -4,6 +4,7 @@ package me.stevemmmmm.thehypixelpit.game;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -33,7 +34,7 @@ public class DamageIndicator implements Listener {
             Player damager = (Player) event.getDamager();
             Player attacked = (Player) event.getEntity();
 
-            if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN) && !DamageManager.getInstance().isEventCancelled(event)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
+            if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN) && !DamageManager.getInstance().isEventCancelled(event) && !CustomEnchantManager.getInstance().playerEnchantProcIsCanceled(damager)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
@@ -41,7 +42,7 @@ public class DamageIndicator implements Listener {
                 Player damager = (Player) ((Arrow) event.getDamager()).getShooter();
                 Player attacked = (Player) event.getEntity();
 
-                if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN) && !DamageManager.getInstance().isEventCancelled(event)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
+                if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN) && !DamageManager.getInstance().isEventCancelled(event) && !CustomEnchantManager.getInstance().playerEnchantProcIsCanceled(damager)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
             }
         }
     }
