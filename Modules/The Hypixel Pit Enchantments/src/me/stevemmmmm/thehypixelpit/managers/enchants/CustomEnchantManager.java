@@ -5,7 +5,9 @@ import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.utils.SortCustomEnchantByName;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -51,6 +53,7 @@ public class CustomEnchantManager {
 
     public void applyLore(ItemStack item, CustomEnchant enchant, int level) {
         ItemMeta meta = item.getItemMeta();
+        String previousDisplayName = meta.getDisplayName();
 
         switch (item.getType()) {
             case GOLD_SWORD:
@@ -60,8 +63,7 @@ public class CustomEnchantManager {
                 meta.setDisplayName(ChatColor.RED + "Tier III Bow");
                 break;
             case LEATHER_LEGGINGS:
-                meta.setDisplayName(ChatColor.RED + "Tier III Pants");
-                break;
+                if (!ChatColor.stripColor(meta.getDisplayName()).equals("Tier III Pants")) meta.setDisplayName("Tier III Pants");
         }
 
         String rare = ChatColor.LIGHT_PURPLE + "RARE! " + ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
@@ -76,10 +78,63 @@ public class CustomEnchantManager {
         enchantLore.add(0, enchant.isRareEnchant() ? rare : normal);
         if (meta.getLore() != null) enchantLore.add(0, " ");
 
-        List<String> combinedLore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
-        combinedLore.addAll(enchantLore);
+        List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
-        meta.setLore(combinedLore);
+        //TODO Lives
+
+        if (previousDisplayName != null && item.getType() == Material.LEATHER_LEGGINGS) {
+            if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Fresh")) {
+                lore = new ArrayList<>();
+
+                lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
+                lore.add(" ");
+
+                meta.setDisplayName(getChatColorFromPantsColor(ChatColor.stripColor(previousDisplayName.split(" ")[1])) + meta.getDisplayName());
+                enchantLore.remove(0);
+            }
+        }
+
+        if (previousDisplayName != null && item.getType() == Material.GOLD_SWORD) {
+            if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Mystic")) {
+                lore = new ArrayList<>();
+
+                lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
+                lore.add(" ");
+
+                meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
+
+                enchantLore.remove(0);
+            }
+        }
+
+        if (previousDisplayName != null && item.getType() == Material.BOW) {
+            if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Mystic")) {
+                lore = new ArrayList<>();
+
+                lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
+                lore.add(" ");
+
+                meta.addEnchant(Enchantment.DURABILITY, 1, true);
+
+                enchantLore.remove(0);
+            }
+        }
+
+        if (item.getType() == Material.LEATHER_LEGGINGS) {
+            if (lore.contains(meta.getDisplayName().substring(0, 2) + "As strong as iron")) {
+                lore.remove(lore.size() - 1);
+                lore.remove(lore.size() - 1);
+            }
+        }
+
+        lore.addAll(enchantLore);
+
+        if (item.getType() == Material.LEATHER_LEGGINGS) {
+            lore.add(" ");
+            lore.add(meta.getDisplayName().substring(0, 2) + "As strong as iron");
+
+        }
+        meta.setLore(lore);
 
         item.setItemMeta(meta);
     }
@@ -222,5 +277,28 @@ public class CustomEnchantManager {
         }
 
         return 0;
+    }
+
+    public ChatColor getChatColorFromPantsColor(String color) {
+        switch (color.toLowerCase()) {
+            case "red":
+                return ChatColor.RED;
+            case "green":
+                return ChatColor.GREEN;
+            case "blue":
+                return ChatColor.BLUE;
+            case "orange":
+                return ChatColor.GOLD;
+            case "yellow":
+                return ChatColor.YELLOW;
+            case "dark":
+                return ChatColor.DARK_PURPLE;
+            case "aqua":
+                return ChatColor.AQUA;
+            case "sewer":
+                return ChatColor.DARK_AQUA;
+        }
+
+        return ChatColor.WHITE;
     }
 }

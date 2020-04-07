@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 @SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {
-    private final String update = "Fixed a minor Bullet Time bug!";
+    private final String update = "Item lore is now accurate (lives don't work)!";
     private final String testMessage = "Working on Canceling Player!";
     private final boolean isTesting = false;
 

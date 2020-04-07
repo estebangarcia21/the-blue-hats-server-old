@@ -128,6 +128,7 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new Wasp());
         CustomEnchantManager.getInstance().registerEnchant(new Parasite());
         CustomEnchantManager.getInstance().registerEnchant(new PushComesToShove());
+        CustomEnchantManager.getInstance().registerEnchant(new Chipping());
 
         //Pants
         CustomEnchantManager.getInstance().registerEnchant(new Mirror());

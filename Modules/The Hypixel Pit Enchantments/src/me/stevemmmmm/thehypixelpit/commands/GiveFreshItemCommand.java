@@ -5,6 +5,7 @@ package me.stevemmmmm.thehypixelpit.commands;
  */
 
 import me.stevemmmmm.thehypixelpit.core.Main;
+import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -45,8 +46,13 @@ public class GiveFreshItemCommand implements CommandExecutor {
 
                         ItemMeta meta = item.getItemMeta();
 
-                        meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
-                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        meta.setDisplayName(ChatColor.YELLOW + "Mystic Sword");
+
+//                        meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
+
+                        meta.setLore(new LoreBuilder().write("Kept on death").nextLine().nextLine().write("Used in the mystic well").build());
+
+                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE);
                         meta.spigot().setUnbreakable(true);
 
                         item.setItemMeta(meta);
@@ -55,8 +61,13 @@ public class GiveFreshItemCommand implements CommandExecutor {
 
                         ItemMeta meta = item.getItemMeta();
 
-                        meta.addEnchant(Enchantment.DURABILITY, 1, true);
-                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        meta.setDisplayName(ChatColor.AQUA + "Mystic Bow");
+
+//                        meta.addEnchant(Enchantment.DURABILITY, 1, true);
+
+                        meta.setLore(new LoreBuilder().write("Kept on death").nextLine().nextLine().write("Used in the mystic well").build());
+
+                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE);
                         meta.spigot().setUnbreakable(true);
 
                         item.setItemMeta(meta);
@@ -134,7 +145,6 @@ public class GiveFreshItemCommand implements CommandExecutor {
 
     private void addPantsLore(LeatherArmorMeta newMeta, String name, ChatColor color) {
         newMeta.setDisplayName(color + "Fresh " + name + " Pants");
-        newMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 
         newMeta.spigot().setUnbreakable(true);
 
