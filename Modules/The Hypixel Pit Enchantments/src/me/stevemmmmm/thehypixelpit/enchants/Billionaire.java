@@ -7,6 +7,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -70,5 +71,10 @@ public class Billionaire extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return true;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.GOLD_SWORD;
     }
 }

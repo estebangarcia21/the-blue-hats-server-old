@@ -139,6 +139,77 @@ public class CustomEnchantManager {
         item.setItemMeta(meta);
     }
 
+    public void removeEnchant(ItemStack item, CustomEnchant enchant) {
+        ItemMeta meta = item.getItemMeta();
+
+        List<String> lore = meta.getLore();
+
+        if (lore == null) return;
+
+        List<String> formattedLore = new ArrayList<>();
+
+        for (String string : lore) {
+            ArrayList<String> enchantData = new ArrayList<>(Arrays.asList(string.split(" ")));
+            StringBuilder enchantName = new StringBuilder();
+
+            if (enchantData.size() == 0) {
+                formattedLore.add(" ");
+                continue;
+            }
+
+            String chatColor = string.substring(0, 2);
+
+            for (int i = 0; i < enchantData.size(); i++) {
+                enchantData.set(i, ChatColor.stripColor(enchantData.get(i)));
+            }
+
+            if (enchantData.get(0).equalsIgnoreCase("RARE!")) {
+                enchantData.remove(0);
+            }
+
+            for (int i = 0; i < enchantData.size(); i++) {
+                if (convertRomanNumeralToInteger(enchantData.get(i)) == -1) {
+                    enchantName.append(enchantData.get(i));
+                    if (i != enchantData.size() - 1) enchantName.append(" ");
+                }
+            }
+
+            String name = enchantName.toString().trim();
+
+            formattedLore.add(chatColor + name);
+        }
+
+        int index = -1;
+        for (int i = 0; i < formattedLore.size(); i++) {
+            if (ChatColor.stripColor(formattedLore.get(i)).equalsIgnoreCase(enchant.getName())) {
+                index = i;
+                break;
+            }
+        }
+
+        List<String> finalLore = meta.getLore();
+
+        boolean oneBackIndex = false;
+        while (!finalLore.get(index).equals(" ")) {
+            finalLore.remove(index);
+
+            if (index == finalLore.size()) {
+                oneBackIndex = true;
+                break;
+            }
+        }
+
+        if (oneBackIndex) {
+            finalLore.remove(index - 1);
+        } else {
+            finalLore.remove(index);
+        }
+
+        meta.setLore(finalLore);
+
+        item.setItemMeta(meta);
+    }
+
     public boolean containsEnchant(ItemStack item, CustomEnchant enchant) {
         if (item.getItemMeta().getLore() == null) return false;
 
@@ -261,6 +332,8 @@ public class CustomEnchantManager {
                 return "XXIX";
             case 30:
                 return "XXX";
+            case 35:
+                return "XXXV";
         }
 
         return null;
@@ -276,7 +349,7 @@ public class CustomEnchantManager {
                 return 3;
         }
 
-        return 0;
+        return -1;
     }
 
     public ChatColor getChatColorFromPantsColor(String color) {

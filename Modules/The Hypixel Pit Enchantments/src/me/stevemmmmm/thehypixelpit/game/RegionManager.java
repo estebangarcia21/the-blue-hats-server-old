@@ -34,6 +34,7 @@ public class RegionManager implements Listener {
 
     private void initSpawnRegions() {
         regions.add(new Region(new Vector(35.5, 77.5, 30), new Vector(-42.5, 111.5, -45.5), RegionType.SPAWN));
+        regions.add(new Region(new Vector(120.5, 0, 144.5), new Vector(-126.5, 129.5, -124.607), RegionType.PLAYABLEAREA));
     }
 
     @EventHandler
@@ -98,6 +99,6 @@ public class RegionManager implements Listener {
     }
 
     public enum RegionType {
-        SPAWN
+        SPAWN, PLAYABLEAREA
     }
 }

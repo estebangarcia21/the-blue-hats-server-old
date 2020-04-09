@@ -126,4 +126,9 @@ public class DevilChicks extends CustomEnchant {
     public boolean isRareEnchant() {
         return true;
     }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.BOW;
+    }
 }

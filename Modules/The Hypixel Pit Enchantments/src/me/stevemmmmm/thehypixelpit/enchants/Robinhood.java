@@ -7,6 +7,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -190,5 +191,10 @@ public class Robinhood extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return true;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.BOW;
     }
 }

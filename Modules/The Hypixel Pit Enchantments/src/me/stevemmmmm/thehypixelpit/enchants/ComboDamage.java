@@ -10,6 +10,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -69,5 +70,10 @@ public class ComboDamage extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return false;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.GOLD_SWORD;
     }
 }

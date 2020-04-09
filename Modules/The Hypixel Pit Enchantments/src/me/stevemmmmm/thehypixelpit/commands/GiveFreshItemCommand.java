@@ -134,6 +134,7 @@ public class GiveFreshItemCommand implements CommandExecutor {
                     }
 
                     player.getInventory().addItem(item);
+                    player.updateInventory();
                 } else {
                     player.sendMessage(ChatColor.DARK_PURPLE + "Usage:" + ChatColor.RED + " /givefreshitem <type>");
                 }

@@ -162,8 +162,10 @@ public class GrindingSystem implements Listener, ConfigWriter {
                 color = ChatColor.DARK_PURPLE;
             } else if (getPlayerPrestige(player) < 30) {
                 color = ChatColor.LIGHT_PURPLE;
-            }  else if (getPlayerPrestige(player) == 30) {
+            } else if (getPlayerPrestige(player) < 35) {
                 color = ChatColor.WHITE;
+            } else if (getPlayerPrestige(player) == 35) {
+                color = ChatColor.AQUA;
             }
 
             if (getPlayerLevel(player) < 10) {
@@ -290,8 +292,10 @@ public class GrindingSystem implements Listener, ConfigWriter {
                 color = ChatColor.DARK_PURPLE;
             } else if (getPlayerPrestige(player) < 30) {
                 color = ChatColor.LIGHT_PURPLE;
-            }  else if (getPlayerPrestige(player) == 30) {
+            } else if (getPlayerPrestige(player) < 35) {
                 color = ChatColor.WHITE;
+            } else if (getPlayerPrestige(player) == 35) {
+                color = ChatColor.AQUA;
             }
 
             if (getPlayerLevel(player) < 10) {

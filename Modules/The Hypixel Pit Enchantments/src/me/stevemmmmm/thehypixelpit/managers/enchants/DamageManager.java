@@ -31,10 +31,10 @@ public class DamageManager implements Listener {
     private HashMap<EntityDamageByEntityEvent, Double> additiveDamageBuffer = new HashMap<>();
     private HashMap<EntityDamageByEntityEvent, Double> multiplicativeDamageBuffer = new HashMap<>();
 
-    private ArrayList<EntityDamageByEntityEvent> canceledEvents = new ArrayList<>();
-
     private HashMap<EntityDamageByEntityEvent, Double> reductionBuffer = new HashMap<>();
+    private HashMap<EntityDamageByEntityEvent, Double> absoluteReductionBuffer = new HashMap<>();
 
+    private ArrayList<EntityDamageByEntityEvent> canceledEvents = new ArrayList<>();
     private List<EntityDamageByEntityEvent> removeCriticalDamage = new ArrayList<>();
 
     private DamageManager() { }
@@ -56,12 +56,13 @@ public class DamageManager implements Listener {
         canceledEvents.remove(event);
         additiveDamageBuffer.remove(event);
         multiplicativeDamageBuffer.remove(event);
+        absoluteReductionBuffer.remove(event);
         reductionBuffer.remove(event);
         removeCriticalDamage.remove(event);
     }
 
     public double getDamageFromEvent(EntityDamageByEntityEvent event) {
-        double damage = event.getDamage() * additiveDamageBuffer.getOrDefault(event, 1D) * multiplicativeDamageBuffer.getOrDefault(event, 1D) * reductionBuffer.getOrDefault(event, 1D);
+        double damage = event.getDamage() * additiveDamageBuffer.getOrDefault(event, 1D) * multiplicativeDamageBuffer.getOrDefault(event, 1D) * reductionBuffer.getOrDefault(event, 1D) - absoluteReductionBuffer.getOrDefault(event, 0D);
 
         if (removeCriticalDamage.contains(event)) {
             damage *= .667;
@@ -78,12 +79,14 @@ public class DamageManager implements Listener {
                 }
             }
         }
+
+        if (damage <= 0) damage = 1;
 
         return damage;
     }
 
     public double getFinalDamageFromEvent(EntityDamageByEntityEvent event) {
-        double damage = event.getFinalDamage() * additiveDamageBuffer.getOrDefault(event, 1D) * multiplicativeDamageBuffer.getOrDefault(event, 1D) * reductionBuffer.getOrDefault(event, 1D);
+        double damage = event.getFinalDamage() * additiveDamageBuffer.getOrDefault(event, 1D) * multiplicativeDamageBuffer.getOrDefault(event, 1D) * reductionBuffer.getOrDefault(event, 1D) - absoluteReductionBuffer.getOrDefault(event, 0D);
 
         if (removeCriticalDamage.contains(event)) {
             damage *= .667;
@@ -100,6 +103,8 @@ public class DamageManager implements Listener {
                 }
             }
         }
+
+        if (damage <= 0) damage = 1;
 
         return damage;
     }
@@ -152,14 +157,12 @@ public class DamageManager implements Listener {
         for (EntityDamageByEntityEvent event : canceledEvents) {
             if (event.getDamager() instanceof Arrow) {
                 if (event.getDamager().equals(projectile)) {
-                    System.out.println("Arrow is in canceled vent");
                     return true;
                 }
             }
 
             if (event.getEntity() instanceof Arrow) {
                 if (event.getEntity().equals(projectile)) {
-                    System.out.println("Arrow is in canceled vent");
                     return true;
                 }
             }
@@ -177,6 +180,10 @@ public class DamageManager implements Listener {
         }
 
         reductionBuffer.put(event, 1 - reductionBuffer.get(event) * value);
+    }
+
+    public void reduceAbsoluteDamage(EntityDamageByEntityEvent event, double value) {
+        absoluteReductionBuffer.put(event, absoluteReductionBuffer.getOrDefault(event, 0D) + value);
     }
 
     public void removeExtraCriticalDamage(EntityDamageByEntityEvent event) {

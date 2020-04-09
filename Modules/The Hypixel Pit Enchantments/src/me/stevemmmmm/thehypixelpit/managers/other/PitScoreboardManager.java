@@ -96,7 +96,7 @@ public class PitScoreboardManager implements Listener {
         level.setScore(index);
         index--;
 
-        Score xp = objective.getScore(ChatColor.WHITE + "XP: " + ChatColor.AQUA + "MAXED!");
+        Score xp = objective.getScore(ChatColor.WHITE + "XP: " + ChatColor.AQUA + "MAXED!!!");
         xp.setScore(index);
         index--;
 

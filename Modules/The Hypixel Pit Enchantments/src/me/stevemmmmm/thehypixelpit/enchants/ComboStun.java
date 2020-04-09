@@ -6,6 +6,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -94,5 +95,10 @@ public class ComboStun extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return true;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.GOLD_SWORD;
     }
 }

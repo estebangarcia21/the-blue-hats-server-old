@@ -9,6 +9,7 @@ import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -111,5 +112,10 @@ public class LuckyShot extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return true;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.BOW;
     }
 }

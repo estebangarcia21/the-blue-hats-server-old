@@ -54,6 +54,7 @@ public class Main extends JavaPlugin {
 
         //Utility
         getServer().getPluginManager().registerEvents(new GameUtility(), this);
+        getServer().getPluginManager().registerEvents(new ClearArrows(), this);
         getServer().getPluginManager().registerEvents(new AntiFall(), this);
         getServer().getPluginManager().registerEvents(new AutoRespawn(), this);
         getServer().getPluginManager().registerEvents(new PlayerUtility(), this);
@@ -74,6 +75,7 @@ public class Main extends JavaPlugin {
         getCommand("givebread").setExecutor(new GiveBreadCommand());
         getCommand("givearrows").setExecutor(new GiveArrowCommand());
         getCommand("giveobsidian").setExecutor(new GiveObsidianCommand());
+        getCommand("unenchant").setExecutor(new UnenchantCommand());
 
         SpawnCommand spawnCommand = new SpawnCommand();
         getCommand("spawn").setExecutor(spawnCommand);
@@ -91,6 +93,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Bread(), this);
         getServer().getPluginManager().registerEvents(GrindingSystem.getInstance(), this);
         getServer().getPluginManager().registerEvents(new Obsidian(), this);
+        getServer().getPluginManager().registerEvents(new PlayableArea(), this);
     }
 
     @Override
@@ -116,6 +119,7 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new KingBuster());
         CustomEnchantManager.getInstance().registerEnchant(new Punisher());
         CustomEnchantManager.getInstance().registerEnchant(new ComboSwift());
+        CustomEnchantManager.getInstance().registerEnchant(new Bruiser());
 
         //Bows
         CustomEnchantManager.getInstance().registerEnchant(new Robinhood());
@@ -138,5 +142,6 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new LastStand());
         CustomEnchantManager.getInstance().registerEnchant(new Peroxide());
         CustomEnchantManager.getInstance().registerEnchant(new BooBoo());
+        CustomEnchantManager.getInstance().registerEnchant(new DoubleJump());
     }
 }

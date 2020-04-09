@@ -43,7 +43,7 @@ public class DiamondStomp extends CustomEnchant {
 
     @Override
     public String getEnchantReferenceName() {
-        return "DiamondStomp";
+        return "Diamondstomp";
     }
 
     @Override
@@ -89,5 +89,10 @@ public class DiamondStomp extends CustomEnchant {
         }
 
         return false;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.GOLD_SWORD;
     }
 }

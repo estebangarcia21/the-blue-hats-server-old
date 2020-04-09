@@ -19,8 +19,11 @@ public class AutoRespawn implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         event.setDeathMessage("");
-        Player player = event.getEntity();
 
+        triggerRespawnSequence(event.getEntity());
+    }
+
+    public static void triggerRespawnSequence(Player player) {
         player.setHealth(player.getMaxHealth());
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> {

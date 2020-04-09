@@ -31,20 +31,22 @@ public abstract class CustomEnchant implements Listener {
     private HashMap<UUID, Long> cooldownTimesHitTimer = new HashMap<>();
     private HashMap<UUID, Integer> cooldownResetTasksHitTimer = new HashMap<>();
 
+    public abstract String getName();
+
+    public abstract String getEnchantReferenceName();
+
+    public abstract ArrayList<String> getDescription(int level);
+
+    public abstract boolean isTierTwoEnchant();
+
+    public abstract boolean isRareEnchant();
+
+    public abstract Material getEnchantItemType();
+
     public boolean attemptEnchantExecution(CustomEnchant target, ItemStack source, Object... args) {
         if (itemHasEnchant(source, this)) {
             for (Object object : args) {
                 if (object instanceof Player) {
-                    for (CustomEnchant enchant : CustomEnchantManager.getInstance().getEnchants()) {
-                        if (enchant instanceof EnchantCanceler) {
-                            EnchantCanceler cancelEnchant = (EnchantCanceler) enchant;
-
-                            if (cancelEnchant.isCanceled((Player) object) && cancelEnchant.getEnchant() != target) {
-                                return true;
-                            }
-                        }
-                    }
-
                     if (DamageManager.getInstance().playerIsInCanceledEvent((Player) object)) {
                         return false;
                     }
@@ -55,6 +57,10 @@ public abstract class CustomEnchant implements Listener {
                 }
 
                 if (object instanceof Arrow) {
+                    if (DamageManager.getInstance().arrowIsInCanceledEvent((Arrow) object)) {
+                        return false;
+                    }
+
                     if (RegionManager.getInstance().locationIsInRegion(((Arrow) object).getLocation(), RegionManager.RegionType.SPAWN)) {
                         return false;
                     }
@@ -73,16 +79,6 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public abstract void applyEnchant(int level, Object... args) ;
-
-    public abstract String getName();
-
-    public abstract String getEnchantReferenceName();
-
-    public abstract ArrayList<String> getDescription(int level);
-
-    public abstract boolean isTierTwoEnchant();
-
-    public abstract boolean isRareEnchant();
 
     public void startCooldown(Player player, long ticks, boolean isSeconds) {
         if (isSeconds) ticks *= 20;

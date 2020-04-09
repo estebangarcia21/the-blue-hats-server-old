@@ -23,7 +23,7 @@ public class LevelChatFormatting implements Listener {
         Player player = event.getPlayer();
 
         GrindingSystem.getInstance().setPlayerLevel(player, 120);
-        GrindingSystem.getInstance().setPlayerPrestige(player, 30);
+        GrindingSystem.getInstance().setPlayerPrestige(player, 35);
 
         if (event.getPlayer().getName().equalsIgnoreCase("Stevemmmmmmm") || event.getPlayer().getName().equalsIgnoreCase("SUNDEWS") || event.getPlayer().getName().equalsIgnoreCase("OVEREXERTED")) {
             ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.RED + " " + player.getName())[0];

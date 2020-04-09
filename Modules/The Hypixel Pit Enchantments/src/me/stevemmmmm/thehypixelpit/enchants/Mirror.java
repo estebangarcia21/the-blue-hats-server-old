@@ -4,6 +4,7 @@ import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 
 import java.util.ArrayList;
 
@@ -50,5 +51,10 @@ public class Mirror extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return false;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.LEATHER_LEGGINGS;
     }
 }

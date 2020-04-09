@@ -8,6 +8,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -107,5 +108,10 @@ public class Volley extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return true;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.BOW;
     }
 }

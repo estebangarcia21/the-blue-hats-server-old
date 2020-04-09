@@ -8,6 +8,7 @@ import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -68,5 +69,10 @@ public class Peroxide extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return false;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.LEATHER_LEGGINGS;
     }
 }

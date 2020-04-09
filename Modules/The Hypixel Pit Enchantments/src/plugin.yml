@@ -36,6 +36,9 @@ commands:
   giveobsidian:
     description: Gives obby
     usage: /giveobsidian
+  unenchant:
+    description: Unenchants stuff
+    usage: /unenchant
   duel:
     description: Duels a player
     usage: /duel

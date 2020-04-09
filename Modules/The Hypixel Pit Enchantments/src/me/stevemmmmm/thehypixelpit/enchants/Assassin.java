@@ -90,4 +90,9 @@ public class Assassin extends CustomEnchant {
     public boolean isRareEnchant() {
         return true;
     }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.GOLD_SWORD;
+    }
 }

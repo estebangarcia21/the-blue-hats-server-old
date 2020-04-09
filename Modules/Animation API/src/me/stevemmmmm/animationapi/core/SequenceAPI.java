@@ -19,7 +19,7 @@ public class SequenceAPI extends JavaPlugin {
 
     private static HashMap<Sequence, Integer> animationTaskIndexs = new HashMap<>();
     private static HashMap<Sequence, Long> sequencers = new HashMap<>();
-    private static HashMap<Sequence, AtomicLong> endSequencerTicks = new HashMap<>();
+    private static HashMap<Sequence, Long> endSequencerTicks = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -28,14 +28,13 @@ public class SequenceAPI extends JavaPlugin {
 
     public static void startSequence(Sequence sequence) {
         sequencers.put(sequence, 0L);
-        if (sequence.getAnimationActions() != null) sequence.getAnimationActions().onSequenceStart();
 
-        endSequencerTicks.put(sequence, new AtomicLong());
+        if (sequence.getAnimationActions() != null) sequence.getAnimationActions().onSequenceStart();
 
         ArrayList<Long> values = new ArrayList<>(sequence.getAnimationSequence().keySet());
 
         Collections.sort(values);
-        endSequencerTicks.get(sequence).set(values.get(values.size() - 1));
+        endSequencerTicks.put(sequence, values.get(values.size() - 1));
 
         animationTaskIndexs.put(sequence, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(instance, () -> {
             for (Map.Entry<Long, Frame> keyframe : sequence.getAnimationSequence().entrySet()) {
@@ -44,7 +43,7 @@ public class SequenceAPI extends JavaPlugin {
                 }
             }
 
-            if (sequencers.get(sequence) > endSequencerTicks.get(sequence).get()) {
+            if (sequencers.get(sequence) > endSequencerTicks.get(sequence)) {
                 if (sequence.getAnimationActions() != null) sequence.getAnimationActions().onSequenceEnd();
 
                 Bukkit.getServer().getScheduler().cancelTask(animationTaskIndexs.get(sequence));

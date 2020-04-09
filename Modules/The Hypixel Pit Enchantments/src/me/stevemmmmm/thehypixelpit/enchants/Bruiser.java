@@ -10,48 +10,47 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
 
-public class Chipping extends CustomEnchant {
-    private LevelVariable<Integer> damageAmount = new LevelVariable<>(1, 2, 3);
+public class Bruiser extends CustomEnchant {
+    private LevelVariable<Integer> heartsReduced = new LevelVariable<>(1, 2, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
-            if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(this, ((Player) ((Arrow) event.getDamager()).getShooter()).getInventory().getItemInHand(), event.getEntity(), ((Arrow) event.getDamager()).getShooter());
-            }
+        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+            attemptEnchantExecution(this, ((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(), event);
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        Player hitPlayer = (Player) args[0];
-        Player damager = (Player) args[1];
+        Player player = (Player) args[0];
 
-        DamageManager.getInstance().doTrueDamage(hitPlayer, damageAmount.at(level), damager);
+        if (player.isBlocking()) {
+            DamageManager.getInstance().reduceAbsoluteDamage((EntityDamageByEntityEvent) args[1], heartsReduced.at(level));
+        }
     }
 
     @Override
     public String getName() {
-        return "Chipping";
+        return "Bruiser";
     }
 
     @Override
     public String getEnchantReferenceName() {
-        return "Chipping";
+        return "Bruiser";
     }
 
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("0.5❤", "1.0❤", "1.5❤")
-                .write("Deals ").writeVariable(ChatColor.RED, 0, level).write(" extra true damage")
+                .addVariable("0.5❤", "1❤", "2❤")
+                .write("Blocking with your swords reduces").nextLine()
+                .write("received damage by ").writeVariable(ChatColor.RED, 0, level)
                 .build();
     }
 
@@ -67,6 +66,6 @@ public class Chipping extends CustomEnchant {
 
     @Override
     public Material getEnchantItemType() {
-        return Material.BOW;
+        return Material.GOLD_SWORD;
     }
 }

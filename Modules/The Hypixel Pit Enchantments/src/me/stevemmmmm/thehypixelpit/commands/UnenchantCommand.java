@@ -1,5 +1,9 @@
 package me.stevemmmmm.thehypixelpit.commands;
 
+/*
+ * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ */
+
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import org.apache.commons.lang.StringUtils;
@@ -11,20 +15,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
-public class EnchantCommand implements CommandExecutor {
+public class UnenchantCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if (label.equalsIgnoreCase("pitenchant")) {
+            if (label.equalsIgnoreCase("unenchant")) {
                 if (args.length == 0) {
-                    player.sendMessage(ChatColor.DARK_PURPLE + "Usage:" + ChatColor.RED + " /pitenchant <enchant> <level>");
+                    player.sendMessage(ChatColor.DARK_PURPLE + "Usage:" + ChatColor.RED + " /unenchant <enchant>");
                 } else {
                     CustomEnchant customEnchant = null;
 
@@ -46,28 +46,23 @@ public class EnchantCommand implements CommandExecutor {
                         return true;
                     }
 
-                    if (args.length < 2) {
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You did not specify an enchantment level!");
+                    if (args.length > 1) {
+                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " Too many arguments!");
                         return true;
                     }
 
-                    if (!StringUtils.isNumeric(args[1])) {
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " The enchantment level you entered is not a number!");
+                    if (item.getType() != Material.LEATHER_LEGGINGS && item.getType() != Material.GOLD_SWORD && item.getType() != Material.BOW) {
+                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You can not enchant this item!");
                         return true;
                     }
 
-                    if (CustomEnchantManager.getInstance().containsEnchant(item, customEnchant)) {
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " This item already contains this enchantment!");
+                    if (!CustomEnchantManager.getInstance().containsEnchant(item, customEnchant)) {
+                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " This item does not have the specified enchant!");
                         return true;
                     }
 
-                    if (item.getType() != customEnchant.getEnchantItemType()) {
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You can not enchant this enchant on this item!");
-                        return true;
-                    }
-
-                    CustomEnchantManager.getInstance().applyLore(item, customEnchant, Integer.parseInt(args[1]));
-                    player.sendMessage(ChatColor.DARK_PURPLE + "Success!" + ChatColor.RED + " You applied the enchantment successfully!");
+                    CustomEnchantManager.getInstance().removeEnchant(item, customEnchant);
+                    player.sendMessage(ChatColor.DARK_PURPLE + "Success!" + ChatColor.RED + " You unenchanted the enchant successfully!");
                     player.updateInventory();
                 }
             }

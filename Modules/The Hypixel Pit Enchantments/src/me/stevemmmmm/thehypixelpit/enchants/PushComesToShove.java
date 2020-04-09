@@ -9,6 +9,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -79,5 +80,10 @@ public class PushComesToShove extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return false;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.BOW;
     }
 }

@@ -9,6 +9,7 @@ import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -58,5 +59,10 @@ public class Lifesteal extends CustomEnchant {
     @Override
     public boolean isRareEnchant() {
         return false;
+    }
+
+    @Override
+    public Material getEnchantItemType() {
+        return Material.GOLD_SWORD;
     }
 }
