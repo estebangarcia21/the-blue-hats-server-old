@@ -5,7 +5,10 @@ package me.stevemmmmm.permissions.core;
  */
 
 import me.stevemmmmm.configapi.core.ConfigAPI;
+import me.stevemmmmm.configapi.core.ConfigReader;
 import me.stevemmmmm.configapi.core.ConfigWriter;
+import me.stevemmmmm.permissions.ranks.NoneRank;
+import me.stevemmmmm.permissions.ranks.NoobRank;
 import me.stevemmmmm.permissions.ranks.RankManager;
 import me.stevemmmmm.permissions.ranks.RankType;
 import org.bukkit.entity.Player;
@@ -20,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PermissionsManager implements Listener, ConfigWriter {
+public class PermissionsManager implements Listener, ConfigWriter, ConfigReader {
     private static PermissionsManager instance;
 
     private HashMap<UUID, Rank> playerRanks = new HashMap<>();
@@ -37,21 +40,6 @@ public class PermissionsManager implements Listener, ConfigWriter {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        if (!playerRanks.containsKey(event.getPlayer().getUniqueId())) {
-            playerRanks.put(event.getPlayer().getUniqueId(), RankManager.getInstance().getRankByName("Noob"));
-        }
-
-        if (!playerStaffRanks.containsKey(event.getPlayer().getUniqueId())) {
-            playerStaffRanks.put(event.getPlayer().getUniqueId(), RankManager.getInstance().getRankByName("None"));
-        }
-
-        readConfig(event.getPlayer());
-
-        updatePermissions(event.getPlayer());
-    }
-
-    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         PermissionAttachment attachment = playerPermissions.get(event.getPlayer().getUniqueId());
 
@@ -64,7 +52,7 @@ public class PermissionsManager implements Listener, ConfigWriter {
     }
 
     public Rank getPlayerRank(Player player) {
-        if (!playerStaffRanks.get(player.getUniqueId()).getName().equals("None")) {
+        if (!playerStaffRanks.get(player.getUniqueId()).equalsRank(NoneRank.class)) {
             return playerStaffRanks.get(player.getUniqueId());
         }
 
@@ -108,9 +96,12 @@ public class PermissionsManager implements Listener, ConfigWriter {
         }
     }
 
+    @Override
     public void readConfig(Player player) {
-        playerRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"PlayerRanks", String.class)));
-        playerStaffRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"StaffRanks", String.class)));
+        playerRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"PlayerRanks", String.class, RankManager.getInstance().getRank(NoneRank.class).getName())));
+        playerStaffRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"StaffRanks", String.class, RankManager.getInstance().getRank(NoneRank.class).getName())));
+
+        updatePermissions(player);
     }
 
     @Override

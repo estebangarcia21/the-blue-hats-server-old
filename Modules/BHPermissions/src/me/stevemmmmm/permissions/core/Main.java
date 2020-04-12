@@ -22,19 +22,20 @@ public class Main extends JavaPlugin {
             put("StaffRanks", "rank.staff");
         }});
 
-        getServer().getPluginManager().registerEvents(PermissionsManager.getInstance(), this);
-
-        getServer().getPluginCommand("setrank").setExecutor(new SetRankCommand());
-
         RankManager.getInstance().registerRank(new NoobRank());
         RankManager.getInstance().registerRank(new NoneRank());
         RankManager.getInstance().registerRank(new ModeratorRank());
         RankManager.getInstance().registerRank(new OwnerRank());
         RankManager.getInstance().registerRank(new DonorRank());
+
+        ConfigAPI.registerConfigWriter(PermissionsManager.getInstance());
+        ConfigAPI.registerConfigReader(PermissionsManager.getInstance());
+
+        getServer().getPluginManager().registerEvents(PermissionsManager.getInstance(), this);
+
+        getServer().getPluginCommand("setrank").setExecutor(new SetRankCommand());
     }
 
     @Override
-    public void onDisable() {
-        PermissionsManager.getInstance().writeToConfig();
-    }
+    public void onDisable() { }
 }

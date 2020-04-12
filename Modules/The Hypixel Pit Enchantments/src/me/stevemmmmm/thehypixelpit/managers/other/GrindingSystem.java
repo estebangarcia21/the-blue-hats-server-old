@@ -1,6 +1,7 @@
 package me.stevemmmmm.thehypixelpit.managers.other;
 
 import me.stevemmmmm.configapi.core.ConfigAPI;
+import me.stevemmmmm.configapi.core.ConfigReader;
 import me.stevemmmmm.configapi.core.ConfigWriter;
 import me.stevemmmmm.permissions.core.PermissionsManager;
 import me.stevemmmmm.thehypixelpit.core.Main;
@@ -27,7 +28,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class GrindingSystem implements Listener, ConfigWriter {
+public class GrindingSystem implements Listener, ConfigWriter, ConfigReader {
     private static GrindingSystem instance;
 
     private HashMap<Integer, Integer> xpPerLevel = new HashMap<>();
@@ -101,16 +102,6 @@ public class GrindingSystem implements Listener, ConfigWriter {
         playerGold.put(player.getUniqueId(), Double.parseDouble(df.format(playerGold.get(player.getUniqueId()) + gold)));
 
         return gold;
-    }
-
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        if (!playerPrestiges.containsKey(event.getPlayer().getUniqueId())) playerPrestiges.put(event.getPlayer().getUniqueId(), 0);
-        if (!playerXP.containsKey(event.getPlayer().getUniqueId())) playerXP.put(event.getPlayer().getUniqueId(), 0);
-        if (!playerGold.containsKey(event.getPlayer().getUniqueId())) playerGold.put(event.getPlayer().getUniqueId(), 0D);
-        if (!playerLevels.containsKey(event.getPlayer().getUniqueId())) playerLevels.put(event.getPlayer().getUniqueId(), 0);
-
-        readConfig(event.getPlayer());
     }
 
     @EventHandler
@@ -442,11 +433,12 @@ public class GrindingSystem implements Listener, ConfigWriter {
         playerPrestiges.put(player.getUniqueId(), value);
     }
 
+    @Override
     public void readConfig(Player player) {
-        playerPrestiges.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Prestiges", Integer.class));
-        playerXP.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "XP", Integer.class));
-        playerGold.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Gold", Double.class));
-        playerLevels.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Levels", Integer.class));
+        playerPrestiges.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Prestiges", Integer.class, 0));
+        playerXP.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "XP", Integer.class, 0));
+        playerGold.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Gold", Double.class, 0D));
+        playerLevels.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Levels", Integer.class, 0));
     }
 
     @Override

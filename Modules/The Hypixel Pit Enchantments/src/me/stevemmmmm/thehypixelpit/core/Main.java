@@ -50,6 +50,7 @@ public class Main extends JavaPlugin {
         }});
 
         ConfigAPI.registerConfigWriter(GrindingSystem.getInstance());
+        ConfigAPI.registerConfigReader(GrindingSystem.getInstance());
 
         Logger log = Bukkit.getLogger();
         log.info("------------------------------------------");

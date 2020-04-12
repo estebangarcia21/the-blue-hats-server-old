@@ -2,6 +2,9 @@ package me.stevemmmmm.configapi.core;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
@@ -15,18 +18,20 @@ import java.util.logging.Logger;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class ConfigAPI extends JavaPlugin {
+public class ConfigAPI extends JavaPlugin implements Listener {
     private static HashMap<JavaPlugin, HashMap<String, String>> dataCategories = new HashMap<>();
 
-    private static File file = new File("");
-
     private static ArrayList<ConfigWriter> configWriters = new ArrayList<>();
+    private static ArrayList<ConfigReader> configReaders = new ArrayList<>();
 
+    @Override
     public void onEnable() {
         Logger log = Bukkit.getLogger();
         log.info("------------------------------------------");
         log.info("ConfigAPI by Stevemmmmm");
         log.info("------------------------------------------");
+
+        getServer().getPluginManager().registerEvents(this, this);
 
 //        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
 //            for (ConfigWriter writer : configWriters) {
@@ -35,9 +40,17 @@ public class ConfigAPI extends JavaPlugin {
 //        }, 36000L, 36000L);
     }
 
+    @Override
     public void onDisable() {
         for (ConfigWriter writer : configWriters) {
             writer.writeToConfig();
+        }
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        for (ConfigReader reader : configReaders) {
+            reader.readConfig(event.getPlayer());
         }
     }
 
@@ -47,6 +60,10 @@ public class ConfigAPI extends JavaPlugin {
 
     public static void registerConfigWriter(ConfigWriter writer) {
         configWriters.add(writer);
+    }
+
+    public static void registerConfigReader(ConfigReader reader) {
+        configReaders.add(reader);
     }
 
     public static void write(JavaPlugin plugin, Player player, String path, String value) {
@@ -65,35 +82,11 @@ public class ConfigAPI extends JavaPlugin {
         }
     }
 
-//    public static void write(JavaPlugin plugin, String dataCategory, UUID player, Object value) {
-//        write(plugin, dataCategory, new HashMap<UUID, Object>() {{
-//            put(player, value);
-//        }});
-//
-////        if (!dataCategories.get(plugin).contains(dataCategory)) {
-////            Bukkit.getLogger().severe("Directory " + dataCategory + " does not exist!");
-////            return;
-////        }
-////
-////        List<String> data = new ArrayList<>();
-////
-////        for (String str : readAllData(plugin)) {
-////            System.out.println(str.split(":")[0]);
-////
-////            if (!dataCategory.equals(str.split(":")[0])) {
-////                data.add(str);
-////            }
-////        }
-////
-////        System.out.println(plugin + " | " + data);
-////
-////        data.add(dataCategory + ":" + player + ":" + value.toString());
-////
-////        plugin.getConfig().set(file.getAbsolutePath() + "\\Data\\", data);
-////        plugin.saveConfig();
-//    }
+    public static <T> T read(JavaPlugin plugin, Player player, String path, Class<T> type, T defaultValue) {
+        if (plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path)) == null) {
+            return defaultValue;
+        }
 
-    public static <T> T read(JavaPlugin plugin, Player player, String path, Class<T> type) {
         if (type == Integer.class) {
             return type.cast(Integer.parseInt(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
         }

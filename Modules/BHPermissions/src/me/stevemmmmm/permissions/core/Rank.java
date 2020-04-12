@@ -17,6 +17,10 @@ public abstract class Rank {
         return getPrefix() + " " + getNameColor() + player.getName() + ChatColor.WHITE + ": " + getChatColor();
     }
 
+    public <T extends Rank> boolean equalsRank(Class<T> type) {
+        return type == getClass();
+    }
+
     public abstract String getName();
 
     public abstract int getOrder();
