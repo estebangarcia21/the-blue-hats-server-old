@@ -25,6 +25,16 @@ public class RankManager {
         ranks.add(rank);
     }
 
+    public <T extends Rank> Rank getRank(Class<T> type) {
+        for (Rank rank : ranks) {
+            if (type == rank.getClass()) {
+                return rank;
+            }
+        }
+
+        return null;
+    }
+
     public Rank getRankByName(String name) {
         for (Rank rank : ranks) {
             if (rank.getName().equalsIgnoreCase(name)) {

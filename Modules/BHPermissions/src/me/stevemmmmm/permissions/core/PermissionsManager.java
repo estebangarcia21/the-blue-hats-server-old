@@ -46,6 +46,8 @@ public class PermissionsManager implements Listener, ConfigWriter {
             playerStaffRanks.put(event.getPlayer().getUniqueId(), RankManager.getInstance().getRankByName("None"));
         }
 
+        readConfig(event.getPlayer());
+
         updatePermissions(event.getPlayer());
     }
 
@@ -106,14 +108,9 @@ public class PermissionsManager implements Listener, ConfigWriter {
         }
     }
 
-    public void readConfig() {
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read(Main.INSTANCE, "PlayerRanks").entrySet()) {
-            playerRanks.put(entry.getKey(), RankManager.getInstance().getRankByName(entry.getValue()));
-        }
-
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read(Main.INSTANCE, "StaffRanks").entrySet()) {
-            playerStaffRanks.put(entry.getKey(), RankManager.getInstance().getRankByName(entry.getValue()));
-        }
+    public void readConfig(Player player) {
+        playerRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"PlayerRanks", String.class)));
+        playerStaffRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"StaffRanks", String.class)));
     }
 
     @Override

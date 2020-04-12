@@ -21,8 +21,10 @@ import me.stevemmmmm.thehypixelpit.world.*;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 /*
@@ -40,9 +42,13 @@ public class Main extends JavaPlugin {
         INSTANCE = this;
         protocolManager = ProtocolLibrary.getProtocolManager();
 
-        ConfigAPI.addPlugin(this, "Ranks", "Gold", "XP", "Prestiges", "Levels");
+        ConfigAPI.addPlugin(this, new HashMap<String, String>() {{
+            put("Gold", "stats.gold");
+            put("XP", "stats.xp");
+            put("Prestiges", "stats.prestige");
+            put("Levels", "stats.level");
+        }});
 
-        GrindingSystem.getInstance().readConfig();
         ConfigAPI.registerConfigWriter(GrindingSystem.getInstance());
 
         Logger log = Bukkit.getLogger();
@@ -111,6 +117,12 @@ public class Main extends JavaPlugin {
                 if (entity.isValid()) {
                     entity.remove();
                 }
+            }
+        }
+
+        for (World world : Bukkit.getWorlds()) {
+            for (Player entity : world.getPlayers()) {
+                ConfigAPI.InventorySerializer.serializePlayerInventory(INSTANCE, entity);
             }
         }
 

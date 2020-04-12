@@ -8,6 +8,8 @@ import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.permissions.ranks.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+
 public class Main extends JavaPlugin {
     public static Main INSTANCE;
 
@@ -15,7 +17,10 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
 
-        ConfigAPI.addPlugin(this, "PlayerRanks", "StaffRanks");
+        ConfigAPI.addPlugin(this, new HashMap<String, String>() {{
+            put("PlayerRanks", "rank.player");
+            put("StaffRanks", "rank.staff");
+        }});
 
         getServer().getPluginManager().registerEvents(PermissionsManager.getInstance(), this);
 
@@ -26,8 +31,6 @@ public class Main extends JavaPlugin {
         RankManager.getInstance().registerRank(new ModeratorRank());
         RankManager.getInstance().registerRank(new OwnerRank());
         RankManager.getInstance().registerRank(new DonorRank());
-
-        PermissionsManager.getInstance().readConfig();
     }
 
     @Override

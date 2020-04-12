@@ -105,12 +105,12 @@ public class GrindingSystem implements Listener, ConfigWriter {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        //TODO Check if the player joined a pit instance
-
         if (!playerPrestiges.containsKey(event.getPlayer().getUniqueId())) playerPrestiges.put(event.getPlayer().getUniqueId(), 0);
         if (!playerXP.containsKey(event.getPlayer().getUniqueId())) playerXP.put(event.getPlayer().getUniqueId(), 0);
         if (!playerGold.containsKey(event.getPlayer().getUniqueId())) playerGold.put(event.getPlayer().getUniqueId(), 0D);
         if (!playerLevels.containsKey(event.getPlayer().getUniqueId())) playerLevels.put(event.getPlayer().getUniqueId(), 0);
+
+        readConfig(event.getPlayer());
     }
 
     @EventHandler
@@ -442,22 +442,11 @@ public class GrindingSystem implements Listener, ConfigWriter {
         playerPrestiges.put(player.getUniqueId(), value);
     }
 
-    public void readConfig() {
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read(Main.INSTANCE, "Prestiges").entrySet()) {
-            playerPrestiges.put(entry.getKey(), Integer.parseInt(entry.getValue()));
-        }
-
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read(Main.INSTANCE, "XP").entrySet()) {
-            playerXP.put(entry.getKey(), Integer.parseInt(entry.getValue()));
-        }
-
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read(Main.INSTANCE, "Gold").entrySet()) {
-            playerGold.put(entry.getKey(), Double.parseDouble(entry.getValue()));
-        }
-
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read(Main.INSTANCE, "Levels").entrySet()) {
-            playerLevels.put(entry.getKey(), Integer.parseInt(entry.getValue()));
-        }
+    public void readConfig(Player player) {
+        playerPrestiges.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Prestiges", Integer.class));
+        playerXP.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "XP", Integer.class));
+        playerGold.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Gold", Double.class));
+        playerLevels.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Levels", Integer.class));
     }
 
     @Override

@@ -1,6 +1,9 @@
 package me.stevemmmmm.configapi.core;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,7 +16,8 @@ import java.util.logging.Logger;
  */
 
 public class ConfigAPI extends JavaPlugin {
-    private static HashMap<JavaPlugin, List<String>> dataCategories = new HashMap<>();
+    private static HashMap<JavaPlugin, HashMap<String, String>> dataCategories = new HashMap<>();
+
     private static File file = new File("");
 
     private static ArrayList<ConfigWriter> configWriters = new ArrayList<>();
@@ -37,74 +41,102 @@ public class ConfigAPI extends JavaPlugin {
         }
     }
 
-    public static void addPlugin(JavaPlugin javaPlugin, String... args) {
-        dataCategories.put(javaPlugin, new ArrayList<>(Arrays.asList(args)));
+    public static void addPlugin(JavaPlugin javaPlugin, HashMap<String, String> locations) {
+        dataCategories.put(javaPlugin, locations);
     }
 
     public static void registerConfigWriter(ConfigWriter writer) {
         configWriters.add(writer);
     }
 
-    public static <T> void write(JavaPlugin plugin, String dataCategory, HashMap<UUID, T> object) {
-        if (!dataCategories.get(plugin).contains(dataCategory)) {
-            Bukkit.getLogger().severe("Directory " + dataCategory + " does not exist!");
-            return;
-        }
+    public static void write(JavaPlugin plugin, Player player, String path, String value) {
+        String fullPath = dataCategories.get(plugin).get(path);
 
-        List<String> data = new ArrayList<>();
-
-        for (String str : readAllData(plugin)) {
-            if (!dataCategory.equals(str.split(":")[0])) {
-                data.add(str);
-            }
-        }
-
-        for (Map.Entry<UUID, T> entry : object.entrySet()) {
-            data.add(dataCategory + ":" + entry.getKey().toString() + ":" + entry.getValue().toString());
-        }
-
-        plugin.getConfig().set(file.getAbsolutePath() + "\\Data\\", data);
+        plugin.getConfig().set(player.getUniqueId().toString() + "." + fullPath, value);
         plugin.saveConfig();
     }
 
-    public static void write(JavaPlugin plugin, String dataCategory, UUID player, Object value) {
-        if (!dataCategories.get(plugin).contains(dataCategory)) {
-            Bukkit.getLogger().severe("Directory " + dataCategory + " does not exist!");
-            return;
+    public static <V> void write(JavaPlugin plugin, String path, HashMap<UUID, V> entries) {
+        String fullPath = dataCategories.get(plugin).get(path);
+
+        for (Map.Entry<UUID, V> entry : entries.entrySet()) {
+            plugin.getConfig().set(entry.getKey() + "." + fullPath, entry.getValue().toString());
+            plugin.saveConfig();
+        }
+    }
+
+//    public static void write(JavaPlugin plugin, String dataCategory, UUID player, Object value) {
+//        write(plugin, dataCategory, new HashMap<UUID, Object>() {{
+//            put(player, value);
+//        }});
+//
+////        if (!dataCategories.get(plugin).contains(dataCategory)) {
+////            Bukkit.getLogger().severe("Directory " + dataCategory + " does not exist!");
+////            return;
+////        }
+////
+////        List<String> data = new ArrayList<>();
+////
+////        for (String str : readAllData(plugin)) {
+////            System.out.println(str.split(":")[0]);
+////
+////            if (!dataCategory.equals(str.split(":")[0])) {
+////                data.add(str);
+////            }
+////        }
+////
+////        System.out.println(plugin + " | " + data);
+////
+////        data.add(dataCategory + ":" + player + ":" + value.toString());
+////
+////        plugin.getConfig().set(file.getAbsolutePath() + "\\Data\\", data);
+////        plugin.saveConfig();
+//    }
+
+    public static <T> T read(JavaPlugin plugin, Player player, String path, Class<T> type) {
+        if (type == Integer.class) {
+            return type.cast(Integer.parseInt(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
         }
 
-        List<String> data = new ArrayList<>();
+        if (type == Double.class) {
+            return type.cast(Double.parseDouble(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+        }
 
-        for (String str : readAllData(plugin)) {
-            System.out.println(str.split(":")[0]);
+        if (type == Float.class) {
+            return type.cast(Float.parseFloat(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+        }
 
-            if (!dataCategory.equals(str.split(":")[0])) {
-                data.add(str);
+        if (type == Long.class) {
+            return type.cast(Long.parseLong(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+        }
+
+        if (type == Short.class) {
+            return type.cast(Short.parseShort(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+        }
+
+        if (type == Byte.class) {
+            return type.cast(Byte.parseByte(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+        }
+
+        return type.cast(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path)));
+    }
+
+    public static class InventorySerializer {
+        public static void serializePlayerInventory(JavaPlugin plugin, Player player) {
+            for (int i = 0; i < player.getInventory().getSize(); i++) {
+                if (player.getInventory().getItem(i) == null) continue;
+
+                writeInventory(plugin, player, i, player.getInventory().getItem(i).serialize());
             }
         }
 
-        System.out.println(plugin + " | " + data);
+        public static void loadInventory(JavaPlugin plugin, Player player) {
 
-        data.add(dataCategory + ":" + player + ":" + value.toString());
-
-        plugin.getConfig().set(file.getAbsolutePath() + "\\Data\\", data);
-        plugin.saveConfig();
-    }
-
-    public static HashMap<UUID, String> read(Plugin plugin, String dataCategory) {
-        HashMap<UUID, String> data = new HashMap<>();
-
-        for (String raw : plugin.getConfig().getStringList(file.getAbsolutePath() + "\\Data\\")) {
-            if (raw.split(":")[0].equals(dataCategory)) {
-                String[] splitData = raw.split(":");
-                data.put(UUID.fromString(splitData[1]), splitData[2]);
-            }
         }
 
-        return data;
-    }
-
-    public static List<String> readAllData(JavaPlugin plugin) {
-        return plugin.getConfig().getStringList(file.getAbsolutePath() + "\\Data\\");
+        private static void writeInventory(JavaPlugin plugin, Player player, int slot, Map<String, Object> object) {
+            plugin.getConfig().set(player.getUniqueId().toString() + ".inventory.mainworld.slots." + slot, object);
+            plugin.saveConfig();
+        }
     }
 }
