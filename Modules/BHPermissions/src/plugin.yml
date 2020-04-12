@@ -1,5 +1,6 @@
 name: BHPermissions
 main: me.stevemmmmm.permissions.core.Main
+depend: [ConfigAPI]
 version: 1.0
 commands:
   setrank:

@@ -14,9 +14,7 @@ import me.stevemmmmm.permissions.ranks.RankType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 
 import java.util.HashMap;
@@ -98,7 +96,7 @@ public class PermissionsManager implements Listener, ConfigWriter, ConfigReader 
 
     @Override
     public void readConfig(Player player) {
-        playerRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"PlayerRanks", String.class, RankManager.getInstance().getRank(NoneRank.class).getName())));
+        playerRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"PlayerRanks", String.class, RankManager.getInstance().getRank(NoobRank.class).getName())));
         playerStaffRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"StaffRanks", String.class, RankManager.getInstance().getRank(NoneRank.class).getName())));
 
         updatePermissions(player);
