@@ -2,6 +2,8 @@ package me.stevemmmmm.thehypixelpit.managers.other;
 
 import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.configapi.core.ConfigWriter;
+import me.stevemmmmm.permissions.core.PermissionsManager;
+import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
@@ -124,8 +126,8 @@ public class GrindingSystem implements Listener, ConfigWriter {
         }
 
         DecimalFormat df = new DecimalFormat("##0.00");
-        event.getEntity().getKiller().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "KILL!" + ChatColor.GRAY + " on " + ChatColor.GOLD + event.getEntity().getName() + ChatColor.AQUA + " +" + giveRandomXP(event.getEntity().getKiller()) + "XP" + ChatColor.GOLD + " +" + df.format(giveRandomGold(event.getEntity().getKiller())) + "g");
-        event.getEntity().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "DEATH! " + ChatColor.GRAY + "by " + getFormattedPlayerLevelWithoutPrestige(event.getEntity()) + " " + ChatColor.GOLD + event.getEntity().getKiller().getName() + " " + ChatColor.YELLOW.toString() + ChatColor.BOLD + "VIEW RECAP");
+        event.getEntity().getKiller().sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "KILL!" + ChatColor.GRAY + " on " + PermissionsManager.getInstance().getPlayerRank(event.getEntity()).getNameColor() + event.getEntity().getName() + ChatColor.AQUA + " +" + giveRandomXP(event.getEntity().getKiller()) + "XP" + ChatColor.GOLD + " +" + df.format(giveRandomGold(event.getEntity().getKiller())) + "g");
+        event.getEntity().sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "DEATH! " + ChatColor.GRAY + "by " + getFormattedPlayerLevelWithoutPrestige(event.getEntity().getKiller()) + " " + PermissionsManager.getInstance().getPlayerRank(event.getEntity().getKiller()).getNameColor() + event.getEntity().getKiller().getName() + " " + ChatColor.YELLOW.toString() + ChatColor.BOLD + "VIEW RECAP");
         updateLevel(event.getEntity().getKiller());
     }
 
@@ -441,28 +443,28 @@ public class GrindingSystem implements Listener, ConfigWriter {
     }
 
     public void readConfig() {
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read("Prestiges").entrySet()) {
+        for (Map.Entry<UUID, String> entry : ConfigAPI.read(Main.INSTANCE, "Prestiges").entrySet()) {
             playerPrestiges.put(entry.getKey(), Integer.parseInt(entry.getValue()));
         }
 
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read("XP").entrySet()) {
+        for (Map.Entry<UUID, String> entry : ConfigAPI.read(Main.INSTANCE, "XP").entrySet()) {
             playerXP.put(entry.getKey(), Integer.parseInt(entry.getValue()));
         }
 
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read("Gold").entrySet()) {
+        for (Map.Entry<UUID, String> entry : ConfigAPI.read(Main.INSTANCE, "Gold").entrySet()) {
             playerGold.put(entry.getKey(), Double.parseDouble(entry.getValue()));
         }
 
-        for (Map.Entry<UUID, String> entry : ConfigAPI.read("Levels").entrySet()) {
+        for (Map.Entry<UUID, String> entry : ConfigAPI.read(Main.INSTANCE, "Levels").entrySet()) {
             playerLevels.put(entry.getKey(), Integer.parseInt(entry.getValue()));
         }
     }
 
     @Override
     public void writeToConfig() {
-        ConfigAPI.write("XP", playerXP);
-        ConfigAPI.write("Gold", playerGold);
-        ConfigAPI.write("Prestiges", playerPrestiges);
-        ConfigAPI.write("Levels", playerLevels);
+        ConfigAPI.write(Main.INSTANCE, "XP", playerXP);
+        ConfigAPI.write(Main.INSTANCE, "Gold", playerGold);
+        ConfigAPI.write(Main.INSTANCE, "Prestiges", playerPrestiges);
+        ConfigAPI.write(Main.INSTANCE, "Levels", playerLevels);
     }
 }

@@ -209,7 +209,7 @@ public class DamageManager implements Listener {
 
             if (target.getHealth() - damage < 0) {
                 target.setMaxHealth(target.getMaxHealth());
-                manuallyCallDeathEvent(target);
+                killPlayer(target);
             } else {
                 target.damage(0);
                 target.setHealth(target.getHealth() - damage);
@@ -220,7 +220,7 @@ public class DamageManager implements Listener {
             try {
                 if (reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
                     reflectTo.setMaxHealth(target.getMaxHealth());
-                    manuallyCallDeathEvent(reflectTo);
+                    killPlayer(reflectTo);
                 } else {
                     reflectTo.damage(0);
 
@@ -237,7 +237,7 @@ public class DamageManager implements Listener {
         return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
     }
 
-    private void manuallyCallDeathEvent(Player target) {
+    public void killPlayer(Player target) {
         PlayerDeathEvent manualEvent = new PlayerDeathEvent(target, new ArrayList<>(), 0,  "");
         Main.INSTANCE.getServer().getPluginManager().callEvent(manualEvent);
     }

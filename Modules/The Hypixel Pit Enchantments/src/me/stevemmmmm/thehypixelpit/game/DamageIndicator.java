@@ -4,6 +4,7 @@ package me.stevemmmmm.thehypixelpit.game;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.permissions.core.PermissionsManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
@@ -17,6 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import java.security.Permission;
 import java.text.DecimalFormat;
 
 public class DamageIndicator implements Listener {
@@ -56,7 +58,7 @@ public class DamageIndicator implements Listener {
         private StringBuilder output = new StringBuilder();
 
         public IndicatorBuilder(Player damaged, int originalHealth, double damageTaken, int maxHealth) {
-            output.append(ChatColor.GOLD.toString()).append(damaged.getName()).append(" ");
+            output.append(PermissionsManager.getInstance().getPlayerRank(damaged).getNameColor()).append(damaged.getName()).append(" ");
 
             EntityPlayer player = ((CraftPlayer) damaged).getHandle();
 

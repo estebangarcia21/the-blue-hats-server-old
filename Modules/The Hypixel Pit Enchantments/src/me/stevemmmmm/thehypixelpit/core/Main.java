@@ -19,6 +19,8 @@ import me.stevemmmmm.thehypixelpit.perks.Vampire;
 import me.stevemmmmm.thehypixelpit.utils.DevelopmentMode;
 import me.stevemmmmm.thehypixelpit.world.*;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -38,7 +40,7 @@ public class Main extends JavaPlugin {
         INSTANCE = this;
         protocolManager = ProtocolLibrary.getProtocolManager();
 
-        ConfigAPI.setPlugin(this, "Ranks", "Gold", "XP", "Prestiges", "Levels");
+        ConfigAPI.addPlugin(this, "Ranks", "Gold", "XP", "Prestiges", "Levels");
 
         GrindingSystem.getInstance().readConfig();
         ConfigAPI.registerConfigWriter(GrindingSystem.getInstance());
@@ -63,6 +65,8 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(RegionManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(new DevelopmentMode(), this);
         getServer().getPluginManager().registerEvents(new ServerMOTDInitializer(), this);
+        getServer().getPluginManager().registerEvents(new ChatCooldown(), this);
+        getServer().getPluginManager().registerEvents(new TogglePvPCommand(), this);
 
         //Commands
         getCommand("pitenchant").setExecutor(new EnchantCommand());
@@ -76,6 +80,7 @@ public class Main extends JavaPlugin {
         getCommand("givearrows").setExecutor(new GiveArrowCommand());
         getCommand("giveobsidian").setExecutor(new GiveObsidianCommand());
         getCommand("unenchant").setExecutor(new UnenchantCommand());
+        getCommand("togglepvp").setExecutor(new TogglePvPCommand());
 
         SpawnCommand spawnCommand = new SpawnCommand();
         getCommand("spawn").setExecutor(spawnCommand);
@@ -92,13 +97,24 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new LevelChatFormatting(), this);
         getServer().getPluginManager().registerEvents(new Bread(), this);
         getServer().getPluginManager().registerEvents(GrindingSystem.getInstance(), this);
-        getServer().getPluginManager().registerEvents(new Obsidian(), this);
+        getServer().getPluginManager().registerEvents(Obsidian.getInstance(), this);
         getServer().getPluginManager().registerEvents(new PlayableArea(), this);
+        getServer().getPluginManager().registerEvents(new StopLiquidFlow(), this);
     }
 
     @Override
     public void onDisable() {
         GrindingSystem.getInstance().writeToConfig();
+
+        for (World world : Bukkit.getWorlds()) {
+            for (Entity entity : world.getEntities()) {
+                if (entity.isValid()) {
+                    entity.remove();
+                }
+            }
+        }
+
+        Obsidian.getInstance().removeObsidian();
     }
 
     private void registerPerks() {
@@ -120,6 +136,8 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new Punisher());
         CustomEnchantManager.getInstance().registerEnchant(new ComboSwift());
         CustomEnchantManager.getInstance().registerEnchant(new Bruiser());
+        CustomEnchantManager.getInstance().registerEnchant(new Frostbite());
+        CustomEnchantManager.getInstance().registerEnchant(new Executioner());
 
         //Bows
         CustomEnchantManager.getInstance().registerEnchant(new Robinhood());

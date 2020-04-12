@@ -38,7 +38,7 @@ public class Billionaire extends CustomEnchant {
             GrindingSystem.getInstance().setPlayerGold(damager, GrindingSystem.getInstance().getPlayerGold(damager) - goldNeeded.at(level));
 
             DamageManager.getInstance().addDamage((EntityDamageByEntityEvent) args[1], damageIncrease.at(level), CalculationMode.MULTIPLICATIVE);
-            damager.playSound(damager.getLocation(), Sound.ORB_PICKUP, 1, 0.5f);
+            damager.playSound(damager.getLocation(), Sound.NOTE_PLING, 1, 0.5f);
         }
     }
 

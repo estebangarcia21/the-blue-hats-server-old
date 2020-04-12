@@ -4,6 +4,7 @@ package me.stevemmmmm.thehypixelpit.managers;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.thehypixelpit.commands.TogglePvPCommand;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantCanceler;
@@ -31,6 +32,8 @@ public abstract class CustomEnchant implements Listener {
     private HashMap<UUID, Long> cooldownTimesHitTimer = new HashMap<>();
     private HashMap<UUID, Integer> cooldownResetTasksHitTimer = new HashMap<>();
 
+    public abstract void applyEnchant(int level, Object... args) ;
+
     public abstract String getName();
 
     public abstract String getEnchantReferenceName();
@@ -44,6 +47,8 @@ public abstract class CustomEnchant implements Listener {
     public abstract Material getEnchantItemType();
 
     public boolean attemptEnchantExecution(CustomEnchant target, ItemStack source, Object... args) {
+        if (TogglePvPCommand.pvpIsToggledOff) return false;
+
         if (itemHasEnchant(source, this)) {
             for (Object object : args) {
                 if (object instanceof Player) {
@@ -77,8 +82,6 @@ public abstract class CustomEnchant implements Listener {
     public boolean getAttemptedEnchantExecutionFeedback(ItemStack source) {
         return false;
     }
-
-    public abstract void applyEnchant(int level, Object... args) ;
 
     public void startCooldown(Player player, long ticks, boolean isSeconds) {
         if (isSeconds) ticks *= 20;

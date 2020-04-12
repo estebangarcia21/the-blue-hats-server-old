@@ -268,6 +268,20 @@ public class CustomEnchantManager {
         return enchantsToLevels;
     }
 
+    public List<CustomEnchant> getRawItemEnchants(ItemStack item) {
+        if (item == null) return new ArrayList<>();
+
+        ArrayList<CustomEnchant> enchants = new ArrayList<>();
+
+        for (CustomEnchant enchant : getEnchants()) {
+            if (containsEnchant(item, enchant)) {
+                enchants.add(enchant);
+            }
+        }
+
+        return enchants;
+    }
+
     public String convertToRomanNumeral(int value) {
         switch (value) {
             case 0:

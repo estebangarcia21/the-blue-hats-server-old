@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 @SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {
-    private final String update = "You can now only put enchants on their correct item!";
+    private final String update = "Added a permissions system!";
     private final String testMessage = "Working on Canceling Player!";
     private final boolean isTesting = false;
 

@@ -59,14 +59,14 @@ public class DoubleJump extends CustomEnchant {
 
     @EventHandler
     public void onFlightAttempt(PlayerToggleFlightEvent event) {
+        if (event.getPlayer().getGameMode() == GameMode.SURVIVAL) event.setCancelled(true);
+
         attemptEnchantExecution(this, event.getPlayer().getInventory().getLeggings(), event);
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
         PlayerToggleFlightEvent event = (PlayerToggleFlightEvent) args[0];
-
-        event.setCancelled(true);
 
         Vector normalizedVelocity = event.getPlayer().getEyeLocation().getDirection().normalize();
 

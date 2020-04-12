@@ -93,6 +93,6 @@ public class Assassin extends CustomEnchant {
 
     @Override
     public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+        return Material.LEATHER_LEGGINGS;
     }
 }

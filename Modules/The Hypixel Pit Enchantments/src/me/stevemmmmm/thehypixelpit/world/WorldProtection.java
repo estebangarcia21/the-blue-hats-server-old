@@ -4,6 +4,7 @@ package me.stevemmmmm.thehypixelpit.world;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.thehypixelpit.commands.TogglePvPCommand;
 import me.stevemmmmm.thehypixelpit.game.RegionManager;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -31,7 +32,7 @@ public class WorldProtection implements Listener {
             return;
         }
 
-        if (RegionManager.getInstance().locationIsInRegion(event.getBlockPlaced().getLocation(), RegionManager.RegionType.SPAWN)) {
+        if (RegionManager.getInstance().locationIsInRegion(event.getBlockPlaced().getLocation(), RegionManager.RegionType.SPAWN) || TogglePvPCommand.pvpIsToggledOff) {
             event.setCancelled(true);
         }
     }

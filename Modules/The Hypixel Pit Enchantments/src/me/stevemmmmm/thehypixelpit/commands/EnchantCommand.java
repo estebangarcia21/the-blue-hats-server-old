@@ -66,6 +66,11 @@ public class EnchantCommand implements CommandExecutor {
                         return true;
                     }
 
+                    if (Integer.parseInt(args[1]) > 3 || Integer.parseInt(args[1]) < 1) {
+                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " The enchant level can only be 1, 2, or 3!");
+                        return true;
+                    }
+
                     CustomEnchantManager.getInstance().applyLore(item, customEnchant, Integer.parseInt(args[1]));
                     player.sendMessage(ChatColor.DARK_PURPLE + "Success!" + ChatColor.RED + " You applied the enchantment successfully!");
                     player.updateInventory();

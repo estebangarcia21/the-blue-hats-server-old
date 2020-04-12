@@ -4,6 +4,7 @@ package me.stevemmmmm.thehypixelpit.game;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.thehypixelpit.commands.TogglePvPCommand;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,8 +18,16 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import java.util.HashMap;
 
 public class Obsidian implements Listener {
+    private static Obsidian instance;
+
     private HashMap<Block, Integer> obsidianToRemovalTasks = new HashMap<>();
     private HashMap<Block, Integer> removalTime = new HashMap<>();
+
+    public static Obsidian getInstance() {
+        if (instance == null) instance = new Obsidian();
+
+        return instance;
+    }
 
     @EventHandler (priority = EventPriority.MONITOR)
     public void onBlockPlace(BlockPlaceEvent event) {
@@ -53,6 +62,13 @@ public class Obsidian implements Listener {
                     break;
                 }
             }
+        }
+    }
+
+    public void removeObsidian() {
+        for (Block block : obsidianToRemovalTasks.keySet()) {
+            System.out.println("XD");
+            block.setType(Material.AIR);
         }
     }
 }

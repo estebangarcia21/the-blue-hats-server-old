@@ -1,7 +1,7 @@
 package me.stevemmmmm.configapi.core;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -13,9 +13,7 @@ import java.util.logging.Logger;
  */
 
 public class ConfigAPI extends JavaPlugin {
-    private static JavaPlugin plugin;
-
-    private static List<String> dataCategories = new ArrayList<>();
+    private static HashMap<JavaPlugin, List<String>> dataCategories = new HashMap<>();
     private static File file = new File("");
 
     private static ArrayList<ConfigWriter> configWriters = new ArrayList<>();
@@ -39,25 +37,23 @@ public class ConfigAPI extends JavaPlugin {
         }
     }
 
-    public static void setPlugin(JavaPlugin javaPlugin, String... args) {
-        plugin = javaPlugin;
-
-        dataCategories.addAll(Arrays.asList(args));
+    public static void addPlugin(JavaPlugin javaPlugin, String... args) {
+        dataCategories.put(javaPlugin, new ArrayList<>(Arrays.asList(args)));
     }
 
     public static void registerConfigWriter(ConfigWriter writer) {
         configWriters.add(writer);
     }
 
-    public static <T> void write(String dataCategory, HashMap<UUID, T> object) {
-        if (!dataCategories.contains(dataCategory)) {
+    public static <T> void write(JavaPlugin plugin, String dataCategory, HashMap<UUID, T> object) {
+        if (!dataCategories.get(plugin).contains(dataCategory)) {
             Bukkit.getLogger().severe("Directory " + dataCategory + " does not exist!");
             return;
         }
 
         List<String> data = new ArrayList<>();
 
-        for (String str : readAllData()) {
+        for (String str : readAllData(plugin)) {
             if (!dataCategory.equals(str.split(":")[0])) {
                 data.add(str);
             }
@@ -71,27 +67,31 @@ public class ConfigAPI extends JavaPlugin {
         plugin.saveConfig();
     }
 
-    public static void write(String dataCategory, UUID player, Object value) {
-        File file = new File("");
-
-        if (!dataCategories.contains(dataCategory)) {
+    public static void write(JavaPlugin plugin, String dataCategory, UUID player, Object value) {
+        if (!dataCategories.get(plugin).contains(dataCategory)) {
             Bukkit.getLogger().severe("Directory " + dataCategory + " does not exist!");
             return;
         }
 
         List<String> data = new ArrayList<>();
 
-        for (Map.Entry<UUID, String> entry : read(dataCategory).entrySet()) {
-            data.add(entry.getKey() + ":" + entry.getValue());
+        for (String str : readAllData(plugin)) {
+            System.out.println(str.split(":")[0]);
+
+            if (!dataCategory.equals(str.split(":")[0])) {
+                data.add(str);
+            }
         }
 
-        data.add(player.toString() + ":" + value.toString());
+        System.out.println(plugin + " | " + data);
+
+        data.add(dataCategory + ":" + player + ":" + value.toString());
 
         plugin.getConfig().set(file.getAbsolutePath() + "\\Data\\", data);
         plugin.saveConfig();
     }
 
-    public static HashMap<UUID, String> read(String dataCategory) {
+    public static HashMap<UUID, String> read(Plugin plugin, String dataCategory) {
         HashMap<UUID, String> data = new HashMap<>();
 
         for (String raw : plugin.getConfig().getStringList(file.getAbsolutePath() + "\\Data\\")) {
@@ -104,7 +104,7 @@ public class ConfigAPI extends JavaPlugin {
         return data;
     }
 
-    public static List<String> readAllData() {
+    public static List<String> readAllData(JavaPlugin plugin) {
         return plugin.getConfig().getStringList(file.getAbsolutePath() + "\\Data\\");
     }
 }

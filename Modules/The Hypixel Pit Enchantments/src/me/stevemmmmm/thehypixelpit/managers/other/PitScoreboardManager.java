@@ -1,5 +1,6 @@
 package me.stevemmmmm.thehypixelpit.managers.other;
 
+import me.stevemmmmm.permissions.core.PermissionsManager;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.game.CombatManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
@@ -222,11 +223,7 @@ public class PitScoreboardManager implements Listener {
 
             team = board.registerNewTeam(player.getName());
 
-            if (player.getName().equalsIgnoreCase("Stevemmmmmmm") || player.getName().equalsIgnoreCase("SUNDEWS") || player.getName().equalsIgnoreCase("OVEREXERTED")) {
-                team.setPrefix(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + " " + ChatColor.RED);
-            } else {
-                team.setPrefix(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + " " + ChatColor.GOLD);
-            }
+            team.setPrefix(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + " " + PermissionsManager.getInstance().getPlayerRank(player).getNameColor());
 
             team.addPlayer(player);
         }
