@@ -3,6 +3,8 @@ package me.stevemmmmm.thehypixelpit.core;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import me.stevemmmmm.configapi.core.ConfigAPI;
+import me.stevemmmmm.servercore.core.ServerGame;
+import me.stevemmmmm.servercore.core.WorldType;
 import me.stevemmmmm.thehypixelpit.chat.LevelChatFormatting;
 import me.stevemmmmm.thehypixelpit.commands.*;
 import me.stevemmmmm.thehypixelpit.enchants.*;
@@ -22,6 +24,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -31,7 +34,7 @@ import java.util.logging.Logger;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
-public class Main extends JavaPlugin {
+public class Main extends JavaPlugin implements ServerGame {
     public static Main INSTANCE;
     public static ProtocolManager protocolManager;
 
@@ -107,6 +110,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(Obsidian.getInstance(), this);
         getServer().getPluginManager().registerEvents(new PlayableArea(), this);
         getServer().getPluginManager().registerEvents(new StopLiquidFlow(), this);
+        getServer().getPluginManager().registerEvents(new WorldSelect(), this);
     }
 
     @Override
@@ -174,5 +178,25 @@ public class Main extends JavaPlugin {
         CustomEnchantManager.getInstance().registerEnchant(new Peroxide());
         CustomEnchantManager.getInstance().registerEnchant(new BooBoo());
         CustomEnchantManager.getInstance().registerEnchant(new DoubleJump());
+    }
+
+    @Override
+    public String getGameName() {
+        return "The Blue Hats Pit";
+    }
+
+    @Override
+    public String getReferenceName() {
+        return "ThePit";
+    }
+
+    @Override
+    public World getGameMap() {
+        return Bukkit.getWorld("world");
+    }
+
+    @Override
+    public WorldType getWorldType() {
+        return WorldType.MONITORED;
     }
 }

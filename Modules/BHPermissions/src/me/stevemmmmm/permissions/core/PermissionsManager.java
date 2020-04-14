@@ -14,6 +14,7 @@ import me.stevemmmmm.permissions.ranks.RankType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.permissions.PermissionAttachment;
 
@@ -35,6 +36,11 @@ public class PermissionsManager implements Listener, ConfigWriter, ConfigReader 
         if (instance == null) instance = new PermissionsManager();
 
         return instance;
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        updatePermissions(event.getPlayer());
     }
 
     @EventHandler
@@ -70,7 +76,7 @@ public class PermissionsManager implements Listener, ConfigWriter, ConfigReader 
     }
 
     public boolean playerIsStaff(Player player) {
-        return !playerStaffRanks.get(player.getUniqueId()).getName().equals("None");
+        return !playerStaffRanks.get(player.getUniqueId()).equalsRank(NoneRank.class);
     }
 
     public void updatePermissions(Player player) {

@@ -80,5 +80,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="BHPermissions" />
+    <orderEntry type="module" module-name="Server Core" />
   </component>
 </module>

@@ -67,7 +67,6 @@ public class Obsidian implements Listener {
 
     public void removeObsidian() {
         for (Block block : obsidianToRemovalTasks.keySet()) {
-            System.out.println("XD");
             block.setType(Material.AIR);
         }
     }

@@ -40,7 +40,7 @@ public class TogglePvPCommand implements CommandExecutor, Listener {
             if (s.equalsIgnoreCase("togglepvp")) {
                 if (player.isOp()) {
                     pvpIsToggledOff = !pvpIsToggledOff;
-                    player.sendMessage(ChatColor.RED + "Pvp is turned " + (pvpIsToggledOff ? "off!" : "on!"));
+                    player.sendMessage(ChatColor.RED + "PvP is turned " + (pvpIsToggledOff ? "off!" : "on!"));
                 }
             }
         }

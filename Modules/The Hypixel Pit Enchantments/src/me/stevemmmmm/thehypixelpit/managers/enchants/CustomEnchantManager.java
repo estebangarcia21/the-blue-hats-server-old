@@ -234,12 +234,14 @@ public class CustomEnchantManager {
         if (item.getType() == Material.AIR) return enchantsToLevels;
         if (item.getItemMeta().getLore() == null) return enchantsToLevels;
 
-        for (String line : item.getItemMeta().getLore()) {
-            ArrayList<String> enchantData = new ArrayList<>(Arrays.asList(line.split(" ")));
+        for (String string : item.getItemMeta().getLore()) {
+            ArrayList<String> enchantData = new ArrayList<>(Arrays.asList(string.split(" ")));
             StringBuilder enchantName = new StringBuilder();
-            int enchantLevel;
+            int level = 0;
 
-            if (enchantData.size() == 0) continue;
+            if (enchantData.size() == 0) {
+                continue;
+            }
 
             for (int i = 0; i < enchantData.size(); i++) {
                 enchantData.set(i, ChatColor.stripColor(enchantData.get(i)));
@@ -250,22 +252,37 @@ public class CustomEnchantManager {
             }
 
             for (int i = 0; i < enchantData.size(); i++) {
-                if (i != enchantData.size() - 1) {
+                if (convertRomanNumeralToInteger(enchantData.get(i)) == -1) {
                     enchantName.append(enchantData.get(i));
-                    if (i != enchantData.size() - 2) enchantName.append(" ");
+                    if (i != enchantData.size() - 1) enchantName.append(" ");
+                } else {
+                    level = convertRomanNumeralToInteger(enchantData.get(i));
                 }
             }
 
-            enchantLevel = convertRomanNumeralToInteger(enchantData.get(enchantData.size() - 1));
+            String name = enchantName.toString().trim();
 
-            for (CustomEnchant enchant : enchants) {
-                if (enchant.getName().equalsIgnoreCase(enchantName.toString())) {
-                    enchantsToLevels.put(enchant, enchantLevel);
+            for (CustomEnchant enchant : getEnchants()) {
+                if (enchant.getName().equals(name)) {
+                    enchantsToLevels.put(enchant, level);
+                    break;
                 }
             }
         }
 
         return enchantsToLevels;
+    }
+
+    public int getTokensOnItem(ItemStack item) {
+        if (item.getType() == Material.AIR || item.getItemMeta().getLore() == null) return 0;
+
+        int tokens = 0;
+
+        for (Map.Entry<CustomEnchant, Integer> entry : getItemEnchants(item).entrySet()) {
+            tokens += entry.getValue();
+        }
+
+        return tokens;
     }
 
     public List<CustomEnchant> getRawItemEnchants(ItemStack item) {

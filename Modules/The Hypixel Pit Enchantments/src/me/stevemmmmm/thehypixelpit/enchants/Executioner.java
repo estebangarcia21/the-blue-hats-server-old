@@ -4,6 +4,7 @@ package me.stevemmmmm.thehypixelpit.enchants;
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
 
+import me.stevemmmmm.permissions.core.PermissionsManager;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
@@ -35,12 +36,12 @@ public class Executioner extends CustomEnchant {
         Player hit = (Player) args[0];
 
         if (hit.getHealth() - DamageManager.getInstance().getFinalDamageFromEvent((EntityDamageByEntityEvent) args[2]) / 2 <= heartsToDie.at(level) && hit.getHealth() > 0) {
-            hit.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "EXECUTED!" + ChatColor.GRAY + " by " + ChatColor.GOLD + ((Player) args[1]).getName() + ChatColor.GRAY + " (insta-kill below " + ChatColor.RED + heartsToDie.at(level) / 2 + "❤" + ChatColor.GRAY + ")");
+            hit.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "EXECUTED!" + ChatColor.GRAY + " by " + PermissionsManager.getInstance().getPlayerRank((Player) args[1]).getNameColor() + ((Player) args[1]).getName() + ChatColor.GRAY + " (insta-kill below " + ChatColor.RED + heartsToDie.at(level) / 2 + "❤" + ChatColor.GRAY + ")");
             hit.getWorld().playSound(hit.getLocation(), Sound.VILLAGER_DEATH, 1, 0.5f);
 
-            //TODO ADd particle
+            //TODO Add particle
 
-            DamageManager.getInstance().killPlayer(hit);
+            hit.setHealth(0);
         }
     }
 

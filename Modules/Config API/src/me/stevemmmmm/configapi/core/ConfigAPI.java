@@ -3,6 +3,7 @@ package me.stevemmmmm.configapi.core;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +25,8 @@ public class ConfigAPI extends JavaPlugin implements Listener {
     private static ArrayList<ConfigWriter> configWriters = new ArrayList<>();
     private static ArrayList<ConfigReader> configReaders = new ArrayList<>();
 
+    private ArrayList<UUID> readPlayers = new ArrayList<>();
+
     @Override
     public void onEnable() {
         Logger log = Bukkit.getLogger();
@@ -32,12 +35,6 @@ public class ConfigAPI extends JavaPlugin implements Listener {
         log.info("------------------------------------------");
 
         getServer().getPluginManager().registerEvents(this, this);
-
-//        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-//            for (ConfigWriter writer : configWriters) {
-//                writer.writeToConfig();
-//            }
-//        }, 36000L, 36000L);
     }
 
     @Override
@@ -50,8 +47,12 @@ public class ConfigAPI extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         for (ConfigReader reader : configReaders) {
-            reader.readConfig(event.getPlayer());
+            if (!readPlayers.contains(event.getPlayer().getUniqueId())) {
+                reader.readConfig(event.getPlayer());
+            }
         }
+
+        readPlayers.add(event.getPlayer().getUniqueId());
     }
 
     public static void addPlugin(JavaPlugin javaPlugin, HashMap<String, String> locations) {
@@ -123,7 +124,7 @@ public class ConfigAPI extends JavaPlugin implements Listener {
             }
         }
 
-        public static void loadInventory(JavaPlugin plugin, Player player) {
+        public static void loadPlayerInventory(JavaPlugin plugin, Player player) {
 
         }
 

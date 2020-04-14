@@ -1,7 +1,7 @@
 name: TheBlueHatsPit
 main: me.stevemmmmm.thehypixelpit.core.Main
-version: 1.0
-depend: [ProtocolLib]
+version: v1.0
+depend: [ServerCore, ProtocolLib]
 commands:
   pitenchant:
     description: Use it to enchant some weapons xD xD

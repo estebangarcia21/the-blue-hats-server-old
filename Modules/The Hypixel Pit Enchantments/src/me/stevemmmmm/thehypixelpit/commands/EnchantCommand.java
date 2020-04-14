@@ -11,6 +11,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Map;
+
 /*
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
  */
@@ -71,7 +73,42 @@ public class EnchantCommand implements CommandExecutor {
                         return true;
                     }
 
-                    CustomEnchantManager.getInstance().applyLore(item, customEnchant, Integer.parseInt(args[1]));
+                    int level = Integer.parseInt(args[1]);
+
+                    if (player.getWorld().getName().equals("ThePit_0")) {
+                        int numberOfEnchants = CustomEnchantManager.getInstance().getItemEnchants(item).size();
+
+                        if (numberOfEnchants >= 3) {
+                            player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You can only put a maximum of 3 enchants in this world!");
+                            return true;
+                        }
+
+                        int tokens = CustomEnchantManager.getInstance().getTokensOnItem(item) + level;
+
+                        if (tokens > 8) {
+                            player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You can only have a maximum of 8 tokens in this world!");
+                            return true;
+                        }
+
+                        int rareTokens = 0;
+
+                        for (Map.Entry<CustomEnchant, Integer> entry : CustomEnchantManager.getInstance().getItemEnchants(item).entrySet()) {
+                            if (entry.getKey().isRareEnchant()) {
+                                rareTokens += entry.getValue();
+                            }
+                        }
+
+                        if (customEnchant.isRareEnchant()) {
+                            rareTokens += level;
+                        }
+
+                        if (rareTokens > 4) {
+                            player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You can only have a maximum of 4 tokens for rare enchants in this world!");
+                            return true;
+                        }
+                    }
+
+                    CustomEnchantManager.getInstance().applyLore(item, customEnchant, level);
                     player.sendMessage(ChatColor.DARK_PURPLE + "Success!" + ChatColor.RED + " You applied the enchantment successfully!");
                     player.updateInventory();
                 }

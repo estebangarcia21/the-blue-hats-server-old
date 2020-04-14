@@ -2,6 +2,7 @@ package me.stevemmmmm.thehypixelpit.chat;
 
 import me.stevemmmmm.permissions.core.PermissionsManager;
 import me.stevemmmmm.permissions.core.Rank;
+import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.other.GrindingSystem;
 import me.stevemmmmm.thehypixelpit.managers.other.PitScoreboardManager;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
@@ -10,9 +11,13 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_8_R3.util.CraftChatMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.RegisteredListener;
+
+import java.util.List;
 
 /*
  * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
@@ -35,16 +40,10 @@ public class LevelChatFormatting implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
-//        //TODO Correct values for chat
-//
-//        if (event.getPlayer().getName().equalsIgnoreCase("Stevemmmmmmm")) {
-//            event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.RED + " [OWNER] " + ChatColor.RED + "%s" + ChatColor.WHITE + ": " + ChatColor.YELLOW + "%s");
-//        } else if (event.getPlayer().getName().equalsIgnoreCase("SUNDEWS") || event.getPlayer().getName().equalsIgnoreCase("OVEREXERTED")) {
-//            event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.RED + " [ADMIN] " + ChatColor.RED + "%s" + ChatColor.WHITE + ": " + ChatColor.WHITE + "%s");
-//        } else {
-//            event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + ChatColor.GOLD + " [MVP" + ChatColor.WHITE + "++" + ChatColor.GOLD + "] %s" + ChatColor.WHITE + ": %s");
-//        }
+        event.setCancelled(true);
 
-        event.setFormat(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + " " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getPrefix() + " " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getNameColor() + "%s" + ChatColor.WHITE + ": " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getChatColor() + "%s");
+        for (Player player : event.getPlayer().getWorld().getPlayers()) {
+            player.sendMessage(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + " " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getPrefix() + " " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getNameColor() + event.getPlayer().getName() + ChatColor.WHITE + ": " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getChatColor() + event.getMessage());
+        }
     }
 }

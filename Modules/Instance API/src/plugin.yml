@@ -1,0 +1,4 @@
+name: InstanceAPI
+main: me.stevemmmmm.instanceapi.core.Main
+depend: [ServerCore, TheBlueHatsPit]
+version: v1.0
