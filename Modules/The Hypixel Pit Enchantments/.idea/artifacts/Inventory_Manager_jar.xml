@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Inventory Manager:jar">
+    <output-path>$PROJECT_DIR$/../../../../Projects/The Blue Hats Server/Console/plugins</output-path>
+    <root id="archive" name="Per World Inventories.jar">
+      <element id="module-output" name="Inventory Manager" />
+    </root>
+  </artifact>
+</component>

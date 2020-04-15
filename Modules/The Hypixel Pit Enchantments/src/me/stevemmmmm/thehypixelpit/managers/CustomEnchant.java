@@ -208,7 +208,9 @@ public abstract class CustomEnchant implements Listener {
         if (hitMappings.get(player.getUniqueId()) >= hitAmount) {
             hitMappings.put(player.getUniqueId(), 0);
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     public void startHitResetTimer(Player player) {

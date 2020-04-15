@@ -1,17 +1,17 @@
 package me.stevemmmmm.configapi.core;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -116,20 +116,96 @@ public class ConfigAPI extends JavaPlugin implements Listener {
     }
 
     public static class InventorySerializer {
-        public static void serializePlayerInventory(JavaPlugin plugin, Player player) {
-            for (int i = 0; i < player.getInventory().getSize(); i++) {
-                if (player.getInventory().getItem(i) == null) continue;
+        public static void serializeInventory(JavaPlugin plugin, UUID uuid, String name, Inventory inventory) {
+            for (int i = 0; i < inventory.getSize(); i++) {
+                if (inventory.getItem(i) == null) continue;
 
-                writeInventory(plugin, player, i, player.getInventory().getItem(i).serialize());
+                plugin.getConfig().set("enderchests." + name + "." + uuid.toString() + ".slots." + i, inventory.getItem(i));
+                plugin.saveConfig();
             }
         }
 
-        public static void loadPlayerInventory(JavaPlugin plugin, Player player) {
-
+        public static void loadInventory(JavaPlugin plugin, Player player, String name, Inventory target) {
+            if (plugin.getConfig().get("enderchests." + name + "." + player.getUniqueId().toString()) != null) {
+                for (int i = 0; i < target.getSize(); i++) {
+                    if (plugin.getConfig().get("enderchests." + name + "." + player.getUniqueId().toString() + ".slots." + i) != null) {
+                        target.setItem(i, plugin.getConfig().getItemStack("enderchests." + name + "." + player.getUniqueId().toString() + ".slots." + i));
+                    } else {
+                        target.setItem(i, new ItemStack(Material.AIR));
+                    }
+                }
+            }
         }
 
-        private static void writeInventory(JavaPlugin plugin, Player player, int slot, Map<String, Object> object) {
-            plugin.getConfig().set(player.getUniqueId().toString() + ".inventory.mainworld.slots." + slot, object);
+        public static void serializePlayerInventory(JavaPlugin plugin, World world, Player player) {
+            for (int i = 0; i < player.getInventory().getSize(); i++) {
+                if (player.getInventory().getItem(i) == null) continue;
+
+                writeItemStack(plugin, world, player, i, player.getInventory().getItem(i));
+            }
+
+            if (player.getInventory().getBoots() != null) {
+                writeItemStack(plugin, world, player, -1, player.getInventory().getBoots());
+            } else {
+                writeItemStack(plugin, world, player, -1, new ItemStack(Material.AIR));
+            }
+
+            if (player.getInventory().getLeggings() != null) {
+                writeItemStack(plugin, world, player, -2, player.getInventory().getLeggings());
+            } else {
+                writeItemStack(plugin, world, player, -2, new ItemStack(Material.AIR));
+            }
+
+            if (player.getInventory().getChestplate() != null) {
+                writeItemStack(plugin, world, player, -3, player.getInventory().getChestplate());
+            } else {
+                writeItemStack(plugin, world, player, -3, new ItemStack(Material.AIR));
+            }
+
+            if (player.getInventory().getHelmet() != null) {
+                writeItemStack(plugin, world, player, -4, player.getInventory().getHelmet());
+            } else {
+                writeItemStack(plugin, world, player, -4, new ItemStack(Material.AIR));
+            }
+        }
+
+        public static void loadPlayerInventory(JavaPlugin plugin, World world, Player player) {
+            for (int i = 0; i < player.getInventory().getSize(); i++) {
+                if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + i) != null) {
+                    player.getInventory().setItem(i, plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + i));
+                    player.updateInventory();
+                } else {
+                    player.getInventory().setItem(i, new ItemStack(Material.AIR));
+                }
+            }
+
+            if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-1") != null) {
+                player.getInventory().setBoots(plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-1"));
+            } else {
+                player.getInventory().setBoots(new ItemStack(Material.AIR));
+            }
+
+            if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-2") != null) {
+                player.getInventory().setLeggings(plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-2"));
+            } else {
+                player.getInventory().setLeggings(new ItemStack(Material.AIR));
+            }
+
+            if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-3") != null) {
+                player.getInventory().setChestplate(plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-3"));
+            } else {
+                player.getInventory().setChestplate(new ItemStack(Material.AIR));
+            }
+
+            if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-4") != null) {
+                player.getInventory().setHelmet(plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-4"));
+            } else {
+                player.getInventory().setHelmet(new ItemStack(Material.AIR));
+            }
+        }
+
+        private static void writeItemStack(JavaPlugin plugin, World world, Player player, int slot, ItemStack object) {
+            plugin.getConfig().set(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + slot, object);
             plugin.saveConfig();
         }
     }

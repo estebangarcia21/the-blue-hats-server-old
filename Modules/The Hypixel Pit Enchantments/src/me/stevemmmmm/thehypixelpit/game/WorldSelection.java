@@ -21,19 +21,31 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class WorldSelect implements Listener {
+public class WorldSelection implements Listener {
+    private static WorldSelection instance;
+
     private final String inventoryName = ChatColor.LIGHT_PURPLE + "World Selection";
     private Inventory gui = Bukkit.createInventory(null, 9, inventoryName);
 
     private ArrayList<UUID> mayExitGuiSelection = new ArrayList<>();
 
+    public static WorldSelection getInstance() {
+        if (instance == null) instance = new WorldSelection();
+
+        return instance;
+    }
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        displaySelectionMenu(event.getPlayer());
+    }
+
+    public void displaySelectionMenu(Player player) {
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> {
             generateGui();
 
-            event.getPlayer().teleport(new Location(event.getPlayer().getWorld(), -90.5, 60, 0.5));
-            event.getPlayer().openInventory(gui);
+            player.teleport(new Location(player.getWorld(), -90.5, 60, 0.5));
+            player.openInventory(gui);
         }, 1L);
     }
 

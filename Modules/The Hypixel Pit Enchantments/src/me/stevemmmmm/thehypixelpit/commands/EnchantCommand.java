@@ -91,15 +91,23 @@ public class EnchantCommand implements CommandExecutor {
                         }
 
                         int rareTokens = 0;
+                        int rareEnchantCount = 0;
 
                         for (Map.Entry<CustomEnchant, Integer> entry : CustomEnchantManager.getInstance().getItemEnchants(item).entrySet()) {
                             if (entry.getKey().isRareEnchant()) {
                                 rareTokens += entry.getValue();
+                                rareEnchantCount++;
                             }
                         }
 
                         if (customEnchant.isRareEnchant()) {
                             rareTokens += level;
+                            rareEnchantCount++;
+                        }
+
+                        if (rareEnchantCount > 2) {
+                            player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You can only have 2 rare enchants on an item in this world!");
+                            return true;
                         }
 
                         if (rareTokens > 4) {

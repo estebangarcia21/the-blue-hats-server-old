@@ -81,5 +81,6 @@
     </orderEntry>
     <orderEntry type="module" module-name="BHPermissions" />
     <orderEntry type="module" module-name="Server Core" />
+    <orderEntry type="module" module-name="Inventory Manager" />
   </component>
 </module>

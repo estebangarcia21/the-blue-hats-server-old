@@ -23,8 +23,6 @@ import me.stevemmmmm.thehypixelpit.world.*;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -75,7 +73,7 @@ public class Main extends JavaPlugin implements ServerGame {
         getServer().getPluginManager().registerEvents(RegionManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(new DevelopmentMode(), this);
         getServer().getPluginManager().registerEvents(new ServerMOTDInitializer(), this);
-        getServer().getPluginManager().registerEvents(new ChatCooldown(), this);
+        getServer().getPluginManager().registerEvents(new ChatManagement(), this);
         getServer().getPluginManager().registerEvents(new TogglePvPCommand(), this);
 
         //Commands
@@ -91,6 +89,7 @@ public class Main extends JavaPlugin implements ServerGame {
         getCommand("giveobsidian").setExecutor(new GiveObsidianCommand());
         getCommand("unenchant").setExecutor(new UnenchantCommand());
         getCommand("togglepvp").setExecutor(new TogglePvPCommand());
+        getCommand("selectworld").setExecutor(new SelectWorldCommand());
 
         SpawnCommand spawnCommand = new SpawnCommand();
         getCommand("spawn").setExecutor(spawnCommand);
@@ -110,24 +109,21 @@ public class Main extends JavaPlugin implements ServerGame {
         getServer().getPluginManager().registerEvents(Obsidian.getInstance(), this);
         getServer().getPluginManager().registerEvents(new PlayableArea(), this);
         getServer().getPluginManager().registerEvents(new StopLiquidFlow(), this);
-        getServer().getPluginManager().registerEvents(new WorldSelect(), this);
+        getServer().getPluginManager().registerEvents(WorldSelection.getInstance(), this);
+        getServer().getPluginManager().registerEvents(EnderChest.getInstance(), this);
     }
 
     @Override
     public void onDisable() {
         GrindingSystem.getInstance().writeToConfig();
 
+        EnderChest.getInstance().storeEnderChests();
+
         for (World world : Bukkit.getWorlds()) {
             for (Entity entity : world.getEntities()) {
                 if (entity.isValid()) {
                     entity.remove();
                 }
-            }
-        }
-
-        for (World world : Bukkit.getWorlds()) {
-            for (Player entity : world.getPlayers()) {
-                ConfigAPI.InventorySerializer.serializePlayerInventory(INSTANCE, entity);
             }
         }
 

@@ -37,13 +37,4 @@ public class LevelChatFormatting implements Listener {
         ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + playerRank.getNameColor() + " " + player.getName())[0];
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
     }
-
-    @EventHandler
-    public void onChat(AsyncPlayerChatEvent event) {
-        event.setCancelled(true);
-
-        for (Player player : event.getPlayer().getWorld().getPlayers()) {
-            player.sendMessage(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + " " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getPrefix() + " " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getNameColor() + event.getPlayer().getName() + ChatColor.WHITE + ": " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getChatColor() + event.getMessage());
-        }
-    }
 }

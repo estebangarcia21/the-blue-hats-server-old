@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 @SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {
-    private final String update = "Added a permissions system!";
+    private final String update = "Added multiple worlds!";
     private final String testMessage = "Working on Canceling Player!";
     private final boolean isTesting = false;
 
