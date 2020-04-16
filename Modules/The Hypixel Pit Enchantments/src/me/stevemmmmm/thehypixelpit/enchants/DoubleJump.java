@@ -13,8 +13,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
@@ -57,7 +55,7 @@ public class DoubleJump extends CustomEnchant {
     public void onFlightAttempt(PlayerToggleFlightEvent event) {
         if (event.getPlayer().getGameMode() == GameMode.SURVIVAL) event.setCancelled(true);
 
-        attemptEnchantExecution(this, event.getPlayer().getInventory().getLeggings(), event);
+        attemptEnchantExecution(event.getPlayer().getInventory().getLeggings(), event);
     }
 
     @Override

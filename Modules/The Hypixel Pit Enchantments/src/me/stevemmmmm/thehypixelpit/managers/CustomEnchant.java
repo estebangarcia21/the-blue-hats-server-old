@@ -7,7 +7,6 @@ package me.stevemmmmm.thehypixelpit.managers;
 import me.stevemmmmm.thehypixelpit.commands.TogglePvPCommand;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.game.RegionManager;
-import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantCanceler;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import org.bukkit.Bukkit;
@@ -24,13 +23,13 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class CustomEnchant implements Listener {
-    private final HashMap<UUID, Boolean> playerIsOnCooldown = new HashMap<>();
-    private final HashMap<UUID, Long> cooldownTimerTimes = new HashMap<>();
+    private final HashMap<UUID, Boolean> playersToCooldownState = new HashMap<>();
+    private final HashMap<UUID, Long> cooldownTimes = new HashMap<>();
     private final HashMap<UUID, Integer> cooldownTasks = new HashMap<>();
 
-    private final HashMap<UUID, Integer> hitMappings = new HashMap<>();
-    private final HashMap<UUID, Long> cooldownTimesHitTimer = new HashMap<>();
-    private final HashMap<UUID, Integer> cooldownResetTasksHitTimer = new HashMap<>();
+    private final HashMap<UUID, Integer> playersToHitsWithEnchant = new HashMap<>();
+    private final HashMap<UUID, Long> hitAmountResetTimes = new HashMap<>();
+    private final HashMap<UUID, Integer> hitAmountResetTasks = new HashMap<>();
 
     public abstract void applyEnchant(int level, Object... args) ;
 
@@ -46,7 +45,7 @@ public abstract class CustomEnchant implements Listener {
 
     public abstract Material getEnchantItemType();
 
-    public boolean attemptEnchantExecution(CustomEnchant target, ItemStack source, Object... args) {
+    public boolean attemptEnchantExecution(ItemStack source, Object... args) {
         if (TogglePvPCommand.pvpIsToggledOff) return false;
 
         if (itemHasEnchant(source, this)) {
@@ -86,20 +85,20 @@ public abstract class CustomEnchant implements Listener {
     public void startCooldown(Player player, long ticks, boolean isSeconds) {
         if (isSeconds) ticks *= 20;
 
-        if (!cooldownTimerTimes.containsKey(player.getUniqueId())) cooldownTimerTimes.put(player.getUniqueId(), ticks);
-        if (!playerIsOnCooldown.containsKey(player.getUniqueId())) playerIsOnCooldown.put(player.getUniqueId(), false);
+        if (!cooldownTimes.containsKey(player.getUniqueId())) cooldownTimes.put(player.getUniqueId(), ticks);
+        if (!playersToCooldownState.containsKey(player.getUniqueId())) playersToCooldownState.put(player.getUniqueId(), false);
 
         if (!cooldownTasks.containsKey(player.getUniqueId())) {
-            cooldownTimerTimes.put(player.getUniqueId(), ticks);
+            cooldownTimes.put(player.getUniqueId(), ticks);
 
             cooldownTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                playerIsOnCooldown.put(player.getUniqueId(), true);
+                playersToCooldownState.put(player.getUniqueId(), true);
 
-                cooldownTimerTimes.put(player.getUniqueId(), cooldownTimerTimes.get(player.getUniqueId()) - 1);
+                cooldownTimes.put(player.getUniqueId(), cooldownTimes.get(player.getUniqueId()) - 1);
 
-                if (cooldownTimerTimes.get(player.getUniqueId()) <= 0f) {
-                    playerIsOnCooldown.put(player.getUniqueId(), false);
-                    cooldownTimerTimes.put(player.getUniqueId(), 0L);
+                if (cooldownTimes.get(player.getUniqueId()) <= 0f) {
+                    playersToCooldownState.put(player.getUniqueId(), false);
+                    cooldownTimes.put(player.getUniqueId(), 0L);
                     Bukkit.getServer().getScheduler().cancelTask(cooldownTasks.get(player.getUniqueId()));
                     cooldownTasks.remove(player.getUniqueId());
                 }
@@ -108,7 +107,7 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public boolean percentChance(int percent) {
-        return percent >= ThreadLocalRandom.current().nextInt(0, 101);
+        return ThreadLocalRandom.current().nextInt(0, 100) <= percent;
     }
 
     public static boolean itemHasEnchant(ItemStack item, CustomEnchant enchant) {
@@ -167,70 +166,71 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public boolean isNotOnCooldown(Player player) {
-        if (!playerIsOnCooldown.containsKey(player.getUniqueId())) playerIsOnCooldown.put(player.getUniqueId(), false);
+        if (!playersToCooldownState.containsKey(player.getUniqueId())) playersToCooldownState.put(player.getUniqueId(), false);
 
-        return !playerIsOnCooldown.get(player.getUniqueId());
+        return !playersToCooldownState.get(player.getUniqueId());
     }
 
     public long getCooldownTime(Player player) {
-        if (!cooldownTimerTimes.containsKey(player.getUniqueId())) cooldownTimerTimes.put(player.getUniqueId(), 0L);
+        if (!cooldownTimes.containsKey(player.getUniqueId())) cooldownTimes.put(player.getUniqueId(), 0L);
 
-        return cooldownTimerTimes.get(player.getUniqueId()) / 20;
+        return cooldownTimes.get(player.getUniqueId()) / 20;
     }
 
     public void setCooldownTime(Player player, long ticks, boolean isSeconds) {
         if (isSeconds) ticks *= 20;
 
-        if (!cooldownTimerTimes.containsKey(player.getUniqueId())) cooldownTimerTimes.put(player.getUniqueId(), 0L);
+        if (!cooldownTimes.containsKey(player.getUniqueId())) cooldownTimes.put(player.getUniqueId(), 0L);
 
-        cooldownTimerTimes.put(player.getUniqueId(), Math.max(ticks, 0));
+        cooldownTimes.put(player.getUniqueId(), Math.max(ticks, 0));
     }
 
     public void updateHitCount(Player player) {
-        if (!hitMappings.containsKey(player.getUniqueId())) {
-            hitMappings.put(player.getUniqueId(), 0);
-            cooldownTimesHitTimer.put(player.getUniqueId(), 0L);
+        if (!playersToHitsWithEnchant.containsKey(player.getUniqueId())) {
+            playersToHitsWithEnchant.put(player.getUniqueId(), 0);
+            hitAmountResetTimes.put(player.getUniqueId(), 0L);
         }
 
-        cooldownTimesHitTimer.put(player.getUniqueId(), 0L);
-        hitMappings.put(player.getUniqueId(), hitMappings.get(player.getUniqueId()) + 1);
+        hitAmountResetTimes.put(player.getUniqueId(), 0L);
+        playersToHitsWithEnchant.put(player.getUniqueId(), playersToHitsWithEnchant.get(player.getUniqueId()) + 1);
         startHitResetTimer(player);
     }
 
     public void updateHitCount(Player player, int amount) {
-        if (!hitMappings.containsKey(player.getUniqueId())) hitMappings.put(player.getUniqueId(), 1);
+        if (!playersToHitsWithEnchant.containsKey(player.getUniqueId())) playersToHitsWithEnchant.put(player.getUniqueId(), 1);
 
-        hitMappings.put(player.getUniqueId(), hitMappings.get(player.getUniqueId()) + amount);
+        playersToHitsWithEnchant.put(player.getUniqueId(), playersToHitsWithEnchant.get(player.getUniqueId()) + amount);
     }
 
     public boolean hasRequiredHits(Player player, int hitAmount) {
-        if (!hitMappings.containsKey(player.getUniqueId())) hitMappings.put(player.getUniqueId(), 1);
+        if (!playersToHitsWithEnchant.containsKey(player.getUniqueId())) playersToHitsWithEnchant.put(player.getUniqueId(), 1);
 
-        if (hitMappings.get(player.getUniqueId()) >= hitAmount) {
-            hitMappings.put(player.getUniqueId(), 0);
+        if (playersToHitsWithEnchant.get(player.getUniqueId()) >= hitAmount) {
+            playersToHitsWithEnchant.put(player.getUniqueId(), 0);
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public void startHitResetTimer(Player player) {
-        if (!cooldownResetTasksHitTimer.containsKey(player.getUniqueId())) {
-            cooldownResetTasksHitTimer.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                cooldownTimesHitTimer.put(player.getUniqueId(), cooldownTimesHitTimer.getOrDefault(player.getUniqueId(), 0L) + 1);
+        if (!hitAmountResetTasks.containsKey(player.getUniqueId())) {
+            hitAmountResetTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                hitAmountResetTimes.put(player.getUniqueId(), hitAmountResetTimes.getOrDefault(player.getUniqueId(), 0L) + 1);
 
-                if (cooldownTimesHitTimer.get(player.getUniqueId()) >= 5) {
-                    hitMappings.put(player.getUniqueId(), 0);
-                    cooldownTimesHitTimer.put(player.getUniqueId(), 0L);
-                    Bukkit.getServer().getScheduler().cancelTask(cooldownResetTasksHitTimer.get(player.getUniqueId()));
-                    cooldownResetTasksHitTimer.remove(player.getUniqueId());
+                if (hitAmountResetTimes.get(player.getUniqueId()) >= 5) {
+                    playersToHitsWithEnchant.put(player.getUniqueId(), 0);
+                    hitAmountResetTimes.put(player.getUniqueId(), 0L);
+                    Bukkit.getServer().getScheduler().cancelTask(hitAmountResetTasks.get(player.getUniqueId()));
+                    hitAmountResetTasks.remove(player.getUniqueId());
                 }
             }, 0L, 20L));
         } else {
-            cooldownTimesHitTimer.put(player.getUniqueId(), 0L);
+            hitAmountResetTimes.put(player.getUniqueId(), 0L);
         }
     }
 
+    @Deprecated
     public boolean isCriticalHit(Player player) {
         return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
     }

@@ -33,7 +33,7 @@ public class Explosive extends CustomEnchant {
     public void onArrowLand(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow) {
             if (event.getEntity().getShooter() instanceof Player) {
-                attemptEnchantExecution(this, BowManager.getInstance().getBowFromArrow((Arrow) event.getEntity()), event.getEntity());
+                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getEntity()), event.getEntity());
             }
         }
     }

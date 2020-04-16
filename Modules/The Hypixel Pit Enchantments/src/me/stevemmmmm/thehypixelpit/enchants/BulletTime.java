@@ -27,7 +27,7 @@ public class BulletTime extends CustomEnchant implements EnchantCanceler {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(this, ((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(), event.getDamager(), event);
+                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(), event.getDamager(), event);
             }
         }
     }

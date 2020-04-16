@@ -31,7 +31,7 @@ public class BooBoo extends CustomEnchant {
 
         if (!tasks.containsKey(player.getUniqueId())) {
             tasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                attemptEnchantExecution(this, player.getInventory().getLeggings(), player);
+                attemptEnchantExecution(player.getInventory().getLeggings(), player);
             }, 0L, 20L));
         }
     }

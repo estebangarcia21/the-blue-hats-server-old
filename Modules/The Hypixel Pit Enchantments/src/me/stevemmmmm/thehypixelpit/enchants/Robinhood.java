@@ -37,7 +37,7 @@ public class Robinhood extends CustomEnchant {
             Arrow arrow = (Arrow) event.getProjectile();
             Player player = (Player) event.getEntity();
 
-            attemptEnchantExecution(this, event.getBow(), arrow, player, event.getForce());
+            attemptEnchantExecution(event.getBow(), arrow, player, event.getForce());
         }
     }
 

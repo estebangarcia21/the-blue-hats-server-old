@@ -24,7 +24,7 @@ public class Parasite extends CustomEnchant {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(this, BowManager.getInstance().getBowFromArrow((Arrow) event.getDamager()), ((Arrow) event.getDamager()).getShooter());
+                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getDamager()), ((Arrow) event.getDamager()).getShooter());
             }
         }
     }

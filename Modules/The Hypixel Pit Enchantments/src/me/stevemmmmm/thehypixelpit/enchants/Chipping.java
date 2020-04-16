@@ -24,7 +24,7 @@ public class Chipping extends CustomEnchant {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(this, ((Player) ((Arrow) event.getDamager()).getShooter()).getInventory().getItemInHand(), event.getEntity(), ((Arrow) event.getDamager()).getShooter());
+                attemptEnchantExecution(((Player) ((Arrow) event.getDamager()).getShooter()).getInventory().getItemInHand(), event.getEntity(), ((Arrow) event.getDamager()).getShooter());
             }
         }
     }

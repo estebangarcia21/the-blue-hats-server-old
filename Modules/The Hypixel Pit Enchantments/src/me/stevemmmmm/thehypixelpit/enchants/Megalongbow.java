@@ -24,7 +24,7 @@ public class Megalongbow extends CustomEnchant {
     @EventHandler
     public void onArrowShoot(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player && event.getProjectile() instanceof Arrow) {
-            attemptEnchantExecution(this, ((Player) event.getEntity()).getInventory().getItemInHand(), event.getProjectile(), event.getEntity());
+            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getProjectile(), event.getEntity());
         }
     }
 

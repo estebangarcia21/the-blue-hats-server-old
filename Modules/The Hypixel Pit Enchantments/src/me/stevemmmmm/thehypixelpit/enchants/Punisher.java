@@ -23,7 +23,7 @@ public class Punisher extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(this, ((Player) event.getDamager()).getInventory().getItemInHand(), event.getEntity(), event);
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getEntity(), event);
         }
     }
 

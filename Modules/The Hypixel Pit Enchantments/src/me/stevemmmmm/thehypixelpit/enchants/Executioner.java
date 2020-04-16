@@ -5,19 +5,16 @@ package me.stevemmmmm.thehypixelpit.enchants;
  */
 
 import me.stevemmmmm.permissions.core.PermissionsManager;
-import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import org.bukkit.ChatColor;
-import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.ArrayList;
 
@@ -27,7 +24,7 @@ public class Executioner extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(this, ((Player) event.getDamager()).getInventory().getItemInHand(), event.getEntity(), event.getDamager(), event);
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getEntity(), event.getDamager(), event);
         }
     }
 
