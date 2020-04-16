@@ -1,3 +1,4 @@
 name: InventoryManager
 main: me.stevemmmmm.perworldinventories.core.Main
+depend: [InstanceAPI, ConfigAPI]
 version: v1.0

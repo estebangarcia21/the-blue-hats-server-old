@@ -79,7 +79,7 @@ public class Volley extends CustomEnchant {
                     arrowCount.remove(arrow);
                 }
             }
-        }, 0L, 2L)), 3L);
+        }, 0L, 1)), 1L);
     }
 
     @Override

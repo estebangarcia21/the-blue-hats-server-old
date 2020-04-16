@@ -41,6 +41,7 @@ public class InstanceManager {
             world.setGameRuleValue("doMobSpawning", "false");
             world.setGameRuleValue("keepInventory", "true");
             world.setGameRuleValue("doFireTick", "false");
+            world.setGameRuleValue("randomTickSpeed", "0");
         }
 
         instances.add(world);
@@ -60,6 +61,7 @@ public class InstanceManager {
 
         try {
             FileUtils.copyDirectory(srcDir, destDir);
+
             for (File file : Objects.requireNonNull(destDir.listFiles())) {
                 if (file.isFile()) {
                     if (file.getName().equalsIgnoreCase("uid.dat") || file.getName().equalsIgnoreCase("session.lock")) {

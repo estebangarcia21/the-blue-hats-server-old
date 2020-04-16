@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 
@@ -21,7 +22,7 @@ public class SerializeInventories implements Listener {
         return instance;
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.MONITOR)
     public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
         ConfigAPI.InventorySerializer.serializePlayerInventory(Main.instance, event.getFrom(), event.getPlayer());
 

@@ -20,8 +20,8 @@ import java.util.ArrayList;
  */
 
 public class Billionaire extends CustomEnchant {
-    private LevelVariable<Double> damageIncrease = new LevelVariable<>(1.33D, 1.67D, 2D);
-    private LevelVariable<Integer> goldNeeded = new LevelVariable<>(100, 200, 350);
+    private final LevelVariable<Double> damageIncrease = new LevelVariable<>(1.33D, 1.67D, 2D);
+    private final LevelVariable<Integer> goldNeeded = new LevelVariable<>(100, 200, 350);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -38,7 +38,7 @@ public class Billionaire extends CustomEnchant {
             GrindingSystem.getInstance().setPlayerGold(damager, GrindingSystem.getInstance().getPlayerGold(damager) - goldNeeded.at(level));
 
             DamageManager.getInstance().addDamage((EntityDamageByEntityEvent) args[1], damageIncrease.at(level), CalculationMode.MULTIPLICATIVE);
-            damager.playSound(damager.getLocation(), Sound.NOTE_PLING, 1, 0.5f);
+            damager.playSound(damager.getLocation(), Sound.ORB_PICKUP, 1, 0.73f);
         }
     }
 

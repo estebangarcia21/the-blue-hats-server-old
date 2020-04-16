@@ -2,8 +2,8 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../Inventory Manager">
-      <sourceFolder url="file://$MODULE_DIR$/../Inventory Manager/src" isTestSource="false" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -19,5 +19,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="Config API" />
+    <orderEntry type="module" module-name="Instance API" />
   </component>
 </module>

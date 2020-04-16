@@ -25,10 +25,10 @@ import java.util.UUID;
 public class PermissionsManager implements Listener, ConfigWriter, ConfigReader {
     private static PermissionsManager instance;
 
-    private HashMap<UUID, Rank> playerRanks = new HashMap<>();
-    private HashMap<UUID, Rank> playerStaffRanks = new HashMap<>();
+    private final HashMap<UUID, Rank> playerRanks = new HashMap<>();
+    private final HashMap<UUID, Rank> playerStaffRanks = new HashMap<>();
 
-    private HashMap<UUID, PermissionAttachment> playerPermissions = new HashMap<>();
+    private final HashMap<UUID, PermissionAttachment> playerPermissions = new HashMap<>();
 
     private PermissionsManager() { }
 

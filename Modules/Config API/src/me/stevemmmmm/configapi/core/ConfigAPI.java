@@ -118,7 +118,11 @@ public class ConfigAPI extends JavaPlugin implements Listener {
     public static class InventorySerializer {
         public static void serializeInventory(JavaPlugin plugin, UUID uuid, String name, Inventory inventory) {
             for (int i = 0; i < inventory.getSize(); i++) {
-                if (inventory.getItem(i) == null) continue;
+                if (inventory.getItem(i) == null){
+                    plugin.getConfig().set("enderchests." + name + "." + uuid.toString() + ".slots." + i, new ItemStack(Material.AIR));
+                    plugin.saveConfig();
+                    continue;
+                }
 
                 plugin.getConfig().set("enderchests." + name + "." + uuid.toString() + ".slots." + i, inventory.getItem(i));
                 plugin.saveConfig();
@@ -139,7 +143,10 @@ public class ConfigAPI extends JavaPlugin implements Listener {
 
         public static void serializePlayerInventory(JavaPlugin plugin, World world, Player player) {
             for (int i = 0; i < player.getInventory().getSize(); i++) {
-                if (player.getInventory().getItem(i) == null) continue;
+                if (player.getInventory().getItem(i) == null) {
+                    writeItemStack(plugin, world, player, i, new ItemStack(Material.AIR));
+                    continue;
+                }
 
                 writeItemStack(plugin, world, player, i, player.getInventory().getItem(i));
             }

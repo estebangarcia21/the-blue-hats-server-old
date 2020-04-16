@@ -37,13 +37,13 @@ public class EnderChest implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!playerEnderChestsToxicWorld.containsKey(event.getPlayer().getUniqueId())) {
-            playerEnderChestsToxicWorld.put(event.getPlayer().getUniqueId(), Bukkit.createInventory(null, 63, ChatColor.GRAY + "Ender Chest"));
+            playerEnderChestsToxicWorld.put(event.getPlayer().getUniqueId(), Bukkit.createInventory(null, 54, ChatColor.GRAY + "Ender Chest"));
 
             ConfigAPI.InventorySerializer.loadInventory(Main.INSTANCE, event.getPlayer(), "ToxicWorld", playerEnderChestsToxicWorld.get(event.getPlayer().getUniqueId()));
         }
 
         if (!playerEnderChestsNonToxicWorld.containsKey(event.getPlayer().getUniqueId())) {
-            playerEnderChestsNonToxicWorld.put(event.getPlayer().getUniqueId(), Bukkit.createInventory(null, 63, ChatColor.GRAY + "Ender Chest"));
+            playerEnderChestsNonToxicWorld.put(event.getPlayer().getUniqueId(), Bukkit.createInventory(null, 54, ChatColor.GRAY + "Ender Chest"));
 
             ConfigAPI.InventorySerializer.loadInventory(Main.INSTANCE, event.getPlayer(), "NonToxicWorld", playerEnderChestsNonToxicWorld.get(event.getPlayer().getUniqueId()));
         }
