@@ -20,7 +20,7 @@ import java.util.*;
 public class CustomEnchantManager {
     private static CustomEnchantManager instance;
 
-    private ArrayList<CustomEnchant> enchants = new ArrayList<>();
+    private final ArrayList<CustomEnchant> enchants = new ArrayList<>();
 
     public static CustomEnchantManager getInstance() {
         if (instance == null) instance = new CustomEnchantManager();

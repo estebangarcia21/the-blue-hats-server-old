@@ -24,13 +24,13 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class CustomEnchant implements Listener {
-    private HashMap<UUID, Boolean> playerIsOnCooldown = new HashMap<>();
-    private HashMap<UUID, Long> cooldownTimerTimes = new HashMap<>();
-    private HashMap<UUID, Integer> cooldownTasks = new HashMap<>();
+    private final HashMap<UUID, Boolean> playerIsOnCooldown = new HashMap<>();
+    private final HashMap<UUID, Long> cooldownTimerTimes = new HashMap<>();
+    private final HashMap<UUID, Integer> cooldownTasks = new HashMap<>();
 
-    private HashMap<UUID, Integer> hitMappings = new HashMap<>();
-    private HashMap<UUID, Long> cooldownTimesHitTimer = new HashMap<>();
-    private HashMap<UUID, Integer> cooldownResetTasksHitTimer = new HashMap<>();
+    private final HashMap<UUID, Integer> hitMappings = new HashMap<>();
+    private final HashMap<UUID, Long> cooldownTimesHitTimer = new HashMap<>();
+    private final HashMap<UUID, Integer> cooldownResetTasksHitTimer = new HashMap<>();
 
     public abstract void applyEnchant(int level, Object... args) ;
 
@@ -94,6 +94,7 @@ public abstract class CustomEnchant implements Listener {
 
             cooldownTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
                 playerIsOnCooldown.put(player.getUniqueId(), true);
+
                 cooldownTimerTimes.put(player.getUniqueId(), cooldownTimerTimes.get(player.getUniqueId()) - 1);
 
                 if (cooldownTimerTimes.get(player.getUniqueId()) <= 0f) {
@@ -214,19 +215,16 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public void startHitResetTimer(Player player) {
-        if (!cooldownTimesHitTimer.containsKey(player.getUniqueId())) cooldownTimesHitTimer.put(player.getUniqueId(), 0L);
-
         if (!cooldownResetTasksHitTimer.containsKey(player.getUniqueId())) {
             cooldownResetTasksHitTimer.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                cooldownTimesHitTimer.put(player.getUniqueId(), cooldownTimesHitTimer.getOrDefault(player.getUniqueId(), 0L) + 1);
+
                 if (cooldownTimesHitTimer.get(player.getUniqueId()) >= 5) {
                     hitMappings.put(player.getUniqueId(), 0);
                     cooldownTimesHitTimer.put(player.getUniqueId(), 0L);
                     Bukkit.getServer().getScheduler().cancelTask(cooldownResetTasksHitTimer.get(player.getUniqueId()));
                     cooldownResetTasksHitTimer.remove(player.getUniqueId());
-                    return;
                 }
-
-                cooldownTimesHitTimer.put(player.getUniqueId(), cooldownTimesHitTimer.get(player.getUniqueId()) + 1);
             }, 0L, 20L));
         } else {
             cooldownTimesHitTimer.put(player.getUniqueId(), 0L);

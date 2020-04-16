@@ -18,7 +18,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class Punisher extends CustomEnchant {
-    private LevelVariable<Float> damageIncrease = new LevelVariable<>(.6f, .12f, .18f);
+    private final LevelVariable<Float> damageIncrease = new LevelVariable<>(.6f, .12f, .18f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

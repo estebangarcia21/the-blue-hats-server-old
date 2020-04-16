@@ -21,8 +21,8 @@ import java.util.UUID;
 public class CombatManager implements Listener {
     private static CombatManager instance;
 
-    private HashMap<UUID, Integer> combatTasks = new HashMap<>();
-    private HashMap<UUID, Integer> combatTime = new HashMap<>();
+    private final HashMap<UUID, Integer> combatTasks = new HashMap<>();
+    private final HashMap<UUID, Integer> combatTime = new HashMap<>();
 
     private CombatManager() { }
 

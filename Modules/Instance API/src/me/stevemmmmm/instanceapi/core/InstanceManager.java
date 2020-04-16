@@ -21,7 +21,7 @@ import java.util.*;
 public class InstanceManager {
     private static InstanceManager instance;
 
-    private HashMap<ServerGame, ArrayList<World>> gameInstances = new HashMap<>();
+    private final HashMap<ServerGame, ArrayList<World>> gameInstances = new HashMap<>();
 
     private InstanceManager() { }
 

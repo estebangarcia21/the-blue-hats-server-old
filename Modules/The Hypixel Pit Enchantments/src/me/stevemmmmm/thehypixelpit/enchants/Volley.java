@@ -25,10 +25,10 @@ import java.util.HashMap;
  */
 
 public class Volley extends CustomEnchant {
-    private LevelVariable<Integer> arrows = new LevelVariable<>(2, 3, 4);
+    private final LevelVariable<Integer> arrows = new LevelVariable<>(2, 3, 4);
 
-    private HashMap<Arrow, Integer> volleyTasks = new HashMap<>();
-    private HashMap<Arrow, Integer> arrowCount = new HashMap<>();
+    private final HashMap<Arrow, Integer> volleyTasks = new HashMap<>();
+    private final HashMap<Arrow, Integer> arrowCount = new HashMap<>();
 
     @EventHandler
     public void onBowShoot(EntityShootBowEvent event) {

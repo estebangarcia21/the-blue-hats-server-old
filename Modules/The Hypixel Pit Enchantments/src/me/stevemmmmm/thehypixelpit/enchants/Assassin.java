@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class Assassin extends CustomEnchant {
-    private LevelVariable<Integer> cooldownTime = new LevelVariable<>(5, 4, 3);
+    private final LevelVariable<Integer> cooldownTime = new LevelVariable<>(5, 4, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

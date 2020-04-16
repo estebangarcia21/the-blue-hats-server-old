@@ -22,7 +22,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import java.util.ArrayList;
 
 public class Executioner extends CustomEnchant {
-    private LevelVariable<Integer> heartsToDie = new LevelVariable<>(3, 4, 4);
+    private final LevelVariable<Integer> heartsToDie = new LevelVariable<>(3, 4, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

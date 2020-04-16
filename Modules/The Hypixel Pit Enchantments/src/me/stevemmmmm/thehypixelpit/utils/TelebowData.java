@@ -8,9 +8,9 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.inventory.ItemStack;
 
 public class TelebowData {
-    private Arrow arrow;
-    private ItemStack bow;
-    private boolean isSneaking;
+    private final Arrow arrow;
+    private final ItemStack bow;
+    private final boolean isSneaking;
 
     public TelebowData(Arrow arrow, ItemStack bow, boolean isSneaking) {
         this.arrow = arrow;

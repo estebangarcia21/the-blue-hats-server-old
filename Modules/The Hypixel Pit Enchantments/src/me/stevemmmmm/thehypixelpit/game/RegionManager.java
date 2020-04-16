@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class RegionManager implements Listener {
     private static RegionManager instance;
 
-    private ArrayList<Region> regions = new ArrayList<>();
+    private final ArrayList<Region> regions = new ArrayList<>();
 
     private RegionManager() {
         initSpawnRegions();
@@ -87,9 +87,9 @@ public class RegionManager implements Listener {
     }
 
     static class Region {
-        private Vector lowerBound;
-        private Vector higherBound;
-        private RegionType regionType;
+        private final Vector lowerBound;
+        private final Vector higherBound;
+        private final RegionType regionType;
 
         public Region(Vector lowerBound, Vector higherBound, RegionType regionType) {
             this.higherBound = higherBound;

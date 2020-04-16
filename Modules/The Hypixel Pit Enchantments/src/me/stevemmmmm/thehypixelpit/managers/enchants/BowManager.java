@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class BowManager implements Listener {
     private static BowManager instance;
 
-    private HashMap<Arrow, PlayerInventory> data = new HashMap<>();
+    private final HashMap<Arrow, PlayerInventory> data = new HashMap<>();
 
     public static BowManager getInstance() {
         if (instance == null) instance = new BowManager();

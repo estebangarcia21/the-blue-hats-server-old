@@ -18,9 +18,9 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 
 public class ComboSwift extends CustomEnchant {
-    private LevelVariable<Integer> hitsNeeded = new LevelVariable<>(4, 3, 3);
-    private LevelVariable<Integer> speedTime = new LevelVariable<>(3, 4, 5);
-    private LevelVariable<Integer> speedAmplifier = new LevelVariable<>(0, 1, 1);
+    private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(4, 3, 3);
+    private final LevelVariable<Integer> speedTime = new LevelVariable<>(3, 4, 5);
+    private final LevelVariable<Integer> speedAmplifier = new LevelVariable<>(0, 1, 1);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

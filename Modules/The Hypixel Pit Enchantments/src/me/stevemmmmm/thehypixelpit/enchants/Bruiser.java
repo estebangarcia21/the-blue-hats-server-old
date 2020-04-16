@@ -17,7 +17,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class Bruiser extends CustomEnchant {
-    private LevelVariable<Integer> heartsReduced = new LevelVariable<>(1, 2, 4);
+    private final LevelVariable<Integer> heartsReduced = new LevelVariable<>(1, 2, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

@@ -28,14 +28,14 @@ import java.util.List;
 public class DamageManager implements Listener {
     private static DamageManager instance;
 
-    private HashMap<EntityDamageByEntityEvent, Double> additiveDamageBuffer = new HashMap<>();
-    private HashMap<EntityDamageByEntityEvent, Double> multiplicativeDamageBuffer = new HashMap<>();
+    private final HashMap<EntityDamageByEntityEvent, Double> additiveDamageBuffer = new HashMap<>();
+    private final HashMap<EntityDamageByEntityEvent, Double> multiplicativeDamageBuffer = new HashMap<>();
 
-    private HashMap<EntityDamageByEntityEvent, Double> reductionBuffer = new HashMap<>();
-    private HashMap<EntityDamageByEntityEvent, Double> absoluteReductionBuffer = new HashMap<>();
+    private final HashMap<EntityDamageByEntityEvent, Double> reductionBuffer = new HashMap<>();
+    private final HashMap<EntityDamageByEntityEvent, Double> absoluteReductionBuffer = new HashMap<>();
 
-    private ArrayList<EntityDamageByEntityEvent> canceledEvents = new ArrayList<>();
-    private List<EntityDamageByEntityEvent> removeCriticalDamage = new ArrayList<>();
+    private final ArrayList<EntityDamageByEntityEvent> canceledEvents = new ArrayList<>();
+    private final List<EntityDamageByEntityEvent> removeCriticalDamage = new ArrayList<>();
 
     private DamageManager() { }
 

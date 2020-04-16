@@ -18,7 +18,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class KingBuster extends CustomEnchant {
-    private LevelVariable<Float> damageIncrease = new LevelVariable<>(.7f, .13f, .2f);
+    private final LevelVariable<Float> damageIncrease = new LevelVariable<>(.7f, .13f, .2f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

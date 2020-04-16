@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class ClearArrows implements Listener {
-    private HashMap<UUID, ArrayList<Arrow>> playerToArrows = new HashMap<>();
+    private final HashMap<UUID, ArrayList<Arrow>> playerToArrows = new HashMap<>();
 
     @EventHandler
     public void onProjectileShoot(EntityShootBowEvent event) {

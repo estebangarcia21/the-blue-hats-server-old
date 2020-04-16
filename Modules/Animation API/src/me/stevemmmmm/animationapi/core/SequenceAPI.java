@@ -17,9 +17,9 @@ import java.util.concurrent.atomic.AtomicLong;
 public class SequenceAPI extends JavaPlugin {
     public static SequenceAPI instance;
 
-    private static HashMap<Sequence, Integer> animationTaskIndexs = new HashMap<>();
-    private static HashMap<Sequence, Long> sequencers = new HashMap<>();
-    private static HashMap<Sequence, Long> endSequencerTicks = new HashMap<>();
+    private static final HashMap<Sequence, Integer> animationTaskIndexs = new HashMap<>();
+    private static final HashMap<Sequence, Long> sequencers = new HashMap<>();
+    private static final HashMap<Sequence, Long> endSequencerTicks = new HashMap<>();
 
     @Override
     public void onEnable() {

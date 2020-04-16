@@ -18,7 +18,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class PainFocus extends CustomEnchant {
-    private LevelVariable<Float> damageIncreasePerHeartLost = new LevelVariable<>(.01f, .02f, .05f);
+    private final LevelVariable<Float> damageIncreasePerHeartLost = new LevelVariable<>(.01f, .02f, .05f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

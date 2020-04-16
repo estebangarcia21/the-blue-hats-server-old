@@ -17,7 +17,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class Lifesteal extends CustomEnchant {
-    private LevelVariable<Float> healPercentage = new LevelVariable<>(0.04f, 0.08f, 0.13f);
+    private final LevelVariable<Float> healPercentage = new LevelVariable<>(0.04f, 0.08f, 0.13f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

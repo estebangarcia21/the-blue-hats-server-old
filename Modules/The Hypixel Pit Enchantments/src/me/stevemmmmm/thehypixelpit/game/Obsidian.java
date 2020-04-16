@@ -20,8 +20,8 @@ import java.util.HashMap;
 public class Obsidian implements Listener {
     private static Obsidian instance;
 
-    private HashMap<Block, Integer> obsidianToRemovalTasks = new HashMap<>();
-    private HashMap<Block, Integer> removalTime = new HashMap<>();
+    private final HashMap<Block, Integer> obsidianToRemovalTasks = new HashMap<>();
+    private final HashMap<Block, Integer> removalTime = new HashMap<>();
 
     public static Obsidian getInstance() {
         if (instance == null) instance = new Obsidian();

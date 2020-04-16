@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class CriticallyFunky extends CustomEnchant {
-    private LevelVariable<Float> damageReduction = new LevelVariable<>(0.35f, 0.35f, 0.6f);
-    private LevelVariable<Float> damageIncrease = new LevelVariable<>(0f, .14f, .3f);
+    private final LevelVariable<Float> damageReduction = new LevelVariable<>(0.35f, 0.35f, 0.6f);
+    private final LevelVariable<Float> damageIncrease = new LevelVariable<>(0f, .14f, .3f);
 
-    private List<UUID> queue = new ArrayList<>();
+    private final List<UUID> queue = new ArrayList<>();
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 
 public class Healer extends CustomEnchant {
-    private LevelVariable<Integer> healAmount = new LevelVariable<>(2, 4, 6);
+    private final LevelVariable<Integer> healAmount = new LevelVariable<>(2, 4, 6);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

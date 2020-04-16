@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoreBuilder {
-    private ArrayList<String> description = new ArrayList<>();
-    private List<String[]> parameters = new ArrayList<>();
+    private final ArrayList<String> description = new ArrayList<>();
+    private final List<String[]> parameters = new ArrayList<>();
 
     private boolean condition = true;
     private int lineIndex;

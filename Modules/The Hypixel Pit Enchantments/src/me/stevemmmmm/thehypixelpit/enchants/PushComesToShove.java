@@ -19,8 +19,8 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 
 public class PushComesToShove extends CustomEnchant {
-    private LevelVariable<Float> pctsForce = new LevelVariable<>(12f, 25f, 35f);
-    private LevelVariable<Float> damageAmount = new LevelVariable<>(0f, 1f, 2f);
+    private final LevelVariable<Float> pctsForce = new LevelVariable<>(12f, 25f, 35f);
+    private final LevelVariable<Float> damageAmount = new LevelVariable<>(0f, 1f, 2f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

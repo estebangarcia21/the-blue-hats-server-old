@@ -18,7 +18,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 
 public class LastStand extends CustomEnchant {
-    private LevelVariable<Integer> amplifier = new LevelVariable<>(0, 1, 2);
+    private final LevelVariable<Integer> amplifier = new LevelVariable<>(0, 1, 2);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

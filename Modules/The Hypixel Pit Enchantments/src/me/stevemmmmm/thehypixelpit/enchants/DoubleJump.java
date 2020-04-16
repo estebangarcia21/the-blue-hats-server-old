@@ -25,9 +25,9 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class DoubleJump extends CustomEnchant {
-    private LevelVariable<Integer> cooldownTime = new LevelVariable<>(20, 10, 5);
+    private final LevelVariable<Integer> cooldownTime = new LevelVariable<>(20, 10, 5);
 
-    private HashMap<UUID, Integer> playerHasDoubleJumps = new HashMap<>();
+    private final HashMap<UUID, Integer> playerHasDoubleJumps = new HashMap<>();
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
@@ -40,11 +40,7 @@ public class DoubleJump extends CustomEnchant {
             }
 
             if (itemHasEnchant(player.getInventory().getLeggings(), this)) {
-                if (isNotOnCooldown(player)) {
-                    player.setAllowFlight(true);
-                } else {
-                    player.setAllowFlight(false);
-                }
+                player.setAllowFlight(isNotOnCooldown(player));
             } else {
                 player.setAllowFlight(false);
             }

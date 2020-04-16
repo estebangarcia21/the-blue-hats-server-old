@@ -20,8 +20,8 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 
 public class Wasp extends CustomEnchant {
-    private LevelVariable<Integer> weaknessAmplifier = new LevelVariable<>(1, 2, 3);
-    private LevelVariable<Integer> duration = new LevelVariable<>(6, 11, 16);
+    private final LevelVariable<Integer> weaknessAmplifier = new LevelVariable<>(1, 2, 3);
+    private final LevelVariable<Integer> duration = new LevelVariable<>(6, 11, 16);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

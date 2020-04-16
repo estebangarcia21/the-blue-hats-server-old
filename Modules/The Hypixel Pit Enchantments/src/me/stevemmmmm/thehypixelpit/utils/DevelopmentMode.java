@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 public class DevelopmentMode implements Listener {
-    private boolean isActive = false;
+    private final boolean isActive = false;
 
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent event) {

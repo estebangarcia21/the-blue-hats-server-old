@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class PlayableArea implements Listener {
-    private HashMap<UUID, Integer> tasks = new HashMap<>();
+    private final HashMap<UUID, Integer> tasks = new HashMap<>();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {

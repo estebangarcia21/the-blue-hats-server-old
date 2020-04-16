@@ -24,12 +24,12 @@ import java.util.*;
  */
 
 public class Robinhood extends CustomEnchant {
-    private LevelVariable<Float> damageReduction = new LevelVariable<>(.4f, .5f, .6f);
+    private final LevelVariable<Float> damageReduction = new LevelVariable<>(.4f, .5f, .6f);
 
-    private HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
-    private HashMap<Arrow, Player> arrowToHomingPlayer = new HashMap<>();
+    private final HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
+    private final HashMap<Arrow, Player> arrowToHomingPlayer = new HashMap<>();
 
-    private double range = 8;
+    private final double range = 8;
 
     @EventHandler
     public void onShoot(EntityShootBowEvent event) {

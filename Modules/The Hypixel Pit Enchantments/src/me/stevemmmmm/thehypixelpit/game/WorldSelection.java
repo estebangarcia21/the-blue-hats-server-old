@@ -25,9 +25,9 @@ public class WorldSelection implements Listener {
     private static WorldSelection instance;
 
     private final String inventoryName = ChatColor.LIGHT_PURPLE + "World Selection";
-    private Inventory gui = Bukkit.createInventory(null, 9, inventoryName);
+    private final Inventory gui = Bukkit.createInventory(null, 9, inventoryName);
 
-    private ArrayList<UUID> mayExitGuiSelection = new ArrayList<>();
+    private final ArrayList<UUID> mayExitGuiSelection = new ArrayList<>();
 
     public static WorldSelection getInstance() {
         if (instance == null) instance = new WorldSelection();

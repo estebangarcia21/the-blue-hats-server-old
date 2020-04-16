@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Sequence {
-    private HashMap<Long, Frame> animationSequence = new HashMap<>();
+    private final HashMap<Long, Frame> animationSequence = new HashMap<>();
     private SequenceActions animationActions;
 
     public void addKeyFrame(long time, Frame frame) {

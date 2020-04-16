@@ -17,8 +17,8 @@ import java.util.ArrayList;
  */
 
 public class Perun extends CustomEnchant {
-    private LevelVariable<Integer> perunDamage = new LevelVariable<>(3, 4, 2);
-    private LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
+    private final LevelVariable<Integer> perunDamage = new LevelVariable<>(3, 4, 2);
+    private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

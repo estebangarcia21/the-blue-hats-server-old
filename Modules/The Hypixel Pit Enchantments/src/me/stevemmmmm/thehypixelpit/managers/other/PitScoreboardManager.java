@@ -25,8 +25,8 @@ import java.util.UUID;
 public class PitScoreboardManager implements Listener {
     private static PitScoreboardManager instance;
 
-    private HashMap<UUID, Integer> scoreboardTasks = new HashMap<>();
-    private HashMap<UUID, Scoreboard> playerToScoreboard = new HashMap<>();
+    private final HashMap<UUID, Integer> scoreboardTasks = new HashMap<>();
+    private final HashMap<UUID, Scoreboard> playerToScoreboard = new HashMap<>();
 
     public static PitScoreboardManager getInstance() {
         if (instance == null) instance = new PitScoreboardManager();

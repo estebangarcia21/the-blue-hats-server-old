@@ -20,10 +20,10 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class SpawnCommand implements CommandExecutor {
-    private Vector spawn = new Vector(0.5, 86.5, 11.5);
+    private final Vector spawn = new Vector(0.5, 86.5, 11.5);
 
-    private HashMap<UUID, Integer> cooldownTasks = new HashMap<>();
-    private HashMap<UUID, Integer> cooldownTime = new HashMap<>();
+    private final HashMap<UUID, Integer> cooldownTasks = new HashMap<>();
+    private final HashMap<UUID, Integer> cooldownTime = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

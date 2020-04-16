@@ -55,7 +55,7 @@ public class DamageIndicator implements Listener {
     }
 
     static class IndicatorBuilder {
-        private StringBuilder output = new StringBuilder();
+        private final StringBuilder output = new StringBuilder();
 
         public IndicatorBuilder(Player damaged, int originalHealth, double damageTaken, int maxHealth) {
             output.append(PermissionsManager.getInstance().getPlayerRank(damaged).getNameColor()).append(damaged.getName()).append(" ");

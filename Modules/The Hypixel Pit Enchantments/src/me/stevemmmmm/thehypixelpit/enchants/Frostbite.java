@@ -22,7 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 
 public class Frostbite extends CustomEnchant {
-    private LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
+    private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

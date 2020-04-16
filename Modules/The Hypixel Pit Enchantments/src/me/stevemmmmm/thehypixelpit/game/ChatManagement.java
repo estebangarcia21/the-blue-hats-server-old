@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class ChatManagement implements Listener {
-    private HashMap<UUID, Integer> tasks = new HashMap<>();
-    private HashMap<UUID, Integer> time = new HashMap<>();
+    private final HashMap<UUID, Integer> tasks = new HashMap<>();
+    private final HashMap<UUID, Integer> time = new HashMap<>();
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {

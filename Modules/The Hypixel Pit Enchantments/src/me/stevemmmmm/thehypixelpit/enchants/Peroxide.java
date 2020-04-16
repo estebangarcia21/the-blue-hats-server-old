@@ -19,8 +19,8 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 
 public class Peroxide extends CustomEnchant {
-    private LevelVariable<Integer> regenTime = new LevelVariable<>(5, 8, 8);
-    private LevelVariable<Integer> amplifier = new LevelVariable<>(0, 0, 1);
+    private final LevelVariable<Integer> regenTime = new LevelVariable<>(5, 8, 8);
+    private final LevelVariable<Integer> amplifier = new LevelVariable<>(0, 0, 1);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

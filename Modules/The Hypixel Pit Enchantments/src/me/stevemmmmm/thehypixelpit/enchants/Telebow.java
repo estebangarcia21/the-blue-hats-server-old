@@ -28,9 +28,9 @@ import java.util.UUID;
  */
 
 public class Telebow extends CustomEnchant {
-    private LevelVariable<Integer> cooldownTimes = new LevelVariable<>(90, 45, 20);
+    private final LevelVariable<Integer> cooldownTimes = new LevelVariable<>(90, 45, 20);
 
-    private HashMap<UUID, TelebowData> telebowData = new HashMap<>();
+    private final HashMap<UUID, TelebowData> telebowData = new HashMap<>();
 
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {

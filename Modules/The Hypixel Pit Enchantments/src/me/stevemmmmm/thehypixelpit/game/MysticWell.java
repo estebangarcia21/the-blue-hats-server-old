@@ -28,22 +28,22 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MysticWell implements Listener {
-    private HashMap<UUID, Inventory> playerGui = new HashMap<>();
+    private final HashMap<UUID, Inventory> playerGui = new HashMap<>();
 
-    private HashMap<UUID, MysticWellState> activeAnimations = new HashMap<>();
-    private HashMap<UUID, Integer> animationTasks = new HashMap<>();
+    private final HashMap<UUID, MysticWellState> activeAnimations = new HashMap<>();
+    private final HashMap<UUID, Integer> animationTasks = new HashMap<>();
 
-    private ItemStack enchantmentTableInfoIdle = new ItemStack(Material.ENCHANTMENT_TABLE);
-    private ItemStack enchantmentTableInfoT1 = new ItemStack(Material.ENCHANTMENT_TABLE);
-    private ItemStack enchantmentTableInfoT2 = new ItemStack(Material.ENCHANTMENT_TABLE);
-    private ItemStack enchantmentTableInfoT3 = new ItemStack(Material.ENCHANTMENT_TABLE);
-    private ItemStack enchantmentTableInfoItsRollin = new ItemStack(Material.ENCHANTMENT_TABLE);
-    private ItemStack enchantmentTableInfoMaxTier = new ItemStack(Material.STAINED_CLAY, 1, (byte) 14);
+    private final ItemStack enchantmentTableInfoIdle = new ItemStack(Material.ENCHANTMENT_TABLE);
+    private final ItemStack enchantmentTableInfoT1 = new ItemStack(Material.ENCHANTMENT_TABLE);
+    private final ItemStack enchantmentTableInfoT2 = new ItemStack(Material.ENCHANTMENT_TABLE);
+    private final ItemStack enchantmentTableInfoT3 = new ItemStack(Material.ENCHANTMENT_TABLE);
+    private final ItemStack enchantmentTableInfoItsRollin = new ItemStack(Material.ENCHANTMENT_TABLE);
+    private final ItemStack enchantmentTableInfoMaxTier = new ItemStack(Material.STAINED_CLAY, 1, (byte) 14);
 
     //TODO Rewrite the mystic well
 
-    private HashMap<UUID, AtomicInteger> animationSequenceIndexs = new HashMap<>();
-    private HashMap<UUID, AtomicInteger> sequenceRepititions = new HashMap<>();
+    private final HashMap<UUID, AtomicInteger> animationSequenceIndexs = new HashMap<>();
+    private final HashMap<UUID, AtomicInteger> sequenceRepititions = new HashMap<>();
 
     public MysticWell() {
         ItemMeta etMeta = enchantmentTableInfoIdle.getItemMeta();

@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class Megalongbow extends CustomEnchant {
-    private LevelVariable<Integer> amplifier = new LevelVariable<>(1, 2, 3);
+    private final LevelVariable<Integer> amplifier = new LevelVariable<>(1, 2, 3);
 
     @EventHandler
     public void onArrowShoot(EntityShootBowEvent event) {

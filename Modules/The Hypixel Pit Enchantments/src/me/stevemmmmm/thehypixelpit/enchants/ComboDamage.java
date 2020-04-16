@@ -19,8 +19,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class ComboDamage extends CustomEnchant {
-    private LevelVariable<Integer> hitsNeeded = new LevelVariable<>(4, 3, 3);
-    private LevelVariable<Float> damageAmount = new LevelVariable<>(.2f, .3f, .45f);
+    private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(4, 3, 3);
+    private final LevelVariable<Float> damageAmount = new LevelVariable<>(.2f, .3f, .45f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

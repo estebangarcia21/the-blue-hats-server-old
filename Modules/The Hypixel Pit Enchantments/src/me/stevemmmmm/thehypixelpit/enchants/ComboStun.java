@@ -22,8 +22,8 @@ import java.util.ArrayList;
  */
 
 public class ComboStun extends CustomEnchant {
-    private LevelVariable<Integer> duration = new LevelVariable<>(10, 16, 30);
-    private LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
+    private final LevelVariable<Integer> duration = new LevelVariable<>(10, 16, 30);
+    private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

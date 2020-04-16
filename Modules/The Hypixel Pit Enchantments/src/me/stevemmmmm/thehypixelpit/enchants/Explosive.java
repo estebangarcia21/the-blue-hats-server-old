@@ -23,11 +23,11 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 
 public class Explosive extends CustomEnchant {
-    private LevelVariable<Double> explosionRange = new LevelVariable<>(1D, 2.5D, 6D);
-    private LevelVariable<Integer> cooldownTime = new LevelVariable<>(5, 3, 5);
-    private LevelVariable<Float> explosionPitch = new LevelVariable<>(2f, 1f, 1.4f);
+    private final LevelVariable<Double> explosionRange = new LevelVariable<>(1D, 2.5D, 6D);
+    private final LevelVariable<Integer> cooldownTime = new LevelVariable<>(5, 3, 5);
+    private final LevelVariable<Float> explosionPitch = new LevelVariable<>(2f, 1f, 1.4f);
 
-    private LevelVariable<Effect> explosionParticle = new LevelVariable<>(Effect.EXPLOSION_LARGE, Effect.EXPLOSION_HUGE, Effect.EXPLOSION_HUGE);
+    private final LevelVariable<Effect> explosionParticle = new LevelVariable<>(Effect.EXPLOSION_LARGE, Effect.EXPLOSION_HUGE, Effect.EXPLOSION_HUGE);
 
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {

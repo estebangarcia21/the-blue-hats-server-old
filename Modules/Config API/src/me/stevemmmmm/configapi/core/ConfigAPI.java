@@ -20,12 +20,12 @@ import java.util.logging.Logger;
  */
 
 public class ConfigAPI extends JavaPlugin implements Listener {
-    private static HashMap<JavaPlugin, HashMap<String, String>> dataCategories = new HashMap<>();
+    private static final HashMap<JavaPlugin, HashMap<String, String>> dataCategories = new HashMap<>();
 
-    private static ArrayList<ConfigWriter> configWriters = new ArrayList<>();
-    private static ArrayList<ConfigReader> configReaders = new ArrayList<>();
+    private static final ArrayList<ConfigWriter> configWriters = new ArrayList<>();
+    private static final ArrayList<ConfigReader> configReaders = new ArrayList<>();
 
-    private ArrayList<UUID> readPlayers = new ArrayList<>();
+    private final ArrayList<UUID> readPlayers = new ArrayList<>();
 
     @Override
     public void onEnable() {

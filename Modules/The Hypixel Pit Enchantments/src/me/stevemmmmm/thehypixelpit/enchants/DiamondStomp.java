@@ -18,7 +18,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class DiamondStomp extends CustomEnchant {
-    private LevelVariable<Double> percentDamageIncrease = new LevelVariable<>(.07, .12, .25);
+    private final LevelVariable<Double> percentDamageIncrease = new LevelVariable<>(.07, .12, .25);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

@@ -5,7 +5,7 @@ package me.stevemmmmm.thehypixelpit.managers.enchants;
  */
 
 public class LevelVariable<T> {
-    private T[] values;
+    private final T[] values;
 
     @SafeVarargs
     public LevelVariable(T... values) {

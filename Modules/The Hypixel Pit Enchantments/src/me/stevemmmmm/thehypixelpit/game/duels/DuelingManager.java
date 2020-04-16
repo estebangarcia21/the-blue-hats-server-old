@@ -23,7 +23,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DuelingManager implements Listener {
     private static DuelingManager instance;
 
-    private ArrayList<Duel> activeDuels = new ArrayList<>();
+    private final ArrayList<Duel> activeDuels = new ArrayList<>();
 //    private ArrayList<Pair<Vector, Vector>> duelPositions = new ArrayList<>();
 
     private DuelingManager() {

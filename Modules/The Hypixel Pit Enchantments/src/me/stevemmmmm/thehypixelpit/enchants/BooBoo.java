@@ -21,9 +21,9 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class BooBoo extends CustomEnchant {
-    private HashMap<UUID, Integer> tasks = new HashMap<>();
+    private final HashMap<UUID, Integer> tasks = new HashMap<>();
 
-    private LevelVariable<Integer> secondsNeeded = new LevelVariable<>(5, 4, 3);
+    private final LevelVariable<Integer> secondsNeeded = new LevelVariable<>(5, 4, 3);
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {

@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class LuckyShot extends CustomEnchant {
-    private LevelVariable<Integer> percentChance = new LevelVariable<>(2, 3, 10);
+    private final LevelVariable<Integer> percentChance = new LevelVariable<>(2, 3, 10);
 
-    private ArrayList<Arrow> hitLuckyShotArrows = new ArrayList<>();
+    private final ArrayList<Arrow> hitLuckyShotArrows = new ArrayList<>();
 
-    private List<UUID> canLuckyShot = new ArrayList<>();
+    private final List<UUID> canLuckyShot = new ArrayList<>();
 
     @EventHandler
     public void onArrowHit(EntityDamageByEntityEvent event) {

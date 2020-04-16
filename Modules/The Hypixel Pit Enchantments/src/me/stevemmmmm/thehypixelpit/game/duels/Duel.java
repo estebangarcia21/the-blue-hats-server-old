@@ -10,8 +10,8 @@ import org.bukkit.util.Vector;
 import java.util.UUID;
 
 public class Duel {
-    private Player playerA;
-    private Player playerB;
+    private final Player playerA;
+    private final Player playerB;
 
     private Vector playerAPos;
     private Vector playerBPos;

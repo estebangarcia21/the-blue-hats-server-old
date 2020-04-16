@@ -12,10 +12,6 @@ public class AntiFall implements Listener {
 
     @EventHandler
     public void onFall(EntityDamageEvent event) {
-        if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-            event.setCancelled(true);
-        } else {
-            event.setCancelled(false);
-        }
+        event.setCancelled(event.getCause() == EntityDamageEvent.DamageCause.FALL);
     }
 }

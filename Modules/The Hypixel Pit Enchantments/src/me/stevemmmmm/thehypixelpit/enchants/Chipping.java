@@ -18,7 +18,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class Chipping extends CustomEnchant {
-    private LevelVariable<Integer> damageAmount = new LevelVariable<>(1, 2, 3);
+    private final LevelVariable<Integer> damageAmount = new LevelVariable<>(1, 2, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

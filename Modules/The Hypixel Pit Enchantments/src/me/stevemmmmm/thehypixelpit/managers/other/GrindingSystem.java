@@ -29,13 +29,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GrindingSystem implements Listener, ConfigWriter, ConfigReader {
     private static GrindingSystem instance;
 
-    private HashMap<Integer, Integer> xpPerLevel = new HashMap<>();
-    private HashMap<Integer, Float> prestigeMultiplier = new HashMap<>();
+    private final HashMap<Integer, Integer> xpPerLevel = new HashMap<>();
+    private final HashMap<Integer, Float> prestigeMultiplier = new HashMap<>();
 
-    private HashMap<UUID, Integer> playerPrestiges = new HashMap<>();
-    private HashMap<UUID, Integer> playerLevels = new HashMap<>();
-    private HashMap<UUID, Integer> playerXP = new HashMap<>();
-    private HashMap<UUID, Double> playerGold = new HashMap<>();
+    private final HashMap<UUID, Integer> playerPrestiges = new HashMap<>();
+    private final HashMap<UUID, Integer> playerLevels = new HashMap<>();
+    private final HashMap<UUID, Integer> playerXP = new HashMap<>();
+    private final HashMap<UUID, Double> playerGold = new HashMap<>();
 
     private GrindingSystem() {
         initializeMaps();

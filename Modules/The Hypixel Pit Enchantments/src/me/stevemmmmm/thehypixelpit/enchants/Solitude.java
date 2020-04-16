@@ -19,8 +19,8 @@ import java.util.List;
  */
 
 public class Solitude extends CustomEnchant {
-    private LevelVariable<Float> damageReduction = new LevelVariable<>(.4f, .5f, .6f);
-    private LevelVariable<Integer> playersNeeded = new LevelVariable<>(1, 2, 2);
+    private final LevelVariable<Float> damageReduction = new LevelVariable<>(.4f, .5f, .6f);
+    private final LevelVariable<Integer> playersNeeded = new LevelVariable<>(1, 2, 2);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

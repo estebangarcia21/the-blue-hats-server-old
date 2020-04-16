@@ -21,7 +21,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class BulletTime extends CustomEnchant implements EnchantCanceler {
-    private LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
+    private final LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {

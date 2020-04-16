@@ -23,7 +23,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 
 public class DevilChicks extends CustomEnchant {
-    private LevelVariable<Integer> amountOfChicks = new LevelVariable<>(1, 2, 3);
+    private final LevelVariable<Integer> amountOfChicks = new LevelVariable<>(1, 2, 3);
 
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {

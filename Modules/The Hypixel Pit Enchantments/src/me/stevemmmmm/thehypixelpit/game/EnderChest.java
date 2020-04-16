@@ -25,8 +25,8 @@ import java.util.UUID;
 public class EnderChest implements Listener {
     private static EnderChest instance;
 
-    private HashMap<UUID, Inventory> playerEnderChestsToxicWorld = new HashMap<>();
-    private HashMap<UUID, Inventory> playerEnderChestsNonToxicWorld = new HashMap<>();
+    private final HashMap<UUID, Inventory> playerEnderChestsToxicWorld = new HashMap<>();
+    private final HashMap<UUID, Inventory> playerEnderChestsNonToxicWorld = new HashMap<>();
 
     public static EnderChest getInstance() {
         if (instance == null) instance = new EnderChest();

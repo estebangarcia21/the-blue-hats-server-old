@@ -13,7 +13,7 @@ import java.util.List;
 public class RankManager {
     private static RankManager instance;
 
-    private List<Rank> ranks = new ArrayList<>();
+    private final List<Rank> ranks = new ArrayList<>();
 
     public static RankManager getInstance() {
         if (instance == null) instance = new RankManager();

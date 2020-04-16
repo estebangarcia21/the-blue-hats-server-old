@@ -18,7 +18,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class Parasite extends CustomEnchant {
-    private LevelVariable<Double> healAmount = new LevelVariable<>(0.5D, 1D, 2D);
+    private final LevelVariable<Double> healAmount = new LevelVariable<>(0.5D, 1D, 2D);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
