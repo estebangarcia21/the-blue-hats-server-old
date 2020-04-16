@@ -1,6 +1,6 @@
 package me.stevemmmmm.thepitremake.enchants;
 
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantCanceler;
 import me.stevemmmmm.thepitremake.managers.enchants.DamageManager;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;

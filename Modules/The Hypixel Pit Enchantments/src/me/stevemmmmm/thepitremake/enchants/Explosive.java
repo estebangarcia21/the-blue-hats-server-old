@@ -1,7 +1,7 @@
 package me.stevemmmmm.thepitremake.enchants;
 
 import me.stevemmmmm.thepitremake.game.RegionManager;
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.BowManager;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;

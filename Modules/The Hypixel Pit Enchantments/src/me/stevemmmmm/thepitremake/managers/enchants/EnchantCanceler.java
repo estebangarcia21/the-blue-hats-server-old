@@ -1,6 +1,5 @@
 package me.stevemmmmm.thepitremake.managers.enchants;
 
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
 import org.bukkit.entity.Player;
 
 /*

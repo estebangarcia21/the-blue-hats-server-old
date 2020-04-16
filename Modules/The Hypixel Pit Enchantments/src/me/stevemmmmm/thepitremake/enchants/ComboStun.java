@@ -1,6 +1,6 @@
 package me.stevemmmmm.thepitremake.enchants;
 
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;

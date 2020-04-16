@@ -1,10 +1,8 @@
-package me.stevemmmmm.thepitremake.managers;
+package me.stevemmmmm.thepitremake.managers.enchants;
 
 import me.stevemmmmm.thepitremake.commands.TogglePvPCommand;
 import me.stevemmmmm.thepitremake.core.Main;
 import me.stevemmmmm.thepitremake.game.RegionManager;
-import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchantManager;
-import me.stevemmmmm.thepitremake.managers.enchants.DamageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -228,10 +226,5 @@ public abstract class CustomEnchant implements Listener {
         } else {
             hitAmountResetTimes.put(player.getUniqueId(), 0L);
         }
-    }
-
-    @Deprecated
-    public boolean isCriticalHit(Player player) {
-        return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
     }
 }

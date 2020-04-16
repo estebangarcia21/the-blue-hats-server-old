@@ -4,7 +4,6 @@ import me.stevemmmmm.thepitremake.core.Main;
 import me.stevemmmmm.thepitremake.enchants.Mirror;
 import me.stevemmmmm.thepitremake.game.CombatManager;
 import me.stevemmmmm.thepitremake.game.RegionManager;
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -123,8 +122,9 @@ public class DamageManager implements Listener {
         canceledEvents.add(event);
     }
 
-    public boolean isEventCancelled(EntityDamageByEntityEvent event) {
-        return canceledEvents.contains(event);
+    //TODO Inversion error?
+    public boolean isEventNotCancelled(EntityDamageByEntityEvent event) {
+        return !canceledEvents.contains(event);
     }
 
     public boolean playerIsInCanceledEvent(Player player) {

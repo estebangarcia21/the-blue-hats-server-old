@@ -1,6 +1,6 @@
 package me.stevemmmmm.thepitremake.enchants;
 
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -51,7 +51,7 @@ public class CriticallyFunky extends CustomEnchant {
 
         if (damager == null) return;
 
-        if (!isCriticalHit(damager)) return;
+        if (!DamageManager.getInstance().isCriticalHit(damager)) return;
 
         if (queue.contains(damager.getUniqueId())) {
             DamageManager.getInstance().addDamage(event, damageIncrease.at(level), CalculationMode.ADDITIVE);

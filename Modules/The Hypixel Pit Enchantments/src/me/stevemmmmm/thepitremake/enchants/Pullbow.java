@@ -1,6 +1,6 @@
 package me.stevemmmmm.thepitremake.enchants;
 
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -18,11 +18,11 @@ public class Pullbow extends CustomEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
-            if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                
-            }
-        }
+//        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
+//            if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
+//
+//            }
+//        }
     }
 
     @Override

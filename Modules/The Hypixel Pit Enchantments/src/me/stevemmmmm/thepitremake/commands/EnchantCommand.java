@@ -1,6 +1,6 @@
 package me.stevemmmmm.thepitremake.commands;
 
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchantManager;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;

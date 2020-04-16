@@ -23,7 +23,7 @@ public class LoreBuilder {
     }
 
     public LoreBuilder addVariable(String... values) {
-        this.parameters.add(values);
+        parameters.add(values);
 
         return this;
     }

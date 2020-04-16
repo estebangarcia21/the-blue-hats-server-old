@@ -34,7 +34,7 @@ public class DamageIndicator implements Listener {
             Player damager = (Player) event.getDamager();
             Player attacked = (Player) event.getEntity();
 
-            if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN) && !DamageManager.getInstance().isEventCancelled(event) && !DamageManager.getInstance().playerIsInCanceledEvent(damager)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
+            if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN) && DamageManager.getInstance().isEventNotCancelled(event) && !DamageManager.getInstance().playerIsInCanceledEvent(damager)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
@@ -42,7 +42,7 @@ public class DamageIndicator implements Listener {
                 Player damager = (Player) ((Arrow) event.getDamager()).getShooter();
                 Player attacked = (Player) event.getEntity();
 
-                if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN) && !DamageManager.getInstance().isEventCancelled(event) && !DamageManager.getInstance().playerIsInCanceledEvent(damager)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
+                if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN) && DamageManager.getInstance().isEventNotCancelled(event) && !DamageManager.getInstance().playerIsInCanceledEvent(damager)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
             }
         }
     }

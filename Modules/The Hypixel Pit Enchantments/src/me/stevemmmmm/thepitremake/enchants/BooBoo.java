@@ -1,7 +1,7 @@
 package me.stevemmmmm.thepitremake.enchants;
 
 import me.stevemmmmm.thepitremake.core.Main;
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import org.bukkit.Bukkit;
@@ -30,9 +30,7 @@ public class BooBoo extends CustomEnchant {
         Player player = event.getPlayer();
 
         if (!tasks.containsKey(player.getUniqueId())) {
-            tasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                attemptEnchantExecution(player.getInventory().getLeggings(), player);
-            }, 0L, 20L));
+            tasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> attemptEnchantExecution(player.getInventory().getLeggings(), player), 0L, 20L));
         }
     }
 

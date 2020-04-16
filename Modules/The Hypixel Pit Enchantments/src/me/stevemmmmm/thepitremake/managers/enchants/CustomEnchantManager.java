@@ -1,7 +1,6 @@
 package me.stevemmmmm.thepitremake.managers.enchants;
 
 import me.stevemmmmm.thepitremake.core.Main;
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
 import me.stevemmmmm.thepitremake.utils.SortCustomEnchantByName;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -78,8 +77,6 @@ public class CustomEnchantManager {
         if (meta.getLore() != null) enchantLore.add(0, " ");
 
         List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
-
-        //TODO Lives
 
         if (previousDisplayName != null && item.getType() == Material.LEATHER_LEGGINGS) {
             if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Fresh")) {

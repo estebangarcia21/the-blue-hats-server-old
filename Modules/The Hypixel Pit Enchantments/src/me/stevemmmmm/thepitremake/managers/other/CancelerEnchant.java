@@ -1,6 +1,6 @@
 package me.stevemmmmm.thepitremake.managers.other;
 
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import org.bukkit.event.Event;
 
 /*

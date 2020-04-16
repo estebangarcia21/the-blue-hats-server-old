@@ -2,7 +2,7 @@ package me.stevemmmmm.thepitremake.enchants;
 
 import me.stevemmmmm.animationapi.core.Sequence;
 import me.stevemmmmm.animationapi.core.SequenceAPI;
-import me.stevemmmmm.thepitremake.managers.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.DamageManager;
 import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
