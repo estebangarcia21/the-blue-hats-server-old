@@ -1,9 +1,5 @@
 package me.stevemmmmm.permissions.core;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.configapi.core.ConfigReader;
 import me.stevemmmmm.configapi.core.ConfigWriter;
@@ -21,6 +17,10 @@ import org.bukkit.permissions.PermissionAttachment;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class PermissionsManager implements Listener, ConfigWriter, ConfigReader {
     private static PermissionsManager instance;

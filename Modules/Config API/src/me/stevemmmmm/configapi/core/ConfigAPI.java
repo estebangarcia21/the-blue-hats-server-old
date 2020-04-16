@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 /*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
 public class ConfigAPI extends JavaPlugin implements Listener {
@@ -29,11 +29,6 @@ public class ConfigAPI extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        Logger log = Bukkit.getLogger();
-        log.info("------------------------------------------");
-        log.info("ConfigAPI by Stevemmmmm");
-        log.info("------------------------------------------");
-
         getServer().getPluginManager().registerEvents(this, this);
     }
 
@@ -55,7 +50,7 @@ public class ConfigAPI extends JavaPlugin implements Listener {
         readPlayers.add(event.getPlayer().getUniqueId());
     }
 
-    public static void addPlugin(JavaPlugin javaPlugin, HashMap<String, String> locations) {
+    public static void registerConfigWriteLocations(JavaPlugin javaPlugin, HashMap<String, String> locations) {
         dataCategories.put(javaPlugin, locations);
     }
 
@@ -74,10 +69,10 @@ public class ConfigAPI extends JavaPlugin implements Listener {
         plugin.saveConfig();
     }
 
-    public static <V> void write(JavaPlugin plugin, String path, HashMap<UUID, V> entries) {
+    public static <T> void write(JavaPlugin plugin, String path, HashMap<UUID, T> entries) {
         String fullPath = dataCategories.get(plugin).get(path);
 
-        for (Map.Entry<UUID, V> entry : entries.entrySet()) {
+        for (Map.Entry<UUID, T> entry : entries.entrySet()) {
             plugin.getConfig().set(entry.getKey() + "." + fullPath, entry.getValue().toString());
             plugin.saveConfig();
         }

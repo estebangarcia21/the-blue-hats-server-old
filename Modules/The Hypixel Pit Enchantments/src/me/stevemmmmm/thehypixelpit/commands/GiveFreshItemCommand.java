@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.commands;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import net.minecraft.server.v1_8_R3.*;
@@ -27,6 +23,10 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class GiveFreshItemCommand implements CommandExecutor {
     @Override

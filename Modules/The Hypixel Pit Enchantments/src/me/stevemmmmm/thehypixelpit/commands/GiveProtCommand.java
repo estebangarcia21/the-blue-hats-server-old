@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.commands;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,6 +8,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class GiveProtCommand implements CommandExecutor {
 

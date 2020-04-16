@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.animationapi.core.Sequence;
 import me.stevemmmmm.animationapi.core.SequenceAPI;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
@@ -20,6 +16,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class Frostbite extends CustomEnchant {
     private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);

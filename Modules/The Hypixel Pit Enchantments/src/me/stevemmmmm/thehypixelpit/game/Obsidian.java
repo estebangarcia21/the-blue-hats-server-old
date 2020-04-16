@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.game;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.commands.TogglePvPCommand;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
@@ -16,6 +12,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import java.util.HashMap;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class Obsidian implements Listener {
     private static Obsidian instance;

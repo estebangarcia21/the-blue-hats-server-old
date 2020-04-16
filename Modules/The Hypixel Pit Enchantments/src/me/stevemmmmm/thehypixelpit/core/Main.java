@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 /*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
 public class Main extends JavaPlugin implements ServerGame {
@@ -43,7 +43,7 @@ public class Main extends JavaPlugin implements ServerGame {
         INSTANCE = this;
         protocolManager = ProtocolLibrary.getProtocolManager();
 
-        ConfigAPI.addPlugin(this, new HashMap<String, String>() {{
+        ConfigAPI.registerConfigWriteLocations(this, new HashMap<String, String>() {{
             put("Gold", "stats.gold");
             put("XP", "stats.xp");
             put("Prestiges", "stats.prestige");

@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.*;
@@ -20,6 +16,10 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class LuckyShot extends CustomEnchant {
     private final LevelVariable<Integer> percentChance = new LevelVariable<>(2, 3, 10);

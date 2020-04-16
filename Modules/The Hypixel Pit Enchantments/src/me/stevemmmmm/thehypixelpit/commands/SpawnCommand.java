@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.commands;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.game.CombatManager;
 import me.stevemmmmm.thehypixelpit.game.RegionManager;
@@ -18,6 +14,10 @@ import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.UUID;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class SpawnCommand implements CommandExecutor {
     private final Vector spawn = new Vector(0.5, 86.5, 11.5);

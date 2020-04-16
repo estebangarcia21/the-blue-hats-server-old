@@ -1,9 +1,5 @@
 package me.stevemmmmm.instanceapi.core;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.servercore.core.ServerGame;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -17,6 +13,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class InstanceManager {
     private static InstanceManager instance;

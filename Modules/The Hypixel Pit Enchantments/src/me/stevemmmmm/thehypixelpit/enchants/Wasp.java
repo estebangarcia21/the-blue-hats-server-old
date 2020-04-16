@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
@@ -18,6 +14,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class Wasp extends CustomEnchant {
     private final LevelVariable<Integer> weaknessAmplifier = new LevelVariable<>(1, 2, 3);

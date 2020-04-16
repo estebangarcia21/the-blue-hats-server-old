@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
@@ -16,6 +12,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class Chipping extends CustomEnchant {
     private final LevelVariable<Integer> damageAmount = new LevelVariable<>(1, 2, 3);

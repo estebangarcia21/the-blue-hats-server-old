@@ -23,7 +23,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 /*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
 public class GrindingSystem implements Listener, ConfigWriter, ConfigReader {

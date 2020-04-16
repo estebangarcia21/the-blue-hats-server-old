@@ -1,13 +1,13 @@
 package me.stevemmmmm.thehypixelpit.managers;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class ServerMOTDInitializer implements Listener {
 

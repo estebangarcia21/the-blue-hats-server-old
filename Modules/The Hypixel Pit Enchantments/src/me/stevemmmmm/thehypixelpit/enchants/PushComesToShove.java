@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.BowManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
@@ -17,6 +13,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class PushComesToShove extends CustomEnchant {
     private final LevelVariable<Float> pctsForce = new LevelVariable<>(12f, 25f, 35f);

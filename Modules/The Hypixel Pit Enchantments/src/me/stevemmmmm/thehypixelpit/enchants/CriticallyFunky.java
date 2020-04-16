@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.*;
 import org.bukkit.ChatColor;
@@ -16,6 +12,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class CriticallyFunky extends CustomEnchant {
     private final LevelVariable<Float> damageReduction = new LevelVariable<>(0.35f, 0.35f, 0.6f);

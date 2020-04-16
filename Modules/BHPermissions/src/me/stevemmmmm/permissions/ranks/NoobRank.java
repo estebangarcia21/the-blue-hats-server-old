@@ -1,9 +1,5 @@
 package me.stevemmmmm.permissions.ranks;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.permissions.core.Rank;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -11,6 +7,10 @@ import org.bukkit.permissions.Permission;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class NoobRank extends Rank {
 

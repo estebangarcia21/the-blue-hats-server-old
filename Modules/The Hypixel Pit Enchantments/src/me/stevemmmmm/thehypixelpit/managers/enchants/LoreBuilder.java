@@ -1,13 +1,13 @@
 package me.stevemmmmm.thehypixelpit.managers.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class LoreBuilder {
     private final ArrayList<String> description = new ArrayList<>();

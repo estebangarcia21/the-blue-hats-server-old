@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.commands;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.game.duels.Duel;
 import me.stevemmmmm.thehypixelpit.game.duels.DuelingManager;
 import org.bukkit.Bukkit;
@@ -12,6 +8,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class DuelCommand implements CommandExecutor {
 

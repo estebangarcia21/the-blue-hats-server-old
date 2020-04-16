@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.animationapi.core.Sequence;
 import me.stevemmmmm.animationapi.core.SequenceAPI;
 import me.stevemmmmm.thehypixelpit.game.RegionManager;
@@ -21,6 +17,10 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class DevilChicks extends CustomEnchant {
     private final LevelVariable<Integer> amountOfChicks = new LevelVariable<>(1, 2, 3);

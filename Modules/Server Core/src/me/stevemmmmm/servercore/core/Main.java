@@ -1,12 +1,12 @@
 package me.stevemmmmm.servercore.core;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class Main extends JavaPlugin {
     public static Main instance;

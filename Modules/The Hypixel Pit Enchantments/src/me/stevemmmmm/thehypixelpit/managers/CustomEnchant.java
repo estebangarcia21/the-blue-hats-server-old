@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.managers;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.commands.TogglePvPCommand;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.game.RegionManager;
@@ -21,6 +17,10 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public abstract class CustomEnchant implements Listener {
     private final HashMap<UUID, Boolean> playersToCooldownState = new HashMap<>();

@@ -20,7 +20,7 @@ import org.bukkit.plugin.RegisteredListener;
 import java.util.List;
 
 /*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
 public class LevelChatFormatting implements Listener {

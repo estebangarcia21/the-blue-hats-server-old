@@ -1,13 +1,13 @@
 package me.stevemmmmm.permissions.ranks;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.permissions.core.Rank;
 import org.bukkit.ChatColor;
 
 import java.util.HashMap;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class OwnerRank extends Rank {
 

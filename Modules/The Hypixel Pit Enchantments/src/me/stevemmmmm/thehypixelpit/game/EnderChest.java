@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.game;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
@@ -21,6 +17,10 @@ import org.bukkit.inventory.Inventory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class EnderChest implements Listener {
     private static EnderChest instance;

@@ -1,11 +1,11 @@
 package me.stevemmmmm.thehypixelpit.managers.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.entity.Player;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public interface EnchantCanceler {
     boolean isCanceled(Player player);

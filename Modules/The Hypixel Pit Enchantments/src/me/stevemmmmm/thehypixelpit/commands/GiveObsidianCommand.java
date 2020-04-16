@@ -1,15 +1,15 @@
 package me.stevemmmmm.thehypixelpit.commands;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class GiveObsidianCommand implements CommandExecutor {
 

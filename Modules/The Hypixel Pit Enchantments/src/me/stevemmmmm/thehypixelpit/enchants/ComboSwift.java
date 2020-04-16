@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
@@ -16,6 +12,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class ComboSwift extends CustomEnchant {
     private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(4, 3, 3);

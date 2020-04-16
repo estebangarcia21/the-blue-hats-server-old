@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.managers.other;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -12,6 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class TabListSorter implements Listener {
     private static TabListSorter instance;

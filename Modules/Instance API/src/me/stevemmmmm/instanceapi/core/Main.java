@@ -1,10 +1,10 @@
 package me.stevemmmmm.instanceapi.core;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import org.bukkit.plugin.java.JavaPlugin;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class Main extends JavaPlugin {
 

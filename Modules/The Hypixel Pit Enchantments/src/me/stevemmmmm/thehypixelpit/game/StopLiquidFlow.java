@@ -1,13 +1,13 @@
 package me.stevemmmmm.thehypixelpit.game;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class StopLiquidFlow implements Listener {
 

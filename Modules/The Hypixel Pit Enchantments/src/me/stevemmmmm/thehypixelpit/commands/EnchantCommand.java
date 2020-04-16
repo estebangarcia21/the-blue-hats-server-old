@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Map;
 
 /*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
 public class EnchantCommand implements CommandExecutor {

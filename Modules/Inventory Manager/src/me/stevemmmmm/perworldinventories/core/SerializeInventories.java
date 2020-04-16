@@ -1,9 +1,5 @@
 package me.stevemmmmm.perworldinventories.core;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.configapi.core.ConfigAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -12,6 +8,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class SerializeInventories implements Listener {
     private static SerializeInventories instance;

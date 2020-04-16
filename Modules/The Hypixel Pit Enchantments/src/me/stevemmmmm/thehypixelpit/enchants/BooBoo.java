@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
@@ -19,6 +15,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class BooBoo extends CustomEnchant {
     private final HashMap<UUID, Integer> tasks = new HashMap<>();

@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.game;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -26,6 +22,10 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class MysticWell implements Listener {
     private final HashMap<UUID, Inventory> playerGui = new HashMap<>();

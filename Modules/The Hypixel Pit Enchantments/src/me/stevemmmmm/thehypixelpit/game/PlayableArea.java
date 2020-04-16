@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.game;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.core.Main;
 import me.stevemmmmm.thehypixelpit.world.AutoRespawn;
 import org.bukkit.Bukkit;
@@ -17,6 +13,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class PlayableArea implements Listener {
     private final HashMap<UUID, Integer> tasks = new HashMap<>();

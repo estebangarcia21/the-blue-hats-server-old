@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 
 /*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
+ * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
 public class Megalongbow extends CustomEnchant {

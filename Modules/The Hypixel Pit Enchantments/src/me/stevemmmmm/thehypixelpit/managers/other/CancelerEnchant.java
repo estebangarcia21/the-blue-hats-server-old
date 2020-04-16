@@ -4,6 +4,10 @@ import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
+
 public abstract class CancelerEnchant<T extends Event> extends CustomEnchant {
     private CancelerEnchant<T> caller;
     private boolean enchantsWereCancelled = false;

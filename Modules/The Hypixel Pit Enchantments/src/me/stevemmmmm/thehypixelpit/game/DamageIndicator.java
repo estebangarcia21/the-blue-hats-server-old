@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.game;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.permissions.core.PermissionsManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
@@ -20,6 +16,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.security.Permission;
 import java.text.DecimalFormat;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class DamageIndicator implements Listener {
     private static DamageIndicator instance;

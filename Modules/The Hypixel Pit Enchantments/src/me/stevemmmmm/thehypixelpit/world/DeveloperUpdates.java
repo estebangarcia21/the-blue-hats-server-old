@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.world;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.ChatColor;
@@ -13,6 +9,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 @SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {

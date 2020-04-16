@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.managers.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -15,6 +11,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashMap;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class BowManager implements Listener {
     private static BowManager instance;

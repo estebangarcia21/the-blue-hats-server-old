@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.commands;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -14,6 +10,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class TogglePvPCommand implements CommandExecutor, Listener {
     public static boolean pvpIsToggledOff;

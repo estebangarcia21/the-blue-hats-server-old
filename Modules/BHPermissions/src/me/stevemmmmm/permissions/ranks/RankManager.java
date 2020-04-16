@@ -1,14 +1,14 @@
 package me.stevemmmmm.permissions.ranks;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.permissions.core.PermissionsManager;
 import me.stevemmmmm.permissions.core.Rank;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class RankManager {
     private static RankManager instance;

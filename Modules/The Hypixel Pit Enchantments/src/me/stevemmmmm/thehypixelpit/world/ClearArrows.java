@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.world;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Arrow;
@@ -18,6 +14,10 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class ClearArrows implements Listener {
     private final HashMap<UUID, ArrayList<Arrow>> playerToArrows = new HashMap<>();

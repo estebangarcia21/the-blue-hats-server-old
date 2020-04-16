@@ -1,13 +1,13 @@
 package me.stevemmmmm.animationapi.core;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class Sequence {
     private final HashMap<Long, Frame> animationSequence = new HashMap<>();

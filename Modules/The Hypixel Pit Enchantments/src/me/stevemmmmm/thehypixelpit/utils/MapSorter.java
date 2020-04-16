@@ -1,10 +1,10 @@
 package me.stevemmmmm.thehypixelpit.utils;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import java.util.*;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class MapSorter {
     public static HashMap<UUID, Integer> sortByValue(HashMap<UUID, Integer> hm)

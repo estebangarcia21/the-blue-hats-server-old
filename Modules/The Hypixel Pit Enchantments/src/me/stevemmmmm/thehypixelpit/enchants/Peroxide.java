@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LevelVariable;
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
@@ -18,9 +14,13 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
+
 public class Peroxide extends CustomEnchant {
     private final LevelVariable<Integer> regenTime = new LevelVariable<>(5, 8, 8);
-    private final LevelVariable<Integer> amplifier = new LevelVariable<>(0, 0, 1);
+    private final LevelVariable<Integer> effectAmplifier = new LevelVariable<>(0, 0, 1);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -39,7 +39,7 @@ public class Peroxide extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player hitPlayer = (Player) args[0];
 
-        hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, regenTime.at(level) * 20, amplifier.at(level)), true);
+        hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, regenTime.at(level) * 20, effectAmplifier.at(level)), true);
     }
 
     @Override

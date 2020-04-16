@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.world;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -13,6 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.Vector;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class AutoRespawn implements Listener {
 

@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.CalculationMode;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
@@ -16,6 +12,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class DiamondStomp extends CustomEnchant {
     private final LevelVariable<Double> percentDamageIncrease = new LevelVariable<>(.07, .12, .25);

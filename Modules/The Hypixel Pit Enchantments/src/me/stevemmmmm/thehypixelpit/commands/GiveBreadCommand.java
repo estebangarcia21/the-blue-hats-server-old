@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.commands;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.enchants.LoreBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,6 +9,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class GiveBreadCommand implements CommandExecutor {
 

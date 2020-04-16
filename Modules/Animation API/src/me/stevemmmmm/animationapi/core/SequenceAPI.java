@@ -1,9 +1,5 @@
 package me.stevemmmmm.animationapi.core;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import javafx.util.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +9,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class SequenceAPI extends JavaPlugin {
     public static SequenceAPI instance;

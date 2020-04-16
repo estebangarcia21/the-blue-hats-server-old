@@ -1,9 +1,5 @@
 package me.stevemmmmm.thehypixelpit.enchants;
 
-/*
- * Copyright (c) 2020. Created by the Pit Player: Stevemmmmm.
- */
-
 import me.stevemmmmm.thehypixelpit.managers.CustomEnchant;
 import me.stevemmmmm.thehypixelpit.managers.enchants.EnchantCanceler;
 import me.stevemmmmm.thehypixelpit.managers.enchants.DamageManager;
@@ -19,6 +15,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.ArrayList;
+
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
 
 public class BulletTime extends CustomEnchant implements EnchantCanceler {
     private final LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
