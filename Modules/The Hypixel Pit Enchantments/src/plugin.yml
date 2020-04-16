@@ -1,5 +1,5 @@
 name: TheBlueHatsPit
-main: me.stevemmmmm.thehypixelpit.core.Main
+main: me.stevemmmmm.thepitremake.core.Main
 version: v1.0
 depend: [ServerCore, ProtocolLib]
 commands:

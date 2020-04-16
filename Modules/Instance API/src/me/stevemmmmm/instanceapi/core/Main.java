@@ -10,7 +10,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        InstanceManager.getInstance().generateGameInstance(me.stevemmmmm.thehypixelpit.core.Main.INSTANCE);
+        InstanceManager.getInstance().generateGameInstance(me.stevemmmmm.thepitremake.core.Main.INSTANCE);
     }
 
     @Override
