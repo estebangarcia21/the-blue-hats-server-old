@@ -151,6 +151,8 @@ public class Main extends JavaPlugin implements ServerGame {
         CustomEnchantManager.getInstance().registerEnchant(new Bruiser());
         CustomEnchantManager.getInstance().registerEnchant(new Frostbite());
         CustomEnchantManager.getInstance().registerEnchant(new Executioner());
+        CustomEnchantManager.getInstance().registerEnchant(new BeatTheSpammers());
+        CustomEnchantManager.getInstance().registerEnchant(new ComboHeal());
 
         //Bows
         CustomEnchantManager.getInstance().registerEnchant(new Robinhood());
@@ -164,6 +166,7 @@ public class Main extends JavaPlugin implements ServerGame {
         CustomEnchantManager.getInstance().registerEnchant(new Parasite());
         CustomEnchantManager.getInstance().registerEnchant(new PushComesToShove());
         CustomEnchantManager.getInstance().registerEnchant(new Chipping());
+        CustomEnchantManager.getInstance().registerEnchant(new Fletching());
 
         //Pants
         CustomEnchantManager.getInstance().registerEnchant(new Mirror());
@@ -174,6 +177,8 @@ public class Main extends JavaPlugin implements ServerGame {
         CustomEnchantManager.getInstance().registerEnchant(new Peroxide());
         CustomEnchantManager.getInstance().registerEnchant(new BooBoo());
         CustomEnchantManager.getInstance().registerEnchant(new DoubleJump());
+        CustomEnchantManager.getInstance().registerEnchant(new FractionalReserve());
+        CustomEnchantManager.getInstance().registerEnchant(new RingArmor());
     }
 
     @Override
