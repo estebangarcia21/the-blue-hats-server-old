@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 @SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {
-    private final String update = "Added frac! /pitenchant frac!";
+    private final String update = "Added ring armor, beat the spammers, combo heal, and fletching!";
     private final String testMessage = "Working on Canceling Player!";
     private final boolean isTesting = false;
 

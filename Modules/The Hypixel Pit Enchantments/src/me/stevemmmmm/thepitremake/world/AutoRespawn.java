@@ -3,6 +3,7 @@ package me.stevemmmmm.thepitremake.world;
 import me.stevemmmmm.thepitremake.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,7 +33,9 @@ public class AutoRespawn implements Listener {
             }
 
             player.setFoodLevel(19);
+
             player.setHealth(player.getMaxHealth());
+            ((CraftPlayer) player).getHandle().setAbsorptionHearts(0);
 
             player.teleport(new Location(player.getWorld(),0.5, 86.5, 11.5, -180, 0));
             player.setVelocity(new Vector(0, 0, 0));
