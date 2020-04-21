@@ -17,6 +17,17 @@ public class Sequence {
         animationSequence.put(time, frame);
     }
 
+    public void addKeyFrameByDelay(Frame frame, long time, int delay, int amount) {
+        addKeyFrame(time, frame);
+
+        long delayTime = time;
+
+        for (int i = 0; i < amount; i++) {
+            addKeyFrame(delayTime + delay, frame);
+            delayTime += delay;
+        }
+    }
+
     public HashMap<Long, Frame> getAnimationSequence() {
         return animationSequence;
     }

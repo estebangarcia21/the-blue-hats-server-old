@@ -34,7 +34,7 @@ public class DamageManager implements Listener {
     private final HashMap<EntityDamageByEntityEvent, Double> absoluteReductionBuffer = new HashMap<>();
 
     private final ArrayList<EntityDamageByEntityEvent> canceledEvents = new ArrayList<>();
-    private final List<EntityDamageByEntityEvent> removeCriticalDamage = new ArrayList<>();
+    private final ArrayList<EntityDamageByEntityEvent> removeCriticalDamage = new ArrayList<>();
 
     private DamageManager() { }
 
@@ -205,27 +205,21 @@ public class DamageManager implements Listener {
         CombatManager.getInstance().combatTag(target);
 
         if (!CustomEnchant.itemHasEnchant(target.getInventory().getLeggings(), mirror)) {
-            if (RegionManager.getInstance().playerIsInRegion(target, RegionManager.RegionType.SPAWN)) return;
-
             if (target.getHealth() - damage < 0) {
-                target.setMaxHealth(target.getMaxHealth());
-                killPlayer(target);
+                safeSetPlayerHealth(target, 0);
             } else {
                 target.damage(0);
-                target.setHealth(target.getHealth() - damage);
+                safeSetPlayerHealth(target, target.getHealth() - damage);
             }
         } else if (CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror) != 1) {
-            if (RegionManager.getInstance().playerIsInRegion(reflectTo, RegionManager.RegionType.SPAWN)) return;
-
             try {
                 if (reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
-                    reflectTo.setMaxHealth(target.getMaxHealth());
-                    killPlayer(reflectTo);
+                    safeSetPlayerHealth(target, 0);
                 } else {
                     reflectTo.damage(0);
 
                     CombatManager.getInstance().combatTag(target);
-                    reflectTo.setHealth(Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
+                    safeSetPlayerHealth(reflectTo, Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
                 }
             } catch (NullPointerException ignored) {
 
@@ -233,12 +227,15 @@ public class DamageManager implements Listener {
         }
     }
 
-    public boolean isCriticalHit(Player player) {
-        return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
+    public void safeSetPlayerHealth(Player player, double health) {
+        if (!RegionManager.getInstance().playerIsInRegion(player, RegionManager.RegionType.SPAWN)) {
+            if (health >= 0 && health <= player.getMaxHealth()) {
+                player.setHealth(health);
+            }
+        }
     }
 
-    public void killPlayer(Player target) {
-        PlayerDeathEvent manualEvent = new PlayerDeathEvent(target, new ArrayList<>(), 0,  "");
-        Main.INSTANCE.getServer().getPluginManager().callEvent(manualEvent);
+    public boolean isCriticalHit(Player player) {
+        return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
     }
 }

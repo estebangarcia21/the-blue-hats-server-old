@@ -436,7 +436,7 @@ public class GrindingSystem implements Listener, ConfigWriter, ConfigReader {
         playerPrestiges.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Prestiges", Integer.class, 0));
         playerXP.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "XP", Integer.class, 0));
         playerGold.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Gold", Double.class, 0D));
-        playerLevels.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Levels", Integer.class, 0));
+        playerLevels.put(player.getUniqueId(), ConfigAPI.read(Main.INSTANCE, player, "Levels", Integer.class, 1));
     }
 
     @Override

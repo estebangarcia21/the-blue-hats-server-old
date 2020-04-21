@@ -18,6 +18,7 @@ public class SequenceAPI extends JavaPlugin {
     public static SequenceAPI instance;
 
     private static final HashMap<Sequence, Integer> animationTaskIndexs = new HashMap<>();
+    private static final HashMap<Sequence, Integer> framePosition = new HashMap<>();
     private static final HashMap<Sequence, Long> sequencers = new HashMap<>();
     private static final HashMap<Sequence, Long> endSequencerTicks = new HashMap<>();
 
@@ -40,6 +41,7 @@ public class SequenceAPI extends JavaPlugin {
             for (Map.Entry<Long, Frame> keyframe : sequence.getAnimationSequence().entrySet()) {
                 if (keyframe.getKey().equals(sequencers.get(sequence))) {
                     keyframe.getValue().play();
+                    framePosition.put(sequence, framePosition.getOrDefault(sequence, 0) + 1);
                 }
             }
 
@@ -47,11 +49,16 @@ public class SequenceAPI extends JavaPlugin {
                 if (sequence.getAnimationActions() != null) sequence.getAnimationActions().onSequenceEnd();
 
                 Bukkit.getServer().getScheduler().cancelTask(animationTaskIndexs.get(sequence));
+                framePosition.remove(sequence);
                 animationTaskIndexs.remove(sequence);
                 endSequencerTicks.remove(sequence);
             }
 
             sequencers.put(sequence, sequencers.get(sequence) + 1);
         }, 0L, 1L));
+    }
+
+    public static int getCurrentFrameFromSequence(Sequence sequence) {
+        return framePosition.get(sequence);
     }
 }

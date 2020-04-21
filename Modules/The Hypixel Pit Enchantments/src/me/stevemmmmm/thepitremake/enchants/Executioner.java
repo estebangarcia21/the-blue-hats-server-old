@@ -38,7 +38,7 @@ public class Executioner extends CustomEnchant {
 
             //TODO Add particle
 
-            hit.setHealth(0);
+            DamageManager.getInstance().safeSetPlayerHealth(hit, 0);
         }
     }
 

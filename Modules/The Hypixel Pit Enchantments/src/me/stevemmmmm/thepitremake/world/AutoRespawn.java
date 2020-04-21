@@ -26,6 +26,7 @@ public class AutoRespawn implements Listener {
 
     public static void triggerRespawnSequence(Player player) {
         player.setHealth(player.getMaxHealth());
+        player.teleport(new Location(player.getWorld(),0.5, 86.5, 11.5, -180, 0));
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> {
             for (PotionEffect effect : player.getActivePotionEffects()) {
@@ -37,7 +38,6 @@ public class AutoRespawn implements Listener {
             player.setHealth(player.getMaxHealth());
             ((CraftPlayer) player).getHandle().setAbsorptionHearts(0);
 
-            player.teleport(new Location(player.getWorld(),0.5, 86.5, 11.5, -180, 0));
             player.setVelocity(new Vector(0, 0, 0));
             player.setFireTicks(0);
         }, 1);

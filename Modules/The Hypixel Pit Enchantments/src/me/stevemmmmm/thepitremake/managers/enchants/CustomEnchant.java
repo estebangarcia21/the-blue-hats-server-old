@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Predicate;
 
 /*
  * Copyright (c) 2020. Created by Stevemmmmm.
@@ -47,6 +48,41 @@ public abstract class CustomEnchant implements Listener {
         if (TogglePvPCommand.pvpIsToggledOff) return false;
 
         if (itemHasEnchant(source, this)) {
+            for (Object object : args) {
+                if (object instanceof Player) {
+                    if (DamageManager.getInstance().playerIsInCanceledEvent((Player) object)) {
+                        return false;
+                    }
+
+                    if (RegionManager.getInstance().playerIsInRegion((Player) object, RegionManager.RegionType.SPAWN)) {
+                        return false;
+                    }
+                }
+
+                if (object instanceof Arrow) {
+                    if (DamageManager.getInstance().arrowIsInCanceledEvent((Arrow) object)) {
+                        return false;
+                    }
+
+                    if (RegionManager.getInstance().locationIsInRegion(((Arrow) object).getLocation(), RegionManager.RegionType.SPAWN)) {
+                        return false;
+                    }
+                }
+            }
+
+            applyEnchant(getEnchantLevel(source, this), args);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean attemptEnchantExecution(ItemStack source, boolean condition, Object... args) {
+        if (TogglePvPCommand.pvpIsToggledOff) return false;
+
+        if (itemHasEnchant(source, this)) {
+            if (!condition) return false;
+
             for (Object object : args) {
                 if (object instanceof Player) {
                     if (DamageManager.getInstance().playerIsInCanceledEvent((Player) object)) {
