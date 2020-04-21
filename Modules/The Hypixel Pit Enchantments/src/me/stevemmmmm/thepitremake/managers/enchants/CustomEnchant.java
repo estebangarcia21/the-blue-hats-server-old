@@ -38,7 +38,9 @@ public abstract class CustomEnchant implements Listener {
 
     public abstract ArrayList<String> getDescription(int level);
 
-    public abstract boolean isTierTwoEnchant();
+    public abstract boolean isRemovedFromPassiveWorld();
+
+    public abstract EnchantGroup getEnchantGroup();
 
     public abstract boolean isRareEnchant();
 

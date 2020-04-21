@@ -1,10 +1,6 @@
 package me.stevemmmmm.thepitremake.enchants;
 
-import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
-import me.stevemmmmm.thepitremake.managers.enchants.EnchantCanceler;
-import me.stevemmmmm.thepitremake.managers.enchants.DamageManager;
-import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -88,8 +84,13 @@ public class BulletTime extends CustomEnchant implements EnchantCanceler {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.B;
     }
 
     @Override

@@ -1,10 +1,7 @@
 package me.stevemmmmm.thepitremake.enchants;
 
 import me.stevemmmmm.thepitremake.game.RegionManager;
-import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
-import me.stevemmmmm.thepitremake.managers.enchants.BowManager;
-import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.*;
 import me.stevemmmmm.thepitremake.utils.TelebowData;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
@@ -146,8 +143,13 @@ public class Telebow extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.B;
     }
 
     @Override

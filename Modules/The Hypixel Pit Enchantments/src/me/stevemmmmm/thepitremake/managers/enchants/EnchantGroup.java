@@ -5,5 +5,5 @@ package me.stevemmmmm.thepitremake.managers.enchants;
  */
 
 public enum EnchantGroup {
-    A, B, C
+    A, B, C, AUCTION, CUSTOM
 }

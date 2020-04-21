@@ -1,6 +1,7 @@
 package me.stevemmmmm.thepitremake.enchants;
 
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
 import org.bukkit.ChatColor;
@@ -44,8 +45,13 @@ public class Mirror extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.B;
     }
 
     @Override

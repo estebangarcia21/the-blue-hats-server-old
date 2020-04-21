@@ -4,10 +4,7 @@ package me.stevemmmmm.thepitremake.enchants;
  * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
-import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
-import me.stevemmmmm.thepitremake.managers.enchants.DamageManager;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
-import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
+import me.stevemmmmm.thepitremake.managers.enchants.*;
 import me.stevemmmmm.thepitremake.managers.other.GrindingSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -65,8 +62,13 @@ public class FractionalReserve extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.AUCTION;
     }
 
     @Override

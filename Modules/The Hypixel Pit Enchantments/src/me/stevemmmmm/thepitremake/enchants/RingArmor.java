@@ -4,10 +4,7 @@ package me.stevemmmmm.thepitremake.enchants;
  * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
-import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
-import me.stevemmmmm.thepitremake.managers.enchants.DamageManager;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
-import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
+import me.stevemmmmm.thepitremake.managers.enchants.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -54,8 +51,13 @@ public class RingArmor extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.A;
     }
 
     @Override

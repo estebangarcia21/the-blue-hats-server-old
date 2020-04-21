@@ -50,8 +50,13 @@ public class BeatTheSpammers extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.A;
     }
 
     @Override

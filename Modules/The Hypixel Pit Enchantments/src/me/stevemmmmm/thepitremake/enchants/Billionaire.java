@@ -1,10 +1,6 @@
 package me.stevemmmmm.thepitremake.enchants;
 
-import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
-import me.stevemmmmm.thepitremake.managers.enchants.CalculationMode;
-import me.stevemmmmm.thepitremake.managers.enchants.DamageManager;
-import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.*;
 import me.stevemmmmm.thepitremake.managers.other.GrindingSystem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -64,8 +60,13 @@ public class Billionaire extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.B;
     }
 
     @Override

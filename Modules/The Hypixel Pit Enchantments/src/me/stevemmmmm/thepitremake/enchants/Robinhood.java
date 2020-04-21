@@ -184,8 +184,13 @@ public class Robinhood extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
-        return false;
+    public boolean isRemovedFromPassiveWorld() {
+        return true;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.B;
     }
 
     @Override

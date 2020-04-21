@@ -3,6 +3,7 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.core.Main;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.*;
+import me.stevemmmmm.thepitremake.utils.OutdatedEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,6 +22,7 @@ import java.util.UUID;
  * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
+@OutdatedEnchant
 public class LuckyShot extends CustomEnchant {
     private final LevelVariable<Integer> percentChance = new LevelVariable<>(2, 3, 10);
 
@@ -105,8 +107,13 @@ public class LuckyShot extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.B;
     }
 
     @Override

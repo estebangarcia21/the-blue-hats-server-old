@@ -1,10 +1,7 @@
 package me.stevemmmmm.thepitremake.enchants;
 
 import me.stevemmmmm.permissions.core.PermissionsManager;
-import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
-import me.stevemmmmm.thepitremake.managers.enchants.DamageManager;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
-import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
+import me.stevemmmmm.thepitremake.managers.enchants.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -62,8 +59,13 @@ public class Executioner extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.B;
     }
 
     @Override

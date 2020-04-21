@@ -5,6 +5,7 @@ package me.stevemmmmm.thepitremake.enchants;
  */
 
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
 import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
@@ -12,7 +13,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -64,8 +64,13 @@ public class ComboHeal extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.B;
     }
 
     @Override

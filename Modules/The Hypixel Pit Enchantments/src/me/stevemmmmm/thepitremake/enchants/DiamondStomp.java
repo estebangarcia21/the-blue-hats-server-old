@@ -1,10 +1,6 @@
 package me.stevemmmmm.thepitremake.enchants;
 
-import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
-import me.stevemmmmm.thepitremake.managers.enchants.CalculationMode;
-import me.stevemmmmm.thepitremake.managers.enchants.DamageManager;
-import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -36,6 +32,33 @@ public class DiamondStomp extends CustomEnchant {
         }
     }
 
+    private boolean playerHasDiamondPiece(Player player) {
+        if (player.getInventory().getBoots() != null) {
+            if (player.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
+                return true;
+            }
+        }
+
+        if (player.getInventory().getLeggings() != null) {
+            if (player.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS) {
+                return true;
+            }
+        }
+
+        if (player.getInventory().getChestplate() != null) {
+            if (player.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) {
+                return true;
+            }
+        }
+
+        if (player.getInventory().getHelmet() != null) {
+            return player.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET;
+        }
+
+        return false;
+    }
+
+
     @Override
     public String getName() {
         return "Diamond Stomp";
@@ -56,38 +79,17 @@ public class DiamondStomp extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
+    public boolean isRemovedFromPassiveWorld() {
         return false;
     }
 
     @Override
-    public boolean isRareEnchant() {
-        return false;
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.A;
     }
 
-    private boolean playerHasDiamondPiece(Player player) {
-        if (player.getInventory().getBoots() != null) {
-            if (player.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
-                 return true;
-            }
-        }
-
-        if (player.getInventory().getLeggings() != null) {
-            if (player.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS) {
-                return true;
-            }
-        }
-
-        if (player.getInventory().getChestplate() != null) {
-            if (player.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) {
-                return true;
-            }
-        }
-
-        if (player.getInventory().getHelmet() != null) {
-            return player.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET;
-        }
-
+    @Override
+    public boolean isRareEnchant() {
         return false;
     }
 

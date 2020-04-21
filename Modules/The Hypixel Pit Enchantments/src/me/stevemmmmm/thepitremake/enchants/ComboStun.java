@@ -1,6 +1,7 @@
 package me.stevemmmmm.thepitremake.enchants;
 
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -88,8 +89,13 @@ public class ComboStun extends CustomEnchant {
     }
 
     @Override
-    public boolean isTierTwoEnchant() {
-        return false;
+    public boolean isRemovedFromPassiveWorld() {
+        return true;
+    }
+
+    @Override
+    public EnchantGroup getEnchantGroup() {
+        return EnchantGroup.B;
     }
 
     @Override
