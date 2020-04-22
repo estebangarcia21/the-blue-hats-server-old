@@ -17,7 +17,7 @@ public class Sequence {
         animationSequence.put(time, frame);
     }
 
-    public void addKeyFrameByDelay(Frame frame, long time, int delay, int amount) {
+    public void repeatAddKeyFrame(Frame frame, long time, int delay, int amount) {
         addKeyFrame(time, frame);
 
         long delayTime = time;

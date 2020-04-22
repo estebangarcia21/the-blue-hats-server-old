@@ -1,6 +1,8 @@
 package me.stevemmmmm.thepitremake.game;
 
 import me.stevemmmmm.animationapi.core.Sequence;
+import me.stevemmmmm.animationapi.core.SequenceAPI;
+import me.stevemmmmm.animationapi.core.SequenceActions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,6 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 /*
  * Copyright (c) 2020. Created by Stevemmmmm.
@@ -27,7 +30,8 @@ import java.util.UUID;
 public class MysticWell implements Listener {
     private final HashMap<UUID, Inventory> playerGuis = new HashMap<>();
 
-    private final HashMap<UUID, MysticWellState> mysticWellStates = new HashMap<>();
+    private final HashMap<UUID, MysticWellAnimation> mysticWellStates = new HashMap<>();
+    private final HashMap<UUID, Sequence> mysticWellSequences = new HashMap<>();
 
     private final ItemStack enchantmentTableInfoIdle = new ItemStack(Material.ENCHANTMENT_TABLE);
     private final ItemStack enchantmentTableInfoT1 = new ItemStack(Material.ENCHANTMENT_TABLE);
@@ -129,8 +133,10 @@ public class MysticWell implements Listener {
             event.setCancelled(true);
 
             //Enchantment confirm slot
-            if (event.getInventory().getItem(event.getSlot()).getType() == Material.ENCHANTMENT_TABLE) {
-                if (event.getCurrentItem().getType() != Material.STAINED_CLAY) enchantItem((Player) event.getWhoClicked(), event.getInventory().getItem(20));
+            if (event.getInventory().getItem(event.getSlot()) != null) {
+                if (event.getInventory().getItem(event.getSlot()).getType() == Material.ENCHANTMENT_TABLE) {
+                    if (event.getCurrentItem().getType() != Material.STAINED_CLAY) enchantItem((Player) event.getWhoClicked(), event.getInventory().getItem(20));
+                }
             }
 
             //Target mystic item slot
@@ -163,7 +169,7 @@ public class MysticWell implements Listener {
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
         if (event.getInventory().getName().equals(ChatColor.GRAY + "Mystic Well")) {
-            if (mysticWellStates.get(event.getPlayer().getUniqueId()) == MysticWellState.ENCHANTING) {
+            if (mysticWellStates.get(event.getPlayer().getUniqueId()) == MysticWellAnimation.ENCHANTING) {
 //                sequenceRepititions.get(event.getPlayer().getUniqueId()).set(6);
             }
         }
@@ -172,6 +178,11 @@ public class MysticWell implements Listener {
     private void enchantItem(Player player, ItemStack item) {
         if (item == null) return;
 
+        mysticWellStates.put(player.getUniqueId(), MysticWellAnimation.ENCHANTING);
+
+        Inventory gui = playerGuis.get(player.getUniqueId());
+
+        ItemStack[] animationItems = new ItemStack[] { new ItemStack(Material.INK_SACK, 1, (byte) 0), new ItemStack(Material.INK_SACK, 1, (byte) 1), new ItemStack(Material.INK_SACK, 1, (byte) 2), new ItemStack(Material.INK_SACK, 1, (byte) 3), new ItemStack(Material.INK_SACK, 1, (byte) 4), new ItemStack(Material.INK_SACK, 1, (byte) 5), new ItemStack(Material.INK_SACK, 1, (byte) 6), new ItemStack(Material.INK_SACK, 1, (byte) 7), new ItemStack(Material.INK_SACK, 1, (byte) 8), new ItemStack(Material.INK_SACK, 1, (byte) 9), new ItemStack(Material.INK_SACK, 1, (byte) 10), new ItemStack(Material.INK_SACK, 1, (byte) 11), new ItemStack(Material.INK_SACK, 1, (byte) 12), new ItemStack(Material.INK_SACK, 1, (byte) 13), new ItemStack(Material.INK_SACK, 1, (byte) 14) };
         final int[] position = { 0 };
 
         Sequence enchantmentSequence = new Sequence() {{
@@ -180,11 +191,41 @@ public class MysticWell implements Listener {
             addKeyFrame(4, () -> setGlassPanesToColor(player, "Pink"));
             addKeyFrame(6, () -> setGlassPanesToColor(player, "Gray"));
 
-            addKeyFrameByDelay(() -> {
-                addKeyFrame(8, () -> setPaneToPink(player, position[0]));
+            repeatAddKeyFrame(() -> {
+                setPaneToPink(player, position[0]);
+                gui.setItem(20, animationItems[ThreadLocalRandom.current().nextInt(animationItems.length)]);
+
                 position[0]++;
+
+                if (position[0] + 1 > glassPanes.length) {
+                    position[0] = 0;
+                }
             }, 8, 2, 50);
+
+            setAnimationActions(new SequenceActions() {
+                @Override
+                public void onSequenceStart() {
+
+                }
+
+                @Override
+                public void onSequenceEnd() {
+                    mysticWellSequences.remove(player.getUniqueId());
+                }
+            });
         }};
+
+        mysticWellSequences.put(player.getUniqueId(), enchantmentSequence);
+
+        SequenceAPI.startSequence(enchantmentSequence);
+    }
+
+    private void setNextPane() {
+
+    }
+
+    private void setMysticWellAnimation(MysticWellAnimation animation) {
+
     }
 
     private void setPaneToPink(Player player, int index) {
@@ -254,7 +295,7 @@ public class MysticWell implements Listener {
         return null;
     }
 
-    enum MysticWellState {
+    enum MysticWellAnimation {
         IDLE, ENCHANTING
     }
 }
