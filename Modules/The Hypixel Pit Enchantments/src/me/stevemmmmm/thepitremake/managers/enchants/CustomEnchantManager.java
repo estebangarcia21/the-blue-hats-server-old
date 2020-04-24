@@ -1,6 +1,7 @@
 package me.stevemmmmm.thepitremake.managers.enchants;
 
 import me.stevemmmmm.thepitremake.core.Main;
+import me.stevemmmmm.thepitremake.game.MysticWell;
 import me.stevemmmmm.thepitremake.utils.SortCustomEnchantByName;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -9,7 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /*
  * Copyright (c) 2020. Created by Stevemmmmm.
@@ -49,19 +52,49 @@ public class CustomEnchantManager {
         return true;
     }
 
-    public void applyLore(ItemStack item, CustomEnchant enchant, int level) {
+    public void addEnchant(ItemStack item, CustomEnchant enchant, int level) {
         ItemMeta meta = item.getItemMeta();
         String previousDisplayName = meta.getDisplayName();
 
+        String tier = convertToRomanNumeral(MysticWell.getItemTier(item) + 1);
+
+        ChatColor tierColor = null;
+        switch (MysticWell.getItemTier(item) + 1) {
+            case 1:
+                tierColor = ChatColor.GREEN;
+                break;
+            case 2:
+                tierColor = ChatColor.YELLOW;
+                break;
+            case 3:
+                tierColor = ChatColor.RED;
+        }
+
+        String itemIndentifier = "";
+
+        if (getTokensOnItem(item) == 8) {
+            itemIndentifier = "Legendary ";
+        }
+
+        if (getItemLives(item) == 100) {
+            itemIndentifier = "Artifact ";
+        }
+
+        //TODO Extraordinary
+
         switch (item.getType()) {
             case GOLD_SWORD:
-                meta.setDisplayName(ChatColor.RED + "Tier III Sword");
+                meta.setDisplayName(tierColor + itemIndentifier + "Tier " + tier + " Sword");
                 break;
             case BOW:
-                meta.setDisplayName(ChatColor.RED + "Tier III Bow");
+                meta.setDisplayName(tierColor + itemIndentifier + "Tier " + tier + " Bow");
                 break;
             case LEATHER_LEGGINGS:
-                if (!ChatColor.stripColor(meta.getDisplayName()).equals("Tier III Pants")) meta.setDisplayName("Tier III Pants");
+                if (MysticWell.getItemTier(item) == 0) {
+                    meta.setDisplayName(getChatColorFromPantsColor(ChatColor.stripColor(meta.getDisplayName().split(" ")[1])) + itemIndentifier + "Tier " + tier + " Pants");
+                } else {
+                    meta.setDisplayName(meta.getDisplayName().substring(0, 2) + itemIndentifier + "Tier " + tier + " Pants");
+                }
         }
 
         String rare = ChatColor.LIGHT_PURPLE + "RARE! " + ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
@@ -128,11 +161,66 @@ public class CustomEnchantManager {
         if (item.getType() == Material.LEATHER_LEGGINGS) {
             lore.add(" ");
             lore.add(meta.getDisplayName().substring(0, 2) + "As strong as iron");
-
         }
+
         meta.setLore(lore);
 
         item.setItemMeta(meta);
+    }
+
+    public int getItemLives(ItemStack item) {
+        if (item.getItemMeta().getLore() == null) return 0;
+
+        ArrayList<String> keyWords = new ArrayList<>(Arrays.asList(ChatColor.stripColor(item.getItemMeta().getDisplayName()).split(" ")));
+
+        if (keyWords.contains("Fresh") || keyWords.contains("Mystic")) return 0;
+
+        List<String> lore = item.getItemMeta().getLore();
+        String livesLine = lore.get(0);
+
+        return Integer.parseInt(ChatColor.stripColor(livesLine.split(" ")[1]).split("/")[0]);
+    }
+
+    public int getMaximumItemLives(ItemStack item) {
+        if (item.getItemMeta().getLore() == null) return 0;
+
+        ArrayList<String> keyWords = new ArrayList<>(Arrays.asList(ChatColor.stripColor(item.getItemMeta().getDisplayName()).split(" ")));
+
+        if (keyWords.contains("Fresh") || keyWords.contains("Mystic")) return 0;
+
+        List<String> lore = item.getItemMeta().getLore();
+        String livesLine = lore.get(0);
+
+        return Integer.parseInt(ChatColor.stripColor(livesLine.split(" ")[1]).split("/")[1]);
+    }
+
+    public void setItemLives(ItemStack item, int value) {
+        if (item.getItemMeta().getLore() == null) return;
+
+        List<String> lore = item.getItemMeta().getLore();
+        lore.set(0, ChatColor.GRAY + "Lives: " + (value > 3 ? ChatColor.GREEN : ChatColor.RED) + value + ChatColor.GRAY + "/" + getMaximumItemLives(item));
+
+        ItemMeta meta = item.getItemMeta();
+        meta.setLore(lore);
+
+        item.setItemMeta(meta);
+    }
+
+    public void setMaximumItemLives(ItemStack item, int value) {
+        if (item.getItemMeta().getLore() == null) return;
+
+        int lives = getItemLives(item);
+
+        if (lives > value) lives = value;
+
+        List<String> lore = item.getItemMeta().getLore();
+        lore.set(0, ChatColor.GRAY + "Lives: " + (value > 3 ? ChatColor.GREEN : ChatColor.RED) + lives + ChatColor.GRAY + "/" + value);
+
+        ItemMeta meta = item.getItemMeta();
+        meta.setLore(lore);
+
+        item.setItemMeta(meta);
+
     }
 
     public void removeEnchant(ItemStack item, CustomEnchant enchant) {
@@ -206,7 +294,7 @@ public class CustomEnchantManager {
         item.setItemMeta(meta);
     }
 
-    public boolean containsEnchant(ItemStack item, CustomEnchant enchant) {
+    public boolean itemContainsEnchant(ItemStack item, CustomEnchant enchant) {
         if (item.getItemMeta().getLore() == null) return false;
 
         List<String> lore = item.getItemMeta().getLore();
@@ -287,12 +375,16 @@ public class CustomEnchantManager {
         ArrayList<CustomEnchant> enchants = new ArrayList<>();
 
         for (CustomEnchant enchant : getEnchants()) {
-            if (containsEnchant(item, enchant)) {
+            if (itemContainsEnchant(item, enchant)) {
                 enchants.add(enchant);
             }
         }
 
         return enchants;
+    }
+
+    public boolean percentChance(double percent) {
+        return Double.parseDouble(new DecimalFormat("#0.0").format(ThreadLocalRandom.current().nextDouble(0, 99))) <= percent;
     }
 
     public String convertToRomanNumeral(int value) {

@@ -52,10 +52,23 @@ public class SequenceAPI extends JavaPlugin {
                 framePosition.remove(sequence);
                 animationTaskIndexs.remove(sequence);
                 endSequencerTicks.remove(sequence);
+
+                if (sequence.isLooping()) {
+                    startSequence(sequence);
+                }
             }
 
             sequencers.put(sequence, sequencers.get(sequence) + 1);
         }, 0L, 1L));
+    }
+
+    public static void stopSequence(Sequence sequence) {
+        if (sequence.getAnimationActions() != null) sequence.getAnimationActions().onSequenceEnd();
+
+        Bukkit.getServer().getScheduler().cancelTask(animationTaskIndexs.get(sequence));
+        framePosition.remove(sequence);
+        animationTaskIndexs.remove(sequence);
+        endSequencerTicks.remove(sequence);
     }
 
     public static int getCurrentFrameFromSequence(Sequence sequence) {

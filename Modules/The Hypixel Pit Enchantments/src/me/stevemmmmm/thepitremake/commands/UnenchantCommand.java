@@ -55,7 +55,7 @@ public class UnenchantCommand implements CommandExecutor {
                         return true;
                     }
 
-                    if (!CustomEnchantManager.getInstance().containsEnchant(item, customEnchant)) {
+                    if (!CustomEnchantManager.getInstance().itemContainsEnchant(item, customEnchant)) {
                         player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " This item does not have the specified enchant!");
                         return true;
                     }

@@ -58,7 +58,7 @@ public class EnchantCommand implements CommandExecutor {
                         return true;
                     }
 
-                    if (CustomEnchantManager.getInstance().containsEnchant(item, customEnchant)) {
+                    if (CustomEnchantManager.getInstance().itemContainsEnchant(item, customEnchant)) {
                         player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " This item already contains this enchantment!");
                         return true;
                     }
@@ -116,7 +116,7 @@ public class EnchantCommand implements CommandExecutor {
                         }
                     }
 
-                    CustomEnchantManager.getInstance().applyLore(item, customEnchant, level);
+                    CustomEnchantManager.getInstance().addEnchant(item, customEnchant, level);
                     player.sendMessage(ChatColor.DARK_PURPLE + "Success!" + ChatColor.RED + " You applied the enchantment successfully!");
                     player.updateInventory();
                 }

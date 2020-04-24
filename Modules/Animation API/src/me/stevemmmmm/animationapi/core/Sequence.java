@@ -13,11 +13,15 @@ public class Sequence {
     private final HashMap<Long, Frame> animationSequence = new HashMap<>();
     private SequenceActions animationActions;
 
-    public void addKeyFrame(long time, Frame frame) {
+    private boolean loop;
+
+    public Sequence addKeyFrame(long time, Frame frame) {
         animationSequence.put(time, frame);
+
+        return this;
     }
 
-    public void repeatAddKeyFrame(Frame frame, long time, int delay, int amount) {
+    public Sequence repeatAddKeyFrame(Frame frame, long time, int delay, int amount) {
         addKeyFrame(time, frame);
 
         long delayTime = time;
@@ -26,6 +30,24 @@ public class Sequence {
             addKeyFrame(delayTime + delay, frame);
             delayTime += delay;
         }
+
+        return this;
+    }
+
+    public Sequence setAnimationActions(SequenceActions action) {
+        animationActions = action;
+
+        return this;
+    }
+
+    public Sequence loop() {
+        loop = true;
+
+        return this;
+    }
+
+    public boolean isLooping() {
+        return loop;
     }
 
     public HashMap<Long, Frame> getAnimationSequence() {
@@ -34,9 +56,5 @@ public class Sequence {
 
     public SequenceActions getAnimationActions() {
         return animationActions;
-    }
-
-    public void setAnimationActions(SequenceActions action) {
-        animationActions = action;
     }
 }
