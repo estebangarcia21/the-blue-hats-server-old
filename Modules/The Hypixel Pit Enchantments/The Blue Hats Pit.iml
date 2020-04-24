@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="FacetManager">
-    <facet type="IntelliGuard" name="Obfuscation">
-      <configuration>
-        <option name="yGuardJar" value="D:\Development\The Hypixel Pit Enchantments\yguard.jar" />
-        <option name="inFile" value="D:\LS\plugins\The Hypixel Pit Enchantments.jar" />
-        <option name="outFile" value="D:\Obfuscation Output\The Hypixel Pit by Stevemmmmm.jar" />
-        <option name="mainclass" value="me.stevemmmmm.core.Main" />
-        <option name="jarConfig">
-          <JarConfig>
-            <option name="jarEntries">
-              <list>
-                <option value="D:\Development\The Hypixel Pit Enchantments\out\production\The Hypixel Pit Enchantments" />
-              </list>
-            </option>
-          </JarConfig>
-        </option>
-      </configuration>
-    </facet>
-  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">

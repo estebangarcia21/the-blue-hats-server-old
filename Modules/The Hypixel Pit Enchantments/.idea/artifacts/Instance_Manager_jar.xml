@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Instance Manager:jar">
+  <artifact type="jar" name="Instance Manager:jar">
     <output-path>$PROJECT_DIR$/../../../../Projects/The Blue Hats Server/Console/plugins</output-path>
     <root id="archive" name="Instance Manager.jar">
       <element id="module-output" name="Instance API" />
