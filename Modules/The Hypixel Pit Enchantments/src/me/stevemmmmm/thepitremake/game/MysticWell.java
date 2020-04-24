@@ -6,6 +6,7 @@ import me.stevemmmmm.animationapi.core.SequenceActions;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
+import me.stevemmmmm.thepitremake.managers.other.GrindingSystem;
 import me.stevemmmmm.thepitremake.utils.MathUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -120,7 +121,7 @@ public class MysticWell implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!playerGuis.containsKey(event.getPlayer().getUniqueId())) playerGuis.put(event.getPlayer().getUniqueId(), createMysticWell());
-        //TODO Read from invetory API
+        //TODO Read from inventory API
     }
 
     @EventHandler
@@ -144,22 +145,42 @@ public class MysticWell implements Listener {
         if (event.getInventory().getName().equals(ChatColor.GRAY + "Mystic Well") && event.getSlotType() != InventoryType.SlotType.OUTSIDE) {
             event.setCancelled(true);
 
-            //Enchantment confirm slot
+            Player player = (Player) event.getWhoClicked();
+
             if (event.getInventory().getItem(event.getSlot()) != null) {
                 if (event.getInventory().getItem(event.getSlot()).getType() == Material.ENCHANTMENT_TABLE) {
-                    if (playerGuis.get(event.getWhoClicked().getUniqueId()).getItem(24).getType() != Material.HARD_CLAY) enchantItem((Player) event.getWhoClicked(), event.getInventory().getItem(20));
+                    if (playerGuis.get(player.getUniqueId()).getItem(24).getType() != Material.HARD_CLAY) {
+                        int goldAmount = 0;
+
+                        switch (getItemTier(event.getInventory().getItem(20))) {
+                            case 0:
+                                goldAmount = 1000;
+                                break;
+                            case 1:
+                                goldAmount = 4000;
+                                break;
+                            case 2:
+                                goldAmount = 8000;
+                                break;
+                        }
+
+                        if (GrindingSystem.getInstance().getPlayerGold(player) >= goldAmount) {
+                            GrindingSystem.getInstance().setPlayerGold(player, Math.max(0, GrindingSystem.getInstance().getPlayerGold(player) - goldAmount));
+                        }
+
+                        enchantItem(player, event.getInventory().getItem(20));
+                    }
                 }
             }
 
-            //Target mystic item slot
             if (event.getRawSlot() == 20) {
                 if (event.getCurrentItem().getType() != Material.AIR) {
                     if (event.getCurrentItem().getType() == Material.GOLD_SWORD || event.getCurrentItem().getType() == Material.BOW || event.getCurrentItem().getType() == Material.LEATHER_LEGGINGS) {
-                        for (int i = 0; i < event.getWhoClicked().getInventory().getSize(); i++) {
+                        for (int i = 0; i < player.getInventory().getSize(); i++) {
                             if (event.getWhoClicked().getInventory().getItem(i) == null) {
-                                playerGuis.get(event.getWhoClicked().getUniqueId()).setItem(24, enchantmentTableInfoIdle);
-                                event.getWhoClicked().getInventory().setItem(i, event.getCurrentItem());
-                                playerGuis.get(event.getWhoClicked().getUniqueId()).setItem(event.getSlot(), new ItemStack(Material.AIR));
+                                playerGuis.get(player.getUniqueId()).setItem(24, enchantmentTableInfoIdle);
+                                player.getInventory().setItem(i, event.getCurrentItem());
+                                playerGuis.get(player.getUniqueId()).setItem(event.getSlot(), new ItemStack(Material.AIR));
                                 break;
                             }
                         }
@@ -169,9 +190,9 @@ public class MysticWell implements Listener {
                 if (event.getCurrentItem().getItemMeta().getDisplayName() != null) {
                     String[] itemTokens = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).split(" ");
                     if (itemTokens[0].equalsIgnoreCase("Fresh") || itemTokens[0].equalsIgnoreCase("Mystic") || itemTokens[0].equalsIgnoreCase("Tier")) {
-                        playerGuis.get(event.getWhoClicked().getUniqueId()).setItem(24, getInfoFromTier(getItemTier(event.getCurrentItem())));
-                        playerGuis.get(event.getWhoClicked().getUniqueId()).setItem(20, event.getCurrentItem());
-                        event.getWhoClicked().getInventory().setItem(event.getSlot(), new ItemStack(Material.AIR));
+                        playerGuis.get(player.getUniqueId()).setItem(24, getInfoFromTier(getItemTier(event.getCurrentItem())));
+                        playerGuis.get(player.getUniqueId()).setItem(20, event.getCurrentItem());
+                        player.getInventory().setItem(event.getSlot(), new ItemStack(Material.AIR));
                     }
                 }
             }
@@ -236,7 +257,8 @@ public class MysticWell implements Listener {
     }
 
     private void addNewEnchantsToItem(ItemStack item) {
-        final float livesBias = 0.73f;
+        final double livesBias = 2;
+        final double enchantBias = 3;
 
         if (getItemTier(item) == 0) {
             CustomEnchant enchant = getRandomEnchantFromGroup(EnchantGroup.A, item.getType());
@@ -246,9 +268,9 @@ public class MysticWell implements Listener {
                 return;
             }
 
-            int lives = CustomEnchantManager.getInstance().getItemLives(item) + Math.max(5, MathUtils.biasedRandomness(16, livesBias));
+            int lives = CustomEnchantManager.getInstance().getItemLives(item) + MathUtils.biasedRandomness(5, 10, livesBias);
 
-            CustomEnchantManager.getInstance().addEnchant(item, enchant, ThreadLocalRandom.current().nextInt(1, 4));
+            CustomEnchantManager.getInstance().addEnchant(item, enchant, MathUtils.biasedRandomness(1, 3, enchantBias));
             CustomEnchantManager.getInstance().setItemLives(item, lives);
             CustomEnchantManager.getInstance().setMaximumItemLives(item, lives);
             return;
@@ -262,9 +284,9 @@ public class MysticWell implements Listener {
                 return;
             }
 
-            int lives = CustomEnchantManager.getInstance().getItemLives(item) + Math.max(2, MathUtils.biasedRandomness(21, livesBias));
+            int lives = CustomEnchantManager.getInstance().getItemLives(item) + MathUtils.biasedRandomness(2, 20, 2.2);
 
-            CustomEnchantManager.getInstance().addEnchant(item, enchant, ThreadLocalRandom.current().nextInt(1, 4));
+            CustomEnchantManager.getInstance().addEnchant(item, enchant, MathUtils.biasedRandomness(1, 3, enchantBias));
             CustomEnchantManager.getInstance().setItemLives(item, lives);
             CustomEnchantManager.getInstance().setMaximumItemLives(item, lives);
             return;
@@ -278,9 +300,9 @@ public class MysticWell implements Listener {
                 return;
             }
 
-            int lives = CustomEnchantManager.getInstance().getItemLives(item) + Math.max(5, MathUtils.biasedRandomness(25, livesBias));
+            int lives = CustomEnchantManager.getInstance().getItemLives(item) + MathUtils.biasedRandomness(5, 25, 2.45);
 
-            CustomEnchantManager.getInstance().addEnchant(item, enchant, ThreadLocalRandom.current().nextInt(1, 4));
+            CustomEnchantManager.getInstance().addEnchant(item, enchant, MathUtils.biasedRandomness(1, 3, enchantBias));
             CustomEnchantManager.getInstance().setItemLives(item, lives);
             CustomEnchantManager.getInstance().setMaximumItemLives(item, lives);
         }
