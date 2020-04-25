@@ -1,28 +1,18 @@
 package me.stevemmmmm.thepitremake.enchants;
 
-import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
-import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
-import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
-import java.util.ArrayList;
-
 /*
  * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
-public class Pullbow extends CustomEnchant {
+import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
+import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 
-    @EventHandler
-    public void onHit(EntityDamageByEntityEvent event) {
-//        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
-//            if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-//
-//            }
-//        }
-    }
+import java.util.ArrayList;
+
+public class Sweaty extends CustomEnchant {
 
     @Override
     public void applyEnchant(int level, Object... args) {
@@ -31,24 +21,24 @@ public class Pullbow extends CustomEnchant {
 
     @Override
     public String getName() {
-        return "Pullbow";
+        return "Sweaty";
     }
 
     @Override
     public String getEnchantReferenceName() {
-        return "Pullbow";
+        return "Sweaty";
     }
 
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
+                .addVariable("+20%", "+40% XP", "+60% XP")
+                .addVariable("", "+50 max XP", "+100 max XP")
                 .setWriteCondition(level == 1)
-                .write("Hitting a player pulls them toward").next()
-                .write("you (8s cooldown per player)")
+                .writeVariable(ChatColor.AQUA, 0, level).write(" XP from streak XP bonus")
                 .setWriteCondition(level != 1)
-                .write("Hitting a player puls them and").next()
-                .write("nearby players toward you (8s").next()
-                .write("cooldown)")
+                .write("Earn ").writeVariable(ChatColor.AQUA, 0, level).write(" from streak XP").next()
+                .write("bonus and ").writeVariable(ChatColor.AQUA, 1, level).write(" per kill")
                 .build();
     }
 
@@ -59,16 +49,16 @@ public class Pullbow extends CustomEnchant {
 
     @Override
     public EnchantGroup getEnchantGroup() {
-        return EnchantGroup.B;
+        return EnchantGroup.C;
     }
 
     @Override
     public boolean isRareEnchant() {
-        return true;
+        return false;
     }
 
     @Override
     public Material[] getEnchantItemTypes() {
-        return new Material[] { Material.BOW };
+        return new Material[] { Material.GOLD_SWORD, Material.LEATHER_LEGGINGS, Material.BOW };
     }
 }

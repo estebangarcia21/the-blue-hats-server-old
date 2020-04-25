@@ -112,7 +112,7 @@ public class MysticWell implements Listener {
             add(ChatColor.GRAY + "This item cannot be");
             add(ChatColor.GRAY + "upgraded any further");
             add(" ");
-            add(ChatColor.RED + "Max out upgrade tier!");
+            add(ChatColor.RED + "Maxed out upgrade tier!");
         }});
 
         enchantmentTableInfoMaxTier.setItemMeta(etMax);
@@ -147,12 +147,12 @@ public class MysticWell implements Listener {
 
             Player player = (Player) event.getWhoClicked();
 
-            if (event.getInventory().getItem(event.getSlot()) != null) {
+            if (playerGuis.get(player.getUniqueId()).getItem(20) != null && playerGuis.get(player.getUniqueId()).getItem(event.getSlot()) != null) {
                 if (event.getInventory().getItem(event.getSlot()).getType() == Material.ENCHANTMENT_TABLE) {
-                    if (playerGuis.get(player.getUniqueId()).getItem(24).getType() != Material.HARD_CLAY) {
+                    if (playerGuis.get(player.getUniqueId()).getItem(24).getType() != Material.STAINED_CLAY) {
                         int goldAmount = 0;
 
-                        switch (getItemTier(event.getInventory().getItem(20))) {
+                        switch (getItemTier(playerGuis.get(player.getUniqueId()).getItem(20))) {
                             case 0:
                                 goldAmount = 1000;
                                 break;
@@ -166,9 +166,10 @@ public class MysticWell implements Listener {
 
                         if (GrindingSystem.getInstance().getPlayerGold(player) >= goldAmount) {
                             GrindingSystem.getInstance().setPlayerGold(player, Math.max(0, GrindingSystem.getInstance().getPlayerGold(player) - goldAmount));
-                        }
+                            //TODO Not enough gold
 
-                        enchantItem(player, event.getInventory().getItem(20));
+                            enchantItem(player, event.getInventory().getItem(20));
+                        }
                     }
                 }
             }
@@ -186,7 +187,7 @@ public class MysticWell implements Listener {
                         }
                     }
                 }
-            } else if (event.getCurrentItem().getType() != Material.AIR) {
+            } else if (event.getCurrentItem().getType() != Material.AIR && event.getRawSlot() > 36 && playerGuis.get(player.getUniqueId()).getItem(20) == null && mysticWellStates.get(player.getUniqueId()).equals(MysticWellAnimation.IDLE)) {
                 if (event.getCurrentItem().getItemMeta().getDisplayName() != null) {
                     String[] itemTokens = ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName()).split(" ");
                     if (itemTokens[0].equalsIgnoreCase("Fresh") || itemTokens[0].equalsIgnoreCase("Mystic") || itemTokens[0].equalsIgnoreCase("Tier")) {
@@ -221,9 +222,9 @@ public class MysticWell implements Listener {
         final int[] position = { 0 };
 
         Sequence enchantmentSequence = new Sequence()
-            .addKeyFrame(0, () -> setGlassPanesToColor(player, "Pink"))
+            .addKeyFrame(0, () -> setGlassPanesToColor(player, "Green"))
             .addKeyFrame(2, () -> setGlassPanesToColor(player, "Gray"))
-            .addKeyFrame(4, () -> setGlassPanesToColor(player, "Pink"))
+            .addKeyFrame(4, () -> setGlassPanesToColor(player, "Green"))
             .addKeyFrame(6, () -> setGlassPanesToColor(player, "Gray"))
             .repeatAddKeyFrame(() -> {
                 setPaneToPink(player, position[0]);
@@ -257,62 +258,57 @@ public class MysticWell implements Listener {
     }
 
     private void addNewEnchantsToItem(ItemStack item) {
-        final double livesBias = 2;
-        final double enchantBias = 3;
-
         if (getItemTier(item) == 0) {
-            CustomEnchant enchant = getRandomEnchantFromGroup(EnchantGroup.A, item.getType());
+            int determinant = MathUtils.biasedRandomness(1, 2, 1.8);
 
-            if (CustomEnchantManager.getInstance().itemContainsEnchant(item, enchant)) {
-                addNewEnchantsToItem(item);
-                return;
+            if (determinant == 1) {
+                CustomEnchant enchant = getRandomEnchantFromGroup(EnchantGroup.A, item.getType());
+
+                addEnchantsToItem(item, 5, 10, 2.25, enchant);
+            } else {
+                CustomEnchant enchantA = getRandomEnchantFromGroup(EnchantGroup.A, item.getType());
+                CustomEnchant enchantC = getRandomEnchantFromGroup(EnchantGroup.C, item.getType());
+
+                addEnchantsToItem(item, 5, 10, 2.25, enchantA, enchantC);
             }
 
-            int lives = CustomEnchantManager.getInstance().getItemLives(item) + MathUtils.biasedRandomness(5, 10, livesBias);
-
-            CustomEnchantManager.getInstance().addEnchant(item, enchant, MathUtils.biasedRandomness(1, 3, enchantBias));
-            CustomEnchantManager.getInstance().setItemLives(item, lives);
-            CustomEnchantManager.getInstance().setMaximumItemLives(item, lives);
             return;
         }
 
         if (getItemTier(item) == 1) {
             CustomEnchant enchant = getRandomEnchantFromGroup(EnchantGroup.B, item.getType());
 
-            if (CustomEnchantManager.getInstance().itemContainsEnchant(item, enchant)) {
-                addNewEnchantsToItem(item);
-                return;
-            }
-
-            int lives = CustomEnchantManager.getInstance().getItemLives(item) + MathUtils.biasedRandomness(2, 20, 2.2);
-
-            CustomEnchantManager.getInstance().addEnchant(item, enchant, MathUtils.biasedRandomness(1, 3, enchantBias));
-            CustomEnchantManager.getInstance().setItemLives(item, lives);
-            CustomEnchantManager.getInstance().setMaximumItemLives(item, lives);
+            addEnchantsToItem(item, 2, 20, 2.35, enchant);
             return;
         }
 
         if (getItemTier(item) == 2) {
             CustomEnchant enchant = getRandomEnchantFromGroup(EnchantGroup.B, item.getType());
 
+            addEnchantsToItem(item, 5, 25, 2.5, enchant);
+        }
+    }
+
+    private void addEnchantsToItem(ItemStack item, int minLives, int maxLives, double livesBias, CustomEnchant... enchants) {
+        for (CustomEnchant enchant : enchants) {
             if (CustomEnchantManager.getInstance().itemContainsEnchant(item, enchant)) {
                 addNewEnchantsToItem(item);
                 return;
             }
-
-            int lives = CustomEnchantManager.getInstance().getItemLives(item) + MathUtils.biasedRandomness(5, 25, 2.45);
-
-            CustomEnchantManager.getInstance().addEnchant(item, enchant, MathUtils.biasedRandomness(1, 3, enchantBias));
-            CustomEnchantManager.getInstance().setItemLives(item, lives);
-            CustomEnchantManager.getInstance().setMaximumItemLives(item, lives);
         }
+
+        int lives = CustomEnchantManager.getInstance().getItemLives(item) + MathUtils.biasedRandomness(minLives, maxLives, livesBias);
+
+        CustomEnchantManager.getInstance().addEnchants(item, MathUtils.biasedRandomness(1, 3, 3.5), enchants);
+        CustomEnchantManager.getInstance().setItemLives(item, lives);
+        CustomEnchantManager.getInstance().setMaximumItemLives(item, lives);
     }
 
     private CustomEnchant getRandomEnchantFromGroup(EnchantGroup group, Material type) {
         ArrayList<CustomEnchant> groupEnchants = new ArrayList<>();
 
         for (CustomEnchant enchant : CustomEnchantManager.getInstance().getEnchants()) {
-            if (enchant.getEnchantGroup() == group && enchant.getEnchantItemType() == type) {
+            if (enchant.getEnchantGroup() == group && enchant.isCompatibleWith(type)) {
                 groupEnchants.add(enchant);
             }
         }

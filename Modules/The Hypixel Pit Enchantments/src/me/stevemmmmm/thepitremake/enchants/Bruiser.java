@@ -46,7 +46,7 @@ public class Bruiser extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("0.5❤", "1❤", "2❤")
-                .write("Blocking with your swords reduces").nextLine()
+                .write("Blocking with your swords reduces").next()
                 .write("received damage by ").writeVariable(ChatColor.RED, 0, level)
                 .build();
     }
@@ -67,7 +67,7 @@ public class Bruiser extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

@@ -61,10 +61,10 @@ public class PushComesToShove extends CustomEnchant {
         return new LoreBuilder()
                 .addVariable("Punch", "Punch V", "Punch VII")
                 .addVariable("", "+0.5❤", "+1❤")
-                .write("Every 3rd shot on a player has").nextLine()
+                .write("Every 3rd shot on a player has").next()
                 .writeVariable(ChatColor.AQUA, 0, level)
                 .setWriteCondition(level != 1)
-                .write(" and deals ").writeVariable(ChatColor.RED, 1, level).nextLine()
+                .write(" and deals ").writeVariable(ChatColor.RED, 1, level).next()
                 .write("extra damage")
                 .build();
     }
@@ -85,7 +85,7 @@ public class PushComesToShove extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.BOW;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.BOW };
     }
 }

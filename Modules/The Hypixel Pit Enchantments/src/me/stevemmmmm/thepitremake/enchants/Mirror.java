@@ -38,8 +38,8 @@ public class Mirror extends CustomEnchant {
                 .setWriteCondition(level == 1)
                 .write("You are immune to true damage")
                 .setWriteCondition(level != 1)
-                .write("You do not take true damage and").nextLine()
-                .write("instead reflect ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" of it to").nextLine()
+                .write("You do not take true damage and").next()
+                .write("instead reflect ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" of it to").next()
                 .write("your attacker")
                 .build();
     }
@@ -60,7 +60,7 @@ public class Mirror extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.LEATHER_LEGGINGS;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.LEATHER_LEGGINGS };
     }
 }

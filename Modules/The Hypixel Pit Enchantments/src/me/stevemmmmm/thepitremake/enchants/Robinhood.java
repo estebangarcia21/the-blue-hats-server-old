@@ -174,11 +174,11 @@ public class Robinhood extends CustomEnchant {
         return new LoreBuilder()
                 .addVariable("40%", "50%", "60%")
                 .setWriteCondition(level == 1)
-                .write("Your charged shots are homing but").nextLine()
+                .write("Your charged shots are homing but").next()
                 .write("deal ").writeVariable(ChatColor.RED, 0, level).write(" damage")
                 .resetCondition()
                 .setWriteCondition(level != 1)
-                .write("All your shots are homing but deal").nextLine()
+                .write("All your shots are homing but deal").next()
                 .setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" damage")
                 .build();
     }
@@ -199,7 +199,7 @@ public class Robinhood extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.BOW;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.BOW };
     }
 }

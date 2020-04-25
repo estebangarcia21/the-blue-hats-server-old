@@ -57,7 +57,7 @@ public class ComboSwift extends CustomEnchant {
                 .addVariable("fourth", "third", "third")
                 .addVariable("Speed I", "Speed II", "Speed III")
                 .addVariable("3", "4", "5")
-                .write("Every ").writeVariable(ChatColor.YELLOW, 0, level).write(" strike gain").nextLine()
+                .write("Every ").writeVariable(ChatColor.YELLOW, 0, level).write(" strike gain").next()
                 .writeVariable(ChatColor.YELLOW, 1, level).write(" (").writeVariable(2, level).write("s)")
                 .build();
     }
@@ -78,7 +78,7 @@ public class ComboSwift extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

@@ -67,7 +67,7 @@ public class BooBoo extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("5", "4", "3")
-                .write("Passively regain ").write(ChatColor.RED, "1❤").write(" every ").writeVariable(0, level).nextLine()
+                .write("Passively regain ").write(ChatColor.RED, "1❤").write(" every ").writeVariable(0, level).next()
                 .write("seconds")
                 .build();
     }
@@ -88,7 +88,7 @@ public class BooBoo extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.LEATHER_LEGGINGS;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.LEATHER_LEGGINGS };
     }
 }

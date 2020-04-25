@@ -47,7 +47,7 @@ public class PainFocus extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("+1%", "+2%", "+5%")
-                .write("Deal ").setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" damage per ").setColor(ChatColor.RED).write("❤").resetColor().nextLine()
+                .write("Deal ").setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" damage per ").setColor(ChatColor.RED).write("❤").resetColor().next()
                 .write("you're missing")
                 .build();
     }
@@ -68,7 +68,7 @@ public class PainFocus extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

@@ -45,7 +45,7 @@ public class RingArmor extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("-20%", "-40%", "-60%")
-                .write("Recieve ").writeVariable(ChatColor.BLUE, 0, level).write(" damage from").nextLine()
+                .write("Recieve ").writeVariable(ChatColor.BLUE, 0, level).write(" damage from").next()
                 .write("arrows")
                 .build();
     }
@@ -66,7 +66,7 @@ public class RingArmor extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.LEATHER_LEGGINGS;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.LEATHER_LEGGINGS };
     }
 }

@@ -73,12 +73,12 @@ public class BulletTime extends CustomEnchant implements EnchantCanceler {
         return new LoreBuilder()
                 .addVariable("", "1❤", "1.5❤")
                 .setWriteCondition(level == 1)
-                .setColor(ChatColor.GRAY).write("Blocking destroys arrows that").nextLine()
+                .setColor(ChatColor.GRAY).write("Blocking destroys arrows that").next()
                 .setColor(ChatColor.GRAY).write("hit you")
                 .resetCondition()
                 .setWriteCondition(level != 1)
-                .setColor(ChatColor.GRAY).write("Blocking destroys arrows hitting").nextLine()
-                .setColor(ChatColor.GRAY).write("you. Destroying arrows this way").nextLine()
+                .setColor(ChatColor.GRAY).write("Blocking destroys arrows hitting").next()
+                .setColor(ChatColor.GRAY).write("you. Destroying arrows this way").next()
                 .setColor(ChatColor.GRAY).write("heals ").setColor(ChatColor.RED).writeVariable(0, level)
                 .build();
     }
@@ -99,7 +99,7 @@ public class BulletTime extends CustomEnchant implements EnchantCanceler {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

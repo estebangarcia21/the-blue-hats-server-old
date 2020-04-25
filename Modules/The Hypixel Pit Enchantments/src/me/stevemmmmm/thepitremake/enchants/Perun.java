@@ -61,12 +61,12 @@ public class Perun extends CustomEnchant {
         return new LoreBuilder()
                 .addVariable("1.5❤", "2❤", "1❤ + 1❤")
                 .addVariable("fifth", "fourth", "fourth")
-                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(1, level).resetColor().write(" hit strikes").nextLine()
+                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(1, level).resetColor().write(" hit strikes").next()
                 .setColor(ChatColor.YELLOW).write("lightning").resetColor().write(" for ").setColor(ChatColor.RED)
-                .writeVariable(0, level).resetColor().writeOnlyIf(level != 3, ".").nextLine()
+                .writeVariable(0, level).resetColor().writeOnlyIf(level != 3, ".").next()
                 .setWriteCondition(level == 3)
-                .write("per ").setColor(ChatColor.AQUA).write("diamond piece").resetColor().write(" on your victim").nextLine()
-                .write("victim.").nextLine()
+                .write("per ").setColor(ChatColor.AQUA).write("diamond piece").resetColor().write(" on your victim").next()
+                .write("victim.").next()
                 .resetCondition()
                 .write(ChatColor.ITALIC + "Lightning deals true damage")
                 .build();
@@ -88,7 +88,7 @@ public class Perun extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

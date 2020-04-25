@@ -41,7 +41,7 @@ public class GiveFreshItemCommand implements CommandExecutor {
 
 //                        meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
 
-                        meta.setLore(new LoreBuilder().write("Kept on death").nextLine().nextLine().write("Used in the mystic well").build());
+                        meta.setLore(new LoreBuilder().write("Kept on death").next().next().write("Used in the mystic well").build());
 
                         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE);
                         meta.spigot().setUnbreakable(true);
@@ -56,7 +56,7 @@ public class GiveFreshItemCommand implements CommandExecutor {
 
 //                        meta.addEnchant(Enchantment.DURABILITY, 1, true);
 
-                        meta.setLore(new LoreBuilder().write("Kept on death").nextLine().nextLine().write("Used in the mystic well").build());
+                        meta.setLore(new LoreBuilder().write("Kept on death").next().next().write("Used in the mystic well").build());
 
                         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE);
                         meta.spigot().setUnbreakable(true);

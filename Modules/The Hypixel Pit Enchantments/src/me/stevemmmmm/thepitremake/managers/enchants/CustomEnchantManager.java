@@ -52,120 +52,125 @@ public class CustomEnchantManager {
         return true;
     }
 
-    public void addEnchant(ItemStack item, CustomEnchant enchant, int level) {
-        ItemMeta meta = item.getItemMeta();
-        String previousDisplayName = meta.getDisplayName();
+    public void addEnchants(ItemStack item, int level, CustomEnchant... enchants) {
+        boolean hasTiered = false;
 
-        String tier = convertToRomanNumeral(MysticWell.getItemTier(item) + 1);
+        for (CustomEnchant enchant : enchants) {
+            ItemMeta meta = item.getItemMeta();
+            String previousDisplayName = meta.getDisplayName();
 
-        ChatColor tierColor = null;
-        switch (MysticWell.getItemTier(item) + 1) {
-            case 1:
-                tierColor = ChatColor.GREEN;
-                break;
-            case 2:
-                tierColor = ChatColor.YELLOW;
-                break;
-            case 3:
-                tierColor = ChatColor.RED;
-        }
+            String tier = convertToRomanNumeral(MysticWell.getItemTier(item) + (hasTiered ? 0 : 1));
 
-        String itemIndentifier = "";
+            ChatColor tierColor = null;
+            switch (MysticWell.getItemTier(item) + 1) {
+                case 1:
+                    tierColor = ChatColor.GREEN;
+                    break;
+                case 2:
+                    tierColor = ChatColor.YELLOW;
+                    break;
+                case 3:
+                    tierColor = ChatColor.RED;
+            }
 
-        if (getTokensOnItem(item) == 8) {
-            itemIndentifier = "Legendary ";
-        }
+            String itemIndentifier = "";
 
-        if (getItemLives(item) == 100) {
-            itemIndentifier = "Artifact ";
-        }
+            if (getTokensOnItem(item) == 8) {
+                itemIndentifier = "Legendary ";
+            }
 
-        //TODO Extraordinary
+            if (getItemLives(item) == 100) {
+                itemIndentifier = "Artifact ";
+            }
 
-        switch (item.getType()) {
-            case GOLD_SWORD:
-                meta.setDisplayName(tierColor + itemIndentifier + "Tier " + tier + " Sword");
-                break;
-            case BOW:
-                meta.setDisplayName(tierColor + itemIndentifier + "Tier " + tier + " Bow");
-                break;
-            case LEATHER_LEGGINGS:
-                if (MysticWell.getItemTier(item) == 0) {
-                    meta.setDisplayName(getChatColorFromPantsColor(ChatColor.stripColor(meta.getDisplayName().split(" ")[1])) + itemIndentifier + "Tier " + tier + " Pants");
-                } else {
-                    meta.setDisplayName(meta.getDisplayName().substring(0, 2) + itemIndentifier + "Tier " + tier + " Pants");
+            //TODO Extraordinary
+
+            switch (item.getType()) {
+                case GOLD_SWORD:
+                    meta.setDisplayName(tierColor + itemIndentifier + "Tier " + tier + " Sword");
+                    break;
+                case BOW:
+                    meta.setDisplayName(tierColor + itemIndentifier + "Tier " + tier + " Bow");
+                    break;
+                case LEATHER_LEGGINGS:
+                    if (MysticWell.getItemTier(item) == 0) {
+                        meta.setDisplayName(getChatColorFromPantsColor(ChatColor.stripColor(meta.getDisplayName().split(" ")[1])) + itemIndentifier + "Tier " + tier + " Pants");
+                    } else {
+                        meta.setDisplayName(meta.getDisplayName().substring(0, 2) + itemIndentifier + "Tier " + tier + " Pants");
+                    }
+            }
+
+            String rare = ChatColor.LIGHT_PURPLE + "RARE! " + ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
+            String normal = ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
+
+            List<String> enchantLore = enchant.getDescription(level);
+
+            if (enchantLore == null) {
+                return;
+            }
+
+            enchantLore.add(0, enchant.isRareEnchant() ? rare : normal);
+            if (meta.getLore() != null) enchantLore.add(0, " ");
+
+            List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+
+            if (previousDisplayName != null && item.getType() == Material.LEATHER_LEGGINGS) {
+                if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Fresh")) {
+                    lore = new ArrayList<>();
+
+                    lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
+                    lore.add(" ");
+
+                    meta.setDisplayName(getChatColorFromPantsColor(ChatColor.stripColor(previousDisplayName.split(" ")[1])) + meta.getDisplayName());
+                    enchantLore.remove(0);
                 }
-        }
+            }
 
-        String rare = ChatColor.LIGHT_PURPLE + "RARE! " + ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
-        String normal = ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
+            if (previousDisplayName != null && item.getType() == Material.GOLD_SWORD) {
+                if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Mystic")) {
+                    lore = new ArrayList<>();
 
-        List<String> enchantLore = enchant.getDescription(level);
+                    lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
+                    lore.add(" ");
 
-        if (enchantLore == null) {
-            return;
-        }
+                    meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
 
-        enchantLore.add(0, enchant.isRareEnchant() ? rare : normal);
-        if (meta.getLore() != null) enchantLore.add(0, " ");
+                    enchantLore.remove(0);
+                }
+            }
 
-        List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+            if (previousDisplayName != null && item.getType() == Material.BOW) {
+                if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Mystic")) {
+                    lore = new ArrayList<>();
 
-        if (previousDisplayName != null && item.getType() == Material.LEATHER_LEGGINGS) {
-            if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Fresh")) {
-                lore = new ArrayList<>();
+                    lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
+                    lore.add(" ");
 
-                lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
+                    meta.addEnchant(Enchantment.DURABILITY, 1, true);
+
+                    enchantLore.remove(0);
+                }
+            }
+
+            if (item.getType() == Material.LEATHER_LEGGINGS) {
+                if (lore.contains(meta.getDisplayName().substring(0, 2) + "As strong as iron")) {
+                    lore.remove(lore.size() - 1);
+                    lore.remove(lore.size() - 1);
+                }
+            }
+
+            lore.addAll(enchantLore);
+
+            if (item.getType() == Material.LEATHER_LEGGINGS) {
                 lore.add(" ");
-
-                meta.setDisplayName(getChatColorFromPantsColor(ChatColor.stripColor(previousDisplayName.split(" ")[1])) + meta.getDisplayName());
-                enchantLore.remove(0);
+                lore.add(meta.getDisplayName().substring(0, 2) + "As strong as iron");
             }
+
+            meta.setLore(lore);
+
+            item.setItemMeta(meta);
+            hasTiered = true;
         }
-
-        if (previousDisplayName != null && item.getType() == Material.GOLD_SWORD) {
-            if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Mystic")) {
-                lore = new ArrayList<>();
-
-                lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
-                lore.add(" ");
-
-                meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
-
-                enchantLore.remove(0);
-            }
-        }
-
-        if (previousDisplayName != null && item.getType() == Material.BOW) {
-            if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Mystic")) {
-                lore = new ArrayList<>();
-
-                lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
-                lore.add(" ");
-
-                meta.addEnchant(Enchantment.DURABILITY, 1, true);
-
-                enchantLore.remove(0);
-            }
-        }
-
-        if (item.getType() == Material.LEATHER_LEGGINGS) {
-            if (lore.contains(meta.getDisplayName().substring(0, 2) + "As strong as iron")) {
-                lore.remove(lore.size() - 1);
-                lore.remove(lore.size() - 1);
-            }
-        }
-
-        lore.addAll(enchantLore);
-
-        if (item.getType() == Material.LEATHER_LEGGINGS) {
-            lore.add(" ");
-            lore.add(meta.getDisplayName().substring(0, 2) + "As strong as iron");
-        }
-
-        meta.setLore(lore);
-
-        item.setItemMeta(meta);
     }
 
     public int getItemLives(ItemStack item) {

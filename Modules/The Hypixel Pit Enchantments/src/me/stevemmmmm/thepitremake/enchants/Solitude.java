@@ -62,8 +62,8 @@ public class Solitude extends CustomEnchant {
         return new LoreBuilder()
                 .addVariable("-40%", "-50%", "-60%")
                 .write("Recieve ").setColor(ChatColor.BLUE).writeVariable(0, level).resetColor().write(" damage when ")
-                .setWriteCondition(level == 1).write("only").nextLine().write("one other player is within 7").nextLine().write("blocks").resetCondition()
-                .setWriteCondition(level != 1).write("two").nextLine().write("or less players are within 7").nextLine().write("blocks")
+                .setWriteCondition(level == 1).write("only").next().write("one other player is within 7").next().write("blocks").resetCondition()
+                .setWriteCondition(level != 1).write("two").next().write("or less players are within 7").next().write("blocks")
                 .build();
     }
 
@@ -83,7 +83,7 @@ public class Solitude extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.LEATHER_LEGGINGS;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.LEATHER_LEGGINGS };
     }
 }

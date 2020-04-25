@@ -48,7 +48,7 @@ public class LoreBuilder {
         return this;
     }
 
-    public LoreBuilder nextLine() {
+    public LoreBuilder next() {
         if (condition) {
             lineIndex++;
             description.add("");

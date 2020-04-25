@@ -78,7 +78,7 @@ public class Peroxide extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.LEATHER_LEGGINGS;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.LEATHER_LEGGINGS };
     }
 }

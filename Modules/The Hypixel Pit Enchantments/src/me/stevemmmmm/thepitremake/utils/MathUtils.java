@@ -4,6 +4,8 @@ package me.stevemmmmm.thepitremake.utils;
  * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,12 +29,14 @@ public class MathUtils {
     }
 
     public static int biasedRandomness(int min, int max, double bias) {
+        if (max <= min || min < 0) {
+            throw new IllegalArgumentException("Invalid arguments!");
+        }
+
         double d = max - min;
         double r = 15 + d;
-        double x = Double.parseDouble(new DecimalFormat("#0.0").format(ThreadLocalRandom.current().nextDouble(0, r)));
+        double x = Double.parseDouble(new DecimalFormat("#0.0").format(ThreadLocalRandom.current().nextDouble(0, r + 1)));;
 
-        long result = Math.round(d * Math.pow(Math.E, -bias / 15 * x) + (max - d));
-
-        return (int) result;
+        return (int) Math.round(d * Math.pow(Math.E, -bias / 15 * x) + (max - d));
     }
 }

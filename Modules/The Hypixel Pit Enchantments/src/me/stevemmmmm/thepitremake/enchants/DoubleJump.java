@@ -86,7 +86,7 @@ public class DoubleJump extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("20s", "10s", "5s")
-                .write("You can double-jump. (").writeVariable(0, level).nextLine()
+                .write("You can double-jump. (").writeVariable(0, level).next()
                 .write("cooldown)")
                 .build();
     }
@@ -107,7 +107,7 @@ public class DoubleJump extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.LEATHER_LEGGINGS;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.LEATHER_LEGGINGS };
     }
 }

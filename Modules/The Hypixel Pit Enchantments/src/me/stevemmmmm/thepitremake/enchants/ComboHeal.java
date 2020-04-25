@@ -57,8 +57,8 @@ public class ComboHeal extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("0.4", "0.8", "1.2")
-                .write("Every ").write(ChatColor.YELLOW, "fourth ").write("strike heals").nextLine()
-                .writeVariable(ChatColor.RED, 0, level).write(ChatColor.RED, "❤").write(" and grants ").writeVariable(ChatColor.GOLD, 0, level).write(ChatColor.GOLD, "❤").nextLine()
+                .write("Every ").write(ChatColor.YELLOW, "fourth ").write("strike heals").next()
+                .writeVariable(ChatColor.RED, 0, level).write(ChatColor.RED, "❤").write(" and grants ").writeVariable(ChatColor.GOLD, 0, level).write(ChatColor.GOLD, "❤").next()
                 .write("absorption")
                 .build();
     }
@@ -79,7 +79,7 @@ public class ComboHeal extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

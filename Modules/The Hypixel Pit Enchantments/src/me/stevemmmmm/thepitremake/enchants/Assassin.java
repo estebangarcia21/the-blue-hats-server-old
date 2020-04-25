@@ -76,8 +76,8 @@ public class Assassin extends CustomEnchant {
         return new LoreBuilder()
                 .addVariable("5s", "4s", "3s")
                 .setColor(ChatColor.GRAY)
-                .write("Sneaking teleports you behind").nextLine()
-                .write("your").nextLine()
+                .write("Sneaking teleports you behind").next()
+                .write("your").next()
                 .write("attacker. (").writeVariable(0, level).write(" cooldown)")
                 .build();
     }
@@ -98,7 +98,7 @@ public class Assassin extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.LEATHER_LEGGINGS;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.LEATHER_LEGGINGS };
     }
 }

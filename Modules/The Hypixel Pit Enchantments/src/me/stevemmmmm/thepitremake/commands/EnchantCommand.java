@@ -63,7 +63,7 @@ public class EnchantCommand implements CommandExecutor {
                         return true;
                     }
 
-                    if (item.getType() != customEnchant.getEnchantItemType()) {
+                    if (!customEnchant.isCompatibleWith(item.getType())) {
                         player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You can not enchant this enchant on this item!");
                         return true;
                     }
@@ -116,7 +116,7 @@ public class EnchantCommand implements CommandExecutor {
                         }
                     }
 
-                    CustomEnchantManager.getInstance().addEnchant(item, customEnchant, level);
+                    CustomEnchantManager.getInstance().addEnchants(item, level, customEnchant);
                     player.sendMessage(ChatColor.DARK_PURPLE + "Success!" + ChatColor.RED + " You applied the enchantment successfully!");
                     player.updateInventory();
                 }

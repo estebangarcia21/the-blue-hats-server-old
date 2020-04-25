@@ -81,11 +81,11 @@ public class CriticallyFunky extends CustomEnchant {
         return new LoreBuilder()
                 .addVariable("65%", "65%", "40%")
                 .addVariable("", "14%", "30%")
-                .write("Critical hits against you deal").nextLine()
-                .setColor(ChatColor.BLUE).writeVariable(0, level).resetColor().write(" of the damage they").nextLine()
+                .write("Critical hits against you deal").next()
+                .setColor(ChatColor.BLUE).writeVariable(0, level).resetColor().write(" of the damage they").next()
                 .write("normally would")
                 .setWriteCondition(level != 1)
-                .write(" and empower your").nextLine()
+                .write(" and empower your").next()
                 .write("next strike for ").setColor(ChatColor.RED).writeVariable(1, level).resetColor().write(" damage")
                 .build();
     }
@@ -106,7 +106,7 @@ public class CriticallyFunky extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.LEATHER_LEGGINGS;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.LEATHER_LEGGINGS };
     }
 }

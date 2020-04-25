@@ -44,7 +44,7 @@ public class BeatTheSpammers extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("+10%", "+25%", "+40%")
-                .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" damage vs. players").nextLine()
+                .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" damage vs. players").next()
                 .write("holding a bow")
                 .build();
     }
@@ -65,7 +65,7 @@ public class BeatTheSpammers extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

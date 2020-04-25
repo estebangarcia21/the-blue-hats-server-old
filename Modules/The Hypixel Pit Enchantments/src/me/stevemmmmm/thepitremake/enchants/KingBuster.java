@@ -47,7 +47,7 @@ public class KingBuster extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("+7%", "+13%", "+20%")
-                .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" damage vs. player").nextLine()
+                .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" damage vs. player").next()
                 .write("above 50% HP")
                 .build();
     }
@@ -68,7 +68,7 @@ public class KingBuster extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

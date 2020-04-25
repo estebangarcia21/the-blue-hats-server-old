@@ -136,8 +136,8 @@ public class Telebow extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("90s", "45s", "20s")
-                .write("Sneak to shoot a teleportation").nextLine()
-                .write("arrow (").writeVariable(0, level).write(" cooldown, -3 per bow").nextLine()
+                .write("Sneak to shoot a teleportation").next()
+                .write("arrow (").writeVariable(0, level).write(" cooldown, -3 per bow").next()
                 .write("hit)")
                 .build();
     }
@@ -158,7 +158,7 @@ public class Telebow extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.BOW;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.BOW };
     }
 }

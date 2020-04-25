@@ -54,7 +54,7 @@ public class Billionaire extends CustomEnchant {
                 .addVariable("1.33", "1.67", "2")
                 .addVariable("100g", "200g", "350g")
                 .setColor(ChatColor.GRAY)
-                .write("Hits with this sword deals ").setColor(ChatColor.RED).writeVariable(0, level).write("x").nextLine()
+                .write("Hits with this sword deals ").setColor(ChatColor.RED).writeVariable(0, level).write("x").next()
                 .setColor(ChatColor.RED).write("damage ").setColor(ChatColor.GRAY).write("but cost ").setColor(ChatColor.GOLD).writeVariable(1, level)
                 .build();
     }
@@ -75,7 +75,7 @@ public class Billionaire extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

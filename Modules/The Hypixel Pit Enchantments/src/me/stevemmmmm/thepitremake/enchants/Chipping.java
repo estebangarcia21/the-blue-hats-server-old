@@ -68,7 +68,7 @@ public class Chipping extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.BOW;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.BOW };
     }
 }

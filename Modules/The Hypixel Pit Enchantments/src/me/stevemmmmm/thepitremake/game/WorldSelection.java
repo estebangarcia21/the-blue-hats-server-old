@@ -98,8 +98,8 @@ public class WorldSelection implements Listener {
 
         meta.setLore(new LoreBuilder()
             .setColor(ChatColor.YELLOW)
-            .write("A world where any").nextLine()
-            .write("enchants are allowed").nextLine().nextLine()
+            .write("A world where any").next()
+            .write("enchants are allowed").next().next()
             .resetColor().write(ChatColor.ITALIC + "No token limit on items")
             .build());
 
@@ -113,10 +113,10 @@ public class WorldSelection implements Listener {
 
         meta.setLore(new LoreBuilder()
                 .setColor(ChatColor.WHITE)
-                .write("A world where the most toxic").nextLine()
-                .write("enchants are removed from").nextLine()
-                .write("existance for peaceful").nextLine()
-                .write("gameplay and fair fights").nextLine().nextLine()
+                .write("A world where the most toxic").next()
+                .write("enchants are removed from").next()
+                .write("existance for peaceful").next()
+                .write("gameplay and fair fights").next().next()
                 .resetColor().write(ChatColor.ITALIC + "8 tokens maximum on items")
                 .build());
 

@@ -44,36 +44,23 @@ public abstract class CustomEnchant implements Listener {
 
     public abstract boolean isRareEnchant();
 
-    public abstract Material getEnchantItemType();
+    public abstract Material[] getEnchantItemTypes();
+
+    public boolean isCompatibleWith(Material material) {
+        for (Material mat : getEnchantItemTypes()) {
+            if (mat == material) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public boolean attemptEnchantExecution(ItemStack source, Object... args) {
         if (TogglePvPCommand.pvpIsToggledOff) return false;
 
         if (itemHasEnchant(source, this)) {
-            for (Object object : args) {
-                if (object instanceof Player) {
-                    if (DamageManager.getInstance().playerIsInCanceledEvent((Player) object)) {
-                        return false;
-                    }
-
-                    if (RegionManager.getInstance().playerIsInRegion((Player) object, RegionManager.RegionType.SPAWN)) {
-                        return false;
-                    }
-                }
-
-                if (object instanceof Arrow) {
-                    if (DamageManager.getInstance().arrowIsInCanceledEvent((Arrow) object)) {
-                        return false;
-                    }
-
-                    if (RegionManager.getInstance().locationIsInRegion(((Arrow) object).getLocation(), RegionManager.RegionType.SPAWN)) {
-                        return false;
-                    }
-                }
-            }
-
-            applyEnchant(getEnchantLevel(source, this), args);
-            return true;
+            return calculateConditions(source, args);
         }
 
         return false;
@@ -85,33 +72,37 @@ public abstract class CustomEnchant implements Listener {
         if (itemHasEnchant(source, this)) {
             if (!condition) return false;
 
-            for (Object object : args) {
-                if (object instanceof Player) {
-                    if (DamageManager.getInstance().playerIsInCanceledEvent((Player) object)) {
-                        return false;
-                    }
-
-                    if (RegionManager.getInstance().playerIsInRegion((Player) object, RegionManager.RegionType.SPAWN)) {
-                        return false;
-                    }
-                }
-
-                if (object instanceof Arrow) {
-                    if (DamageManager.getInstance().arrowIsInCanceledEvent((Arrow) object)) {
-                        return false;
-                    }
-
-                    if (RegionManager.getInstance().locationIsInRegion(((Arrow) object).getLocation(), RegionManager.RegionType.SPAWN)) {
-                        return false;
-                    }
-                }
-            }
-
-            applyEnchant(getEnchantLevel(source, this), args);
-            return true;
+            return calculateConditions(source, args);
         }
 
         return false;
+    }
+
+    private boolean calculateConditions(ItemStack source, Object[] args) {
+        for (Object object : args) {
+            if (object instanceof Player) {
+                if (DamageManager.getInstance().playerIsInCanceledEvent((Player) object)) {
+                    return false;
+                }
+
+                if (RegionManager.getInstance().playerIsInRegion((Player) object, RegionManager.RegionType.SPAWN)) {
+                    return false;
+                }
+            }
+
+            if (object instanceof Arrow) {
+                if (DamageManager.getInstance().arrowIsInCanceledEvent((Arrow) object)) {
+                    return false;
+                }
+
+                if (RegionManager.getInstance().locationIsInRegion(((Arrow) object).getLocation(), RegionManager.RegionType.SPAWN)) {
+                    return false;
+                }
+            }
+        }
+
+        applyEnchant(getEnchantLevel(source, this), args);
+        return true;
     }
 
     public boolean getAttemptedEnchantExecutionFeedback(ItemStack source) {

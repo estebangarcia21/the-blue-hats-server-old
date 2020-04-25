@@ -153,6 +153,7 @@ public class Main extends JavaPlugin implements ServerGame {
         CustomEnchantManager.getInstance().registerEnchant(new Executioner());
         CustomEnchantManager.getInstance().registerEnchant(new BeatTheSpammers());
         CustomEnchantManager.getInstance().registerEnchant(new ComboHeal());
+        CustomEnchantManager.getInstance().registerEnchant(new Sweaty());
 
         //Bows
         CustomEnchantManager.getInstance().registerEnchant(new Robinhood());

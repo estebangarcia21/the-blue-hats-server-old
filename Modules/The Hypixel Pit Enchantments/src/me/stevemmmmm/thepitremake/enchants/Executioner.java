@@ -53,7 +53,7 @@ public class Executioner extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("1.5❤", "2❤", "2❤")
-                .write("Hitting an enemy to below ").writeVariable(ChatColor.RED, 0, level).nextLine()
+                .write("Hitting an enemy to below ").writeVariable(ChatColor.RED, 0, level).next()
                 .write("instantly kills them")
                 .build();
     }
@@ -74,7 +74,7 @@ public class Executioner extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

@@ -53,7 +53,7 @@ public class ComboDamage extends CustomEnchant {
         return new LoreBuilder()
                 .addVariable("fourth", "third", "third")
                 .addVariable("+20%", "+30%", "+45%")
-                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" strike deals").nextLine()
+                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" strike deals").next()
                 .setColor(ChatColor.RED).writeVariable(1, level).resetColor().write(" damage")
                 .build();
     }
@@ -74,7 +74,7 @@ public class ComboDamage extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }

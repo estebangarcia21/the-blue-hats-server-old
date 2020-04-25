@@ -72,11 +72,11 @@ public class Frostbite extends CustomEnchant {
         return new LoreBuilder()
                 .addVariable("", "2s", "4s")
                 .setWriteCondition(level == 1)
-                .write("Every ").write(ChatColor.YELLOW, "fifth").write(" strike ").write(ChatColor.AQUA, "freezes ").write("enemies,").nextLine()
+                .write("Every ").write(ChatColor.YELLOW, "fifth").write(" strike ").write(ChatColor.AQUA, "freezes ").write("enemies,").next()
                 .write("applying slowness for 3s")
                 .setWriteCondition(level != 1)
-                .write("Every ").write(ChatColor.YELLOW, "fourth").write(" strike ").write(ChatColor.AQUA, "freezes ").write("enemies,").nextLine()
-                .write("applying slowness for 3s and dealing").nextLine()
+                .write("Every ").write(ChatColor.YELLOW, "fourth").write(" strike ").write(ChatColor.AQUA, "freezes ").write("enemies,").next()
+                .write("applying slowness for 3s and dealing").next()
                 .write(ChatColor.RED, "1❤").write(" of ").write("true damage each second for ").writeVariable(0, level)
                 .build();
     }
@@ -97,7 +97,7 @@ public class Frostbite extends CustomEnchant {
     }
 
     @Override
-    public Material getEnchantItemType() {
-        return Material.GOLD_SWORD;
+    public Material[] getEnchantItemTypes() {
+        return new Material[] { Material.GOLD_SWORD };
     }
 }
