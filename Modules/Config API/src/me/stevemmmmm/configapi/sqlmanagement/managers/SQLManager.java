@@ -1,29 +1,180 @@
 package me.stevemmmmm.configapi.sqlmanagement.managers;
 
-import me.stevemmmmm.configapi.sqlmanagement.databases.PlayerRanksDatabase;
+import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.UUID;
 
 /*
  * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
 public class SQLManager {
-    public static void main(String[] args) {
-        double x = sendQuery(PlayerRanksDatabase.class, "SELECT * FROM %s.PlayerRanks", Double.class, SQLDefaultActions.READ.getAction());
-        System.out.println(x);
+    /**
+     * Returns the <code>ResultSet</code> from the given query.
+     *
+     * @param database The database to connect to (PebbleHost prefix)
+     * @param query The query to be executed
+     * @return The requested data
+     */
+    public static ResultSet sendQuery(Class<? extends MySQLDatabase> database, String query) {
+        try {
+            if (database == MySQLDatabase.class) {
+                throw new IllegalArgumentException("You can not pass MySQLDatabase as a database!");
+            }
+
+            MySQLDatabase databaseInstance = database.newInstance();
+
+            Connection connection = DriverManager.getConnection(databaseInstance.getConnectionUrl(), databaseInstance.getUsername(), databaseInstance.getPassword());
+            Statement statement = connection.createStatement();
+
+            query = String.format(query, databaseInstance.getName());
+
+            return statement.executeQuery(query);
+        } catch (SQLException | IllegalAccessException | InstantiationException exception) {
+            exception.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <K, V> HashMap<K, V> getMap(Class<? extends MySQLDatabase> database, String table, Class<K> keyType, String keyColumn, Class<V> valueType, String valueColumn) {
+        try {
+            if (database == MySQLDatabase.class) {
+                throw new IllegalArgumentException("You can not pass MySQLDatabase as a database!");
+            }
+
+            MySQLDatabase databaseInstance = database.newInstance();
+
+            Connection connection = DriverManager.getConnection(databaseInstance.getConnectionUrl(), databaseInstance.getUsername(), databaseInstance.getPassword());
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + databaseInstance.getName() + "." + table);
+
+            HashMap<K, V> result = new HashMap<>();
+
+            while (resultSet.next()) {
+                String keyEntry = resultSet.getString(keyColumn);
+                String valueEntry = resultSet.getString(valueColumn);
+
+                Object finalKey = keyEntry;
+                Object finalValue = valueEntry;
+
+                if (StringUtils.isNumeric(keyEntry)) {
+                    finalKey = castToNumber(keyEntry, keyType);
+                }
+
+                if (StringUtils.isNumeric(valueEntry)) {
+                    finalValue = castToNumber(valueEntry, valueType);
+                }
+
+                result.put(keyType.isPrimitive() ? (K) finalKey : keyType.cast(finalKey), valueType.isPrimitive() ? (V) finalValue : valueType.cast(finalValue));
+            }
+
+            return result;
+        } catch (SQLException | IllegalAccessException | InstantiationException exception) {
+            exception.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <V> HashMap<UUID, V> getPlayerDataMap(Class<? extends MySQLDatabase> database, String table, String uuidColumn, Class<V> valueType, String valueColumn, CastInstructions valueInstructions) {
+        try {
+            if (database == MySQLDatabase.class) {
+                throw new IllegalArgumentException("You can not pass MySQLDatabase as a database!");
+            }
+
+            MySQLDatabase databaseInstance = database.newInstance();
+
+            Connection connection = DriverManager.getConnection(databaseInstance.getConnectionUrl(), databaseInstance.getUsername(), databaseInstance.getPassword());
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + databaseInstance.getName() + "." + table);
+
+            HashMap<UUID, V> result = new HashMap<>();
+
+            while (resultSet.next()) {
+                String keyEntry = resultSet.getString(uuidColumn);
+                String valueEntry = resultSet.getString(valueColumn);
+
+                Object finalValue = valueEntry;
+
+                if (StringUtils.isNumeric(valueEntry)) {
+                    finalValue = castToNumber(valueEntry, valueType);
+                }
+
+                if (valueInstructions != null) finalValue = valueInstructions.cast(keyEntry, valueEntry);
+
+                result.put(UUID.fromString(keyEntry), valueType.isPrimitive() ? (V) finalValue : valueType.cast(finalValue));
+            }
+
+            return result;
+        } catch (SQLException | IllegalAccessException | InstantiationException exception) {
+            exception.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <K, V> HashMap<K, V> getComplexMap(Class<? extends MySQLDatabase> database, String table, Class<K> keyType, String uuidColumn, Class<V> valueType, String valueColumn, CastInstructions keyInstructions, CastInstructions valueInstructions) {
+        try {
+            if (database == MySQLDatabase.class) {
+                throw new IllegalArgumentException("You can not pass MySQLDatabase as a database!");
+            }
+
+            MySQLDatabase databaseInstance = database.newInstance();
+
+            Connection connection = DriverManager.getConnection(databaseInstance.getConnectionUrl(), databaseInstance.getUsername(), databaseInstance.getPassword());
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + databaseInstance.getName() + "." + table);
+
+            HashMap<K, V> result = new HashMap<>();
+
+            while (resultSet.next()) {
+                String keyEntry = resultSet.getString(uuidColumn);
+                String valueEntry = resultSet.getString(valueColumn);
+
+                Object finalKey = keyEntry;
+                Object finalValue = valueEntry;
+
+                if (StringUtils.isNumeric(keyEntry)) {
+                    finalKey = castToNumber(keyEntry, keyType);
+                }
+
+                if (StringUtils.isNumeric(valueEntry)) {
+                    finalValue = castToNumber(valueEntry, valueType);
+                }
+
+                if (keyInstructions != null) finalKey = keyInstructions.cast(keyEntry, valueEntry);
+                if (valueInstructions != null) finalValue = valueInstructions.cast(keyEntry, valueEntry);
+
+                result.put(keyType.isPrimitive() ? (K) finalKey : keyType.cast(finalKey), valueType.isPrimitive() ? (V) finalValue : valueType.cast(finalValue));
+            }
+
+            return result;
+        } catch (SQLException | IllegalAccessException | InstantiationException exception) {
+            exception.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
-     * Reads data from a database. Readable databases and their tables are:<br><br>
-     *
-     * - playerranks > PlayerRanks
+     * Reads the <code>ResultSet</code> and casts the result to the specified class from the given query.
      *
      * @param database The database to connect to (PebbleHost prefix)
-     * @param resultType The class that the result will be cast to
-     * @param <T> The return type of the query
+     * @param query The query to be executed
+     * @param resultType The class that the data from the ResultSet will be casted to
+     * @param action Action performed on the <code>ResultSet</code>
      * @return The requested data
      */
     @SuppressWarnings("unchecked")
@@ -36,7 +187,6 @@ public class SQLManager {
             MySQLDatabase databaseInstance = database.newInstance();
 
             Connection connection = DriverManager.getConnection(databaseInstance.getConnectionUrl(), databaseInstance.getUsername(), databaseInstance.getPassword());
-
             Statement statement = connection.createStatement();
 
             query = String.format(query, databaseInstance.getName());
@@ -81,5 +231,52 @@ public class SQLManager {
         }
 
         return resultType.cast(null);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T> T castToNumber(String value, Class<T> type) {
+        try {
+            String typeName = type.getName();
+
+            String root = null;
+
+            if (type.getName().length() >= 10) {
+                root = typeName.substring(0, 10);
+            } else if (type.isPrimitive()) {
+                root = "java.lang.";
+
+                if (typeName.equalsIgnoreCase("int")) {
+                    typeName = "integer";
+                }
+
+                typeName = root + typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
+            }
+
+            if (root != null) {
+                if (root.equalsIgnoreCase("java.lang.") && !typeName.equalsIgnoreCase("java.lang.String")) {
+                    Class<?> reflectedClass = Class.forName(typeName);
+
+                    String parseSuffix = typeName.split("\\.")[2];
+
+                    if (parseSuffix.equalsIgnoreCase("Integer")) {
+                        parseSuffix = "Int";
+                    }
+
+                    Method parseMethod = reflectedClass.getMethod("parse" + parseSuffix, String.class);
+
+                    Object parseResult = parseMethod.invoke(null, String.valueOf(value));
+
+                    if (type.isPrimitive()) {
+                        return (T) parseResult;
+                    }
+
+                    return type.cast(parseResult);
+                }
+            }
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

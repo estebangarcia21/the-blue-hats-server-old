@@ -1,5 +1,9 @@
 package me.stevemmmmm.thepitremake.game;
 
+import me.stevemmmmm.configapi.sqlmanagement.databases.PlayerRanksDatabase;
+import me.stevemmmmm.configapi.sqlmanagement.managers.SQLManager;
+import me.stevemmmmm.permissions.core.Rank;
+import me.stevemmmmm.permissions.ranks.RankManager;
 import me.stevemmmmm.thepitremake.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -10,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import java.sql.ResultSet;
 import java.util.HashMap;
 
 /*

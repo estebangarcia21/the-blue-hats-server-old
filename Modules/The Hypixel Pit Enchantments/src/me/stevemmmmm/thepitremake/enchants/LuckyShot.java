@@ -22,7 +22,6 @@ import java.util.UUID;
  * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
-@OutdatedEnchant
 public class LuckyShot extends CustomEnchant {
     private final LevelVariable<Integer> percentChance = new LevelVariable<>(2, 3, 10);
 
