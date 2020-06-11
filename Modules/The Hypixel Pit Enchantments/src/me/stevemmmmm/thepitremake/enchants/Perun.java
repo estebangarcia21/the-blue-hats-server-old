@@ -14,8 +14,8 @@ import java.util.ArrayList;
  */
 
 public class Perun extends CustomEnchant {
-    private final LevelVariable<Integer> perunDamage = new LevelVariable<>(3, 4, 2);
-    private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
+    private final EnchantProperty<Integer> perunDamage = new EnchantProperty<>(3, 4, 2);
+    private final EnchantProperty<Integer> hitsNeeded = new EnchantProperty<>(5, 4, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -29,11 +29,11 @@ public class Perun extends CustomEnchant {
         Player damager = (Player) args[0];
         Player target = (Player) args[1];
 
-        int damage = perunDamage.at(level);
+        int damage = perunDamage.getValueAtLevel(level);
 
         updateHitCount(damager);
 
-        if (hasRequiredHits(damager, hitsNeeded.at(level))) {
+        if (hasRequiredHits(damager, hitsNeeded.getValueAtLevel(level))) {
             if (level == 3) {
                 if (target.getInventory().getBoots() != null) if (target.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) damage += 2;
                 if (target.getInventory().getChestplate() != null) if (target.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) damage += 2;

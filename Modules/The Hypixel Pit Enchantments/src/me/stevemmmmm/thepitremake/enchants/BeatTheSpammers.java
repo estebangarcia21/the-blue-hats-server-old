@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class BeatTheSpammers extends CustomEnchant {
-    private LevelVariable<Float> damageAmount = new LevelVariable<>(.10f, .25f, .40f);
+    private EnchantProperty<Float> damageAmount = new EnchantProperty<>(.10f, .25f, .40f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -26,7 +26,7 @@ public class BeatTheSpammers extends CustomEnchant {
     @Override
     public void applyEnchant(int level, Object... args) {
         if (((Player) args[0]).getInventory().getItemInHand().getType() == Material.BOW) {
-            DamageManager.getInstance().addDamage(((EntityDamageByEntityEvent) args[1]), damageAmount.at(level), CalculationMode.ADDITIVE);
+            DamageManager.getInstance().addDamage(((EntityDamageByEntityEvent) args[1]), damageAmount.getValueAtLevel(level), CalculationMode.ADDITIVE);
         }
     }
 

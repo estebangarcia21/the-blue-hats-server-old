@@ -59,10 +59,15 @@ public class CustomEnchantManager {
             ItemMeta meta = item.getItemMeta();
             String previousDisplayName = meta.getDisplayName();
 
-            String tier = convertToRomanNumeral(MysticWell.getItemTier(item) + (hasTiered ? 0 : 1));
+            int tierValue = MysticWell.getItemTier(item);
+            System.out.println(tierValue);
+
+            if (tierValue > 2) tierValue = 2;
+
+            String tier = convertToRomanNumeral(tierValue + (hasTiered ? 0 : 1));
 
             ChatColor tierColor = null;
-            switch (MysticWell.getItemTier(item) + 1) {
+            switch (tierValue + 1) {
                 case 1:
                     tierColor = ChatColor.GREEN;
                     break;
@@ -300,7 +305,7 @@ public class CustomEnchantManager {
     }
 
     public boolean itemContainsEnchant(ItemStack item, CustomEnchant enchant) {
-        if (item.getItemMeta().getLore() == null) return false;
+        if (item.getItemMeta().getLore() == null || enchant == null) return false;
 
         List<String> lore = item.getItemMeta().getLore();
 

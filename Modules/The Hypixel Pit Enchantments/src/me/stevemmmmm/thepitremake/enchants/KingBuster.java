@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class KingBuster extends CustomEnchant {
-    private final LevelVariable<Float> damageIncrease = new LevelVariable<>(.7f, .13f, .2f);
+    private final EnchantProperty<Float> damageIncrease = new EnchantProperty<>(.7f, .13f, .2f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -29,7 +29,7 @@ public class KingBuster extends CustomEnchant {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[1];
 
         if (damaged.getHealth() > damaged.getMaxHealth() / 2) {
-            DamageManager.getInstance().addDamage(event, damageIncrease.at(level), CalculationMode.ADDITIVE);
+            DamageManager.getInstance().addDamage(event, damageIncrease.getValueAtLevel(level), CalculationMode.ADDITIVE);
         }
     }
 

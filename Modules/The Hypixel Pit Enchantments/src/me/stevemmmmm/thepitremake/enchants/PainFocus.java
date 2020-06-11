@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class PainFocus extends CustomEnchant {
-    private final LevelVariable<Float> damageIncreasePerHeartLost = new LevelVariable<>(.01f, .02f, .05f);
+    private final EnchantProperty<Float> damageIncreasePerHeartLost = new EnchantProperty<>(.01f, .02f, .05f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -30,7 +30,7 @@ public class PainFocus extends CustomEnchant {
 
         int heartsLost = (int) (player.getMaxHealth() - player.getHealth()) / 2;
 
-        DamageManager.getInstance().addDamage(event, damageIncreasePerHeartLost.at(level) * heartsLost, CalculationMode.ADDITIVE);
+        DamageManager.getInstance().addDamage(event, damageIncreasePerHeartLost.getValueAtLevel(level) * heartsLost, CalculationMode.ADDITIVE);
     }
 
     @Override

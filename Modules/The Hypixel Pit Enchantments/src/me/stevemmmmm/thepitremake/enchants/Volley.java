@@ -22,7 +22,7 @@ import java.util.HashMap;
  */
 
 public class Volley extends CustomEnchant {
-    private final LevelVariable<Integer> arrows = new LevelVariable<>(2, 3, 4);
+    private final EnchantProperty<Integer> arrows = new EnchantProperty<>(2, 3, 4);
 
     private final HashMap<Arrow, Integer> volleyTasks = new HashMap<>();
     private final HashMap<Arrow, Integer> arrowCount = new HashMap<>();
@@ -70,7 +70,7 @@ public class Volley extends CustomEnchant {
                 BowManager.getInstance().registerArrow(volleyArrow, player);
 
                 arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
-                if (arrowCount.get(arrow) > arrows.at(level)) {
+                if (arrowCount.get(arrow) > arrows.getValueAtLevel(level)) {
                     Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
                     volleyTasks.remove(arrow);
                     arrowCount.remove(arrow);

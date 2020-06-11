@@ -3,7 +3,7 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.core.Main;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -24,7 +24,7 @@ import java.util.UUID;
  */
 
 public class DoubleJump extends CustomEnchant {
-    private final LevelVariable<Integer> cooldownTime = new LevelVariable<>(20, 10, 5);
+    private final EnchantProperty<Integer> cooldownTime = new EnchantProperty<>(20, 10, 5);
 
     private final HashMap<UUID, Integer> playerHasDoubleJumps = new HashMap<>();
 
@@ -69,7 +69,7 @@ public class DoubleJump extends CustomEnchant {
             event.getPlayer().setVelocity(new Vector(normalizedVelocity.getX() * 3, 1.5, normalizedVelocity.getZ() * 3));
         }
 
-        startCooldown(event.getPlayer(), cooldownTime.at(level), true);
+        startCooldown(event.getPlayer(), cooldownTime.getValueAtLevel(level), true);
     }
 
     @Override

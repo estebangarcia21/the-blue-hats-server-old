@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class Punisher extends CustomEnchant {
-    private final LevelVariable<Float> damageIncrease = new LevelVariable<>(.6f, .12f, .18f);
+    private final EnchantProperty<Float> damageIncrease = new EnchantProperty<>(.6f, .12f, .18f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -29,7 +29,7 @@ public class Punisher extends CustomEnchant {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[1];
 
         if (damaged.getHealth() < damaged.getMaxHealth() / 2) {
-            DamageManager.getInstance().addDamage(event, damageIncrease.at(level), CalculationMode.ADDITIVE);
+            DamageManager.getInstance().addDamage(event, damageIncrease.getValueAtLevel(level), CalculationMode.ADDITIVE);
         }
     }
 

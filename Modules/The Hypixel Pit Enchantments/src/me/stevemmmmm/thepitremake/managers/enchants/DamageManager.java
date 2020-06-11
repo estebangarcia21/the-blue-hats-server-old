@@ -1,6 +1,5 @@
 package me.stevemmmmm.thepitremake.managers.enchants;
 
-import me.stevemmmmm.thepitremake.core.Main;
 import me.stevemmmmm.thepitremake.enchants.Mirror;
 import me.stevemmmmm.thepitremake.game.CombatManager;
 import me.stevemmmmm.thepitremake.game.RegionManager;
@@ -13,12 +12,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /*
  * Copyright (c) 2020. Created by Stevemmmmm.
@@ -213,13 +210,13 @@ public class DamageManager implements Listener {
             }
         } else if (CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror) != 1) {
             try {
-                if (reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
+                if (reflectTo.getHealth() - (damage * mirror.damageReflection.getValueAtLevel(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
                     safeSetPlayerHealth(target, 0);
                 } else {
                     reflectTo.damage(0);
 
                     CombatManager.getInstance().combatTag(target);
-                    safeSetPlayerHealth(reflectTo, Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.at(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
+                    safeSetPlayerHealth(reflectTo, Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.getValueAtLevel(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
                 }
             } catch (NullPointerException ignored) {
 

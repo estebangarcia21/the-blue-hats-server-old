@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class Frostbite extends CustomEnchant {
-    private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
+    private final EnchantProperty<Integer> hitsNeeded = new EnchantProperty<>(5, 4, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -35,7 +35,7 @@ public class Frostbite extends CustomEnchant {
 
         updateHitCount(damager);
 
-        if (hasRequiredHits(damager, hitsNeeded.at(level))) {
+        if (hasRequiredHits(damager, hitsNeeded.getValueAtLevel(level))) {
             hit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 1), true);
             hit.getWorld().playSound(hit.getLocation(), Sound.GLASS, 1, 1);
 

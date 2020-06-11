@@ -2,7 +2,7 @@ package me.stevemmmmm.thepitremake.enchants;
 
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,8 +20,8 @@ import java.util.ArrayList;
  */
 
 public class Peroxide extends CustomEnchant {
-    private final LevelVariable<Integer> regenTime = new LevelVariable<>(5, 8, 8);
-    private final LevelVariable<Integer> effectAmplifier = new LevelVariable<>(0, 0, 1);
+    private final EnchantProperty<Integer> regenTime = new EnchantProperty<>(5, 8, 8);
+    private final EnchantProperty<Integer> effectAmplifier = new EnchantProperty<>(0, 0, 1);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -40,7 +40,7 @@ public class Peroxide extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player hitPlayer = (Player) args[0];
 
-        hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, regenTime.at(level) * 20, effectAmplifier.at(level)), true);
+        hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, regenTime.getValueAtLevel(level) * 20, effectAmplifier.getValueAtLevel(level)), true);
     }
 
     @Override

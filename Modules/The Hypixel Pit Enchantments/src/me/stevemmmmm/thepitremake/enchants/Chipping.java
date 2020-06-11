@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class Chipping extends CustomEnchant {
-    private final LevelVariable<Integer> damageAmount = new LevelVariable<>(1, 2, 3);
+    private final EnchantProperty<Integer> damageAmount = new EnchantProperty<>(1, 2, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -31,7 +31,7 @@ public class Chipping extends CustomEnchant {
         Player hitPlayer = (Player) args[0];
         Player damager = (Player) args[1];
 
-        DamageManager.getInstance().doTrueDamage(hitPlayer, damageAmount.at(level), damager);
+        DamageManager.getInstance().doTrueDamage(hitPlayer, damageAmount.getValueAtLevel(level), damager);
     }
 
     @Override

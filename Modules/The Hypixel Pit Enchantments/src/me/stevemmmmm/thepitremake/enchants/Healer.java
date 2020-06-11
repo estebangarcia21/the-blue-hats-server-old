@@ -3,7 +3,7 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 
 public class Healer extends CustomEnchant {
-    private final LevelVariable<Integer> healAmount = new LevelVariable<>(2, 4, 6);
+    private final EnchantProperty<Integer> healAmount = new EnchantProperty<>(2, 4, 6);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -31,8 +31,8 @@ public class Healer extends CustomEnchant {
         Player damager = (Player) args[0];
         Player damaged = (Player) args[1];
 
-        damager.setHealth(Math.min(damager.getHealth() + healAmount.at(level), damager.getMaxHealth()));
-        damaged.setHealth(Math.min(damaged.getHealth() + healAmount.at(level), damaged.getMaxHealth()));
+        damager.setHealth(Math.min(damager.getHealth() + healAmount.getValueAtLevel(level), damager.getMaxHealth()));
+        damaged.setHealth(Math.min(damaged.getHealth() + healAmount.getValueAtLevel(level), damaged.getMaxHealth()));
     }
 
     @Override

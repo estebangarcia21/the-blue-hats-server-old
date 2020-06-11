@@ -3,7 +3,7 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 
 public class Megalongbow extends CustomEnchant {
-    private final LevelVariable<Integer> amplifier = new LevelVariable<>(1, 2, 3);
+    private final EnchantProperty<Integer> amplifier = new EnchantProperty<>(1, 2, 3);
 
     @EventHandler
     public void onArrowShoot(EntityShootBowEvent event) {
@@ -37,7 +37,7 @@ public class Megalongbow extends CustomEnchant {
         if (isNotOnCooldown(player)) {
             arrow.setCritical(true);
             arrow.setVelocity(player.getLocation().getDirection().multiply(2.90));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, amplifier.at(level)), true);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 40, amplifier.getValueAtLevel(level)), true);
         }
 
         startCooldown(player, 1, true);

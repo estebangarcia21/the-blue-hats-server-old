@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class Fletching extends CustomEnchant {
-    private final LevelVariable<Float> damageAmount = new LevelVariable<>(.07f, .12f, .20f);
+    private final EnchantProperty<Float> damageAmount = new EnchantProperty<>(.07f, .12f, .20f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -28,7 +28,7 @@ public class Fletching extends CustomEnchant {
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        DamageManager.getInstance().addDamage(((EntityDamageByEntityEvent) args[0]), damageAmount.at(level), CalculationMode.ADDITIVE);
+        DamageManager.getInstance().addDamage(((EntityDamageByEntityEvent) args[0]), damageAmount.getValueAtLevel(level), CalculationMode.ADDITIVE);
     }
 
     @Override

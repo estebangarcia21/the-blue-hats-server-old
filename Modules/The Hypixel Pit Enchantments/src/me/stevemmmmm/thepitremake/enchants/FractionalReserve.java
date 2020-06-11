@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class FractionalReserve extends CustomEnchant {
-    private final LevelVariable<Double> maximumDamageReduction = new LevelVariable<>(.15D, .21D, .30D);
+    private final EnchantProperty<Double> maximumDamageReduction = new EnchantProperty<>(.15D, .21D, .30D);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -34,8 +34,8 @@ public class FractionalReserve extends CustomEnchant {
             damageReduction += .10D;
         }
 
-        if (damageReduction > maximumDamageReduction.at(level)) {
-            damageReduction = maximumDamageReduction.at(level);
+        if (damageReduction > maximumDamageReduction.getValueAtLevel(level)) {
+            damageReduction = maximumDamageReduction.getValueAtLevel(level);
         }
 
         DamageManager.getInstance().reduceDamage(((EntityDamageByEntityEvent) args[1]), damageReduction);

@@ -3,7 +3,7 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,9 +19,9 @@ import java.util.ArrayList;
  */
 
 public class ComboSwift extends CustomEnchant {
-    private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(4, 3, 3);
-    private final LevelVariable<Integer> speedTime = new LevelVariable<>(3, 4, 5);
-    private final LevelVariable<Integer> speedAmplifier = new LevelVariable<>(0, 1, 1);
+    private final EnchantProperty<Integer> hitsNeeded = new EnchantProperty<>(4, 3, 3);
+    private final EnchantProperty<Integer> speedTime = new EnchantProperty<>(3, 4, 5);
+    private final EnchantProperty<Integer> speedAmplifier = new EnchantProperty<>(0, 1, 1);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -36,8 +36,8 @@ public class ComboSwift extends CustomEnchant {
 
         updateHitCount(player);
 
-        if (hasRequiredHits(player, hitsNeeded.at(level))) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, speedTime.at(level) * 20, speedAmplifier.at(level)), true);
+        if (hasRequiredHits(player, hitsNeeded.getValueAtLevel(level))) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, speedTime.getValueAtLevel(level) * 20, speedAmplifier.getValueAtLevel(level)), true);
         }
     }
 

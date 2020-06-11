@@ -3,7 +3,7 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class LastStand extends CustomEnchant {
-    private final LevelVariable<Integer> amplifier = new LevelVariable<>(0, 1, 2);
+    private final EnchantProperty<Integer> amplifier = new EnchantProperty<>(0, 1, 2);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -33,7 +33,7 @@ public class LastStand extends CustomEnchant {
         Player damaged = (Player) args[0];
 
         if (damaged.getHealth() < 10) {
-            damaged.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, amplifier.at(level)));
+            damaged.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, amplifier.getValueAtLevel(level)));
         }
     }
 

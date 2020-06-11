@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class DevilChicks extends CustomEnchant {
-    private final LevelVariable<Integer> amountOfChicks = new LevelVariable<>(1, 2, 3);
+    private final EnchantProperty<Integer> amountOfChicks = new EnchantProperty<>(1, 2, 3);
 
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {
@@ -36,7 +36,7 @@ public class DevilChicks extends CustomEnchant {
         Location location = arrow.getLocation();
         World world = location.getWorld();
 
-        for (int i = 0; i < amountOfChicks.at(level); i++) {
+        for (int i = 0; i < amountOfChicks.getValueAtLevel(level); i++) {
             Vector direction = new Vector();
 
             float radius = 0.75f;

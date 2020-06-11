@@ -3,7 +3,7 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class Mirror extends CustomEnchant {
-    public LevelVariable<Float> damageReflection = new LevelVariable<>(0f, .25f, .5f);
+    public EnchantProperty<Float> damageReflection = new EnchantProperty<>(0f, .25f, .5f);
 
     @Override
     public void applyEnchant(int level, Object... args) {

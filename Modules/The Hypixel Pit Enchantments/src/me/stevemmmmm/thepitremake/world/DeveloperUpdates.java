@@ -15,16 +15,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 @SuppressWarnings("all")
 public class DeveloperUpdates implements Listener {
-    private final String update = "Added ring armor, beat the spammers, combo heal, and fletching!";
-    private final String testMessage = "Working on Canceling Player!";
-    private final boolean isTesting = false;
+    private static final String update = "Welcome back everyone!";
+    private static final String testMessage = "Working on Canceling Player!";
+    private static final boolean isTesting = false;
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        displayUpdate(event.getPlayer());
-    }
-
-    private void displayUpdate(Player player) {
+    public static void displayUpdate(Player player) {
         if (isTesting) {
             IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "⚠ " + ChatColor.YELLOW + "Testing! Expect restarts..." + ChatColor.RED + " ⚠" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
@@ -43,7 +38,7 @@ public class DeveloperUpdates implements Listener {
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitle);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitleLength);
         } else {
-            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "What's new?" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.GOLD + "Welcome back!" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
             PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
             PacketPlayOutTitle length = new PacketPlayOutTitle(20, 5 * 20, 20);

@@ -3,7 +3,6 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.core.Main;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.*;
-import me.stevemmmmm.thepitremake.utils.OutdatedEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,7 +22,7 @@ import java.util.UUID;
  */
 
 public class LuckyShot extends CustomEnchant {
-    private final LevelVariable<Integer> percentChance = new LevelVariable<>(2, 3, 10);
+    private final EnchantProperty<Integer> percentChance = new EnchantProperty<>(2, 3, 10);
 
     private final ArrayList<Arrow> hitLuckyShotArrows = new ArrayList<>();
 
@@ -65,7 +64,7 @@ public class LuckyShot extends CustomEnchant {
                 if (CustomEnchant.itemHasEnchant(((Player) ((Arrow) event.getProjectile()).getShooter()).getItemInHand(), this)) {
                     int level = CustomEnchant.getEnchantLevel(((Player) ((Arrow) event.getProjectile()).getShooter()).getItemInHand(), this);
 
-                    if (percentChance(percentChance.at(level))) {
+                    if (percentChance(percentChance.getValueAtLevel(level))) {
                         canLuckyShot.add(((Player) ((Arrow) event.getProjectile()).getShooter()).getUniqueId());
                         ((Player) ((Arrow) event.getProjectile()).getShooter()).sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
                     }

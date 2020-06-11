@@ -15,8 +15,8 @@ import java.util.ArrayList;
  */
 
 public class ComboDamage extends CustomEnchant {
-    private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(4, 3, 3);
-    private final LevelVariable<Float> damageAmount = new LevelVariable<>(.2f, .3f, .45f);
+    private final EnchantProperty<Integer> hitsNeeded = new EnchantProperty<>(4, 3, 3);
+    private final EnchantProperty<Float> damageAmount = new EnchantProperty<>(.2f, .3f, .45f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -32,9 +32,9 @@ public class ComboDamage extends CustomEnchant {
 
         updateHitCount(player);
 
-        if (hasRequiredHits(player, hitsNeeded.at(level))) {
+        if (hasRequiredHits(player, hitsNeeded.getValueAtLevel(level))) {
             player.playSound(player.getLocation(), Sound.DONKEY_HIT, 1, 0.5f);
-            DamageManager.getInstance().addDamage(event, damageAmount.at(level), CalculationMode.ADDITIVE);
+            DamageManager.getInstance().addDamage(event, damageAmount.getValueAtLevel(level), CalculationMode.ADDITIVE);
         }
     }
 

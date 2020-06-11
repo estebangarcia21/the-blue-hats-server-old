@@ -25,7 +25,7 @@ import java.util.UUID;
  */
 
 public class Telebow extends CustomEnchant {
-    private final LevelVariable<Integer> cooldownTimes = new LevelVariable<>(90, 45, 20);
+    private final EnchantProperty<Integer> cooldownTimes = new EnchantProperty<>(90, 45, 20);
 
     private final HashMap<UUID, TelebowData> telebowData = new HashMap<>();
 
@@ -119,7 +119,7 @@ public class Telebow extends CustomEnchant {
             player.getWorld().playSound(arrow.getLocation(), Sound.ENDERMAN_TELEPORT, 1f, 2f);
         }
 
-        startCooldown(player, cooldownTimes.at(level), true);
+        startCooldown(player, cooldownTimes.getValueAtLevel(level), true);
     }
 
     @Override

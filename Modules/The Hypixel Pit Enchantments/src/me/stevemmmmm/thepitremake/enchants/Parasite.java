@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class Parasite extends CustomEnchant {
-    private final LevelVariable<Double> healAmount = new LevelVariable<>(0.5D, 1D, 2D);
+    private final EnchantProperty<Double> healAmount = new EnchantProperty<>(0.5D, 1D, 2D);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -30,7 +30,7 @@ public class Parasite extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player player = (Player) args[0];
 
-        player.setHealth(Math.min(player.getHealth() + healAmount.at(level), player.getMaxHealth()));
+        player.setHealth(Math.min(player.getHealth() + healAmount.getValueAtLevel(level), player.getMaxHealth()));
     }
 
     @Override

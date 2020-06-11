@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class Bruiser extends CustomEnchant {
-    private final LevelVariable<Integer> heartsReduced = new LevelVariable<>(1, 2, 4);
+    private final EnchantProperty<Integer> heartsReduced = new EnchantProperty<>(1, 2, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -28,7 +28,7 @@ public class Bruiser extends CustomEnchant {
         Player player = (Player) args[0];
 
         if (player.isBlocking()) {
-            DamageManager.getInstance().reduceAbsoluteDamage((EntityDamageByEntityEvent) args[1], heartsReduced.at(level));
+            DamageManager.getInstance().reduceAbsoluteDamage((EntityDamageByEntityEvent) args[1], heartsReduced.getValueAtLevel(level));
         }
     }
 

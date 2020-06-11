@@ -14,7 +14,6 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 
 public class GiveProtCommand implements CommandExecutor {
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {

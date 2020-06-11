@@ -25,11 +25,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
+/*
+ * This class is lazily coded.
+ */
 
 /*
  * Copyright (c) 2020. Created by Stevemmmmm.
@@ -261,37 +262,56 @@ public class MysticWell implements Listener {
 
     private void addNewEnchantsToItem(ItemStack item) {
         if (getItemTier(item) == 0) {
-            int determinant = MathUtils.biasedRandomness(1, 2, 1.8);
+            int determinant = ThreadLocalRandom.current().nextInt(0, 10) + 1;
 
-            if (determinant == 1) {
+            if (determinant != 1) {
                 CustomEnchant enchant = getRandomEnchantFromGroup(EnchantGroup.A, item.getType());
 
-                addEnchantsToItem(item, 5, 10, 2.25, enchant);
+                addEnchantsToItem(item, 5, 10, 2.25, 2, enchant);
             } else {
                 CustomEnchant enchantA = getRandomEnchantFromGroup(EnchantGroup.A, item.getType());
                 CustomEnchant enchantC = getRandomEnchantFromGroup(EnchantGroup.C, item.getType());
 
-                addEnchantsToItem(item, 5, 10, 2.25, enchantA, enchantC);
+                addEnchantsToItem(item, 5, 10, 2.25, 1, enchantA, enchantC);
             }
 
             return;
         }
 
         if (getItemTier(item) == 1) {
-            CustomEnchant enchant = getRandomEnchantFromGroup(EnchantGroup.B, item.getType());
+            int determinant = ThreadLocalRandom.current().nextInt(0, 10) + 1;
 
-            addEnchantsToItem(item, 2, 20, 2.35, enchant);
+            CustomEnchant[] buffer = new CustomEnchant[2];
+
+            if (determinant <= 7) {
+                int tokenDeterminant = ThreadLocalRandom.current().nextInt(0, 10) + 1;
+                boolean addRare = ThreadLocalRandom.current().nextInt(0, 150) == 0;
+
+                if (tokenDeterminant <= 4) {
+                    buffer[0] = getRandomEnchantFromGroup(EnchantGroup.A, item.getType());
+                }
+
+            } else {
+                int order = ThreadLocalRandom.current().nextInt(0, 1);
+
+                buffer[order] = getRandomEnchantFromGroup(EnchantGroup.A, item.getType());
+                buffer[order - 1 != 0 ? 1 : 0] = getRandomEnchantFromGroup(EnchantGroup.C, item.getType());
+            }
+
+            buffer = Arrays.stream(buffer).filter(Objects::nonNull).toArray(CustomEnchant[]::new);
+
+            addEnchantsToItem(item, 2, 20, 2.35, 3, buffer);
             return;
         }
 
         if (getItemTier(item) == 2) {
             CustomEnchant enchant = getRandomEnchantFromGroup(EnchantGroup.B, item.getType());
 
-            addEnchantsToItem(item, 5, 25, 2.5, enchant);
+            addEnchantsToItem(item, 5, 25, 2.5, 3, enchant);
         }
     }
 
-    private void addEnchantsToItem(ItemStack item, int minLives, int maxLives, double livesBias, CustomEnchant... enchants) {
+    private void addEnchantsToItem(ItemStack item, int minLives, int maxLives, double livesBias, int maxToken, CustomEnchant... enchants) {
         for (CustomEnchant enchant : enchants) {
             if (CustomEnchantManager.getInstance().itemContainsEnchant(item, enchant)) {
                 addNewEnchantsToItem(item);
@@ -301,7 +321,7 @@ public class MysticWell implements Listener {
 
         int lives = CustomEnchantManager.getInstance().getItemLives(item) + MathUtils.biasedRandomness(minLives, maxLives, livesBias);
 
-        CustomEnchantManager.getInstance().addEnchants(item, MathUtils.biasedRandomness(1, 3, 3.5), enchants);
+        CustomEnchantManager.getInstance().addEnchants(item, MathUtils.biasedRandomness(1, maxToken, 3.5), enchants);
         CustomEnchantManager.getInstance().setItemLives(item, lives);
         CustomEnchantManager.getInstance().setMaximumItemLives(item, lives);
     }

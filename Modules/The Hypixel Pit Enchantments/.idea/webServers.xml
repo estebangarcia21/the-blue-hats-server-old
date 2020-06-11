@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="885434dc-8953-43a3-985b-1f2c3f371052" name="TBH Server" url="https://thebluehatsserver@gmail.com.112484@na327.pebblehost.com:21">
-        <fileTransfer host="na327.pebblehost.com" port="21">
+      <webServer id="885434dc-8953-43a3-985b-1f2c3f371052" name="TBH Server" url="https://thebluehatsserver@gmail.com.123353@na29.pebblehost.com:21">
+        <fileTransfer host="na29.pebblehost.com" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

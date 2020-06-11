@@ -18,7 +18,6 @@ import java.util.Map;
  */
 
 public class EnchantCommand implements CommandExecutor {
-
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {

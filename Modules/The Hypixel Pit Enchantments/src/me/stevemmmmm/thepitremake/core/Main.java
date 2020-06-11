@@ -111,6 +111,7 @@ public class Main extends JavaPlugin implements ServerGame {
         getServer().getPluginManager().registerEvents(new StopLiquidFlow(), this);
         getServer().getPluginManager().registerEvents(WorldSelection.getInstance(), this);
         getServer().getPluginManager().registerEvents(EnderChest.getInstance(), this);
+        getServer().getPluginManager().registerEvents(new MonsterBlob(), this);
     }
 
     @Override

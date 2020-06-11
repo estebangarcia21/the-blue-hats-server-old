@@ -3,7 +3,7 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.core.Main;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,7 +24,7 @@ import java.util.UUID;
 public class BooBoo extends CustomEnchant {
     private final HashMap<UUID, Integer> tasks = new HashMap<>();
 
-    private final LevelVariable<Integer> secondsNeeded = new LevelVariable<>(5, 4, 3);
+    private final EnchantProperty<Integer> secondsNeeded = new EnchantProperty<>(5, 4, 3);
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -48,7 +48,7 @@ public class BooBoo extends CustomEnchant {
 
         updateHitCount(player);
 
-        if (hasRequiredHits(player, secondsNeeded.at(level))) {
+        if (hasRequiredHits(player, secondsNeeded.getValueAtLevel(level))) {
             player.setHealth(Math.min(player.getHealth() + 2, player.getMaxHealth()));
         }
     }

@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class RingArmor extends CustomEnchant {
-    private final LevelVariable<Float> damageReductionAmount = new LevelVariable<>(.20f, .40f, .60f);
+    private final EnchantProperty<Float> damageReductionAmount = new EnchantProperty<>(.20f, .40f, .60f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -28,7 +28,7 @@ public class RingArmor extends CustomEnchant {
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        DamageManager.getInstance().reduceDamage(((EntityDamageByEntityEvent) args[0]), damageReductionAmount.at(level));
+        DamageManager.getInstance().reduceDamage(((EntityDamageByEntityEvent) args[0]), damageReductionAmount.getValueAtLevel(level));
     }
 
     @Override

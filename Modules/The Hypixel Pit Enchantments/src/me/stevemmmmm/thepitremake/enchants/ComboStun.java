@@ -3,7 +3,7 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.ChatColor;
@@ -23,8 +23,8 @@ import java.util.ArrayList;
  */
 
 public class ComboStun extends CustomEnchant {
-    private final LevelVariable<Integer> duration = new LevelVariable<>(10, 16, 30);
-    private final LevelVariable<Integer> hitsNeeded = new LevelVariable<>(5, 4, 4);
+    private final EnchantProperty<Integer> duration = new EnchantProperty<>(10, 16, 30);
+    private final EnchantProperty<Integer> hitsNeeded = new EnchantProperty<>(5, 4, 4);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -40,9 +40,9 @@ public class ComboStun extends CustomEnchant {
 
         updateHitCount(damager);
 
-        if (hasRequiredHits(damager, hitsNeeded.at(level))) {
-            hit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, duration.at(level), 8), true);
-            hit.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, duration.at(level), -8), true);
+        if (hasRequiredHits(damager, hitsNeeded.getValueAtLevel(level))) {
+            hit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, duration.getValueAtLevel(level), 8), true);
+            hit.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, duration.getValueAtLevel(level), -8), true);
             hit.getWorld().playSound(hit.getLocation(), Sound.ANVIL_LAND, 1, 0.1f);
 
             sendPackets(hit);

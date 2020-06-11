@@ -16,8 +16,8 @@ import java.util.ArrayList;
  */
 
 public class Billionaire extends CustomEnchant {
-    private final LevelVariable<Double> damageIncrease = new LevelVariable<>(1.33D, 1.67D, 2D);
-    private final LevelVariable<Integer> goldNeeded = new LevelVariable<>(100, 200, 350);
+    private final EnchantProperty<Double> damageIncrease = new EnchantProperty<>(1.33D, 1.67D, 2D);
+    private final EnchantProperty<Integer> goldNeeded = new EnchantProperty<>(100, 200, 350);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -30,10 +30,10 @@ public class Billionaire extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player damager = (Player) args[0];
 
-        if (GrindingSystem.getInstance().getPlayerGold(damager) >= goldNeeded.at(level)) {
-            GrindingSystem.getInstance().setPlayerGold(damager, GrindingSystem.getInstance().getPlayerGold(damager) - goldNeeded.at(level));
+        if (GrindingSystem.getInstance().getPlayerGold(damager) >= goldNeeded.getValueAtLevel(level)) {
+            GrindingSystem.getInstance().setPlayerGold(damager, GrindingSystem.getInstance().getPlayerGold(damager) - goldNeeded.getValueAtLevel(level));
 
-            DamageManager.getInstance().addDamage((EntityDamageByEntityEvent) args[1], damageIncrease.at(level), CalculationMode.MULTIPLICATIVE);
+            DamageManager.getInstance().addDamage((EntityDamageByEntityEvent) args[1], damageIncrease.getValueAtLevel(level), CalculationMode.MULTIPLICATIVE);
             damager.playSound(damager.getLocation(), Sound.ORB_PICKUP, 1, 0.73f);
         }
     }

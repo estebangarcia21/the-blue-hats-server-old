@@ -14,7 +14,7 @@ public class PlayerUtility implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        event.setJoinMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "YUH! " + ChatColor.AQUA + event.getPlayer().getName() + ChatColor.GREEN + " just joined the server!");
+        event.setJoinMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "WELCOME BACK! " + ChatColor.AQUA + event.getPlayer().getName() + ChatColor.GREEN + " just joined the server!");
     }
 
     @EventHandler

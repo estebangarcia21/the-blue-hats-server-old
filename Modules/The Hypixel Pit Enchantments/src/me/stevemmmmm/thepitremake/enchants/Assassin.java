@@ -3,7 +3,7 @@ package me.stevemmmmm.thepitremake.enchants;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 
 public class Assassin extends CustomEnchant {
-    private final LevelVariable<Integer> cooldownTime = new LevelVariable<>(5, 4, 3);
+    private final EnchantProperty<Integer> cooldownTime = new EnchantProperty<>(5, 4, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -58,7 +58,7 @@ public class Assassin extends CustomEnchant {
             player.getWorld().playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 2);
         }
 
-        startCooldown(player, cooldownTime.at(level), true);
+        startCooldown(player, cooldownTime.getValueAtLevel(level), true);
     }
 
     @Override

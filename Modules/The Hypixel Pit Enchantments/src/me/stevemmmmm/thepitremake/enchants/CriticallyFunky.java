@@ -18,8 +18,8 @@ import java.util.UUID;
  */
 
 public class CriticallyFunky extends CustomEnchant {
-    private final LevelVariable<Float> damageReduction = new LevelVariable<>(0.35f, 0.35f, 0.6f);
-    private final LevelVariable<Float> damageIncrease = new LevelVariable<>(0f, .14f, .3f);
+    private final EnchantProperty<Float> damageReduction = new EnchantProperty<>(0.35f, 0.35f, 0.6f);
+    private final EnchantProperty<Float> damageIncrease = new EnchantProperty<>(0f, .14f, .3f);
 
     private final List<UUID> queue = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class CriticallyFunky extends CustomEnchant {
         if (!DamageManager.getInstance().isCriticalHit(damager)) return;
 
         if (queue.contains(damager.getUniqueId())) {
-            DamageManager.getInstance().addDamage(event, damageIncrease.at(level), CalculationMode.ADDITIVE);
+            DamageManager.getInstance().addDamage(event, damageIncrease.getValueAtLevel(level), CalculationMode.ADDITIVE);
             queue.remove(damager.getUniqueId());
         }
 
@@ -62,7 +62,7 @@ public class CriticallyFunky extends CustomEnchant {
             queue.add(event.getEntity().getUniqueId());
         }
 
-        DamageManager.getInstance().reduceDamage(event, damageReduction.at(level));
+        DamageManager.getInstance().reduceDamage(event, damageReduction.getValueAtLevel(level));
         DamageManager.getInstance().removeExtraCriticalDamage(event);
     }
 

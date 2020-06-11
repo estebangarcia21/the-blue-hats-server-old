@@ -6,7 +6,7 @@ package me.stevemmmmm.thepitremake.enchants;
 
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;
-import me.stevemmmmm.thepitremake.managers.enchants.LevelVariable;
+import me.stevemmmmm.thepitremake.managers.enchants.EnchantProperty;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import org.bukkit.ChatColor;
@@ -20,7 +20,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.ArrayList;
 
 public class ComboHeal extends CustomEnchant {
-    private final LevelVariable<Float> healingAmount = new LevelVariable<>(.80f, 1.6f, 2.4f);
+    private final EnchantProperty<Float> healingAmount = new EnchantProperty<>(.80f, 1.6f, 2.4f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -39,7 +39,7 @@ public class ComboHeal extends CustomEnchant {
             EntityPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
 
             player.playSound(player.getLocation(), Sound.DONKEY_HIT, 1, 0.5f);
-            nmsPlayer.setAbsorptionHearts(Math.min(nmsPlayer.getAbsorptionHearts() + healingAmount.at(level), 8));
+            nmsPlayer.setAbsorptionHearts(Math.min(nmsPlayer.getAbsorptionHearts() + healingAmount.getValueAtLevel(level), 8));
         }
     }
 

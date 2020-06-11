@@ -2,6 +2,7 @@ package me.stevemmmmm.thepitremake.game;
 
 import me.stevemmmmm.thepitremake.core.Main;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
+import me.stevemmmmm.thepitremake.world.DeveloperUpdates;
 import org.bukkit.*;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -10,11 +11,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.UUID;
 
 /*
@@ -85,8 +88,16 @@ public class WorldSelection implements Listener {
         }
     }
 
-    private void transportToWorld(HumanEntity player, String world) {
-        player.teleport(new Location(Bukkit.getWorld(world),0.5, 86.5, 11.5, -180, 0));
+    private void transportToWorld(HumanEntity player, String worldName) {
+        World world = Main.INSTANCE.getServer().createWorld(new WorldCreator(worldName));
+        Location location = new Location(world,0.5, 86.5, 11.5, -180, 0);
+
+        location.getChunk().load();
+
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> {
+            player.teleport(new Location(world,0.5, 86.5, 11.5, -180, 0));
+            DeveloperUpdates.displayUpdate((Player) player);
+        }, 1L);
     }
 
     private void generateGui() {

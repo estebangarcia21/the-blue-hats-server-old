@@ -20,11 +20,11 @@ import java.util.ArrayList;
  */
 
 public class Explosive extends CustomEnchant {
-    private final LevelVariable<Double> explosionRange = new LevelVariable<>(1D, 2.5D, 6D);
-    private final LevelVariable<Integer> cooldownTime = new LevelVariable<>(5, 3, 5);
-    private final LevelVariable<Float> explosionPitch = new LevelVariable<>(2f, 1f, 1.4f);
+    private final EnchantProperty<Double> explosionRange = new EnchantProperty<>(1D, 2.5D, 6D);
+    private final EnchantProperty<Integer> cooldownTime = new EnchantProperty<>(5, 3, 5);
+    private final EnchantProperty<Float> explosionPitch = new EnchantProperty<>(2f, 1f, 1.4f);
 
-    private final LevelVariable<Effect> explosionParticle = new LevelVariable<>(Effect.EXPLOSION_LARGE, Effect.EXPLOSION_HUGE, Effect.EXPLOSION_HUGE);
+    private final EnchantProperty<Effect> explosionParticle = new EnchantProperty<>(Effect.EXPLOSION_LARGE, Effect.EXPLOSION_HUGE, Effect.EXPLOSION_HUGE);
 
     @EventHandler
     public void onArrowLand(ProjectileHitEvent event) {
@@ -41,7 +41,7 @@ public class Explosive extends CustomEnchant {
         Player shooter = (Player) arrow.getShooter();
 
         if (isNotOnCooldown(shooter)) {
-            for (Entity entity : arrow.getNearbyEntities(explosionRange.at(level), explosionRange.at(level), explosionRange.at(level))) {
+            for (Entity entity : arrow.getNearbyEntities(explosionRange.getValueAtLevel(level), explosionRange.getValueAtLevel(level), explosionRange.getValueAtLevel(level))) {
                 if (entity instanceof Player) {
                     Player player = (Player) entity;
 
@@ -56,11 +56,11 @@ public class Explosive extends CustomEnchant {
                 }
             }
 
-            arrow.getWorld().playSound(arrow.getLocation(), Sound.EXPLODE, 0.75f, explosionPitch.at(level));
-            arrow.getWorld().playEffect(arrow.getLocation(), explosionParticle.at(level), explosionParticle.at(level).getData(), 100);
+            arrow.getWorld().playSound(arrow.getLocation(), Sound.EXPLODE, 0.75f, explosionPitch.getValueAtLevel(level));
+            arrow.getWorld().playEffect(arrow.getLocation(), explosionParticle.getValueAtLevel(level), explosionParticle.getValueAtLevel(level).getData(), 100);
         }
 
-        startCooldown(shooter, cooldownTime.at(level), true);
+        startCooldown(shooter, cooldownTime.getValueAtLevel(level), true);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class Explosive extends CustomEnchant {
         return new LoreBuilder()
                 .addVariable("POP", "BANG", "BOOM")
                 .setColor(ChatColor.GRAY)
-                .write("Arrows go ").writeVariable(0, level).write("! (" + cooldownTime.at(level) + "s cooldown)")
+                .write("Arrows go ").writeVariable(0, level).write("! (" + cooldownTime.getValueAtLevel(level) + "s cooldown)")
                 .build();
     }
 

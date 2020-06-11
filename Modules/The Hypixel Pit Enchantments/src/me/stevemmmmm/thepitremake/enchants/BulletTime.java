@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 
 public class BulletTime extends CustomEnchant implements EnchantCanceler {
-    private final LevelVariable<Integer> healingAmount = new LevelVariable<>(0, 2, 3);
+    private final EnchantProperty<Integer> healingAmount = new EnchantProperty<>(0, 2, 3);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -44,7 +44,7 @@ public class BulletTime extends CustomEnchant implements EnchantCanceler {
 
             arrow.remove();
 
-            hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + healingAmount.at(level), hitPlayer.getMaxHealth()));
+            hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + healingAmount.getValueAtLevel(level), hitPlayer.getMaxHealth()));
         }
     }
 

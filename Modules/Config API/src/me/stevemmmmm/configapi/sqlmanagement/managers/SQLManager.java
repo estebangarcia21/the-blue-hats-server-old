@@ -20,21 +20,15 @@ public class SQLManager {
      * @param query The query to be executed
      * @return The requested data
      */
-    public static ResultSet sendQuery(Class<? extends MySQLDatabase> database, String query) {
+    public static ResultSet sendQuery(MySQLDatabase database, String query) {
         try {
-            if (database == MySQLDatabase.class) {
-                throw new IllegalArgumentException("You can not pass MySQLDatabase as a database!");
-            }
-
-            MySQLDatabase databaseInstance = database.newInstance();
-
-            Connection connection = DriverManager.getConnection(databaseInstance.getConnectionUrl(), databaseInstance.getUsername(), databaseInstance.getPassword());
+            Connection connection = DriverManager.getConnection(database.getConnectionUrl(), database.getUsername(), database.getPassword());
             Statement statement = connection.createStatement();
 
-            query = String.format(query, databaseInstance.getName());
+            query = String.format(query, database.getName());
 
             return statement.executeQuery(query);
-        } catch (SQLException | IllegalAccessException | InstantiationException exception) {
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
@@ -42,18 +36,12 @@ public class SQLManager {
     }
 
     @SuppressWarnings("unchecked")
-    public static <K, V> HashMap<K, V> getMap(Class<? extends MySQLDatabase> database, String table, Class<K> keyType, String keyColumn, Class<V> valueType, String valueColumn) {
+    public static <K, V> HashMap<K, V> getMap(MySQLDatabase database, String table, Class<K> keyType, String keyColumn, Class<V> valueType, String valueColumn) {
         try {
-            if (database == MySQLDatabase.class) {
-                throw new IllegalArgumentException("You can not pass MySQLDatabase as a database!");
-            }
-
-            MySQLDatabase databaseInstance = database.newInstance();
-
-            Connection connection = DriverManager.getConnection(databaseInstance.getConnectionUrl(), databaseInstance.getUsername(), databaseInstance.getPassword());
+            Connection connection = DriverManager.getConnection(database.getConnectionUrl(), database.getUsername(), database.getPassword());
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + databaseInstance.getName() + "." + table);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + database.getName() + "." + table);
 
             HashMap<K, V> result = new HashMap<>();
 
@@ -76,7 +64,7 @@ public class SQLManager {
             }
 
             return result;
-        } catch (SQLException | IllegalAccessException | InstantiationException exception) {
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
@@ -85,20 +73,14 @@ public class SQLManager {
     }
 
     @SuppressWarnings("unchecked")
-    public static <V> HashMap<UUID, V> getPlayerDataMap(Class<? extends MySQLDatabase> database, String table, String uuidColumn, Class<V> valueType, String valueColumn, CastInstructions valueInstructions) {
+    public static <T> HashMap<UUID, T> getPlayerDataMap(MySQLDatabase database, String table, String uuidColumn, Class<T> valueType, String valueColumn, CastInstructions valueInstructions) {
         try {
-            if (database == MySQLDatabase.class) {
-                throw new IllegalArgumentException("You can not pass MySQLDatabase as a database!");
-            }
-
-            MySQLDatabase databaseInstance = database.newInstance();
-
-            Connection connection = DriverManager.getConnection(databaseInstance.getConnectionUrl(), databaseInstance.getUsername(), databaseInstance.getPassword());
+            Connection connection = DriverManager.getConnection(database.getConnectionUrl(), database.getUsername(), database.getPassword());
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + databaseInstance.getName() + "." + table);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + database.getName() + "." + table);
 
-            HashMap<UUID, V> result = new HashMap<>();
+            HashMap<UUID, T> result = new HashMap<>();
 
             while (resultSet.next()) {
                 String keyEntry = resultSet.getString(uuidColumn);
@@ -112,11 +94,11 @@ public class SQLManager {
 
                 if (valueInstructions != null) finalValue = valueInstructions.cast(keyEntry, valueEntry);
 
-                result.put(UUID.fromString(keyEntry), valueType.isPrimitive() ? (V) finalValue : valueType.cast(finalValue));
+                result.put(UUID.fromString(keyEntry), valueType.isPrimitive() ? (T) finalValue : valueType.cast(finalValue));
             }
 
             return result;
-        } catch (SQLException | IllegalAccessException | InstantiationException exception) {
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
@@ -124,18 +106,12 @@ public class SQLManager {
     }
 
     @SuppressWarnings("unchecked")
-    public static <K, V> HashMap<K, V> getComplexMap(Class<? extends MySQLDatabase> database, String table, Class<K> keyType, String uuidColumn, Class<V> valueType, String valueColumn, CastInstructions keyInstructions, CastInstructions valueInstructions) {
+    public static <K, V> HashMap<K, V> getComplexMap(MySQLDatabase database, String table, Class<K> keyType, String uuidColumn, Class<V> valueType, String valueColumn, CastInstructions keyInstructions, CastInstructions valueInstructions) {
         try {
-            if (database == MySQLDatabase.class) {
-                throw new IllegalArgumentException("You can not pass MySQLDatabase as a database!");
-            }
-
-            MySQLDatabase databaseInstance = database.newInstance();
-
-            Connection connection = DriverManager.getConnection(databaseInstance.getConnectionUrl(), databaseInstance.getUsername(), databaseInstance.getPassword());
+            Connection connection = DriverManager.getConnection(database.getConnectionUrl(), database.getUsername(), database.getPassword());
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + databaseInstance.getName() + "." + table);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + database.getName() + "." + table);
 
             HashMap<K, V> result = new HashMap<>();
 
@@ -161,7 +137,7 @@ public class SQLManager {
             }
 
             return result;
-        } catch (SQLException | IllegalAccessException | InstantiationException exception) {
+        } catch (SQLException exception) {
             exception.printStackTrace();
         }
 
@@ -178,18 +154,12 @@ public class SQLManager {
      * @return The requested data
      */
     @SuppressWarnings("unchecked")
-    public static <T> T sendQuery(Class<? extends MySQLDatabase> database, String query, Class<T> resultType, ResultSetAction action) {
+    public static <T> T sendQuery(MySQLDatabase database, String query, Class<T> resultType, ResultSetAction action) {
         try {
-            if (database == MySQLDatabase.class) {
-                throw new IllegalArgumentException("You can not pass MySQLDatabase as a database!");
-            }
-
-            MySQLDatabase databaseInstance = database.newInstance();
-
-            Connection connection = DriverManager.getConnection(databaseInstance.getConnectionUrl(), databaseInstance.getUsername(), databaseInstance.getPassword());
+            Connection connection = DriverManager.getConnection(database.getConnectionUrl(), database.getUsername(), database.getPassword());
             Statement statement = connection.createStatement();
 
-            query = String.format(query, databaseInstance.getName());
+            query = String.format(query, database.getName());
             ResultSet resultSet = statement.executeQuery(query);
 
             String typeName = resultType.getName();
@@ -226,7 +196,7 @@ public class SQLManager {
             }
 
             return resultType.cast(action.run(resultSet));
-        } catch (SQLException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException exception) {
+        } catch (SQLException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException exception) {
             exception.printStackTrace();
         }
 

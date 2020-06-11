@@ -12,7 +12,6 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
  */
 
 public class Bread implements Listener {
-
     @EventHandler
     public void onEat(PlayerItemConsumeEvent event) {
         if (event.getItem().getType() == Material.BREAD) {

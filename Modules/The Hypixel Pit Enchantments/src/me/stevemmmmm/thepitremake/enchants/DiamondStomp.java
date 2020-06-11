@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class DiamondStomp extends CustomEnchant {
-    private final LevelVariable<Double> percentDamageIncrease = new LevelVariable<>(.07, .12, .25);
+    private final EnchantProperty<Double> percentDamageIncrease = new EnchantProperty<>(.07, .12, .25);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -28,7 +28,7 @@ public class DiamondStomp extends CustomEnchant {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
 
         if (playerHasDiamondPiece((Player) event.getEntity())) {
-            DamageManager.getInstance().addDamage(event, percentDamageIncrease.at(level), CalculationMode.ADDITIVE);
+            DamageManager.getInstance().addDamage(event, percentDamageIncrease.getValueAtLevel(level), CalculationMode.ADDITIVE);
         }
     }
 

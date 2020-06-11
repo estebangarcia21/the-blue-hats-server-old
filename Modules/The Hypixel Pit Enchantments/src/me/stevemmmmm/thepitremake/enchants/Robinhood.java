@@ -24,7 +24,7 @@ import java.util.*;
  */
 
 public class Robinhood extends CustomEnchant {
-    private final LevelVariable<Float> damageReduction = new LevelVariable<>(.4f, .5f, .6f);
+    private final EnchantProperty<Float> damageReduction = new EnchantProperty<>(.4f, .5f, .6f);
 
     private final HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
     private final HashMap<Arrow, Player> arrowToHomingPlayer = new HashMap<>();
@@ -54,7 +54,7 @@ public class Robinhood extends CustomEnchant {
                         Player player = (Player) arrow.getShooter();
 
                         if (itemHasEnchant(player.getInventory().getItemInHand(), this)) {
-                            DamageManager.getInstance().addDamage(event, damageReduction.at(getEnchantLevel(player.getInventory().getItemInHand(), this)), CalculationMode.ADDITIVE);
+                            DamageManager.getInstance().addDamage(event, damageReduction.getValueAtLevel(getEnchantLevel(player.getInventory().getItemInHand(), this)), CalculationMode.ADDITIVE);
                         }
                     }
 

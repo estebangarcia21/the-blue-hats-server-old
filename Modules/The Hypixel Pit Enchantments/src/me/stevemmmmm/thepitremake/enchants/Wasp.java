@@ -17,8 +17,8 @@ import java.util.ArrayList;
  */
 
 public class Wasp extends CustomEnchant {
-    private final LevelVariable<Integer> weaknessAmplifier = new LevelVariable<>(1, 2, 3);
-    private final LevelVariable<Integer> duration = new LevelVariable<>(6, 11, 16);
+    private final EnchantProperty<Integer> weaknessAmplifier = new EnchantProperty<>(1, 2, 3);
+    private final EnchantProperty<Integer> duration = new EnchantProperty<>(6, 11, 16);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -33,7 +33,7 @@ public class Wasp extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player hit = (Player) args[0];
 
-        hit.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, duration.at(level) * 20, weaknessAmplifier.at(level)), true);
+        hit.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, duration.getValueAtLevel(level) * 20, weaknessAmplifier.getValueAtLevel(level)), true);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Wasp extends CustomEnchant {
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
                 .addVariable("II", "III", "IV")
-                .setColor(ChatColor.GRAY).write("Apply ").setColor(ChatColor.RED).write("Weakness ").writeVariable(0, level).setColor(ChatColor.GRAY).write(" (" + duration.at(level) + "s) on hit")
+                .setColor(ChatColor.GRAY).write("Apply ").setColor(ChatColor.RED).write("Weakness ").writeVariable(0, level).setColor(ChatColor.GRAY).write(" (" + duration.getValueAtLevel(level) + "s) on hit")
                 .build();
     }
 

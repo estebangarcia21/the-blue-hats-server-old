@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class Lifesteal extends CustomEnchant {
-    private final LevelVariable<Float> healPercentage = new LevelVariable<>(0.04f, 0.08f, 0.13f);
+    private final EnchantProperty<Float> healPercentage = new EnchantProperty<>(0.04f, 0.08f, 0.13f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -27,7 +27,7 @@ public class Lifesteal extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player damager = (Player) args[0];
 
-        damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().getDamageFromEvent((EntityDamageByEntityEvent) args[1]) * healPercentage.at(level), damager.getMaxHealth()));
+        damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().getDamageFromEvent((EntityDamageByEntityEvent) args[1]) * healPercentage.getValueAtLevel(level), damager.getMaxHealth()));
     }
 
     @Override
