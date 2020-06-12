@@ -26,7 +26,7 @@ public class Main extends JavaPlugin {
         RankManager.getInstance().registerRank(new NoneRank());
         RankManager.getInstance().registerRank(new ModeratorRank());
         RankManager.getInstance().registerRank(new OwnerRank());
-        RankManager.getInstance().registerRank(new DonorRank());
+        RankManager.getInstance().registerRank(new MiniDonorRank());
 
         ConfigAPI.registerConfigWriter(PermissionsManager.getInstance());
         ConfigAPI.registerConfigReader(PermissionsManager.getInstance());

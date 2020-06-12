@@ -8,49 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Config API" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="module" module-name="Animation API" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/annotations/17.0.0/annotations-17.0.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../Player Protection/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../Player Protection/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../Config API/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../Config API/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -63,5 +21,25 @@
     <orderEntry type="module" module-name="BHPermissions" />
     <orderEntry type="module" module-name="Server Core" />
     <orderEntry type="module" module-name="Inventory Manager" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../Projects/The Blue Hats Server/Console/paper-443.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

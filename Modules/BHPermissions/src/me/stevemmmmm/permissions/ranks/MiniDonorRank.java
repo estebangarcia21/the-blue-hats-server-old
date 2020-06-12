@@ -1,41 +1,43 @@
 package me.stevemmmmm.permissions.ranks;
 
+/*
+ * Copyright (c) 2020. Created by Stevemmmmm.
+ */
+
 import me.stevemmmmm.permissions.core.Rank;
 import org.bukkit.ChatColor;
 
 import java.util.HashMap;
 
-/*
- * Copyright (c) 2020. Created by Stevemmmmm.
- */
-
-public class DonorRank extends Rank {
-
+//$1 Cost
+public class MiniDonorRank extends Rank {
     @Override
     public String getName() {
-        return "Donor";
+        return "MiniDonor";
     }
 
     @Override
     public int getOrder() {
-        return 1;
+        return 0;
     }
 
     @Override
     public HashMap<String, Boolean> getPermissions() {
         return new HashMap<String, Boolean>() {{
             put("bhperms.chatcooldownbypass", true);
+
+            //TODO Extra perms
         }};
     }
 
     @Override
     public String getPrefix() {
-        return ChatColor.LIGHT_PURPLE + "[" + ChatColor.WHITE + "Donor" + ChatColor.LIGHT_PURPLE + "]";
+        return ChatColor.AQUA + "[" + getNameColor() + getName() + ChatColor.AQUA + "]";
     }
 
     @Override
     public ChatColor getNameColor() {
-        return ChatColor.AQUA;
+        return ChatColor.WHITE;
     }
 
     @Override

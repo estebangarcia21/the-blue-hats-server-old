@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -88,16 +89,25 @@ public class WorldSelection implements Listener {
         }
     }
 
+    @EventHandler
+    public void onChunkUnload(ChunkUnloadEvent event) {
+        System.out.println("CANCELLED");
+        event.setCancelled(true);
+    }
+
     private void transportToWorld(HumanEntity player, String worldName) {
         World world = Main.INSTANCE.getServer().createWorld(new WorldCreator(worldName));
         Location location = new Location(world,0.5, 86.5, 11.5, -180, 0);
 
-        location.getChunk().load();
+        Chunk centerChunk = location.getChunk();
+        centerChunk.load(true);
+
+        player.sendMessage(ChatColor.GREEN + "You will be teleported soon...");
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> {
             player.teleport(new Location(world,0.5, 86.5, 11.5, -180, 0));
             DeveloperUpdates.displayUpdate((Player) player);
-        }, 1L);
+        }, 60L);
     }
 
     private void generateGui() {
