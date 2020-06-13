@@ -20,8 +20,6 @@ import java.util.UUID;
  */
 
 public class SpawnCommand implements CommandExecutor {
-    private final Vector spawn = new Vector(0.5, 86.5, 11.5);
-
     private final HashMap<UUID, Integer> cooldownTasks = new HashMap<>();
     private final HashMap<UUID, Integer> cooldownTime = new HashMap<>();
 
@@ -39,7 +37,7 @@ public class SpawnCommand implements CommandExecutor {
                 if (!CombatManager.getInstance().playerIsInCombat(player)) {
                     if (!cooldownTasks.containsKey(player.getUniqueId())) {
                         player.setHealth(player.getMaxHealth());
-                        player.teleport(new Location(player.getWorld(), spawn.getX(), spawn.getY(), spawn.getZ(), -180, 0));
+                        player.teleport(RegionManager.getInstance().getSpawnLocation(player));
 
                         cooldownTime.put(player.getUniqueId(), 10);
 

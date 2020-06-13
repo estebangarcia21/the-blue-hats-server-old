@@ -39,51 +39,39 @@ public class Obsidian implements Listener {
             return;
         }
 
-        try {
-            if (event.getBlockPlaced().getType() == Material.OBSIDIAN) {
-                obsidianToRemovalTasks.put(event.getBlockPlaced(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                    removalTime.put(event.getBlockPlaced(), removalTime.getOrDefault(event.getBlockPlaced(), 120) - 1);
+        if (event.getBlockPlaced().getType() == Material.OBSIDIAN) {
+            obsidianToRemovalTasks.put(event.getBlockPlaced(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                removalTime.put(event.getBlockPlaced(), removalTime.getOrDefault(event.getBlockPlaced(), 120) - 1);
 
-                    if (removalTime.get(event.getBlockPlaced()) <= 0) {
-                        event.getBlockPlaced().setType(Material.AIR);
+                if (removalTime.get(event.getBlockPlaced()) <= 0) {
+                    Bukkit.getServer().getScheduler().cancelTask(obsidianToRemovalTasks.get(event.getBlockPlaced()));
+                    obsidianToRemovalTasks.remove(event.getBlockPlaced());
+                    removalTime.remove(event.getBlockPlaced());
 
-                        Bukkit.getServer().getScheduler().cancelTask(obsidianToRemovalTasks.get(event.getBlockPlaced()));
-                        obsidianToRemovalTasks.remove(event.getBlockPlaced());
-                        removalTime.remove(event.getBlockPlaced());
-                    }
-                }, 0L, 20L));
-            }
-        } catch (NullPointerException ignored) {
-
+                    event.getBlockPlaced().setType(Material.AIR);
+                }
+            }, 0L, 20L));
         }
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        try {
-            if (event.getBlock().getType() == Material.OBSIDIAN) {
-                for (Block obsidianBlocks : obsidianToRemovalTasks.keySet()) {
-                    if (obsidianBlocks.equals(event.getBlock())) {
-                        Bukkit.getServer().getScheduler().cancelTask(obsidianToRemovalTasks.get(event.getBlock()));
+        if (event.getBlock().getType() == Material.OBSIDIAN) {
+            for (Block obsidianBlocks : obsidianToRemovalTasks.keySet()) {
+                if (obsidianBlocks.equals(event.getBlock())) {
+                    Bukkit.getServer().getScheduler().cancelTask(obsidianToRemovalTasks.get(event.getBlock()));
 
-                        obsidianToRemovalTasks.remove(event.getBlock());
-                        removalTime.remove(event.getBlock());
-                        break;
-                    }
+                    obsidianToRemovalTasks.remove(event.getBlock());
+                    removalTime.remove(event.getBlock());
+                    break;
                 }
             }
-        } catch (NullPointerException ignored) {
-
         }
     }
 
     public void removeObsidian() {
-        try {
-            for (Block block : obsidianToRemovalTasks.keySet()) {
-                block.setType(Material.AIR);
-            }
-        } catch (NullPointerException ignored) {
-
+        for (Block block : obsidianToRemovalTasks.keySet()) {
+            block.setType(Material.AIR);
         }
     }
 }

@@ -8,9 +8,11 @@ import me.stevemmmmm.animationapi.core.Sequence;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -114,6 +116,24 @@ public class NewMysticWell implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
+        if (!event.getInventory().getName().equalsIgnoreCase(ChatColor.GRAY + "Mystic Well") || event.getSlotType() != InventoryType.SlotType.OUTSIDE) return;
+
+        Player player = (Player) event.getWhoClicked();
+        Inventory inventory = event.getClickedInventory();
+
+        //Enchant button
+        if (event.getRawSlot() == 24) {
+
+        }
+
+        updateGui(event);
+    }
+
+    public ItemStack getTargetItem(Player player) {
+        return null;
+    }
+
+    private void updateGui(InventoryClickEvent event) {
 
     }
 

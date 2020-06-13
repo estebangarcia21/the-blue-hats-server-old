@@ -104,9 +104,9 @@ public class WorldSelection implements Listener {
         player.sendMessage(ChatColor.GREEN + "You will be teleported soon...");
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> {
-            player.teleport(new Location(world,0.5, 86.5, 11.5, -180, 0));
+            player.teleport(RegionManager.getInstance().getSpawnLocation(((Player) player)));
             DeveloperUpdates.displayUpdate((Player) player);
-        }, 60L);
+        }, 20L);
     }
 
     private void generateGui() {

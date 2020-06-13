@@ -10,10 +10,10 @@ import org.bukkit.ChatColor;
 import java.util.HashMap;
 
 //$1 Cost
-public class MiniDonorRank extends Rank {
+public class PoggerRank extends Rank {
     @Override
     public String getName() {
-        return "MiniDonor";
+        return "Pogger";
     }
 
     @Override
@@ -32,12 +32,12 @@ public class MiniDonorRank extends Rank {
 
     @Override
     public String getPrefix() {
-        return ChatColor.AQUA + "[" + getNameColor() + getName() + ChatColor.AQUA + "]";
+        return ChatColor.LIGHT_PURPLE + "[" + getNameColor() + getName() + ChatColor.LIGHT_PURPLE + "]";
     }
 
     @Override
     public ChatColor getNameColor() {
-        return ChatColor.WHITE;
+        return ChatColor.LIGHT_PURPLE;
     }
 
     @Override
