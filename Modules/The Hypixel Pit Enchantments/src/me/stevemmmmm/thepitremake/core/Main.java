@@ -36,6 +36,8 @@ public class Main extends JavaPlugin implements ServerGame {
     public static Main INSTANCE;
     public static ProtocolManager protocolManager;
 
+    public static boolean isRestarting;
+
     public static String version = "v1.0";
 
     @Override
@@ -116,6 +118,8 @@ public class Main extends JavaPlugin implements ServerGame {
 
     @Override
     public void onDisable() {
+        isRestarting = true;
+
         GrindingSystem.getInstance().writeToConfig();
 
         EnderChest.getInstance().storeEnderChests();

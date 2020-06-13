@@ -169,6 +169,8 @@ public class ConfigAPI extends JavaPlugin implements Listener {
             } else {
                 writeItemStack(plugin, world, player, -4, new ItemStack(Material.AIR));
             }
+
+            plugin.saveConfig();
         }
 
         public static void loadPlayerInventory(JavaPlugin plugin, World world, Player player) {
@@ -208,7 +210,6 @@ public class ConfigAPI extends JavaPlugin implements Listener {
 
         private static void writeItemStack(JavaPlugin plugin, World world, Player player, int slot, ItemStack object) {
             plugin.getConfig().set(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + slot, object);
-            plugin.saveConfig();
         }
     }
 }

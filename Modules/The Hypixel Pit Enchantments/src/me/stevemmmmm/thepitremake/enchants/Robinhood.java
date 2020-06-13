@@ -113,6 +113,7 @@ public class Robinhood extends CustomEnchant {
 
             Player closestPlayer = null;
 
+            //TODO Optimize?
             for (Entity entity : closestEntities) {
                 if (entity instanceof Player) {
                     if (entity != player) {
@@ -156,7 +157,7 @@ public class Robinhood extends CustomEnchant {
             }
 
             arrow.setVelocity(direction);
-        }, 0L, 1L));
+        }, 0L, 3L));
     }
 
     @Override

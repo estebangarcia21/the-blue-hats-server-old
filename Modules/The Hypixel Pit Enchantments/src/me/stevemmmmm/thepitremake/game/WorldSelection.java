@@ -91,8 +91,7 @@ public class WorldSelection implements Listener {
 
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
-        System.out.println("CANCELLED");
-        event.setCancelled(true);
+        if (!Main.isRestarting) event.setCancelled(true);
     }
 
     private void transportToWorld(HumanEntity player, String worldName) {
