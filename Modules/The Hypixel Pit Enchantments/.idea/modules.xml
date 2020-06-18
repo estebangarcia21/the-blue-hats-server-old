@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Animation API/Animation API.iml" filepath="$PROJECT_DIR$/../Animation API/Animation API.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../BHPermissions/BHPermissions.iml" filepath="$PROJECT_DIR$/../BHPermissions/BHPermissions.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../Config API/Config API.iml" filepath="$PROJECT_DIR$/../Config API/Config API.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../Instance API/Instance API.iml" filepath="$PROJECT_DIR$/../Instance API/Instance API.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../Inventory Manager/Inventory Manager.iml" filepath="$PROJECT_DIR$/../Inventory Manager/Inventory Manager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../Player Protection/Player Protection.iml" filepath="$PROJECT_DIR$/../Player Protection/Player Protection.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../Server Core/Server Core.iml" filepath="$PROJECT_DIR$/../Server Core/Server Core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/The Blue Hats Pit.iml" filepath="$PROJECT_DIR$/The Blue Hats Pit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/The Hypixel Pit Enchantments.iml" filepath="$PROJECT_DIR$/.idea/The Hypixel Pit Enchantments.iml" />
     </modules>
   </component>
 </project>

@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="The Blue Hats Pit:jar">
-    <output-path>$PROJECT_DIR$/../../../../Projects/The Blue Hats Server/Console/plugins</output-path>
-    <root id="archive" name="TheBlueHatsPit.jar">
-      <element id="module-output" name="The Blue Hats Pit" />
-    </root>
-  </artifact>
-</component>

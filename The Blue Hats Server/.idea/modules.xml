@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/The Blue Hats Server.iml" filepath="$PROJECT_DIR$/The Blue Hats Server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/The Pit Remake Plugin/The Pit Remake Plugin.iml" filepath="$PROJECT_DIR$/The Pit Remake Plugin/The Pit Remake Plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Animation API/Animation API.iml" filepath="$PROJECT_DIR$/Animation API/Animation API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Blue Permissions/Blue Permissions.iml" filepath="$PROJECT_DIR$/Blue Permissions/Blue Permissions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Config API/Config API.iml" filepath="$PROJECT_DIR$/Config API/Config API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Instance API/Instance API.iml" filepath="$PROJECT_DIR$/Instance API/Instance API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Inventory Manager/Inventory Manager.iml" filepath="$PROJECT_DIR$/Inventory Manager/Inventory Manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Server Core/Server Core.iml" filepath="$PROJECT_DIR$/Server Core/Server Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/The Blue Hats Pit/The Blue Hats Pit.iml" filepath="$PROJECT_DIR$/The Blue Hats Pit/The Blue Hats Pit.iml" />
     </modules>
   </component>
 </project>

@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Animation API:jar">
-    <output-path>$PROJECT_DIR$/../../../../Projects/The Blue Hats Server/Console/plugins</output-path>
-    <root id="archive" name="Animation API.jar">
-      <element id="module-output" name="Animation API" />
-    </root>
-  </artifact>
-</component>

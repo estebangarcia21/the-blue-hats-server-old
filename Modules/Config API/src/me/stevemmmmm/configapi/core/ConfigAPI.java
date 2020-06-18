@@ -74,8 +74,9 @@ public class ConfigAPI extends JavaPlugin implements Listener {
 
         for (Map.Entry<UUID, T> entry : entries.entrySet()) {
             plugin.getConfig().set(entry.getKey() + "." + fullPath, entry.getValue().toString());
-            plugin.saveConfig();
         }
+
+        plugin.saveConfig();
     }
 
     public static <T> T read(JavaPlugin plugin, Player player, String path, Class<T> type, T defaultValue) {
@@ -115,13 +116,13 @@ public class ConfigAPI extends JavaPlugin implements Listener {
             for (int i = 0; i < inventory.getSize(); i++) {
                 if (inventory.getItem(i) == null){
                     plugin.getConfig().set("enderchests." + name + "." + uuid.toString() + ".slots." + i, new ItemStack(Material.AIR));
-                    plugin.saveConfig();
                     continue;
                 }
 
                 plugin.getConfig().set("enderchests." + name + "." + uuid.toString() + ".slots." + i, inventory.getItem(i));
-                plugin.saveConfig();
             }
+
+            plugin.saveConfig();
         }
 
         public static void loadInventory(JavaPlugin plugin, Player player, String name, Inventory target) {
@@ -134,6 +135,8 @@ public class ConfigAPI extends JavaPlugin implements Listener {
                     }
                 }
             }
+
+            plugin.saveConfig();
         }
 
         public static void serializePlayerInventory(JavaPlugin plugin, World world, Player player) {
@@ -177,7 +180,6 @@ public class ConfigAPI extends JavaPlugin implements Listener {
             for (int i = 0; i < player.getInventory().getSize(); i++) {
                 if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + i) != null) {
                     player.getInventory().setItem(i, plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + i));
-                    player.updateInventory();
                 } else {
                     player.getInventory().setItem(i, new ItemStack(Material.AIR));
                 }
@@ -206,6 +208,8 @@ public class ConfigAPI extends JavaPlugin implements Listener {
             } else {
                 player.getInventory().setHelmet(new ItemStack(Material.AIR));
             }
+
+            player.updateInventory();
         }
 
         private static void writeItemStack(JavaPlugin plugin, World world, Player player, int slot, ItemStack object) {
