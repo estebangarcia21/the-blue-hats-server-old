@@ -392,6 +392,24 @@ public class CustomEnchantManager {
         return enchants;
     }
 
+    public int getItemTier(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+
+        ArrayList<String> tokens = new ArrayList<>(Arrays.asList(ChatColor.stripColor(meta.getDisplayName()).split(" ")));
+
+        if (tokens.contains("I")) {
+            return 1;
+        } else if (tokens.contains("II")) {
+            return 2;
+        } else if (tokens.contains("III")) {
+            return 3;
+        } else if (tokens.contains("Fresh") || tokens.contains("Mystic")) {
+            return 0;
+        }
+
+        return -1;
+    }
+
     public boolean percentChance(double percent) {
         return Double.parseDouble(new DecimalFormat("#0.0").format(ThreadLocalRandom.current().nextDouble(0, 99))) <= percent;
     }

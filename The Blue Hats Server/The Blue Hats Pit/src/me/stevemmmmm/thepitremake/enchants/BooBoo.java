@@ -23,7 +23,6 @@ import java.util.UUID;
 
 public class BooBoo extends CustomEnchant {
     private final HashMap<UUID, Integer> tasks = new HashMap<>();
-
     private final EnchantProperty<Integer> secondsNeeded = new EnchantProperty<>(5, 4, 3);
 
     @EventHandler
