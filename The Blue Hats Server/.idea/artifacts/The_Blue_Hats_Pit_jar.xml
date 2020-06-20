@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="The Blue Hats Pit:jar">
+    <output-path>$PROJECT_DIR$/../../../Projects/The Blue Hats Server/Console/plugins</output-path>
+    <root id="archive" name="The Blue Hats Pit.jar">
+      <element id="module-output" name="The Blue Hats Pit" />
+      <element id="module-output" name="Animation API" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Projects/The Blue Hats Server/Console/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

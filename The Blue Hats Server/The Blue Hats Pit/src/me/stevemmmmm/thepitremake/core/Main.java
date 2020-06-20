@@ -98,7 +98,9 @@ public class Main extends JavaPlugin implements ServerGame {
         getCommand("respawn").setExecutor(spawnCommand);
 
         //Game
-        getServer().getPluginManager().registerEvents(new MysticWell(), this);
+        getServer().getPluginManager().registerEvents(new NewMysticWell(), this);
+        System.out.println("Using the new mystic well!");
+
         getServer().getPluginManager().registerEvents(PitScoreboardManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(DuelingManager.getInstance(), this);
         getServer().getPluginManager().registerEvents(DamageIndicator.getInstance(), this);

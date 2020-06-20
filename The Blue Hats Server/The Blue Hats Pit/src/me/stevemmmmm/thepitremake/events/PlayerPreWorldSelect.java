@@ -21,8 +21,12 @@ public class PlayerPreWorldSelect extends Event {
         return player;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     @Override
     public HandlerList getHandlers() {
-        return handlers;
+        return null;
     }
 }

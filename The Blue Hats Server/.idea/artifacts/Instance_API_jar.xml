@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Instance API:jar">
+    <output-path>$PROJECT_DIR$/../../../Projects/The Blue Hats Server/Console/plugins</output-path>
+    <root id="archive" name="Instance API.jar">
+      <element id="module-output" name="Instance API" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Projects/The Blue Hats Server/Console/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

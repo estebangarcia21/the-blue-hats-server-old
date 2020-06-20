@@ -16,9 +16,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -29,9 +29,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class NewMysticWell implements Listener {
     private final HashMap<UUID, MysticWellInventory> playerMysticWellInventorys = new HashMap<>();
-
-    private final HashMap<UUID, MysticWell.MysticWellAnimation> mysticWellStates = new HashMap<>();
-    private final HashMap<UUID, Sequence> mysticWellSequences = new HashMap<>();
 
     private static final ItemStack enchantmentTableInfoIdle = new ItemStack(Material.ENCHANTMENT_TABLE);
     private static final ItemStack enchantmentTableInfoT1 = new ItemStack(Material.ENCHANTMENT_TABLE);
@@ -123,22 +120,62 @@ public class NewMysticWell implements Listener {
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
-        if (!event.getInventory().getName().equalsIgnoreCase(ChatColor.GRAY + "Mystic Well") || event.getSlotType() != InventoryType.SlotType.OUTSIDE) return;
+    public void onInventoryOpen(InventoryOpenEvent event) {
+        if (event.getInventory().getType() == InventoryType.ENCHANTING) {
+            event.setCancelled(true);
 
-        Player player = (Player) event.getWhoClicked();
-        Inventory inventory = event.getClickedInventory();
+            MysticWellInventory inventory = playerMysticWellInventorys.get(event.getPlayer().getUniqueId());
 
-        if (MysticWellInventory.pressedEnchantButton(event) && playerMysticWellInventorys.get(player.getUniqueId()).canEnchant()) {
-            startEnchantmentProcess(player);
+            if (inventory.getSequence() != null) {
+                if (inventory.getState() == MysticWellInventory.MysticWellState.ENCHANTING) {
+                    SequenceAPI.stopSequence(inventory.getSequence());
+                }
+            }
+
+            setMysticWellToIdle(((Player) event.getPlayer()));
+            event.getPlayer().openInventory(playerMysticWellInventorys.get(event.getPlayer().getUniqueId()).getRawInventory());
+
+            updateGui(((Player) event.getPlayer()));
         }
-
-        updateGui(event);
     }
 
-    private void startEnchantmentProcess(Player player) {
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (!event.getInventory().getName().equalsIgnoreCase(MysticWellInventory.INVENTORY_NAME) || event.getSlotType() == InventoryType.SlotType.OUTSIDE) return;
+
+        event.setCancelled(true);
+
+        Player player = (Player) event.getWhoClicked();
+        MysticWellInventory inventory = playerMysticWellInventorys.get(player.getUniqueId());
+
+        if (inventory.getState() == MysticWellInventory.MysticWellState.ENCHANTING) return;
+
+        if (event.getRawSlot() == 20 && inventory.getItemInEnchantmentSlot() != null) {
+            for (int i = 0; i < player.getInventory().getSize(); i++) {
+                if (event.getWhoClicked().getInventory().getItem(i) == null) {
+                    player.getInventory().setItem(i, event.getCurrentItem());
+                    inventory.getRawInventory().setItem(20, new ItemStack(Material.AIR));
+                    break;
+                }
+            }
+        } else if (itemIsEnchantable(event.getCurrentItem()) && event.getRawSlot() != 24) {
+            inventory.getRawInventory().setItem(20, event.getCurrentItem());
+            player.getInventory().setItem(event.getSlot(), new ItemStack(Material.AIR));
+        }
+
+        if (MysticWellInventory.pressedEnchantButton(event) && inventory.canEnchant() && inventory.getState() == MysticWellInventory.MysticWellState.IDLE) {
+            startEnchantmentSequence(player);
+            return;
+        }
+
+        updateGui(player);
+    }
+
+    private void startEnchantmentSequence(Player player) {
         MysticWellInventory inventory = playerMysticWellInventorys.get(player.getUniqueId());
         ItemStack targetItem = inventory.getItemInEnchantmentSlot();
+
+        SequenceAPI.stopSequence(inventory.getSequence());
 
         ItemStack[] animationItems = new ItemStack[] { new ItemStack(Material.INK_SACK, 1, (byte) 0), new ItemStack(Material.INK_SACK, 1, (byte) 1), new ItemStack(Material.INK_SACK, 1, (byte) 2), new ItemStack(Material.INK_SACK, 1, (byte) 3), new ItemStack(Material.INK_SACK, 1, (byte) 4), new ItemStack(Material.INK_SACK, 1, (byte) 5), new ItemStack(Material.INK_SACK, 1, (byte) 6), new ItemStack(Material.INK_SACK, 1, (byte) 7), new ItemStack(Material.INK_SACK, 1, (byte) 8), new ItemStack(Material.INK_SACK, 1, (byte) 9), new ItemStack(Material.INK_SACK, 1, (byte) 10), new ItemStack(Material.INK_SACK, 1, (byte) 11), new ItemStack(Material.INK_SACK, 1, (byte) 12), new ItemStack(Material.INK_SACK, 1, (byte) 13), new ItemStack(Material.INK_SACK, 1, (byte) 14) };
         final int[] glassPaneIndex = { 0 };
@@ -175,7 +212,8 @@ public class NewMysticWell implements Listener {
             }
         });
 
-        mysticWellSequences.put(player.getUniqueId(), enchantmentSequence);
+        inventory.setSequence(enchantmentSequence);
+        inventory.setState(MysticWellInventory.MysticWellState.ENCHANTING);
 
         SequenceAPI.startSequence(enchantmentSequence);
     }
@@ -187,10 +225,10 @@ public class NewMysticWell implements Listener {
     }
 
     private void setMysticWellToIdle(Player player) {
-        Inventory gui = playerMysticWellInventorys.get(player.getUniqueId()).getRawInventory();
+        MysticWellInventory gui = playerMysticWellInventorys.get(player.getUniqueId());
 
-        if (mysticWellStates.containsKey(player.getUniqueId())) {
-            if (mysticWellStates.get(player.getUniqueId()) == MysticWell.MysticWellAnimation.IDLE) return;
+        if (gui.getSequence() != null) {
+            if (gui.getState() == MysticWellInventory.MysticWellState.IDLE) return;
         }
 
         final int[] position = { 0 };
@@ -206,8 +244,10 @@ public class NewMysticWell implements Listener {
                 }, 0, 2, 50)
                 .loop();
 
-        mysticWellStates.put(player.getUniqueId(), MysticWell.MysticWellAnimation.IDLE);
-        mysticWellSequences.put(player.getUniqueId(), idleSequence);
+        gui.setState(MysticWellInventory.MysticWellState.IDLE);
+        gui.setSequence(idleSequence);
+
+        updateGui(player);
 
         SequenceAPI.startSequence(idleSequence);
     }
@@ -230,6 +270,10 @@ public class NewMysticWell implements Listener {
                 playerMysticWellInventorys.get(player.getUniqueId()).getRawInventory().setItem(glassPane, new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 6));
             }
         }
+    }
+
+    private boolean itemIsEnchantable(ItemStack item) {
+        return CustomEnchantManager.getInstance().getItemTier(item) != -1;
     }
 
     private ItemStack getIconFromTier(int tier) {
@@ -266,7 +310,15 @@ public class NewMysticWell implements Listener {
         CustomEnchantManager.getInstance().setMaximumItemLives(item, lives);
     }
 
-    private void updateGui(InventoryClickEvent event) {
+    private void updateGui(Player player) {
+        MysticWellInventory inventory = playerMysticWellInventorys.get(player.getUniqueId());
+        ItemStack item = inventory.getItemInEnchantmentSlot();
 
+        if (item == null) {
+            inventory.setEnchantmentButtonIcon(enchantmentTableInfoIdle);
+            return;
+        }
+
+        inventory.setEnchantmentButtonIcon(getIconFromTier(CustomEnchantManager.getInstance().getItemTier(item)));
     }
 }

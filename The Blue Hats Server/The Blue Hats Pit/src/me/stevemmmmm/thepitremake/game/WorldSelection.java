@@ -1,7 +1,6 @@
 package me.stevemmmmm.thepitremake.game;
 
 import me.stevemmmmm.thepitremake.core.Main;
-import me.stevemmmmm.thepitremake.events.PlayerPreWorldSelect;
 import me.stevemmmmm.thepitremake.managers.enchants.LoreBuilder;
 import me.stevemmmmm.thepitremake.world.DeveloperUpdates;
 import org.bukkit.*;
@@ -39,7 +38,7 @@ public class WorldSelection implements Listener {
     }
 
     public void displaySelectionMenu(Player player) {
-        Main.INSTANCE.getServer().getPluginManager().callEvent(new PlayerPreWorldSelect(player));
+//        Main.INSTANCE.getServer().getPluginManager().callEvent(new PlayerPreWorldSelect(player));
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> {
             generateGui();
