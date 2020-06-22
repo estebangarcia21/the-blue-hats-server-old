@@ -60,7 +60,7 @@ public class Solitude extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("-40%", "-50%", "-60%")
+                .declareVariable("-40%", "-50%", "-60%")
                 .write("Recieve ").setColor(ChatColor.BLUE).writeVariable(0, level).resetColor().write(" damage when ")
                 .setWriteCondition(level == 1).write("only").next().write("one other player is within 7").next().write("blocks").resetCondition()
                 .setWriteCondition(level != 1).write("two").next().write("or less players are within 7").next().write("blocks")

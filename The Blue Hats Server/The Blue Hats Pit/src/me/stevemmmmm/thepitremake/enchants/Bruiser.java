@@ -45,7 +45,7 @@ public class Bruiser extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("0.5❤", "1❤", "2❤")
+                .declareVariable("0.5❤", "1❤", "2❤")
                 .write("Blocking with your swords reduces").next()
                 .write("received damage by ").writeVariable(ChatColor.RED, 0, level)
                 .build();

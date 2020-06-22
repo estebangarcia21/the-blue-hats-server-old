@@ -81,8 +81,8 @@ public class ComboStun extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("fifth", "fourth", "fourth")
-                .addVariable("0.5", "0.8", "1.5")
+                .declareVariable("fifth", "fourth", "fourth")
+                .declareVariable("0.5", "0.8", "1.5")
                 .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" strike on an enemy").next()
                 .write("stuns them for ").writeVariable(1, level).write(" seconds")
                 .build();

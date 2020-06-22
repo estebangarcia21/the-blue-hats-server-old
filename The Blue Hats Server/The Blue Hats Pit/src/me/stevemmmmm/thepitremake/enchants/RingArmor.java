@@ -44,7 +44,7 @@ public class RingArmor extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("-20%", "-40%", "-60%")
+                .declareVariable("-20%", "-40%", "-60%")
                 .write("Recieve ").writeVariable(ChatColor.BLUE, 0, level).write(" damage from").next()
                 .write("arrows")
                 .build();

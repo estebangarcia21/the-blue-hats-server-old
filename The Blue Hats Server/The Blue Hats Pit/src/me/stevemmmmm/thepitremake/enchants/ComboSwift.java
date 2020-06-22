@@ -54,9 +54,9 @@ public class ComboSwift extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("fourth", "third", "third")
-                .addVariable("Speed I", "Speed II", "Speed III")
-                .addVariable("3", "4", "5")
+                .declareVariable("fourth", "third", "third")
+                .declareVariable("Speed I", "Speed II", "Speed III")
+                .declareVariable("3", "4", "5")
                 .write("Every ").writeVariable(ChatColor.YELLOW, 0, level).write(" strike gain").next()
                 .writeVariable(ChatColor.YELLOW, 1, level).write(" (").writeVariable(2, level).write("s)")
                 .build();

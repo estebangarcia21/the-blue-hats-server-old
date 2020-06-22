@@ -74,7 +74,7 @@ public class Assassin extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("5s", "4s", "3s")
+                .declareVariable("5s", "4s", "3s")
                 .setColor(ChatColor.GRAY)
                 .write("Sneaking teleports you behind").next()
                 .write("your").next()

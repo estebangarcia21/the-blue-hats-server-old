@@ -56,7 +56,7 @@ public class Megalongbow extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("II", "III", "IV")
+                .declareVariable("II", "III", "IV")
                 .write("One shot per second, this bow is").next()
                 .write("automatically fully drawn and").next()
                 .write("grants ").setColor(ChatColor.GREEN).write("Jump Boost ").writeVariable(0, level).resetColor().write(" (2s)")

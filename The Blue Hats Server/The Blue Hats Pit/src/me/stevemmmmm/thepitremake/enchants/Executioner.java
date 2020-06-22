@@ -52,7 +52,7 @@ public class Executioner extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("1.5❤", "2❤", "2❤")
+                .declareVariable("1.5❤", "2❤", "2❤")
                 .write("Hitting an enemy to below ").writeVariable(ChatColor.RED, 0, level).next()
                 .write("instantly kills them")
                 .build();

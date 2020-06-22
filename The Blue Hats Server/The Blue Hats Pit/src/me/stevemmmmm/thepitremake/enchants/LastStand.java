@@ -50,7 +50,7 @@ public class LastStand extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("I", "II", "III")
+                .declareVariable("I", "II", "III")
                 .write("Gain ").setColor(ChatColor.BLUE).write("Resistance ").writeVariable(0, level).resetColor().write(" (4").next()
                 .write("seconds) when reaching ").setColor(ChatColor.RED).write("3❤")
                 .build();

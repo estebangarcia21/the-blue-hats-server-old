@@ -47,7 +47,7 @@ public class Chipping extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("0.5❤", "1.0❤", "1.5❤")
+                .declareVariable("0.5❤", "1.0❤", "1.5❤")
                 .write("Deals ").writeVariable(ChatColor.RED, 0, level).write(" extra true damage")
                 .build();
     }

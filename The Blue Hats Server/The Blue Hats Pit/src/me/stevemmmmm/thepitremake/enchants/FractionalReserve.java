@@ -54,7 +54,7 @@ public class FractionalReserve extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("-15%", "-21%", "-30%")
+                .declareVariable("-15%", "-21%", "-30%")
                 .write("Recieve ").write(ChatColor.BLUE, "-1% damage ").write("per").next()
                 .write(ChatColor.GOLD, "10,000g ").write("you have (").writeVariable(ChatColor.BLUE, 0, level).next()
                 .write("max)")

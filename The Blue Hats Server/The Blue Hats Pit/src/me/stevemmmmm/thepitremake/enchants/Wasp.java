@@ -31,9 +31,9 @@ public class Wasp extends CustomEnchant {
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        Player hit = (Player) args[0];
+        Player hitPlayer = (Player) args[0];
 
-        hit.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, duration.getValueAtLevel(level) * 20, weaknessAmplifier.getValueAtLevel(level)), true);
+        hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, duration.getValueAtLevel(level) * 20, weaknessAmplifier.getValueAtLevel(level)), true);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Wasp extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("II", "III", "IV")
+                .declareVariable("II", "III", "IV")
                 .setColor(ChatColor.GRAY).write("Apply ").setColor(ChatColor.RED).write("Weakness ").writeVariable(0, level).setColor(ChatColor.GRAY).write(" (" + duration.getValueAtLevel(level) + "s) on hit")
                 .build();
     }

@@ -70,7 +70,7 @@ public class Frostbite extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("", "2s", "4s")
+                .declareVariable("", "2s", "4s")
                 .setWriteCondition(level == 1)
                 .write("Every ").write(ChatColor.YELLOW, "fifth").write(" strike ").write(ChatColor.AQUA, "freezes ").write("enemies,").next()
                 .write("applying slowness for 3s")

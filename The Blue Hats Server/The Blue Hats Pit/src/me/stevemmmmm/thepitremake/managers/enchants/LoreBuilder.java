@@ -22,7 +22,7 @@ public class LoreBuilder {
         description.add("");
     }
 
-    public LoreBuilder addVariable(String... values) {
+    public LoreBuilder declareVariable(String... values) {
         parameters.add(values);
 
         return this;

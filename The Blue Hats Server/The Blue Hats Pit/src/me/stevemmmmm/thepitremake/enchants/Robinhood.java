@@ -175,7 +175,7 @@ public class Robinhood extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("40%", "50%", "60%")
+                .declareVariable("40%", "50%", "60%")
                 .setWriteCondition(level == 1)
                 .write("Your charged shots are homing but").next()
                 .write("deal ").writeVariable(ChatColor.RED, 0, level).write(" damage")

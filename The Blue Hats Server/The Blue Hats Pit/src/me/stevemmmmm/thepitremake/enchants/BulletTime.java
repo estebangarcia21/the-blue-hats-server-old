@@ -71,7 +71,7 @@ public class BulletTime extends CustomEnchant implements EnchantCanceler {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("", "1❤", "1.5❤")
+                .declareVariable("", "1❤", "1.5❤")
                 .setWriteCondition(level == 1)
                 .setColor(ChatColor.GRAY).write("Blocking destroys arrows that").next()
                 .setColor(ChatColor.GRAY).write("hit you")

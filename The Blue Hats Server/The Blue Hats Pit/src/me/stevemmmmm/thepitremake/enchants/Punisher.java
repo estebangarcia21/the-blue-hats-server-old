@@ -46,7 +46,7 @@ public class Punisher extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("+6%", "+12%", "+18%")
+                .declareVariable("+6%", "+12%", "+18%")
                 .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" damage vs. player").next()
                 .write("below 50% HP")
                 .build();

@@ -51,8 +51,8 @@ public class ComboDamage extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("fourth", "third", "third")
-                .addVariable("+20%", "+30%", "+45%")
+                .declareVariable("fourth", "third", "third")
+                .declareVariable("+20%", "+30%", "+45%")
                 .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" strike deals").next()
                 .setColor(ChatColor.RED).writeVariable(1, level).resetColor().write(" damage")
                 .build();

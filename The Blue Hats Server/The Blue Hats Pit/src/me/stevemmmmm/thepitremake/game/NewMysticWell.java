@@ -232,7 +232,6 @@ public class NewMysticWell implements Listener {
         }
 
         final int[] position = { 0 };
-
         Sequence idleSequence = new Sequence()
                 .repeatAddKeyFrame(() -> {
                     setPaneToPink(player, position[0]);

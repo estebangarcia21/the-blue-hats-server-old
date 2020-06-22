@@ -78,8 +78,8 @@ public class CriticallyFunky extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("65%", "65%", "40%")
-                .addVariable("", "14%", "30%")
+                .declareVariable("65%", "65%", "40%")
+                .declareVariable("", "14%", "30%")
                 .write("Critical hits against you deal").next()
                 .setColor(ChatColor.BLUE).writeVariable(0, level).resetColor().write(" of the damage they").next()
                 .write("normally would")

@@ -34,7 +34,7 @@ public class Mirror extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("", "25%", "50%")
+                .declareVariable("", "25%", "50%")
                 .setWriteCondition(level == 1)
                 .write("You are immune to true damage")
                 .setWriteCondition(level != 1)

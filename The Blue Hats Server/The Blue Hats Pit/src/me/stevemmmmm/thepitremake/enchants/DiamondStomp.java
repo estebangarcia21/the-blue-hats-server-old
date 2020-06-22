@@ -72,7 +72,7 @@ public class DiamondStomp extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("7%", "12%", "25%")
+                .declareVariable("7%", "12%", "25%")
                 .write("Deal ").setColor(ChatColor.RED).write("+").writeVariable(0, level).resetColor().write(" damage vs. players").next()
                 .write("wearing diamond armor")
                 .build();

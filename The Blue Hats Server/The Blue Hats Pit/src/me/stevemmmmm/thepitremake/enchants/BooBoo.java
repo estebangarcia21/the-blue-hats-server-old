@@ -65,7 +65,7 @@ public class BooBoo extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("5", "4", "3")
+                .declareVariable("5", "4", "3")
                 .write("Passively regain ").write(ChatColor.RED, "1❤").write(" every ").writeVariable(0, level).next()
                 .write("seconds")
                 .build();

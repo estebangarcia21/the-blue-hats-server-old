@@ -15,50 +15,50 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 
-/*
- * Copyright (c) 2020. Created by Stevemmmmm.
- */
-
-public class Peroxide extends CustomEnchant {
-    private final EnchantProperty<Integer> regenTime = new EnchantProperty<>(5, 8, 8);
-    private final EnchantProperty<Integer> effectAmplifier = new EnchantProperty<>(0, 0, 1);
+public class SprintDrain extends CustomEnchant {
+    private final EnchantProperty<Integer> speedDuration = new EnchantProperty<>(5, 5, 7);
+    private final EnchantProperty<Integer> speedAmplifier = new EnchantProperty<>(0, 0, 1);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity());
-        }
-
-        if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
+        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity());
+                attemptEnchantExecution(((Player) ((Arrow) event.getDamager()).getShooter()).getInventory().getItemInHand(), event.getEntity());
             }
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        Player hitPlayer = (Player) args[0];
+        Player player = (Player) args[0];
 
-        hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, regenTime.getValueAtLevel(level) * 20, effectAmplifier.getValueAtLevel(level)), true);
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, speedDuration.getValueAtLevel(level) * 20, speedAmplifier.getValueAtLevel(level)));
+
+        if (level == 1) return;
+
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 0));
     }
 
     @Override
     public String getName() {
-        return "Peroxide";
+        return "Sprint Drain";
     }
 
     @Override
     public String getEnchantReferenceName() {
-        return "Peroxide";
+        return "Sprintdrain";
     }
 
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .declareVariable("Regen I", "Regen I", "Regen II")
-                .declareVariable("5", "8", "8")
-                .write("Gain ").writeVariable(ChatColor.RED, 0, level).write(" (").writeVariable(1, level).write("s)").write(" when hit")
+                .declareVariable("I", "I", "II")
+                .declareVariable("", "5", "7")
+                .write("Arrow shots grant you ").write(ChatColor.YELLOW, "Speed ").writeVariable(ChatColor.YELLOW, 0, level).next()
+                .write("(").writeVariable(1, level).write("s)")
+                .setWriteCondition(level != 1)
+                .write(" and apply ").write(ChatColor.BLUE, "Slowness I").next()
+                .write("(3s)")
                 .build();
     }
 
@@ -69,7 +69,8 @@ public class Peroxide extends CustomEnchant {
 
     @Override
     public EnchantGroup getEnchantGroup() {
-        return EnchantGroup.B;
+        //TODO Correct group
+        return EnchantGroup.C;
     }
 
     @Override
@@ -79,6 +80,6 @@ public class Peroxide extends CustomEnchant {
 
     @Override
     public Material[] getEnchantItemTypes() {
-        return new Material[] { Material.LEATHER_LEGGINGS };
+        return new Material[] { Material.BOW };
     }
 }

@@ -93,7 +93,7 @@ public class Volley extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("3", "4", "5")
+                .declareVariable("3", "4", "5")
                 .write("Shoot ").setColor(ChatColor.WHITE).writeVariable(0, level).write(" arrows ").resetColor().write("at once")
                 .build();
     }

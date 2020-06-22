@@ -177,6 +177,7 @@ public class Main extends JavaPlugin implements ServerGame {
         CustomEnchantManager.getInstance().registerEnchant(new PushComesToShove());
         CustomEnchantManager.getInstance().registerEnchant(new Chipping());
         CustomEnchantManager.getInstance().registerEnchant(new Fletching());
+        CustomEnchantManager.getInstance().registerEnchant(new SprintDrain());
 
         //Pants
         CustomEnchantManager.getInstance().registerEnchant(new Mirror());

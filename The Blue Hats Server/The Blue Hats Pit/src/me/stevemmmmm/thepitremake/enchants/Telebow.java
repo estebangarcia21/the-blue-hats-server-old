@@ -135,7 +135,7 @@ public class Telebow extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("90s", "45s", "20s")
+                .declareVariable("90s", "45s", "20s")
                 .write("Sneak to shoot a teleportation").next()
                 .write("arrow (").writeVariable(0, level).write(" cooldown, -3 per bow").next()
                 .write("hit)")

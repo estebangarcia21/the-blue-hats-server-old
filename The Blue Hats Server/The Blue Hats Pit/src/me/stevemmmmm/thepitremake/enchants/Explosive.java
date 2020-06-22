@@ -76,7 +76,7 @@ public class Explosive extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("POP", "BANG", "BOOM")
+                .declareVariable("POP", "BANG", "BOOM")
                 .setColor(ChatColor.GRAY)
                 .write("Arrows go ").writeVariable(0, level).write("! (" + cooldownTime.getValueAtLevel(level) + "s cooldown)")
                 .build();

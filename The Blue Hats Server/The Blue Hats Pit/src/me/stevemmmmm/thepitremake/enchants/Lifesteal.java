@@ -43,7 +43,7 @@ public class Lifesteal extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("4%", "8%", "13%")
+                .declareVariable("4%", "8%", "13%")
                 .write("Heal for ").setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" of damage dealt")
                 .build();
     }

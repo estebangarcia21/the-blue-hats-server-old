@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class KingBuster extends CustomEnchant {
-    private final EnchantProperty<Float> damageIncrease = new EnchantProperty<>(.7f, .13f, .2f);
+    private final EnchantProperty<Float> damageIncrease = new EnchantProperty<>(.7f, .13f, .20f);
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
@@ -46,7 +46,7 @@ public class KingBuster extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("+7%", "+13%", "+20%")
+                .declareVariable("+7%", "+13%", "+20%")
                 .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" damage vs. player").next()
                 .write("above 50% HP")
                 .build();

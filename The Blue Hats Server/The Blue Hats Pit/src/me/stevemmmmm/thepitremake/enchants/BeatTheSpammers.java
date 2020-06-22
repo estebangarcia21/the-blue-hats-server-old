@@ -43,7 +43,7 @@ public class BeatTheSpammers extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("+10%", "+25%", "+40%")
+                .declareVariable("+10%", "+25%", "+40%")
                 .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" damage vs. players").next()
                 .write("holding a bow")
                 .build();

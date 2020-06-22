@@ -56,7 +56,7 @@ public class ComboHeal extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("0.4", "0.8", "1.2")
+                .declareVariable("0.4", "0.8", "1.2")
                 .write("Every ").write(ChatColor.YELLOW, "fourth ").write("strike heals").next()
                 .writeVariable(ChatColor.RED, 0, level).write(ChatColor.RED, "❤").write(" and grants ").writeVariable(ChatColor.GOLD, 0, level).write(ChatColor.GOLD, "❤").next()
                 .write("absorption")

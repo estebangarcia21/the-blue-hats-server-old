@@ -44,7 +44,7 @@ public class Fletching extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("+7%", "+12%", "+20%")
+                .declareVariable("+7%", "+12%", "+20%")
                 .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" bow damage")
                 .build();
     }

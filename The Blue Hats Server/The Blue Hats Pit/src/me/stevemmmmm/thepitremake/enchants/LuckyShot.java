@@ -97,7 +97,7 @@ public class LuckyShot extends CustomEnchant {
     @Override
     public ArrayList<String> getDescription(int level) {
         return new LoreBuilder()
-                .addVariable("2%", "5%", "10%")
+                .declareVariable("2%", "5%", "10%")
                 .setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" chance for a shot to deal").next()
                 .write("quadruple damage")
                 .build();

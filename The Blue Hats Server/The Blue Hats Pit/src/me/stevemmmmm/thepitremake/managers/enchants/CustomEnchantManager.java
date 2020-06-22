@@ -1,7 +1,6 @@
 package me.stevemmmmm.thepitremake.managers.enchants;
 
 import me.stevemmmmm.thepitremake.core.Main;
-import me.stevemmmmm.thepitremake.game.MysticWell;
 import me.stevemmmmm.thepitremake.utils.SortCustomEnchantByName;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,6 +21,8 @@ public class CustomEnchantManager {
     private static CustomEnchantManager instance;
 
     private final ArrayList<CustomEnchant> enchants = new ArrayList<>();
+
+    private CustomEnchantManager() { }
 
     public static CustomEnchantManager getInstance() {
         if (instance == null) instance = new CustomEnchantManager();
@@ -53,17 +54,17 @@ public class CustomEnchantManager {
     }
 
     public void addEnchants(ItemStack item, int level, CustomEnchant... enchants) {
-        boolean hasTiered = false;
+        boolean itemHasAlreadyTieredUp = false;
 
         for (CustomEnchant enchant : enchants) {
             ItemMeta meta = item.getItemMeta();
             String previousDisplayName = meta.getDisplayName();
 
-            int tierValue = MysticWell.getItemTier(item);
+            int tierValue = getItemTier(item);
 
             if (tierValue > 2) tierValue = 2;
 
-            String tier = convertToRomanNumeral(tierValue + (hasTiered ? 0 : 1));
+            String tier = convertToRomanNumeral(tierValue + (itemHasAlreadyTieredUp ? 0 : 1));
 
             ChatColor tierColor = null;
             switch (tierValue + 1) {
@@ -75,6 +76,7 @@ public class CustomEnchantManager {
                     break;
                 case 3:
                     tierColor = ChatColor.RED;
+                    break;
             }
 
             String itemIndentifier = "";
@@ -97,21 +99,21 @@ public class CustomEnchantManager {
                     meta.setDisplayName(tierColor + itemIndentifier + "Tier " + tier + " Bow");
                     break;
                 case LEATHER_LEGGINGS:
-                    if (MysticWell.getItemTier(item) == 0) {
+                    if (getItemTier(item) == 0) {
                         meta.setDisplayName(getChatColorFromPantsColor(ChatColor.stripColor(meta.getDisplayName().split(" ")[1])) + itemIndentifier + "Tier " + tier + " Pants");
                     } else {
                         meta.setDisplayName(meta.getDisplayName().substring(0, 2) + itemIndentifier + "Tier " + tier + " Pants");
                     }
             }
 
+            //TODO Remove IF statement on LEATHER_LEGGINGS case
+
             String rare = ChatColor.LIGHT_PURPLE + "RARE! " + ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
             String normal = ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
 
             List<String> enchantLore = enchant.getDescription(level);
 
-            if (enchantLore == null) {
-                return;
-            }
+            if (enchantLore == null) return;
 
             enchantLore.add(0, enchant.isRareEnchant() ? rare : normal);
             if (meta.getLore() != null) enchantLore.add(0, " ");
@@ -122,6 +124,7 @@ public class CustomEnchantManager {
                 if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Fresh")) {
                     lore = new ArrayList<>();
 
+                    //TODO Random lives
                     lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
                     lore.add(" ");
 
@@ -131,7 +134,8 @@ public class CustomEnchantManager {
             }
 
             if (previousDisplayName != null && item.getType() == Material.GOLD_SWORD) {
-                if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Mystic")) {
+                if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Mystic"))
+                {
                     lore = new ArrayList<>();
 
                     lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
@@ -173,7 +177,7 @@ public class CustomEnchantManager {
             meta.setLore(lore);
 
             item.setItemMeta(meta);
-            hasTiered = true;
+            itemHasAlreadyTieredUp = true;
         }
     }
 
