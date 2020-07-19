@@ -1,5 +1,6 @@
 # Intellij files
-Modules/The Hypixel Pit Enchantments/.idea/workspace.xml
+*.idea
+*.iml
 
 # Compiled class file
 *.class
