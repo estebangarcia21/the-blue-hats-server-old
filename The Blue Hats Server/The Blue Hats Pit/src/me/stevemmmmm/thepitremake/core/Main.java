@@ -1,7 +1,5 @@
 package me.stevemmmmm.thepitremake.core;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
 import me.stevemmmmm.configapi.core.ConfigAPI;
 import me.stevemmmmm.servercore.core.ServerGame;
 import me.stevemmmmm.servercore.core.WorldType;
@@ -36,14 +34,14 @@ import java.util.logging.Logger;
 
 public class Main extends JavaPlugin implements ServerGame {
     public static Main INSTANCE;
-    public static ProtocolManager protocolManager;
+//    public static ProtocolManager protocolManager;
 
     public static String version = "v1.0";
 
     @Override
     public void onEnable() {
         INSTANCE = this;
-        protocolManager = ProtocolLibrary.getProtocolManager();
+//        protocolManager = ProtocolLibrary.getProtocolManager();
 
         ConfigAPI.registerConfigWriteLocations(this, new HashMap<String, String>() {{
             put("Gold", "stats.gold");
@@ -163,6 +161,7 @@ public class Main extends JavaPlugin implements ServerGame {
         CustomEnchantManager.getInstance().registerEnchant(new BeatTheSpammers());
         CustomEnchantManager.getInstance().registerEnchant(new ComboHeal());
         CustomEnchantManager.getInstance().registerEnchant(new Sweaty());
+        CustomEnchantManager.getInstance().registerEnchant(new Knockback());
 
         //Bows
         CustomEnchantManager.getInstance().registerEnchant(new Robinhood());

@@ -7,15 +7,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="spigot-1.8.8-R0.1-SNAPSHOT-latest" level="project" />
-    <orderEntry type="library" name="spigot-1.8.8-R0.1-SNAPSHOT-latest1" level="project" />
-    <orderEntry type="module" module-name="Animation API1" />
-    <orderEntry type="module" module-name="Animation API" />
-    <orderEntry type="module" module-name="Server Core" />
     <orderEntry type="module" module-name="Blue Permissions" />
-    <orderEntry type="module" module-name="Config API1" />
     <orderEntry type="module" module-name="Config API" />
-    <orderEntry type="module" module-name="Blue Permissions1" />
-    <orderEntry type="module" module-name="Server Core1" />
+    <orderEntry type="library" name="Spigot 1.8.8" level="project" />
+    <orderEntry type="library" name="Spigot 1.8.8" level="project" />
+    <orderEntry type="module" module-name="Server Core" />
+    <orderEntry type="module" module-name="Animation API" />
   </component>
 </module>

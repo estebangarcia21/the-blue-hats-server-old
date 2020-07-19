@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import java.io.IOError;
 import java.util.ArrayList;
 
 /*
@@ -55,7 +56,7 @@ public class BulletTime extends CustomEnchant implements EnchantCanceler {
 
     @Override
     public CustomEnchant getEnchant() {
-        return this;
+        return null;
     }
 
     @Override

@@ -7,9 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="spigot-1.8.8-R0.1-SNAPSHOT-latest" level="project" />
-    <orderEntry type="library" name="spigot-1.8.8-R0.1-SNAPSHOT-latest1" level="project" />
+    <orderEntry type="module" module-name="The Blue Hats Pit" />
+    <orderEntry type="library" name="Spigot 1.8.8" level="project" />
+    <orderEntry type="library" name="Spigot 1.8.8" level="project" />
     <orderEntry type="module" module-name="Server Core" />
-    <orderEntry type="module" module-name="Server Core1" />
   </component>
 </module>
