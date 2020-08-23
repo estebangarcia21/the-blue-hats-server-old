@@ -107,7 +107,6 @@ public class CustomEnchantManager {
             }
 
             //TODO Remove IF statement on LEATHER_LEGGINGS case
-
             String rare = ChatColor.LIGHT_PURPLE + "RARE! " + ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
             String normal = ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
 
@@ -209,8 +208,6 @@ public class CustomEnchantManager {
 
     public void setItemLives(ItemStack item, int value) {
         if (item.getItemMeta().getLore() == null) return;
-        //Aye
-        //Testing this oyut
 
         List<String> lore = item.getItemMeta().getLore();
         lore.set(0, ChatColor.GRAY + "Lives: " + (value > 3 ? ChatColor.GREEN : ChatColor.RED) + value + ChatColor.GRAY + "/" + getMaximumItemLives(item));

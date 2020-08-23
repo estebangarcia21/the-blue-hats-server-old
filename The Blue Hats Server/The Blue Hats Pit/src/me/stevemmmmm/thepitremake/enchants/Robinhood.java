@@ -27,9 +27,7 @@ import java.util.Map;
 
 public class Robinhood extends CustomEnchant {
     private final EnchantProperty<Float> damageReduction = new EnchantProperty<>(.4f, .5f, .6f);
-
     private final HashMap<Arrow, Integer> arrowTasks = new HashMap<>();
-    private final HashMap<Arrow, Player> arrowToHomingPlayer = new HashMap<>();
 
     private final double range = 8;
 
@@ -106,8 +104,7 @@ public class Robinhood extends CustomEnchant {
             List<Player> closestPlayers = new ArrayList<>();
 
             for (Entity entity : closestEntities) {
-                if (entity instanceof Player) {
-                    closestPlayers.add((Player) entity);
+                if (entity instanceof Player) {                    closestPlayers.add((Player) entity);
                 }
             }
 
@@ -115,7 +112,6 @@ public class Robinhood extends CustomEnchant {
 
             Player closestPlayer = null;
 
-            //TODO Optimize?
             for (Entity entity : closestEntities) {
                 if (entity instanceof Player) {
                     if (entity != player) {
@@ -133,30 +129,11 @@ public class Robinhood extends CustomEnchant {
 
             if (closestPlayer == null) return;
 
-            Vector direction;
+            Vector arrowVector = arrow.getLocation().toVector();
+            Vector closestPlayerVector = closestPlayer.getLocation().toVector();
+            closestPlayerVector.setY(closestPlayerVector.getY() + 2);
 
-            if (!arrowToHomingPlayer.containsKey(arrow)) {
-                Location arrowLocation = arrow.getLocation();
-                Location closestPlayerLoc = closestPlayer.getLocation();
-
-                Vector arrowVector = arrowLocation.toVector();
-                Vector closestPlayerVector = closestPlayerLoc.toVector();
-                closestPlayerVector.setY(closestPlayerVector.getY() + 2);
-
-                direction = arrowVector.subtract(closestPlayerVector).normalize().multiply(-1);
-                arrowToHomingPlayer.put(arrow, closestPlayer);
-            } else {
-                Vector closestPlayerVector = arrowToHomingPlayer.get(arrow).getLocation().toVector();
-                closestPlayerVector.setY(closestPlayerVector.getY() + 2);
-
-                if (RegionManager.getInstance().playerIsInRegion(arrowToHomingPlayer.get(arrow), RegionManager.RegionType.SPAWN)) {
-                    Bukkit.getServer().getScheduler().cancelTask(arrowTasks.get(arrow));
-                    arrowTasks.remove(arrow);
-                    return;
-                }
-
-                direction = arrow.getLocation().toVector().subtract(closestPlayerVector).normalize().multiply(-1);
-            }
+            Vector direction = closestPlayerVector.subtract(arrowVector).normalize();
 
             arrow.setVelocity(direction);
         }, 0L, 3L));

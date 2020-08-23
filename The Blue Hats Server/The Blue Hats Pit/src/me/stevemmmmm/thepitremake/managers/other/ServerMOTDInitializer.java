@@ -1,4 +1,4 @@
-package me.stevemmmmm.thepitremake.managers;
+package me.stevemmmmm.thepitremake.managers.other;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;

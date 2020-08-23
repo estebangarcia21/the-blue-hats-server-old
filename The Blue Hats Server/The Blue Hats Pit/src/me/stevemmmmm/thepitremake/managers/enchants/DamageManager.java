@@ -24,11 +24,7 @@ import java.util.HashMap;
 public class DamageManager implements Listener {
     private static DamageManager instance;
 
-    private final HashMap<EntityDamageByEntityEvent, Double> additiveDamageBuffer = new HashMap<>();
-    private final HashMap<EntityDamageByEntityEvent, Double> multiplicativeDamageBuffer = new HashMap<>();
-
-    private final HashMap<EntityDamageByEntityEvent, Double> reductionBuffer = new HashMap<>();
-    private final HashMap<EntityDamageByEntityEvent, Double> absoluteReductionBuffer = new HashMap<>();
+    private static final HashMap<EntityDamageByEntityEvent, EventData> eventData = new HashMap<>();
 
     private final ArrayList<EntityDamageByEntityEvent> canceledEvents = new ArrayList<>();
     private final ArrayList<EntityDamageByEntityEvent> removeCriticalDamage = new ArrayList<>();
@@ -41,85 +37,118 @@ public class DamageManager implements Listener {
         return instance;
     }
 
+    static class EventData {
+        private double additiveDamage = 1;
+        private double multiplicativeDamage;
+
+        private double reductionAmount = 1;
+        private double absoluteReductionAmount;
+
+        private EventData() { }
+
+        public static EventData fromEvent(EntityDamageByEntityEvent event) {
+            if (!eventData.containsKey(event)) {
+                eventData.put(event, new EventData());
+            }
+
+            return eventData.get(event);
+        }
+
+        public double getAdditiveDamage() {
+            return additiveDamage;
+        }
+
+        public void setAdditiveDamage(double additiveDamage) {
+            this.additiveDamage = additiveDamage;
+        }
+
+        public double getMultiplicativeDamage() {
+            return multiplicativeDamage;
+        }
+
+        public void setMultiplicativeDamage(double multiplicativeDamage) {
+            this.multiplicativeDamage = multiplicativeDamage;
+        }
+
+        public double getReductionAmount() {
+            return reductionAmount;
+        }
+
+        public void setReductionAmount(double reductionAmount) {
+            this.reductionAmount = reductionAmount;
+        }
+
+        public double getAbsoluteReductionAmount() {
+            return absoluteReductionAmount;
+        }
+
+        public void setAbsoluteReductionAmount(double absoluteReductionAmount) {
+            this.absoluteReductionAmount = absoluteReductionAmount;
+        }
+    }
+
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onHit(EntityDamageByEntityEvent event) {
+        if (!eventData.containsKey(event)) {
+            eventData.put(event, new EventData());
+        }
+
         if (canceledEvents.contains(event)) {
             event.setCancelled(true);
         } else {
             event.setDamage(getDamageFromEvent(event));
         }
 
+        eventData.remove(event);
         canceledEvents.remove(event);
-        additiveDamageBuffer.remove(event);
-        multiplicativeDamageBuffer.remove(event);
-        absoluteReductionBuffer.remove(event);
-        reductionBuffer.remove(event);
         removeCriticalDamage.remove(event);
     }
 
     public double getDamageFromEvent(EntityDamageByEntityEvent event) {
-        double damage = event.getDamage() * additiveDamageBuffer.getOrDefault(event, 1D) * multiplicativeDamageBuffer.getOrDefault(event, 1D) * reductionBuffer.getOrDefault(event, 1D) - absoluteReductionBuffer.getOrDefault(event, 0D);
-
-        if (removeCriticalDamage.contains(event)) {
-            damage *= .667;
-        }
-
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
-
-            if (player.getInventory().getLeggings() != null) {
-                if (player.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
-                    if (!CustomEnchantManager.getInstance().getItemEnchants(player.getInventory().getLeggings()).isEmpty()) {
-                        damage *= 0.871;
-                    }
-                }
-            }
-        }
-
-        if (damage <= 0) damage = 1;
-
-        return damage;
+        return calculateDamage(event.getDamage(), event);
     }
 
     public double getFinalDamageFromEvent(EntityDamageByEntityEvent event) {
-        double damage = event.getFinalDamage() * additiveDamageBuffer.getOrDefault(event, 1D) * multiplicativeDamageBuffer.getOrDefault(event, 1D) * reductionBuffer.getOrDefault(event, 1D) - absoluteReductionBuffer.getOrDefault(event, 0D);
-
-        if (removeCriticalDamage.contains(event)) {
-            damage *= .667;
-        }
-
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
-
-            if (player.getInventory().getLeggings() != null) {
-                if (player.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
-                    if (!CustomEnchantManager.getInstance().getItemEnchants(player.getInventory().getLeggings()).isEmpty()) {
-                        damage *= 0.871;
-                    }
-                }
-            }
-        }
-
-        if (damage <= 0) damage = 1;
-
-        return damage;
+        return calculateDamage(event.getFinalDamage(), event);
     }
 
     public void addDamage(EntityDamageByEntityEvent event, double value, CalculationMode mode) {
+        EventData data = EventData.fromEvent(event);
+
         if (mode == CalculationMode.ADDITIVE) {
-            additiveDamageBuffer.put(event, additiveDamageBuffer.getOrDefault(event, 1D) + value);
+            data.setAdditiveDamage(data.getAdditiveDamage() + value);
         }
 
         if (mode == CalculationMode.MULTIPLICATIVE) {
-            multiplicativeDamageBuffer.put(event, multiplicativeDamageBuffer.getOrDefault(event, 0D) + value);
+            data.setMultiplicativeDamage(data.getMultiplicativeDamage() + value);
         }
+    }
+
+    public void reduceDamage(EntityDamageByEntityEvent event, double value) {
+        EventData data = EventData.fromEvent(event);
+
+        if (data.getReductionAmount() == 1) {
+            data.setReductionAmount(data.getReductionAmount() - (1 - value));
+            return;
+        }
+
+        data.setReductionAmount(1 - data.getReductionAmount() * value);
+    }
+
+    public void reduceAbsoluteDamage(EntityDamageByEntityEvent event, double value) {
+        EventData data = EventData.fromEvent(event);
+
+        data.setAbsoluteReductionAmount(data.getAbsoluteReductionAmount() + value);
+    }
+
+    public void removeExtraCriticalDamage(EntityDamageByEntityEvent event) {
+        removeCriticalDamage.add(event);
     }
 
     public void setEventAsCanceled(EntityDamageByEntityEvent event) {
         canceledEvents.add(event);
     }
 
-    //TODO Inversion error?
     public boolean isEventNotCancelled(EntityDamageByEntityEvent event) {
         return !canceledEvents.contains(event);
     }
@@ -166,25 +195,6 @@ public class DamageManager implements Listener {
         }
 
         return false;
-    }
-
-    public void reduceDamage(EntityDamageByEntityEvent event, double value) {
-        if (!reductionBuffer.containsKey(event)) reductionBuffer.put(event, 1D);
-
-        if (reductionBuffer.get(event) == 1) {
-            reductionBuffer.put(event, reductionBuffer.get(event) - (1 - value));
-            return;
-        }
-
-        reductionBuffer.put(event, 1 - reductionBuffer.get(event) * value);
-    }
-
-    public void reduceAbsoluteDamage(EntityDamageByEntityEvent event, double value) {
-        absoluteReductionBuffer.put(event, absoluteReductionBuffer.getOrDefault(event, 0D) + value);
-    }
-
-    public void removeExtraCriticalDamage(EntityDamageByEntityEvent event) {
-        removeCriticalDamage.add(event);
     }
 
     public void doTrueDamage(Player target, double damage) {
@@ -234,5 +244,32 @@ public class DamageManager implements Listener {
 
     public boolean isCriticalHit(Player player) {
         return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
+    }
+
+    private double calculateDamage(double initialDamage, EntityDamageByEntityEvent event) {
+        EventData data = EventData.fromEvent(event);
+
+        double damage = initialDamage * data.getAdditiveDamage() * data.getMultiplicativeDamage() * data.getReductionAmount() - data.getAbsoluteReductionAmount();
+
+        if (removeCriticalDamage.contains(event)) {
+            damage *= .667;
+        }
+
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+
+            if (player.getInventory().getLeggings() != null) {
+                if (player.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
+                    if (!CustomEnchantManager.getInstance().getItemEnchants(player.getInventory().getLeggings()).isEmpty()) {
+                        //TODO This is the only way to try to make leather pants to iron in 1.8.8 spigot. I need to upgrade to 1.9+ spigot to fix this. This heavily changes the damage output
+                        damage *= 0.871;
+                    }
+                }
+            }
+        }
+
+        if (damage <= 0) damage = 1;
+
+        return damage;
     }
 }
