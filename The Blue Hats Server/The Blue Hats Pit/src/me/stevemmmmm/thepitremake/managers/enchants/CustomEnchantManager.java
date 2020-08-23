@@ -107,7 +107,6 @@ public class CustomEnchantManager {
             }
 
             //TODO Remove IF statement on LEATHER_LEGGINGS case
-
             String rare = ChatColor.LIGHT_PURPLE + "RARE! " + ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
             String normal = ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
 

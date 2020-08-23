@@ -9,7 +9,7 @@ import me.stevemmmmm.thepitremake.enchants.*;
 import me.stevemmmmm.thepitremake.game.*;
 import me.stevemmmmm.thepitremake.game.duels.DuelingManager;
 import me.stevemmmmm.thepitremake.game.duels.GameUtility;
-import me.stevemmmmm.thepitremake.managers.ServerMOTDInitializer;
+import me.stevemmmmm.thepitremake.managers.other.ServerMOTDInitializer;
 import me.stevemmmmm.thepitremake.managers.enchants.BowManager;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thepitremake.managers.enchants.DamageManager;
