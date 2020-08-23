@@ -9,7 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="The Blue Hats Pit" />
     <orderEntry type="library" name="Spigot 1.8.8" level="project" />
-    <orderEntry type="library" name="Spigot 1.8.8" level="project" />
     <orderEntry type="module" module-name="Server Core" />
   </component>
 </module>
