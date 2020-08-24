@@ -16,4 +16,4 @@ You can open the server source in IntelliJ. To make a configuration running the 
 You are allowed to modify anything about the server. However, you are not allowed to make your own private distributions of the server. Read the LICENSE file for more information <br>
 
 You may contact the server owner through Discord. 
-* Discord - Stevemmmmm#8896
+* Discord - Stevemmmmm#8894
