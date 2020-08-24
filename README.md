@@ -17,6 +17,3 @@ You are allowed to modify anything about the server. However, you are not allowe
 
 You may contact the server owner through Discord. 
 * Discord - Stevemmmmm#8896
-
-### Copyright
-Copyright © 2020 TheRealStevemmmmm 
