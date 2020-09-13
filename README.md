@@ -1,4 +1,7 @@
 # The Blue Hats Server - Plugins
+### About
+The Blue Hats Server is an open source community project that attempts to replicate The Hypixel Pit.
+
 ### Setting up in IntelliJ
 You can open the server source in IntelliJ. To make a configuration running the server, select **JAR Application** and set your JAR as the Spigot jar that is in the server. Set the working directory to the folder that contains the Spigot Jar. It is recommended to allocate more ram to the server through the VM arguments.
 
