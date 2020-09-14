@@ -246,6 +246,7 @@ public class DamageManager implements Listener {
         return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
     }
 
+    //TODO Fix lifesteal damage calculation
     private double calculateDamage(double initialDamage, EntityDamageByEntityEvent event) {
         EventData data = EventData.fromEvent(event);
 
