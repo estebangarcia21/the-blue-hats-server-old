@@ -27,3 +27,5 @@
 hs_err_pid*
 The Blue Hats Server/.DS_Store
 .DS_Store
+/bin/
+/target/
