@@ -1,3 +1,7 @@
+# Eclipse / eclimd files
+.classpath
+.project
+
 # Intellij files
 *.idea
 *.iml
