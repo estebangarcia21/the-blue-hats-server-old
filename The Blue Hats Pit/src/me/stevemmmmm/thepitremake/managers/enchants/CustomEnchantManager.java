@@ -54,8 +54,6 @@ public class CustomEnchantManager {
     }
 
     public void addEnchants(ItemStack item, int level, CustomEnchant... enchants) {
-
-
         boolean itemHasAlreadyTieredUp = false;
 
         for (CustomEnchant enchant : enchants) {
