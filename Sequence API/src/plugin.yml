@@ -1,0 +1,3 @@
+name: SequenceAPI
+main: me.stevemmmmm.sequenceapi.core.SequenceAPI
+version: 1.0

@@ -4,7 +4,7 @@ package me.stevemmmmm.thepitremake.game;
  * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
-import me.stevemmmmm.animationapi.core.Sequence;
+import me.stevemmmmm.sequenceapi.core.Sequence;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thepitremake.managers.other.GrindingSystem;
 import org.bukkit.Bukkit;

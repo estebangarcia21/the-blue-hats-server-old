@@ -1,4 +1,4 @@
-package me.stevemmmmm.animationapi.core;
+package me.stevemmmmm.sequenceapi.core;
 
 import java.util.HashMap;
 

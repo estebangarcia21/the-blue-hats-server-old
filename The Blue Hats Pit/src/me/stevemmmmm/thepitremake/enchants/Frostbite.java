@@ -1,7 +1,7 @@
 package me.stevemmmmm.thepitremake.enchants;
 
-import me.stevemmmmm.animationapi.core.Sequence;
-import me.stevemmmmm.animationapi.core.SequenceAPI;
+import me.stevemmmmm.sequenceapi.core.Sequence;
+import me.stevemmmmm.sequenceapi.core.SequenceAPI;
 import me.stevemmmmm.thepitremake.managers.enchants.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

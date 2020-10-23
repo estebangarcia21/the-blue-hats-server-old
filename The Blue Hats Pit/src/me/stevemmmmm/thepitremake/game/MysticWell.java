@@ -1,8 +1,8 @@
 package me.stevemmmmm.thepitremake.game;
 
-import me.stevemmmmm.animationapi.core.Sequence;
-import me.stevemmmmm.animationapi.core.SequenceAPI;
-import me.stevemmmmm.animationapi.core.SequenceActions;
+import me.stevemmmmm.sequenceapi.core.Sequence;
+import me.stevemmmmm.sequenceapi.core.SequenceAPI;
+import me.stevemmmmm.sequenceapi.core.SequenceActions;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchant;
 import me.stevemmmmm.thepitremake.managers.enchants.CustomEnchantManager;
 import me.stevemmmmm.thepitremake.managers.enchants.EnchantGroup;

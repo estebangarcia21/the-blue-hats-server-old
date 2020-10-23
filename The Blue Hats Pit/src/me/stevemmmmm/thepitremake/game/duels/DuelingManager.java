@@ -1,8 +1,8 @@
 package me.stevemmmmm.thepitremake.game.duels;
 
-import me.stevemmmmm.animationapi.core.Sequence;
-import me.stevemmmmm.animationapi.core.SequenceAPI;
-import me.stevemmmmm.animationapi.core.SequenceActions;
+import me.stevemmmmm.sequenceapi.core.Sequence;
+import me.stevemmmmm.sequenceapi.core.SequenceAPI;
+import me.stevemmmmm.sequenceapi.core.SequenceActions;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.ChatColor;

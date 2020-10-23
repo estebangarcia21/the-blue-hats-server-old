@@ -1,4 +1,4 @@
-package me.stevemmmmm.animationapi.core;
+package me.stevemmmmm.sequenceapi.core;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
