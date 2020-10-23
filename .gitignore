@@ -6,6 +6,9 @@
 *.idea
 *.iml
 
+# VSCode files
+.vscode
+
 # Compiled class file
 *.class
 
