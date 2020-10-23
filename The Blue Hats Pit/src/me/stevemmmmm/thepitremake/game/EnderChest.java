@@ -5,7 +5,6 @@ import me.stevemmmmm.thepitremake.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -29,7 +28,8 @@ public class EnderChest implements Listener {
     private final HashMap<UUID, Inventory> playerEnderChestsNonToxicWorld = new HashMap<>();
 
     public static EnderChest getInstance() {
-        if (instance == null) instance = new EnderChest();
+        if (instance == null)
+            instance = new EnderChest();
 
         return instance;
     }
@@ -37,22 +37,29 @@ public class EnderChest implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!playerEnderChestsToxicWorld.containsKey(event.getPlayer().getUniqueId())) {
-            playerEnderChestsToxicWorld.put(event.getPlayer().getUniqueId(), Bukkit.createInventory(null, 54, ChatColor.GRAY + "Ender Chest"));
+            playerEnderChestsToxicWorld.put(event.getPlayer().getUniqueId(),
+                    Bukkit.createInventory(null, 54, ChatColor.GRAY + "Ender Chest"));
 
-            ConfigAPI.InventorySerializer.loadInventory(Main.INSTANCE, event.getPlayer(), "ToxicWorld", playerEnderChestsToxicWorld.get(event.getPlayer().getUniqueId()));
+            ConfigAPI.InventorySerializer.loadInventory(Main.INSTANCE, event.getPlayer(), "ToxicWorld",
+                    playerEnderChestsToxicWorld.get(event.getPlayer().getUniqueId()));
         }
 
         if (!playerEnderChestsNonToxicWorld.containsKey(event.getPlayer().getUniqueId())) {
-            playerEnderChestsNonToxicWorld.put(event.getPlayer().getUniqueId(), Bukkit.createInventory(null, 54, ChatColor.GRAY + "Ender Chest"));
+            playerEnderChestsNonToxicWorld.put(event.getPlayer().getUniqueId(),
+                    Bukkit.createInventory(null, 54, ChatColor.GRAY + "Ender Chest"));
 
-            ConfigAPI.InventorySerializer.loadInventory(Main.INSTANCE, event.getPlayer(), "NonToxicWorld", playerEnderChestsNonToxicWorld.get(event.getPlayer().getUniqueId()));
+            ConfigAPI.InventorySerializer.loadInventory(Main.INSTANCE, event.getPlayer(), "NonToxicWorld",
+                    playerEnderChestsNonToxicWorld.get(event.getPlayer().getUniqueId()));
         }
 
         for (int i = 0; i < event.getPlayer().getEnderChest().getSize(); i++) {
-            if (event.getPlayer().getEnderChest().getItem(i) == null) continue;
-            if (event.getPlayer().getEnderChest().getItem(i).getType() == Material.AIR) continue;
+            if (event.getPlayer().getEnderChest().getItem(i) == null)
+                continue;
+            if (event.getPlayer().getEnderChest().getItem(i).getType() == Material.AIR)
+                continue;
 
-            playerEnderChestsToxicWorld.get(event.getPlayer().getUniqueId()).setItem(i, event.getPlayer().getEnderChest().getItem(i));
+            playerEnderChestsToxicWorld.get(event.getPlayer().getUniqueId()).setItem(i,
+                    event.getPlayer().getEnderChest().getItem(i));
         }
 
         event.getPlayer().getEnderChest().clear();
@@ -80,13 +87,13 @@ public class EnderChest implements Listener {
 
     public void storeEnderChests() {
         for (Map.Entry<UUID, Inventory> entry : playerEnderChestsToxicWorld.entrySet()) {
-            ConfigAPI.InventorySerializer.serializeInventory(Main.INSTANCE, entry.getKey(), "ToxicWorld", entry.getValue());
+            ConfigAPI.InventorySerializer.serializeInventory(Main.INSTANCE, entry.getKey(), "ToxicWorld",
+                    entry.getValue());
         }
 
         for (Map.Entry<UUID, Inventory> entry : playerEnderChestsNonToxicWorld.entrySet()) {
-            Player player = Bukkit.getPlayer(entry.getKey());
-
-            ConfigAPI.InventorySerializer.serializeInventory(Main.INSTANCE, entry.getKey(), "NonToxicWorld", entry.getValue());
+            ConfigAPI.InventorySerializer.serializeInventory(Main.INSTANCE, entry.getKey(), "NonToxicWorld",
+                    entry.getValue());
         }
     }
 }

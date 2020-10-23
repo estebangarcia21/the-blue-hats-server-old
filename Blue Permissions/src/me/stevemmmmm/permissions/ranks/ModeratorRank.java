@@ -23,16 +23,19 @@ public class ModeratorRank extends Rank {
 
     @Override
     public HashMap<String, Boolean> getPermissions() {
-        return new HashMap<String, Boolean>() {{
-            put("minecraft.command.kick", true);
-            put("minecraft.command.ban", true);
-            put("minecraft.command.ban-ip", true);
-            put("minecraft.command.tp", true);
-            put("minecraft.command.pardon", true);
-            put("minecraft.command.pardon-ip", true);
-            put("minecraft.command.gamemode", true);
-            put("bhperms.chatcooldownbypass", true);
-        }};
+        return new HashMap<String, Boolean>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("minecraft.command.kick", true);
+                put("minecraft.command.ban", true);
+                put("minecraft.command.ban-ip", true);
+                put("minecraft.command.tp", true);
+                put("minecraft.command.pardon", true);
+                put("minecraft.command.pardon-ip", true);
+                put("minecraft.command.gamemode", true);
+                put("bhperms.chatcooldownbypass", true);
+            }
+        };
     }
 
     @Override

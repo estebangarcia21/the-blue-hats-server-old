@@ -22,10 +22,12 @@ public class CustomEnchantManager {
 
     private final ArrayList<CustomEnchant> enchants = new ArrayList<>();
 
-    private CustomEnchantManager() { }
+    private CustomEnchantManager() {
+    }
 
     public static CustomEnchantManager getInstance() {
-        if (instance == null) instance = new CustomEnchantManager();
+        if (instance == null)
+            instance = new CustomEnchantManager();
 
         return instance;
     }
@@ -46,7 +48,8 @@ public class CustomEnchantManager {
             if (enchant instanceof EnchantCanceler) {
                 EnchantCanceler cancelEnchant = (EnchantCanceler) enchant;
 
-                if (cancelEnchant.isCanceled(player)) return false;
+                if (cancelEnchant.isCanceled(player))
+                    return false;
             }
         }
 
@@ -62,7 +65,8 @@ public class CustomEnchantManager {
 
             int tierValue = getItemTier(item);
 
-            if (tierValue > 2) tierValue = 2;
+            if (tierValue > 2)
+                tierValue = 2;
 
             String tier = convertToRomanNumeral(tierValue + (itemHasAlreadyTieredUp ? 0 : 1));
 
@@ -89,8 +93,6 @@ public class CustomEnchantManager {
                 itemIndentifier = "Artifact ";
             }
 
-            //TODO Extraordinary
-
             switch (item.getType()) {
                 case GOLD_SWORD:
                     meta.setDisplayName(tierColor + itemIndentifier + "Tier " + tier + " Sword");
@@ -100,22 +102,29 @@ public class CustomEnchantManager {
                     break;
                 case LEATHER_LEGGINGS:
                     if (getItemTier(item) == 0) {
-                        meta.setDisplayName(getChatColorFromPantsColor(ChatColor.stripColor(meta.getDisplayName().split(" ")[1])) + itemIndentifier + "Tier " + tier + " Pants");
+                        meta.setDisplayName(
+                                getChatColorFromPantsColor(ChatColor.stripColor(meta.getDisplayName().split(" ")[1]))
+                                        + itemIndentifier + "Tier " + tier + " Pants");
                     } else {
-                        meta.setDisplayName(meta.getDisplayName().substring(0, 2) + itemIndentifier + "Tier " + tier + " Pants");
+                        meta.setDisplayName(
+                                meta.getDisplayName().substring(0, 2) + itemIndentifier + "Tier " + tier + " Pants");
                     }
+                default:
+                    break;
             }
 
-            //TODO Remove IF statement on LEATHER_LEGGINGS case
-            String rare = ChatColor.LIGHT_PURPLE + "RARE! " + ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
+            String rare = ChatColor.LIGHT_PURPLE + "RARE! " + ChatColor.BLUE + enchant.getName()
+                    + (level != 1 ? " " + convertToRomanNumeral(level) : "");
             String normal = ChatColor.BLUE + enchant.getName() + (level != 1 ? " " + convertToRomanNumeral(level) : "");
 
             List<String> enchantLore = enchant.getDescription(level);
 
-            if (enchantLore == null) return;
+            if (enchantLore == null)
+                return;
 
             enchantLore.add(0, enchant.isRareEnchant() ? rare : normal);
-            if (meta.getLore() != null) enchantLore.add(0, " ");
+            if (meta.getLore() != null)
+                enchantLore.add(0, " ");
 
             List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
 
@@ -123,18 +132,18 @@ public class CustomEnchantManager {
                 if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Fresh")) {
                     lore = new ArrayList<>();
 
-                    //TODO Random lives
                     lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
                     lore.add(" ");
 
-                    meta.setDisplayName(getChatColorFromPantsColor(ChatColor.stripColor(previousDisplayName.split(" ")[1])) + meta.getDisplayName());
+                    meta.setDisplayName(
+                            getChatColorFromPantsColor(ChatColor.stripColor(previousDisplayName.split(" ")[1]))
+                                    + meta.getDisplayName());
                     enchantLore.remove(0);
                 }
             }
 
             if (previousDisplayName != null && item.getType() == Material.GOLD_SWORD) {
-                if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Mystic"))
-                {
+                if (ChatColor.stripColor(previousDisplayName.split(" ")[0]).equalsIgnoreCase("Mystic")) {
                     lore = new ArrayList<>();
 
                     lore.add(ChatColor.GRAY + "Lives: " + ChatColor.GREEN + "69" + ChatColor.GRAY + "/420");
@@ -181,11 +190,14 @@ public class CustomEnchantManager {
     }
 
     public int getItemLives(ItemStack item) {
-        if (item.getItemMeta().getLore() == null) return 0;
+        if (item.getItemMeta().getLore() == null)
+            return 0;
 
-        ArrayList<String> keyWords = new ArrayList<>(Arrays.asList(ChatColor.stripColor(item.getItemMeta().getDisplayName()).split(" ")));
+        ArrayList<String> keyWords = new ArrayList<>(
+                Arrays.asList(ChatColor.stripColor(item.getItemMeta().getDisplayName()).split(" ")));
 
-        if (keyWords.contains("Fresh") || keyWords.contains("Mystic")) return 0;
+        if (keyWords.contains("Fresh") || keyWords.contains("Mystic"))
+            return 0;
 
         List<String> lore = item.getItemMeta().getLore();
         String livesLine = lore.get(0);
@@ -194,11 +206,14 @@ public class CustomEnchantManager {
     }
 
     public int getMaximumItemLives(ItemStack item) {
-        if (item.getItemMeta().getLore() == null) return 0;
+        if (item.getItemMeta().getLore() == null)
+            return 0;
 
-        ArrayList<String> keyWords = new ArrayList<>(Arrays.asList(ChatColor.stripColor(item.getItemMeta().getDisplayName()).split(" ")));
+        ArrayList<String> keyWords = new ArrayList<>(
+                Arrays.asList(ChatColor.stripColor(item.getItemMeta().getDisplayName()).split(" ")));
 
-        if (keyWords.contains("Fresh") || keyWords.contains("Mystic")) return 0;
+        if (keyWords.contains("Fresh") || keyWords.contains("Mystic"))
+            return 0;
 
         List<String> lore = item.getItemMeta().getLore();
         String livesLine = lore.get(0);
@@ -207,10 +222,12 @@ public class CustomEnchantManager {
     }
 
     public void setItemLives(ItemStack item, int value) {
-        if (item.getItemMeta().getLore() == null) return;
+        if (item.getItemMeta().getLore() == null)
+            return;
 
         List<String> lore = item.getItemMeta().getLore();
-        lore.set(0, ChatColor.GRAY + "Lives: " + (value > 3 ? ChatColor.GREEN : ChatColor.RED) + value + ChatColor.GRAY + "/" + getMaximumItemLives(item));
+        lore.set(0, ChatColor.GRAY + "Lives: " + (value > 3 ? ChatColor.GREEN : ChatColor.RED) + value + ChatColor.GRAY
+                + "/" + getMaximumItemLives(item));
 
         ItemMeta meta = item.getItemMeta();
         meta.setLore(lore);
@@ -219,14 +236,17 @@ public class CustomEnchantManager {
     }
 
     public void setMaximumItemLives(ItemStack item, int value) {
-        if (item.getItemMeta().getLore() == null) return;
+        if (item.getItemMeta().getLore() == null)
+            return;
 
         int lives = getItemLives(item);
 
-        if (lives > value) lives = value;
+        if (lives > value)
+            lives = value;
 
         List<String> lore = item.getItemMeta().getLore();
-        lore.set(0, ChatColor.GRAY + "Lives: " + (value > 3 ? ChatColor.GREEN : ChatColor.RED) + lives + ChatColor.GRAY + "/" + value);
+        lore.set(0, ChatColor.GRAY + "Lives: " + (value > 3 ? ChatColor.GREEN : ChatColor.RED) + lives + ChatColor.GRAY
+                + "/" + value);
 
         ItemMeta meta = item.getItemMeta();
         meta.setLore(lore);
@@ -240,7 +260,8 @@ public class CustomEnchantManager {
 
         List<String> lore = meta.getLore();
 
-        if (lore == null) return;
+        if (lore == null)
+            return;
 
         List<String> formattedLore = new ArrayList<>();
 
@@ -266,7 +287,8 @@ public class CustomEnchantManager {
             for (int i = 0; i < enchantData.size(); i++) {
                 if (convertRomanNumeralToInteger(enchantData.get(i)) == -1) {
                     enchantName.append(enchantData.get(i));
-                    if (i != enchantData.size() - 1) enchantName.append(" ");
+                    if (i != enchantData.size() - 1)
+                        enchantName.append(" ");
                 }
             }
 
@@ -307,18 +329,23 @@ public class CustomEnchantManager {
     }
 
     public boolean itemContainsEnchant(ItemStack item, CustomEnchant enchant) {
-        if (item.getItemMeta().getLore() == null || enchant == null) return false;
+        if (item.getItemMeta().getLore() == null || enchant == null)
+            return false;
 
         List<String> lore = item.getItemMeta().getLore();
 
         String appendRare = "";
 
-        if (enchant.isRareEnchant()) appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
+        if (enchant.isRareEnchant())
+            appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
 
-        if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName())) return true;
+        if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName()))
+            return true;
 
         for (int i = 2; i <= 3; i++) {
-            if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " " + CustomEnchantManager.getInstance().convertToRomanNumeral(i))) return true;
+            if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " "
+                    + CustomEnchantManager.getInstance().convertToRomanNumeral(i)))
+                return true;
         }
 
         return false;
@@ -327,8 +354,10 @@ public class CustomEnchantManager {
     public HashMap<CustomEnchant, Integer> getItemEnchants(ItemStack item) {
         HashMap<CustomEnchant, Integer> enchantsToLevels = new HashMap<>();
 
-        if (item.getType() == Material.AIR) return enchantsToLevels;
-        if (item.getItemMeta().getLore() == null) return enchantsToLevels;
+        if (item.getType() == Material.AIR)
+            return enchantsToLevels;
+        if (item.getItemMeta().getLore() == null)
+            return enchantsToLevels;
 
         for (String string : item.getItemMeta().getLore()) {
             ArrayList<String> enchantData = new ArrayList<>(Arrays.asList(string.split(" ")));
@@ -350,7 +379,8 @@ public class CustomEnchantManager {
             for (int i = 0; i < enchantData.size(); i++) {
                 if (convertRomanNumeralToInteger(enchantData.get(i)) == -1) {
                     enchantName.append(enchantData.get(i));
-                    if (i != enchantData.size() - 1) enchantName.append(" ");
+                    if (i != enchantData.size() - 1)
+                        enchantName.append(" ");
                 } else {
                     level = convertRomanNumeralToInteger(enchantData.get(i));
                 }
@@ -370,7 +400,8 @@ public class CustomEnchantManager {
     }
 
     public int getTokensOnItem(ItemStack item) {
-        if (item.getType() == Material.AIR || item.getItemMeta().getLore() == null) return 0;
+        if (item.getType() == Material.AIR || item.getItemMeta().getLore() == null)
+            return 0;
 
         int tokens = 0;
 
@@ -382,7 +413,8 @@ public class CustomEnchantManager {
     }
 
     public List<CustomEnchant> getRawItemEnchants(ItemStack item) {
-        if (item == null) return new ArrayList<>();
+        if (item == null)
+            return new ArrayList<>();
 
         ArrayList<CustomEnchant> enchants = new ArrayList<>();
 
@@ -398,7 +430,8 @@ public class CustomEnchantManager {
     public int getItemTier(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
 
-        ArrayList<String> tokens = new ArrayList<>(Arrays.asList(ChatColor.stripColor(meta.getDisplayName()).split(" ")));
+        ArrayList<String> tokens = new ArrayList<>(
+                Arrays.asList(ChatColor.stripColor(meta.getDisplayName()).split(" ")));
 
         if (tokens.contains("I")) {
             return 1;
@@ -414,7 +447,8 @@ public class CustomEnchantManager {
     }
 
     public boolean percentChance(double percent) {
-        return Double.parseDouble(new DecimalFormat("#0.0").format(ThreadLocalRandom.current().nextDouble(0, 99))) <= percent;
+        return Double.parseDouble(
+                new DecimalFormat("#0.0").format(ThreadLocalRandom.current().nextDouble(0, 99))) <= percent;
     }
 
     public String convertToRomanNumeral(int value) {

@@ -17,10 +17,13 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
 
-        ConfigAPI.registerConfigWriteLocations(this, new HashMap<String, String>() {{
-            put("PlayerRanks", "rank.player");
-            put("StaffRanks", "rank.staff");
-        }});
+        ConfigAPI.registerConfigWriteLocations(this, new HashMap<String, String>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("PlayerRanks", "rank.player");
+                put("StaffRanks", "rank.staff");
+            }
+        });
 
         RankManager.getInstance().registerRank(new NoobRank());
         RankManager.getInstance().registerRank(new NoneRank());
@@ -37,5 +40,6 @@ public class Main extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() { }
+    public void onDisable() {
+    }
 }

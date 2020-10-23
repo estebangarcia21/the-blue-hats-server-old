@@ -23,11 +23,14 @@ public class NoobRank extends Rank {
 
     @Override
     public HashMap<String, Boolean> getPermissions() {
-        return new HashMap<String, Boolean>() {{
-            put("minecraft.command.me", false);
-            put("bukkit.command.help", false);
-            put("bukkit.command.plugins", false);
-        }};
+        return new HashMap<String, Boolean>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("minecraft.command.me", false);
+                put("bukkit.command.help", false);
+                put("bukkit.command.plugins", false);
+            }
+        };
     }
 
     @Override

@@ -24,9 +24,9 @@ public class MysticWellInventory {
     private MysticWellState state;
     private Sequence sequence;
 
-    private int enchantButtonSlot = 24;
+    private MysticWellInventory() {
 
-    private MysticWellInventory() { }
+    }
 
     public static MysticWellInventory newInventory(Player player) {
         Inventory gui = Bukkit.createInventory(null, 45, INVENTORY_NAME);
@@ -45,7 +45,7 @@ public class MysticWellInventory {
         gui.setItem(19, grayGlassPane);
         gui.setItem(21, grayGlassPane);
 
-//        gui.setItem(24, enchantmentTableInfoIdle);
+        // gui.setItem(24, enchantmentTableInfoIdle);
 
         gui.setItem(28, grayGlassPane);
         gui.setItem(29, grayGlassPane);
@@ -63,7 +63,8 @@ public class MysticWellInventory {
     }
 
     public boolean canEnchant() {
-        if (getItemInEnchantmentSlot() == null) return false;
+        if (getItemInEnchantmentSlot() == null)
+            return false;
 
         int goldAmount = 0;
 
@@ -79,10 +80,11 @@ public class MysticWellInventory {
                 break;
         }
 
-        //TODO Pants color here
+        // TODO Pants color here
 
         if (GrindingSystem.getInstance().getPlayerGold(player) >= goldAmount) {
-            GrindingSystem.getInstance().setPlayerGold(player, Math.max(0, GrindingSystem.getInstance().getPlayerGold(player) - goldAmount));
+            GrindingSystem.getInstance().setPlayerGold(player,
+                    Math.max(0, GrindingSystem.getInstance().getPlayerGold(player) - goldAmount));
         }
 
         return true;

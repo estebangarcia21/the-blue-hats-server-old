@@ -27,10 +27,6 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /*
- * This class is lazily coded.
- */
-
-/*
  * Copyright (c) 2020. Created by Stevemmmmm.
  */
 
@@ -54,6 +50,7 @@ public class MysticWell implements Listener {
 
         etMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
         etMeta.setLore(new ArrayList<String>() {
+            private static final long serialVersionUID = 1L;
             {
                 add(ChatColor.GRAY + "Find a " + ChatColor.AQUA + "Mystic Bow" + ChatColor.GRAY + ", "
                         + ChatColor.YELLOW + "Mystic");
@@ -75,6 +72,7 @@ public class MysticWell implements Listener {
 
         et1Meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
         et1Meta.setLore(new ArrayList<String>() {
+            private static final long serialVersionUID = 1L;
             {
                 add(ChatColor.GRAY + "Upgrade:" + ChatColor.GREEN + " Tier I");
                 add(ChatColor.GRAY + "Cost:" + ChatColor.GOLD + " 1,000g");
@@ -89,6 +87,7 @@ public class MysticWell implements Listener {
 
         et2Meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
         et2Meta.setLore(new ArrayList<String>() {
+            private static final long serialVersionUID = 1L;
             {
                 add(ChatColor.GRAY + "Upgrade:" + ChatColor.YELLOW + " Tier II");
                 add(ChatColor.GRAY + "Cost:" + ChatColor.GOLD + " 4,000g");
@@ -103,6 +102,7 @@ public class MysticWell implements Listener {
 
         et3Meta.setDisplayName(ChatColor.LIGHT_PURPLE + "Mystic Well");
         et3Meta.setLore(new ArrayList<String>() {
+            private static final long serialVersionUID = 1L;
             {
                 add(ChatColor.GRAY + "Upgrade:" + ChatColor.RED + " Tier III");
                 add(ChatColor.GRAY + "Cost:" + ChatColor.GOLD + " 8,000g");
@@ -121,6 +121,7 @@ public class MysticWell implements Listener {
 
         etMax.setDisplayName(ChatColor.RED + "Mystic Well");
         etMax.setLore(new ArrayList<String>() {
+            private static final long serialVersionUID = 1L;
             {
                 add(ChatColor.GRAY + "This item cannot be");
                 add(ChatColor.GRAY + "upgraded any further");
@@ -314,7 +315,7 @@ public class MysticWell implements Listener {
 
             if (determinant <= 7) {
                 int tokenDeterminant = ThreadLocalRandom.current().nextInt(0, 10) + 1;
-                boolean addRare = ThreadLocalRandom.current().nextInt(0, 150) == 0;
+                // boolean addRare = ThreadLocalRandom.current().nextInt(0, 150) == 0;
 
                 if (tokenDeterminant <= 4) {
                     buffer[0] = getRandomEnchantFromGroup(EnchantGroup.A, item.getType());
@@ -370,7 +371,7 @@ public class MysticWell implements Listener {
     }
 
     private void setMysticWellAnimation(Player player, MysticWellAnimation animation) {
-        Inventory gui = playerGuis.get(player.getUniqueId());
+        // Inventory gui = playerGuis.get(player.getUniqueId());
 
         if (animation == MysticWellAnimation.IDLE) {
             if (mysticWellStates.containsKey(player.getUniqueId())) {

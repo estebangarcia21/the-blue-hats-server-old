@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import java.io.IOError;
 import java.util.ArrayList;
 
 /*
@@ -24,7 +23,8 @@ public class BulletTime extends CustomEnchant implements EnchantCanceler {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(), event.getDamager(), event);
+                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(),
+                        event.getDamager(), event);
             }
         }
     }
@@ -45,7 +45,8 @@ public class BulletTime extends CustomEnchant implements EnchantCanceler {
 
             arrow.remove();
 
-            hitPlayer.setHealth(Math.min(hitPlayer.getHealth() + healingAmount.getValueAtLevel(level), hitPlayer.getMaxHealth()));
+            hitPlayer.setHealth(
+                    Math.min(hitPlayer.getHealth() + healingAmount.getValueAtLevel(level), hitPlayer.getMaxHealth()));
         }
     }
 
@@ -71,17 +72,12 @@ public class BulletTime extends CustomEnchant implements EnchantCanceler {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("", "1❤", "1.5❤")
-                .setWriteCondition(level == 1)
-                .setColor(ChatColor.GRAY).write("Blocking destroys arrows that").next()
-                .setColor(ChatColor.GRAY).write("hit you")
-                .resetCondition()
-                .setWriteCondition(level != 1)
-                .setColor(ChatColor.GRAY).write("Blocking destroys arrows hitting").next()
-                .setColor(ChatColor.GRAY).write("you. Destroying arrows this way").next()
-                .setColor(ChatColor.GRAY).write("heals ").setColor(ChatColor.RED).writeVariable(0, level)
-                .build();
+        return new LoreBuilder().declareVariable("", "1❤", "1.5❤").setWriteCondition(level == 1)
+                .setColor(ChatColor.GRAY).write("Blocking destroys arrows that").next().setColor(ChatColor.GRAY)
+                .write("hit you").resetCondition().setWriteCondition(level != 1).setColor(ChatColor.GRAY)
+                .write("Blocking destroys arrows hitting").next().setColor(ChatColor.GRAY)
+                .write("you. Destroying arrows this way").next().setColor(ChatColor.GRAY).write("heals ")
+                .setColor(ChatColor.RED).writeVariable(0, level).build();
     }
 
     @Override

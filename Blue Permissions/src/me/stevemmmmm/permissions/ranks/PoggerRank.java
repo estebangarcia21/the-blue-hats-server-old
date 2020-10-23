@@ -23,11 +23,12 @@ public class PoggerRank extends Rank {
 
     @Override
     public HashMap<String, Boolean> getPermissions() {
-        return new HashMap<String, Boolean>() {{
-            put("bhperms.chatcooldownbypass", true);
-
-            //TODO Extra perms
-        }};
+        return new HashMap<String, Boolean>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("bhperms.chatcooldownbypass", true);
+            }
+        };
     }
 
     @Override

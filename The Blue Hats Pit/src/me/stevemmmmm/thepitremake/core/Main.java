@@ -34,21 +34,24 @@ import java.util.logging.Logger;
 
 public class Main extends JavaPlugin implements ServerGame {
     public static Main INSTANCE;
-//    public static ProtocolManager protocolManager;
+    // public static ProtocolManager protocolManager;
 
     public static String version = "v1.0";
 
     @Override
     public void onEnable() {
         INSTANCE = this;
-//        protocolManager = ProtocolLibrary.getProtocolManager();
+        // protocolManager = ProtocolLibrary.getProtocolManager();
 
-        ConfigAPI.registerConfigWriteLocations(this, new HashMap<String, String>() {{
-            put("Gold", "stats.gold");
-            put("XP", "stats.xp");
-            put("Prestiges", "stats.prestige");
-            put("Levels", "stats.level");
-        }});
+        ConfigAPI.registerConfigWriteLocations(this, new HashMap<String, String>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("Gold", "stats.gold");
+                put("XP", "stats.xp");
+                put("Prestiges", "stats.prestige");
+                put("Levels", "stats.level");
+            }
+        });
 
         ConfigAPI.registerConfigWriter(GrindingSystem.getInstance());
         ConfigAPI.registerConfigReader(GrindingSystem.getInstance());
@@ -58,11 +61,11 @@ public class Main extends JavaPlugin implements ServerGame {
         log.info("The Hypixel Pit Remake by Stevemmmmm");
         log.info("------------------------------------------");
 
-        //Initialization
+        // Initialization
         registerEnchants();
         registerPerks();
 
-        //Utility
+        // Utility
         getServer().getPluginManager().registerEvents(new GameUtility(), this);
         getServer().getPluginManager().registerEvents(new ClearArrows(), this);
         getServer().getPluginManager().registerEvents(new AntiFall(), this);
@@ -76,7 +79,7 @@ public class Main extends JavaPlugin implements ServerGame {
         getServer().getPluginManager().registerEvents(new ChatManagement(), this);
         getServer().getPluginManager().registerEvents(new TogglePvPCommand(), this);
 
-        //Commands
+        // Commands
         getCommand("pitenchant").setExecutor(new EnchantCommand());
         getCommand("mysticenchants").setExecutor(new MysticEnchantsCommand());
         getCommand("pitabout").setExecutor(new PitAboutCommand());
@@ -95,7 +98,7 @@ public class Main extends JavaPlugin implements ServerGame {
         getCommand("spawn").setExecutor(spawnCommand);
         getCommand("respawn").setExecutor(spawnCommand);
 
-        //Game
+        // Game
         getServer().getPluginManager().registerEvents(new NewMysticWell(), this);
         System.out.println("Using the new mystic well!");
 
@@ -113,7 +116,7 @@ public class Main extends JavaPlugin implements ServerGame {
         getServer().getPluginManager().registerEvents(new StopLiquidFlow(), this);
         getServer().getPluginManager().registerEvents(WorldSelection.getInstance(), this);
         getServer().getPluginManager().registerEvents(EnderChest.getInstance(), this);
-//        getServer().getPluginManager().registerEvents(new MonsterBlob(), this);
+        // getServer().getPluginManager().registerEvents(new MonsterBlob(), this);
     }
 
     @Override
@@ -122,9 +125,9 @@ public class Main extends JavaPlugin implements ServerGame {
             ((CraftPlayer) player).disconnect("Server restart!");
         }
 
-//        GrindingSystem.getInstance().writeToConfig();
+        // GrindingSystem.getInstance().writeToConfig();
 
-//        EnderChest.getInstance().storeEnderChests();
+        // EnderChest.getInstance().storeEnderChests();
 
         for (World world : Bukkit.getWorlds()) {
             for (Entity entity : world.getEntities()) {
@@ -142,7 +145,7 @@ public class Main extends JavaPlugin implements ServerGame {
     }
 
     private void registerEnchants() {
-        //Swords
+        // Swords
         CustomEnchantManager.getInstance().registerEnchant(new Billionaire());
         CustomEnchantManager.getInstance().registerEnchant(new Healer());
         CustomEnchantManager.getInstance().registerEnchant(new Perun());
@@ -163,7 +166,7 @@ public class Main extends JavaPlugin implements ServerGame {
         CustomEnchantManager.getInstance().registerEnchant(new Sweaty());
         CustomEnchantManager.getInstance().registerEnchant(new Knockback());
 
-        //Bows
+        // Bows
         CustomEnchantManager.getInstance().registerEnchant(new Robinhood());
         CustomEnchantManager.getInstance().registerEnchant(new Telebow());
         CustomEnchantManager.getInstance().registerEnchant(new Megalongbow());
@@ -178,7 +181,7 @@ public class Main extends JavaPlugin implements ServerGame {
         CustomEnchantManager.getInstance().registerEnchant(new Fletching());
         CustomEnchantManager.getInstance().registerEnchant(new SprintDrain());
 
-        //Pants
+        // Pants
         CustomEnchantManager.getInstance().registerEnchant(new Mirror());
         CustomEnchantManager.getInstance().registerEnchant(new Solitude());
         CustomEnchantManager.getInstance().registerEnchant(new Assassin());

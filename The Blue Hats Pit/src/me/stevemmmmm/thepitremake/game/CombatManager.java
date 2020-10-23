@@ -23,10 +23,12 @@ public class CombatManager implements Listener {
     private final HashMap<UUID, Integer> combatTasks = new HashMap<>();
     private final HashMap<UUID, Integer> combatTime = new HashMap<>();
 
-    private CombatManager() { }
+    private CombatManager() {
+    }
 
     public static CombatManager getInstance() {
-        if (instance == null) instance = new CombatManager();
+        if (instance == null)
+            instance = new CombatManager();
 
         return instance;
     }
@@ -61,24 +63,22 @@ public class CombatManager implements Listener {
     }
 
     public void combatTag(Player player) {
-        if (RegionManager.getInstance().playerIsInRegion(player, RegionManager.RegionType.SPAWN)) return;
+        if (RegionManager.getInstance().playerIsInRegion(player, RegionManager.RegionType.SPAWN))
+            return;
 
         combatTime.put(player.getUniqueId(), calculateCombatTime(player));
 
-        if (!combatTasks.containsKey(player.getUniqueId())) combatTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-            if (combatTime.get(player.getUniqueId()) == 0) {
-                Bukkit.getServer().getScheduler().cancelTask(combatTasks.get(player.getUniqueId()));
-                combatTasks.remove(player.getUniqueId());
-                return;
-            }
+        if (!combatTasks.containsKey(player.getUniqueId()))
+            combatTasks.put(player.getUniqueId(),
+                    Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                        if (combatTime.get(player.getUniqueId()) == 0) {
+                            Bukkit.getServer().getScheduler().cancelTask(combatTasks.get(player.getUniqueId()));
+                            combatTasks.remove(player.getUniqueId());
+                            return;
+                        }
 
-            combatTime.put(player.getUniqueId(), combatTime.get(player.getUniqueId()) - 1);
-        }, 0L, 20L));
-    }
-
-    private void combatTag(Player playerA, Player playerB) {
-        combatTag(playerA);
-        combatTag(playerB);
+                        combatTime.put(player.getUniqueId(), combatTime.get(player.getUniqueId()) - 1);
+                    }, 0L, 20L));
     }
 
     public int getCombatTime(Player player) {
@@ -87,7 +87,6 @@ public class CombatManager implements Listener {
 
     private int calculateCombatTime(Player player) {
         int time = 15;
-        //TODO Check for bounties
 
         return time;
     }

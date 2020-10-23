@@ -29,7 +29,8 @@ public class PitScoreboardManager implements Listener {
     private final HashMap<UUID, Scoreboard> playerToScoreboard = new HashMap<>();
 
     public static PitScoreboardManager getInstance() {
-        if (instance == null) instance = new PitScoreboardManager();
+        if (instance == null)
+            instance = new PitScoreboardManager();
 
         return instance;
     }
@@ -42,9 +43,10 @@ public class PitScoreboardManager implements Listener {
             playerToScoreboard.put(player.getUniqueId(), Bukkit.getScoreboardManager().getNewScoreboard());
             player.setScoreboard(playerToScoreboard.get(player.getUniqueId()));
 
-            scoreboardTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                updateScoreboard(player);
-            }, 20L, 20L));
+            scoreboardTasks.put(player.getUniqueId(),
+                    Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                        updateScoreboard(player);
+                    }, 20L, 20L));
         }
     }
 
@@ -56,15 +58,6 @@ public class PitScoreboardManager implements Listener {
         }
     }
 
-    private void createScoreboard(Player player) {
-        Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective objective = getScoreboardObjective(board, player);
-
-        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-        player.setScoreboard(board);
-    }
-
     private void updateScoreboard(Player player) {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
 
@@ -74,12 +67,15 @@ public class PitScoreboardManager implements Listener {
 
         int index = 11;
 
-        if (CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) index -= 1;
+        if (CustomEnchantManager.getInstance()
+                .convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None"))
+            index -= 1;
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Date date = new Date();
 
-        Score dataAndInstance = objective.getScore(ChatColor.GRAY + simpleDateFormat.format(date) + ChatColor.DARK_GRAY + " mega69L");
+        Score dataAndInstance = objective
+                .getScore(ChatColor.GRAY + simpleDateFormat.format(date) + ChatColor.DARK_GRAY + " mega69L");
         dataAndInstance.setScore(index);
         index--;
 
@@ -87,13 +83,17 @@ public class PitScoreboardManager implements Listener {
         space1.setScore(index);
         index--;
 
-        if (!CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) {
-            Score prestige = objective.getScore(ChatColor.WHITE + "Prestige: " + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)));
+        if (!CustomEnchantManager.getInstance()
+                .convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player))
+                .equalsIgnoreCase("None")) {
+            Score prestige = objective.getScore(ChatColor.WHITE + "Prestige: " + ChatColor.YELLOW + CustomEnchantManager
+                    .getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)));
             prestige.setScore(index);
             index--;
         }
 
-        Score level = objective.getScore(ChatColor.WHITE + "Level: " + GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player));
+        Score level = objective.getScore(ChatColor.WHITE + "Level: "
+                + GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player));
         level.setScore(index);
         index--;
 
@@ -105,7 +105,8 @@ public class PitScoreboardManager implements Listener {
         space2.setScore(index);
         index--;
 
-        Score gold = objective.getScore(ChatColor.WHITE + "Gold: " + ChatColor.GOLD + GrindingSystem.getInstance().getFormattedPlayerGold(player));
+        Score gold = objective.getScore(ChatColor.WHITE + "Gold: " + ChatColor.GOLD
+                + GrindingSystem.getInstance().getFormattedPlayerGold(player));
         gold.setScore(index);
         index--;
 
@@ -113,7 +114,10 @@ public class PitScoreboardManager implements Listener {
         space3.setScore(index);
         index--;
 
-        Score status = objective.getScore(ChatColor.WHITE + "Status: " + (!CombatManager.getInstance().playerIsInCombat(player) ? ChatColor.GREEN + "Idling" : ChatColor.RED + "Fighting " + ChatColor.GRAY + "(" + CombatManager.getInstance().getCombatTime(player) + ")"));
+        Score status = objective.getScore(ChatColor.WHITE + "Status: "
+                + (!CombatManager.getInstance().playerIsInCombat(player) ? ChatColor.GREEN + "Idling"
+                        : ChatColor.RED + "Fighting " + ChatColor.GRAY + "("
+                                + CombatManager.getInstance().getCombatTime(player) + ")"));
         status.setScore(index);
         index--;
 
@@ -134,17 +138,17 @@ public class PitScoreboardManager implements Listener {
     public Objective getScoreboardObjective(Scoreboard board, Player player) {
         Objective objective;
 
-//        if (!objectiveBuffer.containsKey(player.getUniqueId())) {
-//            objectiveBuffer.put(player.getUniqueId(), "main");
-//        }
-//
-//        if (objectiveBuffer.get(player.getUniqueId()).equalsIgnoreCase("main")) {
-//            objective = board.registerNewObjective("buffer", "dummy");
-//            objectiveBuffer.put(player.getUniqueId(), "buffer");
-//        } else {
-//            objective = board.registerNewObjective("main", "dummy");
-//            objectiveBuffer.put(player.getUniqueId(), "main");
-//        }
+        // if (!objectiveBuffer.containsKey(player.getUniqueId())) {
+        // objectiveBuffer.put(player.getUniqueId(), "main");
+        // }
+        //
+        // if (objectiveBuffer.get(player.getUniqueId()).equalsIgnoreCase("main")) {
+        // objective = board.registerNewObjective("buffer", "dummy");
+        // objectiveBuffer.put(player.getUniqueId(), "buffer");
+        // } else {
+        // objective = board.registerNewObjective("main", "dummy");
+        // objectiveBuffer.put(player.getUniqueId(), "main");
+        // }
 
         if (board.getObjective("test") != null) {
             board.getObjective("test").unregister();
@@ -156,12 +160,15 @@ public class PitScoreboardManager implements Listener {
 
         int index = 11;
 
-        if (CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) index -= 1;
+        if (CustomEnchantManager.getInstance()
+                .convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None"))
+            index -= 1;
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         Date date = new Date();
 
-        Score dataAndInstance = objective.getScore(ChatColor.GRAY + simpleDateFormat.format(date) + ChatColor.DARK_GRAY + " mega69L");
+        Score dataAndInstance = objective
+                .getScore(ChatColor.GRAY + simpleDateFormat.format(date) + ChatColor.DARK_GRAY + " mega69L");
         dataAndInstance.setScore(index);
         index--;
 
@@ -169,13 +176,17 @@ public class PitScoreboardManager implements Listener {
         space1.setScore(index);
         index--;
 
-        if (!CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)).equalsIgnoreCase("None")) {
-            Score prestige = objective.getScore(ChatColor.WHITE + "Prestige: " + ChatColor.YELLOW + CustomEnchantManager.getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)));
+        if (!CustomEnchantManager.getInstance()
+                .convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player))
+                .equalsIgnoreCase("None")) {
+            Score prestige = objective.getScore(ChatColor.WHITE + "Prestige: " + ChatColor.YELLOW + CustomEnchantManager
+                    .getInstance().convertToRomanNumeral(GrindingSystem.getInstance().getPlayerPrestige(player)));
             prestige.setScore(index);
             index--;
         }
 
-        Score level = objective.getScore(ChatColor.WHITE + "Level: " + GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player));
+        Score level = objective.getScore(ChatColor.WHITE + "Level: "
+                + GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player));
         level.setScore(index);
         index--;
 
@@ -187,7 +198,8 @@ public class PitScoreboardManager implements Listener {
         space2.setScore(index);
         index--;
 
-        Score gold = objective.getScore(ChatColor.WHITE + "Gold: " + ChatColor.GOLD + GrindingSystem.getInstance().getFormattedPlayerGold(player));
+        Score gold = objective.getScore(ChatColor.WHITE + "Gold: " + ChatColor.GOLD
+                + GrindingSystem.getInstance().getFormattedPlayerGold(player));
         gold.setScore(index);
         index--;
 
@@ -195,12 +207,15 @@ public class PitScoreboardManager implements Listener {
         space3.setScore(index);
         index--;
 
-        //TODO Get status w/ combat timer and change color accordingly
-        Score status = objective.getScore(ChatColor.WHITE + "Status: " + (!CombatManager.getInstance().playerIsInCombat(player) ? ChatColor.GREEN + "Idling" : ChatColor.RED + "Fighting " + ChatColor.GRAY + "(" + CombatManager.getInstance().getCombatTime(player) + ")"));
+        // TODO Get status w/ combat timer and change color accordingly
+        Score status = objective.getScore(ChatColor.WHITE + "Status: "
+                + (!CombatManager.getInstance().playerIsInCombat(player) ? ChatColor.GREEN + "Idling"
+                        : ChatColor.RED + "Fighting " + ChatColor.GRAY + "("
+                                + CombatManager.getInstance().getCombatTime(player) + ")"));
         status.setScore(index);
         index--;
 
-        //TODO If player has bounty... add line
+        // TODO If player has bounty... add line
 
         Score space4 = objective.getScore("    ");
         space4.setScore(index);
@@ -223,7 +238,8 @@ public class PitScoreboardManager implements Listener {
 
             team = board.registerNewTeam(player.getName());
 
-            team.setPrefix(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + " " + PermissionsManager.getInstance().getPlayerRank(player).getNameColor());
+            team.setPrefix(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + " "
+                    + PermissionsManager.getInstance().getPlayerRank(player).getNameColor());
 
             team.addPlayer(player);
         }

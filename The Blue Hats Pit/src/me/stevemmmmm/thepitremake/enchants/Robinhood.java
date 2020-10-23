@@ -1,11 +1,9 @@
 package me.stevemmmmm.thepitremake.enchants;
 
 import me.stevemmmmm.thepitremake.core.Main;
-import me.stevemmmmm.thepitremake.game.RegionManager;
 import me.stevemmmmm.thepitremake.managers.enchants.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -54,7 +52,10 @@ public class Robinhood extends CustomEnchant {
                         Player player = (Player) arrow.getShooter();
 
                         if (itemHasEnchant(player.getInventory().getItemInHand(), this)) {
-                            DamageManager.getInstance().addDamage(event, damageReduction.getValueAtLevel(getEnchantLevel(player.getInventory().getItemInHand(), this)), CalculationMode.ADDITIVE);
+                            DamageManager.getInstance().addDamage(event,
+                                    damageReduction.getValueAtLevel(
+                                            getEnchantLevel(player.getInventory().getItemInHand(), this)),
+                                    CalculationMode.ADDITIVE);
                         }
                     }
 
@@ -65,7 +66,8 @@ public class Robinhood extends CustomEnchant {
                 }
             }
 
-            if (removal != null) arrowTasks.remove(removal);
+            if (removal != null)
+                arrowTasks.remove(removal);
         }
     }
 
@@ -85,7 +87,8 @@ public class Robinhood extends CustomEnchant {
                 }
             }
 
-            if (removal != null) arrowTasks.remove(removal);
+            if (removal != null)
+                arrowTasks.remove(removal);
         }
     }
 
@@ -96,7 +99,8 @@ public class Robinhood extends CustomEnchant {
         float force = (float) args[2];
 
         if (level == 1) {
-            if (force < 1) return;
+            if (force < 1)
+                return;
         }
 
         arrowTasks.put(arrow, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
@@ -104,11 +108,13 @@ public class Robinhood extends CustomEnchant {
             List<Player> closestPlayers = new ArrayList<>();
 
             for (Entity entity : closestEntities) {
-                if (entity instanceof Player) {                    closestPlayers.add((Player) entity);
+                if (entity instanceof Player) {
+                    closestPlayers.add((Player) entity);
                 }
             }
 
-            if (closestPlayers.isEmpty()) closestEntities = arrow.getNearbyEntities(range, range ,range);
+            if (closestPlayers.isEmpty())
+                closestEntities = arrow.getNearbyEntities(range, range, range);
 
             Player closestPlayer = null;
 
@@ -120,14 +126,16 @@ public class Robinhood extends CustomEnchant {
                             continue;
                         }
 
-                        if (player.getLocation().toVector().distance(entity.getLocation().toVector()) < player.getLocation().toVector().distance(closestPlayer.getLocation().toVector())) {
+                        if (player.getLocation().toVector().distance(entity.getLocation().toVector()) < player
+                                .getLocation().toVector().distance(closestPlayer.getLocation().toVector())) {
                             closestPlayer = (Player) entity;
                         }
                     }
                 }
             }
 
-            if (closestPlayer == null) return;
+            if (closestPlayer == null)
+                return;
 
             Vector arrowVector = arrow.getLocation().toVector();
             Vector closestPlayerVector = closestPlayer.getLocation().toVector();
@@ -151,16 +159,11 @@ public class Robinhood extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("40%", "50%", "60%")
-                .setWriteCondition(level == 1)
-                .write("Your charged shots are homing but").next()
-                .write("deal ").writeVariable(ChatColor.RED, 0, level).write(" damage")
-                .resetCondition()
-                .setWriteCondition(level != 1)
-                .write("All your shots are homing but deal").next()
-                .setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" damage")
-                .build();
+        return new LoreBuilder().declareVariable("40%", "50%", "60%").setWriteCondition(level == 1)
+                .write("Your charged shots are homing but").next().write("deal ").writeVariable(ChatColor.RED, 0, level)
+                .write(" damage").resetCondition().setWriteCondition(level != 1)
+                .write("All your shots are homing but deal").next().setColor(ChatColor.RED).writeVariable(0, level)
+                .resetColor().write(" damage").build();
     }
 
     @Override

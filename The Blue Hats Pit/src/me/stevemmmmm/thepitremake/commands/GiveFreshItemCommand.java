@@ -39,9 +39,10 @@ public class GiveFreshItemCommand implements CommandExecutor {
 
                         meta.setDisplayName(ChatColor.YELLOW + "Mystic Sword");
 
-//                        meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
+                        // meta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
 
-                        meta.setLore(new LoreBuilder().write("Kept on death").next().next().write("Used in the mystic well").build());
+                        meta.setLore(new LoreBuilder().write("Kept on death").next().next()
+                                .write("Used in the mystic well").build());
 
                         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE);
                         meta.spigot().setUnbreakable(true);
@@ -54,9 +55,10 @@ public class GiveFreshItemCommand implements CommandExecutor {
 
                         meta.setDisplayName(ChatColor.AQUA + "Mystic Bow");
 
-//                        meta.addEnchant(Enchantment.DURABILITY, 1, true);
+                        // meta.addEnchant(Enchantment.DURABILITY, 1, true);
 
-                        meta.setLore(new LoreBuilder().write("Kept on death").next().next().write("Used in the mystic well").build());
+                        meta.setLore(new LoreBuilder().write("Kept on death").next().next()
+                                .write("Used in the mystic well").build());
 
                         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE);
                         meta.spigot().setUnbreakable(true);
@@ -111,9 +113,9 @@ public class GiveFreshItemCommand implements CommandExecutor {
                         }
 
                         if (object.equalsIgnoreCase("Aqua")) {
-                            freshPantsMeta.setColor(Color.fromRGB(0x55FFFF ));
+                            freshPantsMeta.setColor(Color.fromRGB(0x55FFFF));
 
-                            addPantsLore(freshPantsMeta,"Aqua", ChatColor.AQUA);
+                            addPantsLore(freshPantsMeta, "Aqua", ChatColor.AQUA);
                         }
 
                         if (freshPantsMeta.getLore() == null) {
@@ -140,11 +142,14 @@ public class GiveFreshItemCommand implements CommandExecutor {
 
         newMeta.spigot().setUnbreakable(true);
 
-        newMeta.setLore(new ArrayList<String>() {{
-            add(ChatColor.GRAY + "Kept on death");
-            add(" ");
-            add(color + "Used in the mystic well");
-            add(color + "Also, a fashion statement");
-        }});
+        newMeta.setLore(new ArrayList<String>() {
+            private static final long serialVersionUID = 1L;
+            {
+                add(ChatColor.GRAY + "Kept on death");
+                add(" ");
+                add(color + "Used in the mystic well");
+                add(color + "Also, a fashion statement");
+            }
+        });
     }
 }
