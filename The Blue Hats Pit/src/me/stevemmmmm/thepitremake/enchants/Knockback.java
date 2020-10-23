@@ -26,7 +26,9 @@ public class Knockback extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player player = ((Player) args[0]);
 
-        player.setVelocity(new Vector(player.getVelocity().getX() + blockAmount.getValueAtLevel(level), player.getVelocity().getY() + blockAmount.getValueAtLevel(level), player.getVelocity().getZ() + blockAmount.getValueAtLevel(level)));
+        player.setVelocity(new Vector(player.getVelocity().getX() + blockAmount.getValueAtLevel(level),
+                player.getVelocity().getY() + blockAmount.getValueAtLevel(level),
+                player.getVelocity().getZ() + blockAmount.getValueAtLevel(level)));
     }
 
     @Override

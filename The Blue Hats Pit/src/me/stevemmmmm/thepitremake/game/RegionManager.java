@@ -29,29 +29,36 @@ public class RegionManager implements Listener {
     }
 
     public static RegionManager getInstance() {
-        if (instance == null) instance = new RegionManager();
+        if (instance == null)
+            instance = new RegionManager();
 
         return instance;
     }
 
     private void initSpawnRegions() {
-        //Genisis Spawn
+        // Genisis Spawn
         spawnLocations.put(Map.GENISIS, new Location(null, 0.5, 86.5, 11.5, -180, 0));
 
-        //Seasons Spawn
+        // Seasons Spawn
         spawnLocations.put(Map.SEASONS, new Location(null, 0.5, 114.5, 9.5, -180, 0));
 
-        //Genisis Map
-        regions.add(new Region(Map.GENISIS, new Vector(35.5, 77.5, 30), new Vector(-42.5, 111.5, -45.5), RegionType.SPAWN));
-        regions.add(new Region(Map.GENISIS, new Vector(120.5, 0, 144.5), new Vector(-126.5, 129.5, -124.607), RegionType.PLAYABLEAREA));
+        // Genisis Map
+        regions.add(
+                new Region(Map.GENISIS, new Vector(35.5, 77.5, 30), new Vector(-42.5, 111.5, -45.5), RegionType.SPAWN));
+        regions.add(new Region(Map.GENISIS, new Vector(120.5, 0, 144.5), new Vector(-126.5, 129.5, -124.607),
+                RegionType.PLAYABLEAREA));
 
-        //Seasons Map
-        regions.add(new Region(Map.SEASONS, new Vector(35.5, 107.5, 30), new Vector(-42.5, 141.5, -45.5), RegionType.SPAWN));
-        regions.add(new Region(Map.SEASONS, new Vector(130.5, 0, 144.5), new Vector(-126.5, 150, -220), RegionType.PLAYABLEAREA));
+        // Seasons Map
+        regions.add(new Region(Map.SEASONS, new Vector(35.5, 107.5, 30), new Vector(-42.5, 141.5, -45.5),
+                RegionType.SPAWN));
+        regions.add(new Region(Map.SEASONS, new Vector(130.5, 0, 144.5), new Vector(-126.5, 150, -220),
+                RegionType.PLAYABLEAREA));
     }
 
     public Location getSpawnLocation(Player player) {
-        return new Location(player.getWorld(), spawnLocations.get(GAME_MAP).getX(), spawnLocations.get(GAME_MAP).getY(), spawnLocations.get(GAME_MAP).getZ(), spawnLocations.get(GAME_MAP).getYaw(), spawnLocations.get(GAME_MAP).getPitch());
+        return new Location(player.getWorld(), spawnLocations.get(GAME_MAP).getX(), spawnLocations.get(GAME_MAP).getY(),
+                spawnLocations.get(GAME_MAP).getZ(), spawnLocations.get(GAME_MAP).getYaw(),
+                spawnLocations.get(GAME_MAP).getPitch());
     }
 
     @EventHandler
@@ -82,7 +89,9 @@ public class RegionManager implements Listener {
 
         for (Region region : regions) {
             if (region.regionType == regionType && region.map == GAME_MAP) {
-                if (location.getY() > region.lowerBound.getY() && location.getY() < region.higherBound.getY() && location.getX() < region.lowerBound.getX() && location.getX() > region.higherBound.getX() && location.getZ() < region.lowerBound.getZ() && location.getZ() > region.higherBound.getZ()) {
+                if (location.getY() > region.lowerBound.getY() && location.getY() < region.higherBound.getY()
+                        && location.getX() < region.lowerBound.getX() && location.getX() > region.higherBound.getX()
+                        && location.getZ() < region.lowerBound.getZ() && location.getZ() > region.higherBound.getZ()) {
                     return true;
                 }
             }
@@ -94,7 +103,9 @@ public class RegionManager implements Listener {
     public boolean locationIsInRegion(Location location, RegionType regionType) {
         for (Region region : regions) {
             if (region.regionType == regionType && region.map == GAME_MAP) {
-                if (location.getY() > region.lowerBound.getY() && location.getY() < region.higherBound.getY() && location.getX() < region.lowerBound.getX() && location.getX() > region.higherBound.getX() && location.getZ() < region.lowerBound.getZ() && location.getZ() > region.higherBound.getZ()) {
+                if (location.getY() > region.lowerBound.getY() && location.getY() < region.higherBound.getY()
+                        && location.getX() < region.lowerBound.getX() && location.getX() > region.higherBound.getX()
+                        && location.getZ() < region.lowerBound.getZ() && location.getZ() > region.higherBound.getZ()) {
                     return true;
                 }
             }

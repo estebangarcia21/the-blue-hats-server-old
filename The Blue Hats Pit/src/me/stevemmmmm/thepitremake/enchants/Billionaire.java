@@ -31,9 +31,11 @@ public class Billionaire extends CustomEnchant {
         Player damager = (Player) args[0];
 
         if (GrindingSystem.getInstance().getPlayerGold(damager) >= goldNeeded.getValueAtLevel(level)) {
-            GrindingSystem.getInstance().setPlayerGold(damager, GrindingSystem.getInstance().getPlayerGold(damager) - goldNeeded.getValueAtLevel(level));
+            GrindingSystem.getInstance().setPlayerGold(damager,
+                    GrindingSystem.getInstance().getPlayerGold(damager) - goldNeeded.getValueAtLevel(level));
 
-            DamageManager.getInstance().addDamage((EntityDamageByEntityEvent) args[1], damageIncrease.getValueAtLevel(level), CalculationMode.MULTIPLICATIVE);
+            DamageManager.getInstance().addDamage((EntityDamageByEntityEvent) args[1],
+                    damageIncrease.getValueAtLevel(level), CalculationMode.MULTIPLICATIVE);
             damager.playSound(damager.getLocation(), Sound.ORB_PICKUP, 1, 0.73f);
         }
     }
@@ -50,13 +52,10 @@ public class Billionaire extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("1.33", "1.67", "2")
-                .declareVariable("100g", "200g", "350g")
-                .setColor(ChatColor.GRAY)
-                .write("Hits with this sword deals ").setColor(ChatColor.RED).writeVariable(0, level).write("x").next()
-                .setColor(ChatColor.RED).write("damage ").setColor(ChatColor.GRAY).write("but cost ").setColor(ChatColor.GOLD).writeVariable(1, level)
-                .build();
+        return new LoreBuilder().declareVariable("1.33", "1.67", "2").declareVariable("100g", "200g", "350g")
+                .setColor(ChatColor.GRAY).write("Hits with this sword deals ").setColor(ChatColor.RED)
+                .writeVariable(0, level).write("x").next().setColor(ChatColor.RED).write("damage ")
+                .setColor(ChatColor.GRAY).write("but cost ").setColor(ChatColor.GOLD).writeVariable(1, level).build();
     }
 
     @Override

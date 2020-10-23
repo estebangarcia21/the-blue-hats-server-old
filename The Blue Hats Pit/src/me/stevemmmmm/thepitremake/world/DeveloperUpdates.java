@@ -19,16 +19,19 @@ public class DeveloperUpdates implements Listener {
 
     public static void displayUpdate(Player player) {
         if (isTesting) {
-            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "⚠ " + ChatColor.YELLOW + "Testing! Expect restarts..." + ChatColor.RED + " ⚠" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer
+                    .a("{\"text\": \"" + ChatColor.RED + "⚠ " + ChatColor.YELLOW + "Testing! Expect restarts..."
+                            + ChatColor.RED + " ⚠" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
             PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
             PacketPlayOutTitle length = new PacketPlayOutTitle(20, 5 * 20, 20);
 
-            IChatBaseComponent chatSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.WHITE + testMessage + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+            IChatBaseComponent chatSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.WHITE
+                    + testMessage + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
-            PacketPlayOutTitle subTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, chatSubTitle);
+            PacketPlayOutTitle subTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE,
+                    chatSubTitle);
             PacketPlayOutTitle subTitleLength = new PacketPlayOutTitle(20, 5 * 20, 20);
-
 
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
@@ -36,16 +39,18 @@ public class DeveloperUpdates implements Listener {
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitle);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(subTitleLength);
         } else {
-            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.GOLD + "What's New?" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+            IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.GOLD
+                    + "What's New?" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
             PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
             PacketPlayOutTitle length = new PacketPlayOutTitle(20, 5 * 20, 20);
 
-            IChatBaseComponent chatSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.GREEN + update + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+            IChatBaseComponent chatSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.GREEN
+                    + update + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
-            PacketPlayOutTitle subTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, chatSubTitle);
+            PacketPlayOutTitle subTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE,
+                    chatSubTitle);
             PacketPlayOutTitle subTitleLength = new PacketPlayOutTitle(20, 5 * 20, 20);
-
 
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);

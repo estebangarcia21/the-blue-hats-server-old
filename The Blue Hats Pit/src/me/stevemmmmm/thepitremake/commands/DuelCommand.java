@@ -24,12 +24,14 @@ public class DuelCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.DARK_PURPLE + "Usage:" + ChatColor.RED + " /duel <player>");
                 } else {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Error! " + ChatColor.RED + "This player is not online!");
+                        player.sendMessage(
+                                ChatColor.DARK_PURPLE + "Error! " + ChatColor.RED + "This player is not online!");
                         return true;
                     }
 
                     if (player == Bukkit.getPlayer(args[0])) {
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Error! " + ChatColor.RED + "You can not duel yourself!");
+                        player.sendMessage(
+                                ChatColor.DARK_PURPLE + "Error! " + ChatColor.RED + "You can not duel yourself!");
                         return true;
                     }
 

@@ -29,7 +29,8 @@ public class ComboStun extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager(), event.getEntity());
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager(),
+                    event.getEntity());
         }
     }
 
@@ -50,16 +51,17 @@ public class ComboStun extends CustomEnchant {
     }
 
     private void sendPackets(Player player) {
-        IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.RED + "STUNNED!" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+        IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a(
+                "{\"text\": \"" + ChatColor.RED + "STUNNED!" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
         PacketPlayOutTitle title = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, chatTitle);
         PacketPlayOutTitle length = new PacketPlayOutTitle(0, 60, 0);
 
-        IChatBaseComponent chatSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.YELLOW + "You cannot move!" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
+        IChatBaseComponent chatSubTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.YELLOW
+                + "You cannot move!" + "\",color:" + ChatColor.GOLD.name().toLowerCase() + "}");
 
         PacketPlayOutTitle subTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, chatSubTitle);
         PacketPlayOutTitle subTitleLength = new PacketPlayOutTitle(0, 60, 0);
-
 
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
@@ -80,11 +82,9 @@ public class ComboStun extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("fifth", "fourth", "fourth")
-                .declareVariable("0.5", "0.8", "1.5")
-                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" strike on an enemy").next()
-                .write("stuns them for ").writeVariable(1, level).write(" seconds")
+        return new LoreBuilder().declareVariable("fifth", "fourth", "fourth").declareVariable("0.5", "0.8", "1.5")
+                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor()
+                .write(" strike on an enemy").next().write("stuns them for ").writeVariable(1, level).write(" seconds")
                 .build();
     }
 

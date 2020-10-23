@@ -7,8 +7,7 @@ import java.util.*;
  */
 
 public class MapSorter {
-    public static HashMap<UUID, Integer> sortByValue(HashMap<UUID, Integer> hm)
-    {
+    public static HashMap<UUID, Integer> sortByValue(HashMap<UUID, Integer> hm) {
         List<Map.Entry<UUID, Integer>> list = new LinkedList<>(hm.entrySet());
 
         list.sort(Map.Entry.comparingByValue());

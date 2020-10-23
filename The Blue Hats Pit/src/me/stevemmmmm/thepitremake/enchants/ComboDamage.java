@@ -21,7 +21,8 @@ public class ComboDamage extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager(), event);
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager(),
+                    event);
         }
     }
 
@@ -50,12 +51,9 @@ public class ComboDamage extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("fourth", "third", "third")
-                .declareVariable("+20%", "+30%", "+45%")
-                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" strike deals").next()
-                .setColor(ChatColor.RED).writeVariable(1, level).resetColor().write(" damage")
-                .build();
+        return new LoreBuilder().declareVariable("fourth", "third", "third").declareVariable("+20%", "+30%", "+45%")
+                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" strike deals")
+                .next().setColor(ChatColor.RED).writeVariable(1, level).resetColor().write(" damage").build();
     }
 
     @Override

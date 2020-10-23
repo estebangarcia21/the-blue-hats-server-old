@@ -31,15 +31,11 @@ public class Sweaty extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("+20%", "+40% XP", "+60% XP")
-                .declareVariable("", "+50 max XP", "+100 max XP")
-                .setWriteCondition(level == 1)
-                .writeVariable(ChatColor.AQUA, 0, level).write(" XP from streak XP bonus")
-                .setWriteCondition(level != 1)
+        return new LoreBuilder().declareVariable("+20%", "+40% XP", "+60% XP")
+                .declareVariable("", "+50 max XP", "+100 max XP").setWriteCondition(level == 1)
+                .writeVariable(ChatColor.AQUA, 0, level).write(" XP from streak XP bonus").setWriteCondition(level != 1)
                 .write("Earn ").writeVariable(ChatColor.AQUA, 0, level).write(" from streak XP").next()
-                .write("bonus and ").writeVariable(ChatColor.AQUA, 1, level).write(" per kill")
-                .build();
+                .write("bonus and ").writeVariable(ChatColor.AQUA, 1, level).write(" per kill").build();
     }
 
     @Override

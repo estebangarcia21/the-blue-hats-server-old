@@ -19,7 +19,8 @@ public class MathUtils {
 
         double d = max - min;
         double r = 15 * d / bias;
-        double x = Double.parseDouble(new DecimalFormat("#0.0").format(ThreadLocalRandom.current().nextDouble(0, r + 1)));
+        double x = Double
+                .parseDouble(new DecimalFormat("#0.0").format(ThreadLocalRandom.current().nextDouble(0, r + 1)));
 
         return (int) Math.round(d * Math.pow(Math.E, -bias / 15 * x) + (max - d));
     }

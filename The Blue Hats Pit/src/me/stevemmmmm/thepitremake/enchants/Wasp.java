@@ -24,7 +24,8 @@ public class Wasp extends CustomEnchant {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getDamager()), event.getEntity());
+                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getDamager()),
+                        event.getEntity());
             }
         }
     }
@@ -33,7 +34,8 @@ public class Wasp extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player hitPlayer = (Player) args[0];
 
-        hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, duration.getValueAtLevel(level) * 20, weaknessAmplifier.getValueAtLevel(level)), true);
+        hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, duration.getValueAtLevel(level) * 20,
+                weaknessAmplifier.getValueAtLevel(level)), true);
     }
 
     @Override
@@ -48,10 +50,9 @@ public class Wasp extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("II", "III", "IV")
-                .setColor(ChatColor.GRAY).write("Apply ").setColor(ChatColor.RED).write("Weakness ").writeVariable(0, level).setColor(ChatColor.GRAY).write(" (" + duration.getValueAtLevel(level) + "s) on hit")
-                .build();
+        return new LoreBuilder().declareVariable("II", "III", "IV").setColor(ChatColor.GRAY).write("Apply ")
+                .setColor(ChatColor.RED).write("Weakness ").writeVariable(0, level).setColor(ChatColor.GRAY)
+                .write(" (" + duration.getValueAtLevel(level) + "s) on hit").build();
     }
 
     @Override

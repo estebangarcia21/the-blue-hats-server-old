@@ -13,7 +13,8 @@ public class StopLiquidFlow implements Listener {
 
     @EventHandler
     public void onFlow(BlockFromToEvent event) {
-        if (event.getBlock().getType() == Material.STATIONARY_WATER || event.getBlock().getType() == Material.STATIONARY_LAVA) {
+        if (event.getBlock().getType() == Material.STATIONARY_WATER
+                || event.getBlock().getType() == Material.STATIONARY_LAVA) {
             event.setCancelled(true);
         }
     }

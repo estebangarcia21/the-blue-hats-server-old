@@ -32,18 +32,19 @@ public class DoubleJump extends CustomEnchant {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        playerHasDoubleJumps.put(event.getPlayer().getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-            if (player.getGameMode() != GameMode.SURVIVAL && player.getGameMode() != GameMode.ADVENTURE) {
-                player.setAllowFlight(true);
-                return;
-            }
+        playerHasDoubleJumps.put(event.getPlayer().getUniqueId(),
+                Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                    if (player.getGameMode() != GameMode.SURVIVAL && player.getGameMode() != GameMode.ADVENTURE) {
+                        player.setAllowFlight(true);
+                        return;
+                    }
 
-            if (itemHasEnchant(player.getInventory().getLeggings(), this)) {
-                player.setAllowFlight(isNotOnCooldown(player));
-            } else {
-                player.setAllowFlight(false);
-            }
-        }, 0L, 1L));
+                    if (itemHasEnchant(player.getInventory().getLeggings(), this)) {
+                        player.setAllowFlight(isNotOnCooldown(player));
+                    } else {
+                        player.setAllowFlight(false);
+                    }
+                }, 0L, 1L));
     }
 
     @EventHandler
@@ -54,7 +55,8 @@ public class DoubleJump extends CustomEnchant {
 
     @EventHandler
     public void onFlightAttempt(PlayerToggleFlightEvent event) {
-        if (event.getPlayer().getGameMode() == GameMode.SURVIVAL) event.setCancelled(true);
+        if (event.getPlayer().getGameMode() == GameMode.SURVIVAL)
+            event.setCancelled(true);
 
         attemptEnchantExecution(event.getPlayer().getInventory().getLeggings(), event);
     }
@@ -66,7 +68,8 @@ public class DoubleJump extends CustomEnchant {
         Vector normalizedVelocity = event.getPlayer().getEyeLocation().getDirection().normalize();
 
         if (isNotOnCooldown(event.getPlayer())) {
-            event.getPlayer().setVelocity(new Vector(normalizedVelocity.getX() * 3, 1.5, normalizedVelocity.getZ() * 3));
+            event.getPlayer()
+                    .setVelocity(new Vector(normalizedVelocity.getX() * 3, 1.5, normalizedVelocity.getZ() * 3));
         }
 
         startCooldown(event.getPlayer(), cooldownTime.getValueAtLevel(level), true);
@@ -84,11 +87,8 @@ public class DoubleJump extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("20s", "10s", "5s")
-                .write("You can double-jump. (").writeVariable(0, level).next()
-                .write("cooldown)")
-                .build();
+        return new LoreBuilder().declareVariable("20s", "10s", "5s").write("You can double-jump. (")
+                .writeVariable(0, level).next().write("cooldown)").build();
     }
 
     @Override

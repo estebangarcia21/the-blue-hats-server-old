@@ -23,7 +23,8 @@ public class DamageIndicator implements Listener {
     private static DamageIndicator instance;
 
     public static DamageIndicator getInstance() {
-        if (instance == null) instance = new DamageIndicator();
+        if (instance == null)
+            instance = new DamageIndicator();
 
         return instance;
     }
@@ -34,7 +35,10 @@ public class DamageIndicator implements Listener {
             Player damager = (Player) event.getDamager();
             Player attacked = (Player) event.getEntity();
 
-            if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN) && DamageManager.getInstance().isEventNotCancelled(event) && !DamageManager.getInstance().playerIsInCanceledEvent(damager)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
+            if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN)
+                    && DamageManager.getInstance().isEventNotCancelled(event)
+                    && !DamageManager.getInstance().playerIsInCanceledEvent(damager))
+                displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
@@ -42,13 +46,19 @@ public class DamageIndicator implements Listener {
                 Player damager = (Player) ((Arrow) event.getDamager()).getShooter();
                 Player attacked = (Player) event.getEntity();
 
-                if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN) && DamageManager.getInstance().isEventNotCancelled(event) && !DamageManager.getInstance().playerIsInCanceledEvent(damager)) displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
+                if (!RegionManager.getInstance().playerIsInRegion(attacked, RegionManager.RegionType.SPAWN)
+                        && DamageManager.getInstance().isEventNotCancelled(event)
+                        && !DamageManager.getInstance().playerIsInCanceledEvent(damager))
+                    displayIndicator(damager, attacked, DamageManager.getInstance().getFinalDamageFromEvent(event));
             }
         }
     }
 
     public void displayIndicator(Player damager, Player attacked, double damage) {
-        PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + new IndicatorBuilder(attacked, (int) attacked.getHealth(), damage, (int) attacked.getMaxHealth()).build() + "\"}"), (byte) 2);
+        PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\""
+                + new IndicatorBuilder(attacked, (int) attacked.getHealth(), damage, (int) attacked.getMaxHealth())
+                        .build()
+                + "\"}"), (byte) 2);
         ((CraftPlayer) damager).getHandle().playerConnection.sendPacket(packet);
     }
 
@@ -56,7 +66,8 @@ public class DamageIndicator implements Listener {
         private final StringBuilder output = new StringBuilder();
 
         public IndicatorBuilder(Player damaged, int originalHealth, double damageTaken, int maxHealth) {
-            output.append(PermissionsManager.getInstance().getPlayerRank(damaged).getNameColor()).append(damaged.getName()).append(" ");
+            output.append(PermissionsManager.getInstance().getPlayerRank(damaged).getNameColor())
+                    .append(damaged.getName()).append(" ");
 
             EntityPlayer player = ((CraftPlayer) damaged).getHandle();
 
@@ -91,7 +102,8 @@ public class DamageIndicator implements Listener {
                 output.append(ChatColor.YELLOW.toString()).append("❤");
             }
 
-            output.append(ChatColor.RED.toString()).append(" ").append(new DecimalFormat("###0.000").format(damageTaken / 2)).append("HP");
+            output.append(ChatColor.RED.toString()).append(" ")
+                    .append(new DecimalFormat("###0.000").format(damageTaken / 2)).append("HP");
         }
 
         public String build() {

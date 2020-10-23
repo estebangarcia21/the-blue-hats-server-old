@@ -22,7 +22,8 @@ public class Healer extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event.getEntity(), event);
+            attemptEnchantExecution(((Player) event.getDamager()).getItemInHand(), event.getDamager(),
+                    event.getEntity(), event);
         }
     }
 
@@ -47,10 +48,9 @@ public class Healer extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("1❤", "2❤", "3❤")
-                .write("Hitting a player ").setColor(ChatColor.GREEN).write("heals").resetColor().write(" both you and them for ").setColor(ChatColor.RED).writeVariable(0, level)
-                .build();
+        return new LoreBuilder().declareVariable("1❤", "2❤", "3❤").write("Hitting a player ").setColor(ChatColor.GREEN)
+                .write("heals").resetColor().write(" both you and them for ").setColor(ChatColor.RED)
+                .writeVariable(0, level).build();
     }
 
     @Override

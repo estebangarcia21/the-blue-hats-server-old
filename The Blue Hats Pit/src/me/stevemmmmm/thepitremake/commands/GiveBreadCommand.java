@@ -25,10 +25,8 @@ public class GiveBreadCommand implements CommandExecutor {
                 ItemMeta meta = bread.getItemMeta();
 
                 meta.setDisplayName(ChatColor.GOLD + "Yummy Bread");
-                meta.setLore(new LoreBuilder()
-                    .write("Heals ").write(ChatColor.RED, "4❤").next()
-                    .write("Grants ").write(ChatColor.GOLD, "1❤")
-                    .build());
+                meta.setLore(new LoreBuilder().write("Heals ").write(ChatColor.RED, "4❤").next().write("Grants ")
+                        .write(ChatColor.GOLD, "1❤").build());
 
                 bread.setItemMeta(meta);
 

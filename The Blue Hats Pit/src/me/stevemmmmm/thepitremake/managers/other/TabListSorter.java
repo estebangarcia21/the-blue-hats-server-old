@@ -17,7 +17,8 @@ public class TabListSorter implements Listener {
     private static TabListSorter instance;
 
     public static TabListSorter getInstance() {
-        if (instance == null) instance = new TabListSorter();
+        if (instance == null)
+            instance = new TabListSorter();
 
         return instance;
     }
@@ -26,14 +27,19 @@ public class TabListSorter implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.GOLD + " " + player.getName())[0];
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
+        ((CraftPlayer) player).getHandle().listName = CraftChatMessage
+                .fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + ChatColor.GOLD
+                        + " " + player.getName())[0];
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(
+                PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
 
         for (Player p : player.getWorld().getPlayers()) {
-            ((CraftPlayer) p).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(p) + ChatColor.GOLD + " " + p.getName())[0];
-            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) p).getHandle()));
+            ((CraftPlayer) p).getHandle().listName = CraftChatMessage
+                    .fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(p) + ChatColor.GOLD
+                            + " " + p.getName())[0];
+            ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(
+                    PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) p).getHandle()));
         }
 
-        
     }
 }

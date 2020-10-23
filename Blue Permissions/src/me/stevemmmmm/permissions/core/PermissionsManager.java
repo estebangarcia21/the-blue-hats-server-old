@@ -30,10 +30,12 @@ public class PermissionsManager implements Listener, ConfigWriter, ConfigReader 
 
     private final HashMap<UUID, PermissionAttachment> playerPermissions = new HashMap<>();
 
-    private PermissionsManager() { }
+    private PermissionsManager() {
+    }
 
     public static PermissionsManager getInstance() {
-        if (instance == null) instance = new PermissionsManager();
+        if (instance == null)
+            instance = new PermissionsManager();
 
         return instance;
     }
@@ -90,7 +92,7 @@ public class PermissionsManager implements Listener, ConfigWriter, ConfigReader 
             attachment.unsetPermission(permission.getKey());
         }
 
-        //Default Permissions
+        // Default Permissions
         attachment.setPermission("minecraft.command.me", false);
         attachment.setPermission("bukkit.command.help", false);
         attachment.setPermission("bukkit.command.plugins", false);
@@ -102,8 +104,10 @@ public class PermissionsManager implements Listener, ConfigWriter, ConfigReader 
 
     @Override
     public void readConfig(Player player) {
-        playerRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"PlayerRanks", String.class, RankManager.getInstance().getRank(NoobRank.class).getName())));
-        playerStaffRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE, player,"StaffRanks", String.class, RankManager.getInstance().getRank(NoneRank.class).getName())));
+        playerRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE,
+                player, "PlayerRanks", String.class, RankManager.getInstance().getRank(NoobRank.class).getName())));
+        playerStaffRanks.put(player.getUniqueId(), RankManager.getInstance().getRankByName(ConfigAPI.read(Main.INSTANCE,
+                player, "StaffRanks", String.class, RankManager.getInstance().getRank(NoneRank.class).getName())));
 
         updatePermissions(player);
     }

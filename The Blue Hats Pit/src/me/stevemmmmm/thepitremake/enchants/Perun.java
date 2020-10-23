@@ -20,7 +20,8 @@ public class Perun extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getItemInHand(), event.getDamager(), event.getEntity());
+            attemptEnchantExecution(((Player) event.getDamager()).getItemInHand(), event.getDamager(),
+                    event.getEntity());
         }
     }
 
@@ -35,10 +36,18 @@ public class Perun extends CustomEnchant {
 
         if (hasRequiredHits(damager, hitsNeeded.getValueAtLevel(level))) {
             if (level == 3) {
-                if (target.getInventory().getBoots() != null) if (target.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) damage += 2;
-                if (target.getInventory().getChestplate() != null) if (target.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) damage += 2;
-                if (target.getInventory().getLeggings() != null) if (target.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS) damage += 2;
-                if (target.getInventory().getHelmet() != null) if (target.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET) damage += 2;
+                if (target.getInventory().getBoots() != null)
+                    if (target.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS)
+                        damage += 2;
+                if (target.getInventory().getChestplate() != null)
+                    if (target.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE)
+                        damage += 2;
+                if (target.getInventory().getLeggings() != null)
+                    if (target.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS)
+                        damage += 2;
+                if (target.getInventory().getHelmet() != null)
+                    if (target.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET)
+                        damage += 2;
             }
 
             damager.getWorld().strikeLightningEffect(target.getLocation());
@@ -58,18 +67,13 @@ public class Perun extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("1.5❤", "2❤", "1❤ + 1❤")
-                .declareVariable("fifth", "fourth", "fourth")
-                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(1, level).resetColor().write(" hit strikes").next()
-                .setColor(ChatColor.YELLOW).write("lightning").resetColor().write(" for ").setColor(ChatColor.RED)
-                .writeVariable(0, level).resetColor().writeOnlyIf(level != 3, ".").next()
-                .setWriteCondition(level == 3)
-                .write("per ").setColor(ChatColor.AQUA).write("diamond piece").resetColor().write(" on your victim").next()
-                .write("victim.").next()
-                .resetCondition()
-                .write(ChatColor.ITALIC + "Lightning deals true damage")
-                .build();
+        return new LoreBuilder().declareVariable("1.5❤", "2❤", "1❤ + 1❤").declareVariable("fifth", "fourth", "fourth")
+                .write("Every ").setColor(ChatColor.YELLOW).writeVariable(1, level).resetColor().write(" hit strikes")
+                .next().setColor(ChatColor.YELLOW).write("lightning").resetColor().write(" for ")
+                .setColor(ChatColor.RED).writeVariable(0, level).resetColor().writeOnlyIf(level != 3, ".").next()
+                .setWriteCondition(level == 3).write("per ").setColor(ChatColor.AQUA).write("diamond piece")
+                .resetColor().write(" on your victim").next().write("victim.").next().resetCondition()
+                .write(ChatColor.ITALIC + "Lightning deals true damage").build();
     }
 
     @Override

@@ -58,26 +58,28 @@ public class Volley extends CustomEnchant {
 
         Vector originalVelocity = arrow.getVelocity();
 
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> volleyTasks.put(arrow,Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-            if (!RegionManager.getInstance().playerIsInRegion(player, RegionManager.RegionType.SPAWN)) {
-                player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
-                Arrow volleyArrow = player.launchProjectile(Arrow.class);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> volleyTasks.put(arrow,
+                Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                    if (!RegionManager.getInstance().playerIsInRegion(player, RegionManager.RegionType.SPAWN)) {
+                        player.getWorld().playSound(player.getLocation(), Sound.SHOOT_ARROW, 1, 1);
+                        Arrow volleyArrow = player.launchProjectile(Arrow.class);
 
-                volleyArrow.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
+                        volleyArrow.setVelocity(
+                                player.getEyeLocation().getDirection().normalize().multiply(originalVelocity.length()));
 
-                EntityShootBowEvent event = new EntityShootBowEvent(player, item, volleyArrow, force);
-                Main.INSTANCE.getServer().getPluginManager().callEvent(event);
+                        EntityShootBowEvent event = new EntityShootBowEvent(player, item, volleyArrow, force);
+                        Main.INSTANCE.getServer().getPluginManager().callEvent(event);
 
-                BowManager.getInstance().registerArrow(volleyArrow, player);
+                        BowManager.getInstance().registerArrow(volleyArrow, player);
 
-                arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
-                if (arrowCount.get(arrow) > arrows.getValueAtLevel(level)) {
-                    Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
-                    volleyTasks.remove(arrow);
-                    arrowCount.remove(arrow);
-                }
-            }
-        }, 0L, 2)), 2L);
+                        arrowCount.put(arrow, arrowCount.getOrDefault(arrow, 1) + 1);
+                        if (arrowCount.get(arrow) > arrows.getValueAtLevel(level)) {
+                            Bukkit.getServer().getScheduler().cancelTask(volleyTasks.get(arrow));
+                            volleyTasks.remove(arrow);
+                            arrowCount.remove(arrow);
+                        }
+                    }
+                }, 0L, 2)), 2L);
     }
 
     @Override
@@ -92,10 +94,8 @@ public class Volley extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("3", "4", "5")
-                .write("Shoot ").setColor(ChatColor.WHITE).writeVariable(0, level).write(" arrows ").resetColor().write("at once")
-                .build();
+        return new LoreBuilder().declareVariable("3", "4", "5").write("Shoot ").setColor(ChatColor.WHITE)
+                .writeVariable(0, level).write(" arrows ").resetColor().write("at once").build();
     }
 
     @Override

@@ -30,7 +30,8 @@ public class BooBoo extends CustomEnchant {
         Player player = event.getPlayer();
 
         if (!tasks.containsKey(player.getUniqueId())) {
-            tasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> attemptEnchantExecution(player.getInventory().getLeggings(), player), 0L, 20L));
+            tasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE,
+                    () -> attemptEnchantExecution(player.getInventory().getLeggings(), player), 0L, 20L));
         }
     }
 
@@ -64,11 +65,8 @@ public class BooBoo extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("5", "4", "3")
-                .write("Passively regain ").write(ChatColor.RED, "1❤").write(" every ").writeVariable(0, level).next()
-                .write("seconds")
-                .build();
+        return new LoreBuilder().declareVariable("5", "4", "3").write("Passively regain ").write(ChatColor.RED, "1❤")
+                .write(" every ").writeVariable(0, level).next().write("seconds").build();
     }
 
     @Override

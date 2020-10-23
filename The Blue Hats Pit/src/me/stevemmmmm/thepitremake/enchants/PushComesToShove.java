@@ -23,7 +23,8 @@ public class PushComesToShove extends CustomEnchant {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getDamager()), ((Arrow) event.getDamager()).getShooter(), event.getEntity(), event.getDamager());
+                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getDamager()),
+                        ((Arrow) event.getDamager()).getShooter(), event.getEntity(), event.getDamager());
             }
         }
     }
@@ -36,7 +37,7 @@ public class PushComesToShove extends CustomEnchant {
 
         updateHitCount(player);
 
-        if (hasRequiredHits(player,3)) {
+        if (hasRequiredHits(player, 3)) {
             Vector velocity = arrow.getVelocity().normalize().multiply(pctsForce.getValueAtLevel(level) / 2.35);
             velocity.setY(0);
 
@@ -58,15 +59,10 @@ public class PushComesToShove extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("Punch", "Punch V", "Punch VII")
-                .declareVariable("", "+0.5❤", "+1❤")
-                .write("Every 3rd shot on a player has").next()
-                .writeVariable(ChatColor.AQUA, 0, level)
-                .setWriteCondition(level != 1)
-                .write(" and deals ").writeVariable(ChatColor.RED, 1, level).next()
-                .write("extra damage")
-                .build();
+        return new LoreBuilder().declareVariable("Punch", "Punch V", "Punch VII").declareVariable("", "+0.5❤", "+1❤")
+                .write("Every 3rd shot on a player has").next().writeVariable(ChatColor.AQUA, 0, level)
+                .setWriteCondition(level != 1).write(" and deals ").writeVariable(ChatColor.RED, 1, level).next()
+                .write("extra damage").build();
     }
 
     @Override

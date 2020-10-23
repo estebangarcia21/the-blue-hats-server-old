@@ -39,20 +39,24 @@ public class SpawnCommand implements CommandExecutor {
 
                         cooldownTime.put(player.getUniqueId(), 10);
 
-                        cooldownTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                            cooldownTime.put(player.getUniqueId(), cooldownTime.get(player.getUniqueId()) - 1);
+                        cooldownTasks.put(player.getUniqueId(),
+                                Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                                    cooldownTime.put(player.getUniqueId(), cooldownTime.get(player.getUniqueId()) - 1);
 
-                            if (cooldownTime.get(player.getUniqueId()) <= 0f) {
-                                cooldownTime.remove(player.getUniqueId());
-                                Bukkit.getServer().getScheduler().cancelTask(cooldownTasks.get(player.getUniqueId()));
-                                cooldownTasks.remove(player.getUniqueId());
-                            }
-                        }, 0L, 20L));
+                                    if (cooldownTime.get(player.getUniqueId()) <= 0f) {
+                                        cooldownTime.remove(player.getUniqueId());
+                                        Bukkit.getServer().getScheduler()
+                                                .cancelTask(cooldownTasks.get(player.getUniqueId()));
+                                        cooldownTasks.remove(player.getUniqueId());
+                                    }
+                                }, 0L, 20L));
                     } else {
                         player.sendMessage(ChatColor.RED + "You may only /respawn every 10 seconds");
                     }
                 } else {
-                    player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "HOLD UP! " + ChatColor.GRAY + "Can't /respawn while fighting (" + ChatColor.RED + CombatManager.getInstance().getCombatTime(player) + "s" + ChatColor.GRAY + " left)");
+                    player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "HOLD UP! " + ChatColor.GRAY
+                            + "Can't /respawn while fighting (" + ChatColor.RED
+                            + CombatManager.getInstance().getCombatTime(player) + "s" + ChatColor.GRAY + " left)");
                 }
             }
         }

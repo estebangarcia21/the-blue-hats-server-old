@@ -20,7 +20,8 @@ public class FractionalReserve extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(), event);
+            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(),
+                    event);
         }
     }
 
@@ -53,12 +54,9 @@ public class FractionalReserve extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("-15%", "-21%", "-30%")
-                .write("Recieve ").write(ChatColor.BLUE, "-1% damage ").write("per").next()
-                .write(ChatColor.GOLD, "10,000g ").write("you have (").writeVariable(ChatColor.BLUE, 0, level).next()
-                .write("max)")
-                .build();
+        return new LoreBuilder().declareVariable("-15%", "-21%", "-30%").write("Recieve ")
+                .write(ChatColor.BLUE, "-1% damage ").write("per").next().write(ChatColor.GOLD, "10,000g ")
+                .write("you have (").writeVariable(ChatColor.BLUE, 0, level).next().write("max)").build();
     }
 
     @Override

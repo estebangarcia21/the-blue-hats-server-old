@@ -12,7 +12,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-//        protocolManager = ProtocolLibrary.getProtocolManager();
+        // protocolManager = ProtocolLibrary.getProtocolManager();
     }
 
     @Override

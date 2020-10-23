@@ -19,7 +19,8 @@ public class PainFocus extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager(), event);
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getDamager(),
+                    event);
         }
     }
 
@@ -30,7 +31,8 @@ public class PainFocus extends CustomEnchant {
 
         int heartsLost = (int) (player.getMaxHealth() - player.getHealth()) / 2;
 
-        DamageManager.getInstance().addDamage(event, damageIncreasePerHeartLost.getValueAtLevel(level) * heartsLost, CalculationMode.ADDITIVE);
+        DamageManager.getInstance().addDamage(event, damageIncreasePerHeartLost.getValueAtLevel(level) * heartsLost,
+                CalculationMode.ADDITIVE);
     }
 
     @Override
@@ -45,11 +47,9 @@ public class PainFocus extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("+1%", "+2%", "+5%")
-                .write("Deal ").setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" damage per ").setColor(ChatColor.RED).write("❤").resetColor().next()
-                .write("you're missing")
-                .build();
+        return new LoreBuilder().declareVariable("+1%", "+2%", "+5%").write("Deal ").setColor(ChatColor.RED)
+                .writeVariable(0, level).resetColor().write(" damage per ").setColor(ChatColor.RED).write("❤")
+                .resetColor().next().write("you're missing").build();
     }
 
     @Override

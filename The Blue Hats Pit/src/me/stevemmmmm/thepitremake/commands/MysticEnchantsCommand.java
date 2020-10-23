@@ -25,7 +25,8 @@ public class MysticEnchantsCommand implements CommandExecutor {
 
                 if (args.length == 1) {
                     if (!StringUtils.isNumeric(args[0])) {
-                        player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Please specify a correct page number!");
+                        player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString()
+                                + "Please specify a correct page number!");
                         return true;
                     }
 
@@ -33,12 +34,18 @@ public class MysticEnchantsCommand implements CommandExecutor {
                 }
 
                 if (page <= 0 || page > pages + 1) {
-                    player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Please specify a correct page number!");
+                    player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString()
+                            + "Please specify a correct page number!");
                     return true;
                 }
 
-                //ChatColor.RED.toString() + ChatColor.BOLD + "M" + ChatColor.YELLOW.toString() + ChatColor.BOLD + "y" + ChatColor.GREEN.toString() + ChatColor.BOLD + "s" + ChatColor.AQUA.toString() + ChatColor.BOLD + "t" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "i" + ChatColor.BLUE.toString() + ChatColor.BOLD + "c"
-                player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Mystic Enchants (" + page + "/" + (pages + 1) + ")");
+                // ChatColor.RED.toString() + ChatColor.BOLD + "M" + ChatColor.YELLOW.toString()
+                // + ChatColor.BOLD + "y" + ChatColor.GREEN.toString() + ChatColor.BOLD + "s" +
+                // ChatColor.AQUA.toString() + ChatColor.BOLD + "t" +
+                // ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "i" +
+                // ChatColor.BLUE.toString() + ChatColor.BOLD + "c"
+                player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Mystic Enchants (" + page
+                        + "/" + (pages + 1) + ")");
 
                 for (int i = 0; i < 9; i++) {
                     int index = i + ((page - 1) * 9);
@@ -48,7 +55,10 @@ public class MysticEnchantsCommand implements CommandExecutor {
                         continue;
                     }
 
-                    player.sendMessage(ChatColor.GRAY + "■ " + ChatColor.RED + CustomEnchantManager.getInstance().getEnchants().get(index).getName() + ChatColor.GOLD + " ▶ " + ChatColor.YELLOW + CustomEnchantManager.getInstance().getEnchants().get(index).getEnchantReferenceName());
+                    player.sendMessage(ChatColor.GRAY + "■ " + ChatColor.RED
+                            + CustomEnchantManager.getInstance().getEnchants().get(index).getName() + ChatColor.GOLD
+                            + " ▶ " + ChatColor.YELLOW
+                            + CustomEnchantManager.getInstance().getEnchants().get(index).getEnchantReferenceName());
                 }
             }
         }

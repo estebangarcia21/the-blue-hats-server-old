@@ -23,7 +23,9 @@ public class SprintDrain extends CustomEnchant {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(((Player) ((Arrow) event.getDamager()).getShooter()).getInventory().getItemInHand(), event.getEntity());
+                attemptEnchantExecution(
+                        ((Player) ((Arrow) event.getDamager()).getShooter()).getInventory().getItemInHand(),
+                        event.getEntity());
             }
         }
     }
@@ -32,9 +34,11 @@ public class SprintDrain extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player player = (Player) args[0];
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, speedDuration.getValueAtLevel(level) * 20, speedAmplifier.getValueAtLevel(level)));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, speedDuration.getValueAtLevel(level) * 20,
+                speedAmplifier.getValueAtLevel(level)));
 
-        if (level == 1) return;
+        if (level == 1)
+            return;
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 0));
     }
@@ -51,15 +55,11 @@ public class SprintDrain extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("I", "I", "II")
-                .declareVariable("", "5", "7")
-                .write("Arrow shots grant you ").write(ChatColor.YELLOW, "Speed ").writeVariable(ChatColor.YELLOW, 0, level).next()
-                .write("(").writeVariable(1, level).write("s)")
-                .setWriteCondition(level != 1)
-                .write(" and apply ").write(ChatColor.BLUE, "Slowness I").next()
-                .write("(3s)")
-                .build();
+        return new LoreBuilder().declareVariable("I", "I", "II").declareVariable("", "5", "7")
+                .write("Arrow shots grant you ").write(ChatColor.YELLOW, "Speed ")
+                .writeVariable(ChatColor.YELLOW, 0, level).next().write("(").writeVariable(1, level).write("s)")
+                .setWriteCondition(level != 1).write(" and apply ").write(ChatColor.BLUE, "Slowness I").next()
+                .write("(3s)").build();
     }
 
     @Override
@@ -69,7 +69,6 @@ public class SprintDrain extends CustomEnchant {
 
     @Override
     public EnchantGroup getEnchantGroup() {
-        //TODO Correct group
         return EnchantGroup.C;
     }
 

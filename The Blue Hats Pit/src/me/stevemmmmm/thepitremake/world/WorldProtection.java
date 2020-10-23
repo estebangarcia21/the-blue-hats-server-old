@@ -15,7 +15,10 @@ import org.bukkit.event.block.BlockPlaceEvent;
 public class WorldProtection implements Listener {
     @EventHandler
     public void onBlockBread(BlockBreakEvent event) {
-        if (event.getPlayer().getName().equalsIgnoreCase("Stevemmmmm") || event.getPlayer().getName().equalsIgnoreCase("OVEREXERTED") || event.getPlayer().getName().equalsIgnoreCase("Sundews") || event.getPlayer().isOp()) return;
+        if (event.getPlayer().getName().equalsIgnoreCase("Stevemmmmm")
+                || event.getPlayer().getName().equalsIgnoreCase("OVEREXERTED")
+                || event.getPlayer().getName().equalsIgnoreCase("Sundews") || event.getPlayer().isOp())
+            return;
 
         if (event.getBlock().getType() != Material.OBSIDIAN) {
             event.setCancelled(true);
@@ -24,14 +27,19 @@ public class WorldProtection implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (event.getPlayer().getName().equalsIgnoreCase("Stevemmmmm") || event.getPlayer().getName().equalsIgnoreCase("OVEREXERTED") || event.getPlayer().getName().equalsIgnoreCase("Sundews") || event.getPlayer().isOp()) return;
+        if (event.getPlayer().getName().equalsIgnoreCase("Stevemmmmm")
+                || event.getPlayer().getName().equalsIgnoreCase("OVEREXERTED")
+                || event.getPlayer().getName().equalsIgnoreCase("Sundews") || event.getPlayer().isOp())
+            return;
 
-        if (event.getBlockPlaced().getType() != Material.OBSIDIAN && event.getBlockPlaced().getType() != Material.COBBLESTONE) {
+        if (event.getBlockPlaced().getType() != Material.OBSIDIAN
+                && event.getBlockPlaced().getType() != Material.COBBLESTONE) {
             event.setCancelled(true);
             return;
         }
 
-        if (RegionManager.getInstance().locationIsInRegion(event.getBlockPlaced().getLocation(), RegionManager.RegionType.SPAWN) || TogglePvPCommand.pvpIsToggledOff) {
+        if (RegionManager.getInstance().locationIsInRegion(event.getBlockPlaced().getLocation(),
+                RegionManager.RegionType.SPAWN) || TogglePvPCommand.pvpIsToggledOff) {
             event.setCancelled(true);
         }
     }

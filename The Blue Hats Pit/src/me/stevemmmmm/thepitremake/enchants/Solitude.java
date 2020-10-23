@@ -22,12 +22,13 @@ public class Solitude extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity(), event);
+            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getEntity(),
+                    event);
         }
     }
 
     @Override
-    public void applyEnchant(int level, Object... args)  {
+    public void applyEnchant(int level, Object... args) {
         Player damaged = (Player) args[0];
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[1];
 
@@ -59,12 +60,11 @@ public class Solitude extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("-40%", "-50%", "-60%")
-                .write("Recieve ").setColor(ChatColor.BLUE).writeVariable(0, level).resetColor().write(" damage when ")
-                .setWriteCondition(level == 1).write("only").next().write("one other player is within 7").next().write("blocks").resetCondition()
-                .setWriteCondition(level != 1).write("two").next().write("or less players are within 7").next().write("blocks")
-                .build();
+        return new LoreBuilder().declareVariable("-40%", "-50%", "-60%").write("Recieve ").setColor(ChatColor.BLUE)
+                .writeVariable(0, level).resetColor().write(" damage when ").setWriteCondition(level == 1).write("only")
+                .next().write("one other player is within 7").next().write("blocks").resetCondition()
+                .setWriteCondition(level != 1).write("two").next().write("or less players are within 7").next()
+                .write("blocks").build();
     }
 
     @Override

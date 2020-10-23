@@ -80,46 +80,56 @@ public class ConfigAPI extends JavaPlugin implements Listener {
     }
 
     public static <T> T read(JavaPlugin plugin, Player player, String path, Class<T> type, T defaultValue) {
-        if (plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path)) == null) {
+        if (plugin.getConfig()
+                .getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path)) == null) {
             return defaultValue;
         }
 
         if (type == Integer.class) {
-            return type.cast(Integer.parseInt(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+            return type.cast(Integer.parseInt(plugin.getConfig()
+                    .getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
         }
 
         if (type == Double.class) {
-            return type.cast(Double.parseDouble(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+            return type.cast(Double.parseDouble(plugin.getConfig()
+                    .getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
         }
 
         if (type == Float.class) {
-            return type.cast(Float.parseFloat(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+            return type.cast(Float.parseFloat(plugin.getConfig()
+                    .getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
         }
 
         if (type == Long.class) {
-            return type.cast(Long.parseLong(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+            return type.cast(Long.parseLong(plugin.getConfig()
+                    .getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
         }
 
         if (type == Short.class) {
-            return type.cast(Short.parseShort(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+            return type.cast(Short.parseShort(plugin.getConfig()
+                    .getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
         }
 
         if (type == Byte.class) {
-            return type.cast(Byte.parseByte(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
+            return type.cast(Byte.parseByte(plugin.getConfig()
+                    .getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path))));
         }
 
-        return type.cast(plugin.getConfig().getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path)));
+        return type.cast(plugin.getConfig()
+                .getString(player.getUniqueId().toString() + "." + dataCategories.get(plugin).get(path)));
     }
 
     public static class InventorySerializer {
         public static void serializeInventory(JavaPlugin plugin, UUID uuid, String name, Inventory inventory) {
             for (int i = 0; i < inventory.getSize(); i++) {
-                if (inventory.getItem(i) == null){
-                    plugin.getConfig().set("enderchests." + name + "." + uuid.toString() + ".slots." + i, new ItemStack(Material.AIR));
+                if (inventory.getItem(i) == null) {
+                    plugin.getConfig().set("enderchests." + name + "." + uuid.toString() + ".slots." + i,
+                            new ItemStack(Material.AIR));
                     continue;
                 }
 
-                plugin.getConfig().set("enderchests." + name + "." + uuid.toString() + ".slots." + i, inventory.getItem(i));
+                plugin.getConfig().set("enderchests." + name + "." + uuid.toString() + ".slots." + i,
+                        inventory.getItem(i));
             }
 
             plugin.saveConfig();
@@ -128,8 +138,10 @@ public class ConfigAPI extends JavaPlugin implements Listener {
         public static void loadInventory(JavaPlugin plugin, Player player, String name, Inventory target) {
             if (plugin.getConfig().get("enderchests." + name + "." + player.getUniqueId().toString()) != null) {
                 for (int i = 0; i < target.getSize(); i++) {
-                    if (plugin.getConfig().get("enderchests." + name + "." + player.getUniqueId().toString() + ".slots." + i) != null) {
-                        target.setItem(i, plugin.getConfig().getItemStack("enderchests." + name + "." + player.getUniqueId().toString() + ".slots." + i));
+                    if (plugin.getConfig().get(
+                            "enderchests." + name + "." + player.getUniqueId().toString() + ".slots." + i) != null) {
+                        target.setItem(i, plugin.getConfig().getItemStack(
+                                "enderchests." + name + "." + player.getUniqueId().toString() + ".slots." + i));
                     } else {
                         target.setItem(i, new ItemStack(Material.AIR));
                     }
@@ -178,33 +190,43 @@ public class ConfigAPI extends JavaPlugin implements Listener {
 
         public static void loadPlayerInventory(JavaPlugin plugin, World world, Player player) {
             for (int i = 0; i < player.getInventory().getSize(); i++) {
-                if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + i) != null) {
-                    player.getInventory().setItem(i, plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + i));
+                if (plugin.getConfig().get(
+                        world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + i) != null) {
+                    player.getInventory().setItem(i, plugin.getConfig().getItemStack(
+                            world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + i));
                 } else {
                     player.getInventory().setItem(i, new ItemStack(Material.AIR));
                 }
             }
 
-            if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-1") != null) {
-                player.getInventory().setBoots(plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-1"));
+            if (plugin.getConfig()
+                    .get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-1") != null) {
+                player.getInventory().setBoots(plugin.getConfig()
+                        .getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-1"));
             } else {
                 player.getInventory().setBoots(new ItemStack(Material.AIR));
             }
 
-            if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-2") != null) {
-                player.getInventory().setLeggings(plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-2"));
+            if (plugin.getConfig()
+                    .get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-2") != null) {
+                player.getInventory().setLeggings(plugin.getConfig()
+                        .getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-2"));
             } else {
                 player.getInventory().setLeggings(new ItemStack(Material.AIR));
             }
 
-            if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-3") != null) {
-                player.getInventory().setChestplate(plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-3"));
+            if (plugin.getConfig()
+                    .get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-3") != null) {
+                player.getInventory().setChestplate(plugin.getConfig()
+                        .getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-3"));
             } else {
                 player.getInventory().setChestplate(new ItemStack(Material.AIR));
             }
 
-            if (plugin.getConfig().get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-4") != null) {
-                player.getInventory().setHelmet(plugin.getConfig().getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-4"));
+            if (plugin.getConfig()
+                    .get(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-4") != null) {
+                player.getInventory().setHelmet(plugin.getConfig()
+                        .getItemStack(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots.-4"));
             } else {
                 player.getInventory().setHelmet(new ItemStack(Material.AIR));
             }
@@ -213,7 +235,8 @@ public class ConfigAPI extends JavaPlugin implements Listener {
         }
 
         private static void writeItemStack(JavaPlugin plugin, World world, Player player, int slot, ItemStack object) {
-            plugin.getConfig().set(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + slot, object);
+            plugin.getConfig().set(world.getName() + "." + player.getUniqueId().toString() + ".inventory.slots." + slot,
+                    object);
         }
     }
 }

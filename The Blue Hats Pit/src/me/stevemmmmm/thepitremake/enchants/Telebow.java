@@ -39,7 +39,9 @@ public class Telebow extends CustomEnchant {
 
                 if (telebowData.containsKey(player.getUniqueId())) {
                     if (itemHasEnchant(telebowData.get(player.getUniqueId()).getBow(), this)) {
-                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) attemptEnchantExecution(telebowData.get(player.getUniqueId()).getBow(), player, arrow);
+                        if (arrow == telebowData.get(player.getUniqueId()).getArrow()
+                                && telebowData.get(player.getUniqueId()).isSneaking())
+                            attemptEnchantExecution(telebowData.get(player.getUniqueId()).getBow(), player, arrow);
                     }
                 }
             }
@@ -51,8 +53,12 @@ public class Telebow extends CustomEnchant {
             if (arrow.getShooter() instanceof Player) {
                 Player player = (Player) arrow.getShooter();
 
-                if (itemHasEnchant(BowManager.getInstance().getBowFromArrow(arrow), this) && getCooldownTime(player) != 0 && telebowData.get(player.getUniqueId()).isSneaking() && getCooldownTime(player) != 20) {
-                    PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + ChatColor.RED + "Telebow Cooldown: " + getCooldownTime(player) + "(s)" + "\"}"), (byte) 2);
+                if (itemHasEnchant(BowManager.getInstance().getBowFromArrow(arrow), this)
+                        && getCooldownTime(player) != 0 && telebowData.get(player.getUniqueId()).isSneaking()
+                        && getCooldownTime(player) != 20) {
+                    PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\""
+                            + ChatColor.RED + "Telebow Cooldown: " + getCooldownTime(player) + "(s)" + "\"}"),
+                            (byte) 2);
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
                 }
             }
@@ -67,14 +73,19 @@ public class Telebow extends CustomEnchant {
             if (arrow.getShooter() instanceof Player) {
                 Player player = (Player) arrow.getShooter();
 
-                if (itemHasEnchant(player.getInventory().getItemInHand(), this) && getCooldownTime(player) != 0 && player.isSneaking()) {
-                    PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + ChatColor.RED + "Telebow Cooldown: " + getCooldownTime(player) + "(s)" + "\"}"), (byte) 2);
+                if (itemHasEnchant(player.getInventory().getItemInHand(), this) && getCooldownTime(player) != 0
+                        && player.isSneaking()) {
+                    PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\""
+                            + ChatColor.RED + "Telebow Cooldown: " + getCooldownTime(player) + "(s)" + "\"}"),
+                            (byte) 2);
                     ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
                 }
 
                 if (telebowData.containsKey(player.getUniqueId())) {
                     if (itemHasEnchant(telebowData.get(player.getUniqueId()).getBow(), this)) {
-                        if (arrow == telebowData.get(player.getUniqueId()).getArrow() && telebowData.get(player.getUniqueId()).isSneaking()) attemptEnchantExecution(telebowData.get(player.getUniqueId()).getBow(), player, arrow);
+                        if (arrow == telebowData.get(player.getUniqueId()).getArrow()
+                                && telebowData.get(player.getUniqueId()).isSneaking())
+                            attemptEnchantExecution(telebowData.get(player.getUniqueId()).getBow(), player, arrow);
                     }
                 }
             }
@@ -101,9 +112,11 @@ public class Telebow extends CustomEnchant {
 
             if (itemHasEnchant(player.getInventory().getItemInHand(), this)) {
                 if (player.isSneaking()) {
-                    telebowData.put(player.getUniqueId(), new TelebowData(arrow, player.getInventory().getItemInHand(), true));
+                    telebowData.put(player.getUniqueId(),
+                            new TelebowData(arrow, player.getInventory().getItemInHand(), true));
                 } else {
-                    telebowData.put(player.getUniqueId(), new TelebowData(arrow, player.getInventory().getItemInHand(), false));
+                    telebowData.put(player.getUniqueId(),
+                            new TelebowData(arrow, player.getInventory().getItemInHand(), false));
                 }
             }
         }
@@ -114,7 +127,8 @@ public class Telebow extends CustomEnchant {
         Player player = (Player) args[0];
         Arrow arrow = (Arrow) args[1];
 
-        if (isNotOnCooldown(player) && !RegionManager.getInstance().locationIsInRegion(arrow.getLocation(), RegionManager.RegionType.SPAWN)) {
+        if (isNotOnCooldown(player) && !RegionManager.getInstance().locationIsInRegion(arrow.getLocation(),
+                RegionManager.RegionType.SPAWN)) {
             player.teleport(arrow);
             player.getWorld().playSound(arrow.getLocation(), Sound.ENDERMAN_TELEPORT, 1f, 2f);
         }
@@ -134,12 +148,8 @@ public class Telebow extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("90s", "45s", "20s")
-                .write("Sneak to shoot a teleportation").next()
-                .write("arrow (").writeVariable(0, level).write(" cooldown, -3 per bow").next()
-                .write("hit)")
-                .build();
+        return new LoreBuilder().declareVariable("90s", "45s", "20s").write("Sneak to shoot a teleportation").next()
+                .write("arrow (").writeVariable(0, level).write(" cooldown, -3 per bow").next().write("hit)").build();
     }
 
     @Override

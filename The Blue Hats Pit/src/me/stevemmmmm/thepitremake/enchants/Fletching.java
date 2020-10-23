@@ -28,7 +28,8 @@ public class Fletching extends CustomEnchant {
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        DamageManager.getInstance().addDamage(((EntityDamageByEntityEvent) args[0]), damageAmount.getValueAtLevel(level), CalculationMode.ADDITIVE);
+        DamageManager.getInstance().addDamage(((EntityDamageByEntityEvent) args[0]),
+                damageAmount.getValueAtLevel(level), CalculationMode.ADDITIVE);
     }
 
     @Override
@@ -43,10 +44,8 @@ public class Fletching extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("+7%", "+12%", "+20%")
-                .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" bow damage")
-                .build();
+        return new LoreBuilder().declareVariable("+7%", "+12%", "+20%").write("Deal ")
+                .writeVariable(ChatColor.RED, 0, level).write(" bow damage").build();
     }
 
     @Override

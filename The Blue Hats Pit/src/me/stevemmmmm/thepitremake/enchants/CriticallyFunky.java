@@ -25,12 +25,14 @@ public class CriticallyFunky extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event);
+            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(),
+                    event);
         }
 
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event);
+                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(),
+                        event);
             }
         }
     }
@@ -43,17 +45,21 @@ public class CriticallyFunky extends CustomEnchant {
         if (event.getDamager() instanceof Arrow) {
             Arrow arrow = (Arrow) event.getDamager();
 
-            if (!arrow.isCritical()) return;
+            if (!arrow.isCritical())
+                return;
         } else if (args[0] instanceof Player) {
             damager = (Player) args[0];
         }
 
-        if (damager == null) return;
+        if (damager == null)
+            return;
 
-        if (!DamageManager.getInstance().isCriticalHit(damager)) return;
+        if (!DamageManager.getInstance().isCriticalHit(damager))
+            return;
 
         if (queue.contains(damager.getUniqueId())) {
-            DamageManager.getInstance().addDamage(event, damageIncrease.getValueAtLevel(level), CalculationMode.ADDITIVE);
+            DamageManager.getInstance().addDamage(event, damageIncrease.getValueAtLevel(level),
+                    CalculationMode.ADDITIVE);
             queue.remove(damager.getUniqueId());
         }
 
@@ -77,16 +83,11 @@ public class CriticallyFunky extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("65%", "65%", "40%")
-                .declareVariable("", "14%", "30%")
-                .write("Critical hits against you deal").next()
-                .setColor(ChatColor.BLUE).writeVariable(0, level).resetColor().write(" of the damage they").next()
-                .write("normally would")
-                .setWriteCondition(level != 1)
-                .write(" and empower your").next()
-                .write("next strike for ").setColor(ChatColor.RED).writeVariable(1, level).resetColor().write(" damage")
-                .build();
+        return new LoreBuilder().declareVariable("65%", "65%", "40%").declareVariable("", "14%", "30%")
+                .write("Critical hits against you deal").next().setColor(ChatColor.BLUE).writeVariable(0, level)
+                .resetColor().write(" of the damage they").next().write("normally would").setWriteCondition(level != 1)
+                .write(" and empower your").next().write("next strike for ").setColor(ChatColor.RED)
+                .writeVariable(1, level).resetColor().write(" damage").build();
     }
 
     @Override

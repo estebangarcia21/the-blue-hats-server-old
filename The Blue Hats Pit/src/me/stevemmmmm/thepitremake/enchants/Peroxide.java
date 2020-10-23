@@ -40,7 +40,8 @@ public class Peroxide extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player hitPlayer = (Player) args[0];
 
-        hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, regenTime.getValueAtLevel(level) * 20, effectAmplifier.getValueAtLevel(level)), true);
+        hitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, regenTime.getValueAtLevel(level) * 20,
+                effectAmplifier.getValueAtLevel(level)), true);
     }
 
     @Override
@@ -55,11 +56,9 @@ public class Peroxide extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("Regen I", "Regen I", "Regen II")
-                .declareVariable("5", "8", "8")
-                .write("Gain ").writeVariable(ChatColor.RED, 0, level).write(" (").writeVariable(1, level).write("s)").write(" when hit")
-                .build();
+        return new LoreBuilder().declareVariable("Regen I", "Regen I", "Regen II").declareVariable("5", "8", "8")
+                .write("Gain ").writeVariable(ChatColor.RED, 0, level).write(" (").writeVariable(1, level).write("s)")
+                .write(" when hit").build();
     }
 
     @Override

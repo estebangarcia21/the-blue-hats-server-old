@@ -27,26 +27,36 @@ public class ChatManagement implements Listener {
 
         if (tasks.containsKey(event.getPlayer().getUniqueId()) && !event.getPlayer().isOp()) {
             if (!event.getPlayer().hasPermission("bhperms.chatcooldownbypass")) {
-                event.getPlayer().sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "OOF!" + ChatColor.RED + " Your chat is on cooldown for " + ChatColor.YELLOW + time.get(event.getPlayer().getUniqueId()) + "s" + ChatColor.RED + "!");
+                event.getPlayer()
+                        .sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD + "OOF!" + ChatColor.RED
+                                + " Your chat is on cooldown for " + ChatColor.YELLOW
+                                + time.get(event.getPlayer().getUniqueId()) + "s" + ChatColor.RED + "!");
                 return;
             }
         }
 
         for (Player player : event.getPlayer().getWorld().getPlayers()) {
-            player.sendMessage(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + " " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getPrefix() + " " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getNameColor() + event.getPlayer().getName() + ChatColor.WHITE + ": " + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getChatColor() + event.getMessage());
+            player.sendMessage(GrindingSystem.getInstance().getFormattedPlayerLevel(event.getPlayer()) + " "
+                    + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getPrefix() + " "
+                    + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getNameColor()
+                    + event.getPlayer().getName() + ChatColor.WHITE + ": "
+                    + PermissionsManager.getInstance().getPlayerRank(event.getPlayer()).getChatColor()
+                    + event.getMessage());
         }
 
         if (!tasks.containsKey(event.getPlayer().getUniqueId())) {
-            tasks.put(event.getPlayer().getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                time.put(event.getPlayer().getUniqueId(), time.getOrDefault(event.getPlayer().getUniqueId(), 4) - 1);
+            tasks.put(event.getPlayer().getUniqueId(),
+                    Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                        time.put(event.getPlayer().getUniqueId(),
+                                time.getOrDefault(event.getPlayer().getUniqueId(), 4) - 1);
 
-                if (time.get(event.getPlayer().getUniqueId()) <= 0) {
-                    Bukkit.getServer().getScheduler().cancelTask(tasks.get(event.getPlayer().getUniqueId()));
+                        if (time.get(event.getPlayer().getUniqueId()) <= 0) {
+                            Bukkit.getServer().getScheduler().cancelTask(tasks.get(event.getPlayer().getUniqueId()));
 
-                    tasks.remove(event.getPlayer().getUniqueId());
-                    time.remove(event.getPlayer().getUniqueId());
-                }
-            }, 0L, 20L));
+                            tasks.remove(event.getPlayer().getUniqueId());
+                            time.remove(event.getPlayer().getUniqueId());
+                        }
+                    }, 0L, 20L));
         }
     }
 }

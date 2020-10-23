@@ -27,7 +27,10 @@ public class Lifesteal extends CustomEnchant {
     public void applyEnchant(int level, Object... args) {
         Player damager = (Player) args[0];
 
-        damager.setHealth(Math.min(damager.getHealth() + DamageManager.getInstance().getDamageFromEvent((EntityDamageByEntityEvent) args[1]) * healPercentage.getValueAtLevel(level), damager.getMaxHealth()));
+        damager.setHealth(Math.min(damager.getHealth()
+                + DamageManager.getInstance().getDamageFromEvent((EntityDamageByEntityEvent) args[1])
+                        * healPercentage.getValueAtLevel(level),
+                damager.getMaxHealth()));
     }
 
     @Override
@@ -42,10 +45,8 @@ public class Lifesteal extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("4%", "8%", "13%")
-                .write("Heal for ").setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" of damage dealt")
-                .build();
+        return new LoreBuilder().declareVariable("4%", "8%", "13%").write("Heal for ").setColor(ChatColor.RED)
+                .writeVariable(0, level).resetColor().write(" of damage dealt").build();
     }
 
     @Override

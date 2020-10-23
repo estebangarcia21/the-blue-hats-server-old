@@ -13,6 +13,7 @@ public class ServerMOTDInitializer implements Listener {
 
     @EventHandler
     public void onServerPing(ServerListPingEvent event) {
-        event.setMotd(ChatColor.AQUA.toString() + ChatColor.BOLD + "The Blue Hats" + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + " ▶ " + ChatColor.YELLOW + "Pit Recreation\n" + ChatColor.GOLD + "Welcome back!");
+        event.setMotd(ChatColor.AQUA.toString() + ChatColor.BOLD + "The Blue Hats" + ChatColor.LIGHT_PURPLE.toString()
+                + ChatColor.BOLD + " ▶ " + ChatColor.YELLOW + "Pit Recreation\n" + ChatColor.GOLD + "Welcome back!");
     }
 }

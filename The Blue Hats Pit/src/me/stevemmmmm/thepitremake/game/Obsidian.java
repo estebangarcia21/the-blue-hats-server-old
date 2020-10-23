@@ -23,29 +23,34 @@ public class Obsidian implements Listener {
     private final HashMap<Block, Integer> removalTime = new HashMap<>();
 
     public static Obsidian getInstance() {
-        if (instance == null) instance = new Obsidian();
+        if (instance == null)
+            instance = new Obsidian();
 
         return instance;
     }
 
-    @EventHandler (priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (RegionManager.getInstance().locationIsInRegion(event.getBlockPlaced().getLocation(), RegionManager.RegionType.SPAWN)) {
+        if (RegionManager.getInstance().locationIsInRegion(event.getBlockPlaced().getLocation(),
+                RegionManager.RegionType.SPAWN)) {
             return;
         }
 
         if (event.getBlockPlaced().getType() == Material.OBSIDIAN) {
-            obsidianToRemovalTasks.put(event.getBlockPlaced(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                removalTime.put(event.getBlockPlaced(), removalTime.getOrDefault(event.getBlockPlaced(), 120) - 1);
+            obsidianToRemovalTasks.put(event.getBlockPlaced(),
+                    Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                        removalTime.put(event.getBlockPlaced(),
+                                removalTime.getOrDefault(event.getBlockPlaced(), 120) - 1);
 
-                if (removalTime.get(event.getBlockPlaced()) <= 0) {
-                    Bukkit.getServer().getScheduler().cancelTask(obsidianToRemovalTasks.get(event.getBlockPlaced()));
-                    obsidianToRemovalTasks.remove(event.getBlockPlaced());
-                    removalTime.remove(event.getBlockPlaced());
+                        if (removalTime.get(event.getBlockPlaced()) <= 0) {
+                            Bukkit.getServer().getScheduler()
+                                    .cancelTask(obsidianToRemovalTasks.get(event.getBlockPlaced()));
+                            obsidianToRemovalTasks.remove(event.getBlockPlaced());
+                            removalTime.remove(event.getBlockPlaced());
 
-                    event.getBlockPlaced().setType(Material.AIR);
-                }
-            }, 0L, 20L));
+                            event.getBlockPlaced().setType(Material.AIR);
+                        }
+                    }, 0L, 20L));
         }
     }
 

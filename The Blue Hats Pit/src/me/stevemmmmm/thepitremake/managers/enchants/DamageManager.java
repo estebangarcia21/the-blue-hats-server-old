@@ -29,10 +29,12 @@ public class DamageManager implements Listener {
     private final ArrayList<EntityDamageByEntityEvent> canceledEvents = new ArrayList<>();
     private final ArrayList<EntityDamageByEntityEvent> removeCriticalDamage = new ArrayList<>();
 
-    private DamageManager() { }
+    private DamageManager() {
+    }
 
     public static DamageManager getInstance() {
-        if (instance == null) instance = new DamageManager();
+        if (instance == null)
+            instance = new DamageManager();
 
         return instance;
     }
@@ -44,7 +46,8 @@ public class DamageManager implements Listener {
         private double reductionAmount = 1;
         private double absoluteReductionAmount;
 
-        private EventData() { }
+        private EventData() {
+        }
 
         public static EventData fromEvent(EntityDamageByEntityEvent event) {
             if (!eventData.containsKey(event)) {
@@ -87,7 +90,7 @@ public class DamageManager implements Listener {
         }
     }
 
-    @EventHandler (priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onHit(EntityDamageByEntityEvent event) {
         if (!eventData.containsKey(event)) {
             eventData.put(event, new EventData());
@@ -220,13 +223,16 @@ public class DamageManager implements Listener {
             }
         } else if (CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror) != 1) {
             try {
-                if (reflectTo.getHealth() - (damage * mirror.damageReflection.getValueAtLevel(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
+                if (reflectTo.getHealth() - (damage * mirror.damageReflection.getValueAtLevel(
+                        CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror))) < 0) {
                     safeSetPlayerHealth(target, 0);
                 } else {
                     reflectTo.damage(0);
 
                     CombatManager.getInstance().combatTag(target);
-                    safeSetPlayerHealth(reflectTo, Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.getValueAtLevel(CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
+                    safeSetPlayerHealth(reflectTo,
+                            Math.max(0, reflectTo.getHealth() - (damage * mirror.damageReflection.getValueAtLevel(
+                                    CustomEnchant.getEnchantLevel(target.getInventory().getLeggings(), mirror)))));
                 }
             } catch (NullPointerException ignored) {
 
@@ -243,14 +249,22 @@ public class DamageManager implements Listener {
     }
 
     public boolean isCriticalHit(Player player) {
-        return player.getFallDistance() > 0 && !((Entity) player).isOnGround() && player.getLocation().getBlock().getType() != Material.LADDER && player.getLocation().getBlock().getType() != Material.VINE && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA && player.getLocation().getBlock().getType() != Material.WATER && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
+        return player.getFallDistance() > 0 && !((Entity) player).isOnGround()
+                && player.getLocation().getBlock().getType() != Material.LADDER
+                && player.getLocation().getBlock().getType() != Material.VINE
+                && player.getLocation().getBlock().getType() != Material.STATIONARY_WATER
+                && player.getLocation().getBlock().getType() != Material.STATIONARY_LAVA
+                && player.getLocation().getBlock().getType() != Material.WATER
+                && player.getLocation().getBlock().getType() != Material.LAVA && player.getVehicle() == null
+                && !player.hasPotionEffect(PotionEffectType.BLINDNESS);
     }
 
-    //TODO Fix lifesteal damage calculation
+    // TODO Fix lifesteal damage calculation
     private double calculateDamage(double initialDamage, EntityDamageByEntityEvent event) {
         EventData data = EventData.fromEvent(event);
 
-        double damage = initialDamage * data.getAdditiveDamage() * data.getMultiplicativeDamage() * data.getReductionAmount() - data.getAbsoluteReductionAmount();
+        double damage = initialDamage * data.getAdditiveDamage() * data.getMultiplicativeDamage()
+                * data.getReductionAmount() - data.getAbsoluteReductionAmount();
 
         if (removeCriticalDamage.contains(event)) {
             damage *= .667;
@@ -261,15 +275,19 @@ public class DamageManager implements Listener {
 
             if (player.getInventory().getLeggings() != null) {
                 if (player.getInventory().getLeggings().getType() == Material.LEATHER_LEGGINGS) {
-                    if (!CustomEnchantManager.getInstance().getItemEnchants(player.getInventory().getLeggings()).isEmpty()) {
-                        //TODO This is the only way to try to make leather pants to iron in 1.8.8 spigot. I need to upgrade to 1.9+ spigot to fix this. This heavily changes the damage output
+                    if (!CustomEnchantManager.getInstance().getItemEnchants(player.getInventory().getLeggings())
+                            .isEmpty()) {
+                        // TODO This is the only way to try to make leather pants to iron in 1.8.8
+                        // spigot. I need to upgrade to 1.9+ spigot to fix this. This heavily changes
+                        // the damage output
                         damage *= 0.871;
                     }
                 }
             }
         }
 
-        if (damage <= 0) damage = 1;
+        if (damage <= 0)
+            damage = 1;
 
         return damage;
     }

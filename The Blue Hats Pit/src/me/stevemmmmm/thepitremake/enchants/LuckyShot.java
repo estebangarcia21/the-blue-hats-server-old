@@ -46,7 +46,8 @@ public class LuckyShot extends CustomEnchant {
                 Arrow arrow = (Arrow) event.getEntity();
 
                 if (event.getEntity().getShooter() instanceof Player) {
-                    if (getAttemptedEnchantExecutionFeedback(BowManager.getInstance().getBowFromArrow((Arrow) event.getEntity()))) {
+                    if (getAttemptedEnchantExecutionFeedback(
+                            BowManager.getInstance().getBowFromArrow((Arrow) event.getEntity()))) {
                         if (!hitLuckyShotArrows.contains(arrow)) {
                             canLuckyShot.remove(((Player) (event.getEntity()).getShooter()).getUniqueId());
                         }
@@ -60,12 +61,15 @@ public class LuckyShot extends CustomEnchant {
     public void onBowShoot(EntityShootBowEvent event) {
         if (event.getProjectile() instanceof Arrow) {
             if (((Arrow) event.getProjectile()).getShooter() instanceof Player) {
-                if (CustomEnchant.itemHasEnchant(((Player) ((Arrow) event.getProjectile()).getShooter()).getItemInHand(), this)) {
-                    int level = CustomEnchant.getEnchantLevel(((Player) ((Arrow) event.getProjectile()).getShooter()).getItemInHand(), this);
+                if (CustomEnchant.itemHasEnchant(
+                        ((Player) ((Arrow) event.getProjectile()).getShooter()).getItemInHand(), this)) {
+                    int level = CustomEnchant.getEnchantLevel(
+                            ((Player) ((Arrow) event.getProjectile()).getShooter()).getItemInHand(), this);
 
                     if (percentChance(percentChance.getValueAtLevel(level))) {
                         canLuckyShot.add(((Player) ((Arrow) event.getProjectile()).getShooter()).getUniqueId());
-                        ((Player) ((Arrow) event.getProjectile()).getShooter()).sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
+                        ((Player) ((Arrow) event.getProjectile()).getShooter()).sendMessage(ChatColor.YELLOW.toString()
+                                + ChatColor.BOLD + "LUCKY SHOT!" + ChatColor.LIGHT_PURPLE + " Quadruple damage!");
                     }
                 }
             }
@@ -96,11 +100,8 @@ public class LuckyShot extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("2%", "5%", "10%")
-                .setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" chance for a shot to deal").next()
-                .write("quadruple damage")
-                .build();
+        return new LoreBuilder().declareVariable("2%", "5%", "10%").setColor(ChatColor.YELLOW).writeVariable(0, level)
+                .resetColor().write(" chance for a shot to deal").next().write("quadruple damage").build();
     }
 
     @Override

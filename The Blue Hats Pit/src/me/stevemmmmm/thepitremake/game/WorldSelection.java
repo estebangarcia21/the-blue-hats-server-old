@@ -32,13 +32,15 @@ public class WorldSelection implements Listener {
     private final ArrayList<UUID> mayExitGuiSelection = new ArrayList<>();
 
     public static WorldSelection getInstance() {
-        if (instance == null) instance = new WorldSelection();
+        if (instance == null)
+            instance = new WorldSelection();
 
         return instance;
     }
 
     public void displaySelectionMenu(Player player) {
-//        Main.INSTANCE.getServer().getPluginManager().callEvent(new PlayerPreWorldSelect(player));
+        // Main.INSTANCE.getServer().getPluginManager().callEvent(new
+        // PlayerPreWorldSelect(player));
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.INSTANCE, () -> {
             generateGui();
@@ -97,7 +99,8 @@ public class WorldSelection implements Listener {
     private void transportToWorld(HumanEntity player, String worldName) {
         World world = Main.INSTANCE.getServer().createWorld(new WorldCreator(worldName));
         Location location = RegionManager.getInstance().getSpawnLocation(((Player) player));
-        Location spawnLocation = new Location(world, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+        Location spawnLocation = new Location(world, location.getX(), location.getY(), location.getZ(),
+                location.getYaw(), location.getPitch());
 
         Chunk centerChunk = location.getChunk();
         centerChunk.load(true);
@@ -117,12 +120,9 @@ public class WorldSelection implements Listener {
 
         meta.setDisplayName(ChatColor.RED + "The Toxic World");
 
-        meta.setLore(new LoreBuilder()
-            .setColor(ChatColor.YELLOW)
-            .write("A world where any").next()
-            .write("enchants are allowed").next().next()
-            .resetColor().write(ChatColor.ITALIC + "No token limit on items")
-            .build());
+        meta.setLore(new LoreBuilder().setColor(ChatColor.YELLOW).write("A world where any").next()
+                .write("enchants are allowed").next().next().resetColor()
+                .write(ChatColor.ITALIC + "No token limit on items").build());
 
         gui.getItem(3).setItemMeta(meta);
 
@@ -132,14 +132,10 @@ public class WorldSelection implements Listener {
 
         meta.setDisplayName(ChatColor.AQUA + "The Peaceful World");
 
-        meta.setLore(new LoreBuilder()
-                .setColor(ChatColor.WHITE)
-                .write("A world where the most toxic").next()
-                .write("enchants are removed from").next()
-                .write("existance for peaceful").next()
-                .write("gameplay and fair fights").next().next()
-                .resetColor().write(ChatColor.ITALIC + "8 tokens maximum on items")
-                .build());
+        meta.setLore(new LoreBuilder().setColor(ChatColor.WHITE).write("A world where the most toxic").next()
+                .write("enchants are removed from").next().write("existance for peaceful").next()
+                .write("gameplay and fair fights").next().next().resetColor()
+                .write(ChatColor.ITALIC + "8 tokens maximum on items").build());
 
         gui.getItem(5).setItemMeta(meta);
     }

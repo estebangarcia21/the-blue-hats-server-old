@@ -28,7 +28,8 @@ public class DiamondStomp extends CustomEnchant {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[0];
 
         if (playerHasDiamondPiece((Player) event.getEntity())) {
-            DamageManager.getInstance().addDamage(event, percentDamageIncrease.getValueAtLevel(level), CalculationMode.ADDITIVE);
+            DamageManager.getInstance().addDamage(event, percentDamageIncrease.getValueAtLevel(level),
+                    CalculationMode.ADDITIVE);
         }
     }
 
@@ -58,7 +59,6 @@ public class DiamondStomp extends CustomEnchant {
         return false;
     }
 
-
     @Override
     public String getName() {
         return "Diamond Stomp";
@@ -71,10 +71,8 @@ public class DiamondStomp extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("7%", "12%", "25%")
-                .write("Deal ").setColor(ChatColor.RED).write("+").writeVariable(0, level).resetColor().write(" damage vs. players").next()
-                .write("wearing diamond armor")
+        return new LoreBuilder().declareVariable("7%", "12%", "25%").write("Deal ").setColor(ChatColor.RED).write("+")
+                .writeVariable(0, level).resetColor().write(" damage vs. players").next().write("wearing diamond armor")
                 .build();
     }
 

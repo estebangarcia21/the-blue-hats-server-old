@@ -28,7 +28,8 @@ public class SequenceAPI extends JavaPlugin {
     public static void startSequence(Sequence sequence) {
         sequencers.put(sequence, 0L);
 
-        if (sequence.getAnimationActions() != null) sequence.getAnimationActions().onSequenceStart();
+        if (sequence.getAnimationActions() != null)
+            sequence.getAnimationActions().onSequenceStart();
 
         ArrayList<Long> values = new ArrayList<>(sequence.getAnimationSequence().keySet());
 
@@ -44,7 +45,8 @@ public class SequenceAPI extends JavaPlugin {
             }
 
             if (sequencers.get(sequence) > endSequencerTicks.get(sequence)) {
-                if (sequence.getAnimationActions() != null) sequence.getAnimationActions().onSequenceEnd();
+                if (sequence.getAnimationActions() != null)
+                    sequence.getAnimationActions().onSequenceEnd();
 
                 Bukkit.getServer().getScheduler().cancelTask(animationTaskIndexs.get(sequence));
                 framePosition.remove(sequence);
@@ -61,7 +63,8 @@ public class SequenceAPI extends JavaPlugin {
     }
 
     public static void stopSequence(Sequence sequence) {
-        if (sequence.getAnimationActions() != null) sequence.getAnimationActions().onSequenceEnd();
+        if (sequence.getAnimationActions() != null)
+            sequence.getAnimationActions().onSequenceEnd();
 
         Bukkit.getServer().getScheduler().cancelTask(animationTaskIndexs.get(sequence));
         framePosition.remove(sequence);

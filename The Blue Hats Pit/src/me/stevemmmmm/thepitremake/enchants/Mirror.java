@@ -33,15 +33,10 @@ public class Mirror extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("", "25%", "50%")
-                .setWriteCondition(level == 1)
-                .write("You are immune to true damage")
-                .setWriteCondition(level != 1)
-                .write("You do not take true damage and").next()
-                .write("instead reflect ").setColor(ChatColor.YELLOW).writeVariable(0, level).resetColor().write(" of it to").next()
-                .write("your attacker")
-                .build();
+        return new LoreBuilder().declareVariable("", "25%", "50%").setWriteCondition(level == 1)
+                .write("You are immune to true damage").setWriteCondition(level != 1)
+                .write("You do not take true damage and").next().write("instead reflect ").setColor(ChatColor.YELLOW)
+                .writeVariable(0, level).resetColor().write(" of it to").next().write("your attacker").build();
     }
 
     @Override

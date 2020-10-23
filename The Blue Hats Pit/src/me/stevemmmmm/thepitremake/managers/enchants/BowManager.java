@@ -21,7 +21,8 @@ public class BowManager implements Listener {
     private final HashMap<Arrow, PlayerInventory> data = new HashMap<>();
 
     public static BowManager getInstance() {
-        if (instance == null) instance = new BowManager();
+        if (instance == null)
+            instance = new BowManager();
 
         return instance;
     }
@@ -30,7 +31,8 @@ public class BowManager implements Listener {
     public void onArrowShoot(EntityShootBowEvent event) {
         if (event.getProjectile() instanceof Arrow) {
             if (((Arrow) event.getProjectile()).getShooter() instanceof Player) {
-                data.put((Arrow) event.getProjectile(), ((Player) ((Arrow) event.getProjectile()).getShooter()).getInventory());
+                data.put((Arrow) event.getProjectile(),
+                        ((Player) ((Arrow) event.getProjectile()).getShooter()).getInventory());
             }
         }
     }

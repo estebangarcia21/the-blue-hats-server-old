@@ -33,7 +33,8 @@ public class LastStand extends CustomEnchant {
         Player damaged = (Player) args[0];
 
         if (damaged.getHealth() < 10) {
-            damaged.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, amplifier.getValueAtLevel(level)));
+            damaged.addPotionEffect(
+                    new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, amplifier.getValueAtLevel(level)));
         }
     }
 
@@ -49,11 +50,9 @@ public class LastStand extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("I", "II", "III")
-                .write("Gain ").setColor(ChatColor.BLUE).write("Resistance ").writeVariable(0, level).resetColor().write(" (4").next()
-                .write("seconds) when reaching ").setColor(ChatColor.RED).write("3❤")
-                .build();
+        return new LoreBuilder().declareVariable("I", "II", "III").write("Gain ").setColor(ChatColor.BLUE)
+                .write("Resistance ").writeVariable(0, level).resetColor().write(" (4").next()
+                .write("seconds) when reaching ").setColor(ChatColor.RED).write("3❤").build();
     }
 
     @Override

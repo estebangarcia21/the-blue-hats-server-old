@@ -19,7 +19,8 @@ public class Bruiser extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(), event);
+            attemptEnchantExecution(((Player) event.getEntity()).getInventory().getItemInHand(), event.getEntity(),
+                    event);
         }
     }
 
@@ -28,7 +29,8 @@ public class Bruiser extends CustomEnchant {
         Player player = (Player) args[0];
 
         if (player.isBlocking()) {
-            DamageManager.getInstance().reduceAbsoluteDamage((EntityDamageByEntityEvent) args[1], heartsReduced.getValueAtLevel(level));
+            DamageManager.getInstance().reduceAbsoluteDamage((EntityDamageByEntityEvent) args[1],
+                    heartsReduced.getValueAtLevel(level));
         }
     }
 
@@ -44,11 +46,8 @@ public class Bruiser extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("0.5❤", "1❤", "2❤")
-                .write("Blocking with your swords reduces").next()
-                .write("received damage by ").writeVariable(ChatColor.RED, 0, level)
-                .build();
+        return new LoreBuilder().declareVariable("0.5❤", "1❤", "2❤").write("Blocking with your swords reduces").next()
+                .write("received damage by ").writeVariable(ChatColor.RED, 0, level).build();
     }
 
     @Override

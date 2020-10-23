@@ -33,14 +33,16 @@ public class UnenchantCommand implements CommandExecutor {
                     }
 
                     if (customEnchant == null) {
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " This enchant does not exist!");
+                        player.sendMessage(
+                                ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " This enchant does not exist!");
                         return true;
                     }
 
                     ItemStack item = player.getInventory().getItemInHand();
 
                     if (item.getType() == Material.AIR) {
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You are not holding anything!");
+                        player.sendMessage(
+                                ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You are not holding anything!");
                         return true;
                     }
 
@@ -49,18 +51,22 @@ public class UnenchantCommand implements CommandExecutor {
                         return true;
                     }
 
-                    if (item.getType() != Material.LEATHER_LEGGINGS && item.getType() != Material.GOLD_SWORD && item.getType() != Material.BOW) {
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You can not enchant this item!");
+                    if (item.getType() != Material.LEATHER_LEGGINGS && item.getType() != Material.GOLD_SWORD
+                            && item.getType() != Material.BOW) {
+                        player.sendMessage(
+                                ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " You can not enchant this item!");
                         return true;
                     }
 
                     if (!CustomEnchantManager.getInstance().itemContainsEnchant(item, customEnchant)) {
-                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED + " This item does not have the specified enchant!");
+                        player.sendMessage(ChatColor.DARK_PURPLE + "Error!" + ChatColor.RED
+                                + " This item does not have the specified enchant!");
                         return true;
                     }
 
                     CustomEnchantManager.getInstance().removeEnchant(item, customEnchant);
-                    player.sendMessage(ChatColor.DARK_PURPLE + "Success!" + ChatColor.RED + " You unenchanted the enchant successfully!");
+                    player.sendMessage(ChatColor.DARK_PURPLE + "Success!" + ChatColor.RED
+                            + " You unenchanted the enchant successfully!");
                     player.updateInventory();
                 }
             }

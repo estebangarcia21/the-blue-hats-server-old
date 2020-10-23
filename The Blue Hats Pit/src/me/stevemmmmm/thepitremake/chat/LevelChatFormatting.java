@@ -25,7 +25,10 @@ public class LevelChatFormatting implements Listener {
         GrindingSystem.getInstance().setPlayerLevel(player, 120);
         GrindingSystem.getInstance().setPlayerPrestige(player, 35);
 
-        ((CraftPlayer) player).getHandle().listName = CraftChatMessage.fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player) + playerRank.getNameColor() + " " + player.getName())[0];
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
+        ((CraftPlayer) player).getHandle().listName = CraftChatMessage
+                .fromString(GrindingSystem.getInstance().getFormattedPlayerLevelWithoutPrestige(player)
+                        + playerRank.getNameColor() + " " + player.getName())[0];
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(
+                PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, ((CraftPlayer) player).getHandle()));
     }
 }

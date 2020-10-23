@@ -23,17 +23,20 @@ public class PlayableArea implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        tasks.put(event.getPlayer().getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-            if (!RegionManager.getInstance().playerIsInRegion(event.getPlayer(), RegionManager.RegionType.PLAYABLEAREA)) {
-                if (event.getPlayer().getLocation().getY() < 0) {
-                    Main.INSTANCE.getServer().getPluginManager().callEvent(new PlayerDeathEvent(event.getPlayer(), new ArrayList<>(), 0, ""));
-                } else {
-                    AutoRespawn.triggerRespawnSequence(event.getPlayer());
-                }
+        tasks.put(event.getPlayer().getUniqueId(),
+                Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                    if (!RegionManager.getInstance().playerIsInRegion(event.getPlayer(),
+                            RegionManager.RegionType.PLAYABLEAREA)) {
+                        if (event.getPlayer().getLocation().getY() < 0) {
+                            Main.INSTANCE.getServer().getPluginManager()
+                                    .callEvent(new PlayerDeathEvent(event.getPlayer(), new ArrayList<>(), 0, ""));
+                        } else {
+                            AutoRespawn.triggerRespawnSequence(event.getPlayer());
+                        }
 
-                event.getPlayer().sendMessage(ChatColor.RED + "Congratulations! You went out of the map!");
-            }
-        }, 0L, 1L));
+                        event.getPlayer().sendMessage(ChatColor.RED + "Congratulations! You went out of the map!");
+                    }
+                }, 0L, 1L));
     }
 
     @EventHandler

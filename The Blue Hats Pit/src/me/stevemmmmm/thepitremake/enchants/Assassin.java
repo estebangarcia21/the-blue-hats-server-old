@@ -27,18 +27,19 @@ public class Assassin extends CustomEnchant {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
                 if (((Player) event.getEntity()).isSneaking()) {
-                    attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), ((Arrow) event.getDamager()).getShooter(), event.getEntity());
+                    attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(),
+                            ((Arrow) event.getDamager()).getShooter(), event.getEntity());
                 }
             }
         }
 
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
             if (((Player) event.getEntity()).isSneaking()) {
-                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(), event.getEntity());
+                attemptEnchantExecution(((Player) event.getEntity()).getInventory().getLeggings(), event.getDamager(),
+                        event.getEntity());
             }
         }
     }
-
 
     @Override
     public void applyEnchant(int level, Object... args) {
@@ -73,13 +74,9 @@ public class Assassin extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("5s", "4s", "3s")
-                .setColor(ChatColor.GRAY)
-                .write("Sneaking teleports you behind").next()
-                .write("your").next()
-                .write("attacker. (").writeVariable(0, level).write(" cooldown)")
-                .build();
+        return new LoreBuilder().declareVariable("5s", "4s", "3s").setColor(ChatColor.GRAY)
+                .write("Sneaking teleports you behind").next().write("your").next().write("attacker. (")
+                .writeVariable(0, level).write(" cooldown)").build();
     }
 
     @Override

@@ -15,7 +15,8 @@ public class RankManager {
     private final List<Rank> ranks = new ArrayList<>();
 
     public static RankManager getInstance() {
-        if (instance == null) instance = new RankManager();
+        if (instance == null)
+            instance = new RankManager();
 
         return instance;
     }

@@ -21,7 +21,8 @@ public class Parasite extends CustomEnchant {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getDamager()), ((Arrow) event.getDamager()).getShooter());
+                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getDamager()),
+                        ((Arrow) event.getDamager()).getShooter());
             }
         }
     }
@@ -45,10 +46,8 @@ public class Parasite extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("0.25❤", "0.5❤", "1.0❤")
-                .write("Heal ").setColor(ChatColor.RED).writeVariable(0, level).resetColor().write(" on arrow hit")
-                .build();
+        return new LoreBuilder().declareVariable("0.25❤", "0.5❤", "1.0❤").write("Heal ").setColor(ChatColor.RED)
+                .writeVariable(0, level).resetColor().write(" on arrow hit").build();
     }
 
     @Override

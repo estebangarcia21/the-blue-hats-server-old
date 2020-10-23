@@ -19,7 +19,8 @@ public class Punisher extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getEntity(), event);
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getEntity(),
+                    event);
         }
     }
 
@@ -29,7 +30,8 @@ public class Punisher extends CustomEnchant {
         EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) args[1];
 
         if (damaged.getHealth() < damaged.getMaxHealth() / 2) {
-            DamageManager.getInstance().addDamage(event, damageIncrease.getValueAtLevel(level), CalculationMode.ADDITIVE);
+            DamageManager.getInstance().addDamage(event, damageIncrease.getValueAtLevel(level),
+                    CalculationMode.ADDITIVE);
         }
     }
 
@@ -45,10 +47,8 @@ public class Punisher extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("+6%", "+12%", "+18%")
-                .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" damage vs. player").next()
-                .write("below 50% HP")
+        return new LoreBuilder().declareVariable("+6%", "+12%", "+18%").write("Deal ")
+                .writeVariable(ChatColor.RED, 0, level).write(" damage vs. player").next().write("below 50% HP")
                 .build();
     }
 

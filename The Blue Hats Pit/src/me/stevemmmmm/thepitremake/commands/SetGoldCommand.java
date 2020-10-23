@@ -24,14 +24,17 @@ public class SetGoldCommand implements CommandExecutor {
                         if (StringUtils.isNumeric(args[0])) {
                             double gold = Double.parseDouble(args[0]);
 
-                            if (gold > 1000000000.00) gold = 1000000000.00;
+                            if (gold > 1000000000.00)
+                                gold = 1000000000.00;
 
                             GrindingSystem.getInstance().setPlayerGold(player, gold);
                         } else {
-                            player.sendMessage(ChatColor.RED + "Error! " + ChatColor.DARK_PURPLE + "Usage: /setgold <amount>");
+                            player.sendMessage(
+                                    ChatColor.RED + "Error! " + ChatColor.DARK_PURPLE + "Usage: /setgold <amount>");
                         }
                     } else {
-                        player.sendMessage(ChatColor.RED + "Error! " + ChatColor.DARK_PURPLE + "Usage: /setgold <amount>");
+                        player.sendMessage(
+                                ChatColor.RED + "Error! " + ChatColor.DARK_PURPLE + "Usage: /setgold <amount>");
                     }
                 } else {
                     player.sendMessage(ChatColor.RED + "Error! " + ChatColor.DARK_PURPLE + "Usage: /setgold <amount>");

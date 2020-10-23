@@ -25,7 +25,8 @@ public class DevilChicks extends CustomEnchant {
     public void onArrowLand(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow) {
             if (event.getEntity().getShooter() instanceof Player) {
-                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getEntity()), event.getEntity());
+                attemptEnchantExecution(BowManager.getInstance().getBowFromArrow((Arrow) event.getEntity()),
+                        event.getEntity());
             }
         }
     }
@@ -45,44 +46,50 @@ public class DevilChicks extends CustomEnchant {
             direction.setY(location.getY());
             direction.setZ(location.getZ() + (Math.random() - Math.random()) * radius);
 
-            if (RegionManager.getInstance().locationIsInRegion(direction.toLocation(location.getWorld()), RegionManager.RegionType.SPAWN)) return;
+            if (RegionManager.getInstance().locationIsInRegion(direction.toLocation(location.getWorld()),
+                    RegionManager.RegionType.SPAWN))
+                return;
 
-            Chicken chicken = (Chicken) world.spawnEntity(direction.toLocation(location.getWorld()), EntityType.CHICKEN);
+            Chicken chicken = (Chicken) world.spawnEntity(direction.toLocation(location.getWorld()),
+                    EntityType.CHICKEN);
             chicken.setBaby();
 
             chicken.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 3, 5));
 
             float volume = 0.5f;
 
-            Sequence soundAnimation = new Sequence() {{
-                addKeyFrame(1, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.6f));
-                addKeyFrame(2, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.7f));
-                addKeyFrame(3, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.8f));
-                addKeyFrame(4, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.9f));
-                addKeyFrame(5, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.0f));
-                addKeyFrame(6, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.1f));
-                addKeyFrame(7, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.2f));
-                addKeyFrame(8, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.3f));
-                addKeyFrame(9, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.4f));
+            Sequence soundAnimation = new Sequence() {
+                {
+                    addKeyFrame(1, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.6f));
+                    addKeyFrame(2, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.7f));
+                    addKeyFrame(3, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.8f));
+                    addKeyFrame(4, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 0.9f));
+                    addKeyFrame(5, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.0f));
+                    addKeyFrame(6, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.1f));
+                    addKeyFrame(7, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.2f));
+                    addKeyFrame(8, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.3f));
+                    addKeyFrame(9, () -> world.playSound(location, Sound.NOTE_SNARE_DRUM, volume, 1.4f));
 
-                addKeyFrame(10, () -> {
-                    world.playSound(location, Sound.CHICKEN_HURT, 1, 2);
+                    addKeyFrame(10, () -> {
+                        world.playSound(location, Sound.CHICKEN_HURT, 1, 2);
 
-                    for (Entity entity : chicken.getNearbyEntities(1, 1, 1)) {
-                        if (entity instanceof Player) {
-                            Player player = (Player) entity;
+                        for (Entity entity : chicken.getNearbyEntities(1, 1, 1)) {
+                            if (entity instanceof Player) {
+                                Player player = (Player) entity;
 
-                            DamageManager.getInstance().doTrueDamage(player, 2.4, (Player) arrow.getShooter());
+                                DamageManager.getInstance().doTrueDamage(player, 2.4, (Player) arrow.getShooter());
 
-                            createExplosion(player, chicken.getLocation());
+                                createExplosion(player, chicken.getLocation());
+                            }
                         }
-                    }
 
-                    world.playSound(location, Sound.EXPLODE, volume, 1.6f);
-                    world.playEffect(chicken.getLocation(), Effect.EXPLOSION_LARGE, Effect.EXPLOSION_LARGE.getData(), 100);
-                    chicken.remove();
-                });
-            }};
+                        world.playSound(location, Sound.EXPLODE, volume, 1.6f);
+                        world.playEffect(chicken.getLocation(), Effect.EXPLOSION_LARGE,
+                                Effect.EXPLOSION_LARGE.getData(), 100);
+                        chicken.remove();
+                    });
+                }
+            };
 
             SequenceAPI.startSequence(soundAnimation);
         }
@@ -106,11 +113,9 @@ public class DevilChicks extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .writeOnlyIf(level == 1, "Arrows spawn with explosive chicken.")
+        return new LoreBuilder().writeOnlyIf(level == 1, "Arrows spawn with explosive chicken.")
                 .writeOnlyIf(level == 2, "Arrows spawn many explosive chickens.")
-                .writeOnlyIf(level == 3, "Arrows spawn too many explosive chickens.")
-                .build();
+                .writeOnlyIf(level == 3, "Arrows spawn too many explosive chickens.").build();
     }
 
     @Override

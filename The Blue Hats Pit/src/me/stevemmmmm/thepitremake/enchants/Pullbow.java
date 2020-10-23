@@ -17,11 +17,12 @@ public class Pullbow extends CustomEnchant {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
-//        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
-//            if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-//
-//            }
-//        }
+        // if (event.getEntity() instanceof Player && event.getDamager() instanceof
+        // Arrow) {
+        // if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
+        //
+        // }
+        // }
     }
 
     @Override
@@ -41,15 +42,10 @@ public class Pullbow extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .setWriteCondition(level == 1)
-                .write("Hitting a player pulls them toward").next()
-                .write("you (8s cooldown per player)")
-                .setWriteCondition(level != 1)
-                .write("Hitting a player puls them and").next()
-                .write("nearby players toward you (8s").next()
-                .write("cooldown)")
-                .build();
+        return new LoreBuilder().setWriteCondition(level == 1).write("Hitting a player pulls them toward").next()
+                .write("you (8s cooldown per player)").setWriteCondition(level != 1)
+                .write("Hitting a player puls them and").next().write("nearby players toward you (8s").next()
+                .write("cooldown)").build();
     }
 
     @Override

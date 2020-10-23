@@ -41,7 +41,9 @@ public class SetRankCommand implements CommandExecutor {
                         Rank rank = RankManager.getInstance().getRankByName(rankName);
 
                         PermissionsManager.getInstance().setPlayerRank(target, rank);
-                        target.sendMessage(ChatColor.GREEN + "Hey! " + ChatColor.RED + "Your rank was just changed to " + rank.getNameColor() + rank.getName() + ChatColor.RED + "! You may need to reconnect to refresh you rank.");
+                        target.sendMessage(ChatColor.GREEN + "Hey! " + ChatColor.RED + "Your rank was just changed to "
+                                + rank.getNameColor() + rank.getName() + ChatColor.RED
+                                + "! You may need to reconnect to refresh you rank.");
 
                         player.sendMessage(ChatColor.GREEN + "Rank changed successfully!");
                     }

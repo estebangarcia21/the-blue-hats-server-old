@@ -21,7 +21,9 @@ public class Chipping extends CustomEnchant {
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player) {
             if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                attemptEnchantExecution(((Player) ((Arrow) event.getDamager()).getShooter()).getInventory().getItemInHand(), event.getEntity(), ((Arrow) event.getDamager()).getShooter());
+                attemptEnchantExecution(
+                        ((Player) ((Arrow) event.getDamager()).getShooter()).getInventory().getItemInHand(),
+                        event.getEntity(), ((Arrow) event.getDamager()).getShooter());
             }
         }
     }
@@ -46,10 +48,8 @@ public class Chipping extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("0.5❤", "1.0❤", "1.5❤")
-                .write("Deals ").writeVariable(ChatColor.RED, 0, level).write(" extra true damage")
-                .build();
+        return new LoreBuilder().declareVariable("0.5❤", "1.0❤", "1.5❤").write("Deals ")
+                .writeVariable(ChatColor.RED, 0, level).write(" extra true damage").build();
     }
 
     @Override

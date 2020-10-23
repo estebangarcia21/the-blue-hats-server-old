@@ -28,7 +28,8 @@ public class RingArmor extends CustomEnchant {
 
     @Override
     public void applyEnchant(int level, Object... args) {
-        DamageManager.getInstance().reduceDamage(((EntityDamageByEntityEvent) args[0]), damageReductionAmount.getValueAtLevel(level));
+        DamageManager.getInstance().reduceDamage(((EntityDamageByEntityEvent) args[0]),
+                damageReductionAmount.getValueAtLevel(level));
     }
 
     @Override
@@ -43,11 +44,8 @@ public class RingArmor extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("-20%", "-40%", "-60%")
-                .write("Recieve ").writeVariable(ChatColor.BLUE, 0, level).write(" damage from").next()
-                .write("arrows")
-                .build();
+        return new LoreBuilder().declareVariable("-20%", "-40%", "-60%").write("Recieve ")
+                .writeVariable(ChatColor.BLUE, 0, level).write(" damage from").next().write("arrows").build();
     }
 
     @Override

@@ -30,7 +30,7 @@ public abstract class CustomEnchant implements Listener {
     private final HashMap<UUID, Long> hitAmountResetTimes = new HashMap<>();
     private final HashMap<UUID, Integer> hitAmountResetTasks = new HashMap<>();
 
-    public abstract void applyEnchant(int level, Object... args) ;
+    public abstract void applyEnchant(int level, Object... args);
 
     public abstract String getName();
 
@@ -57,7 +57,8 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public boolean attemptEnchantExecution(ItemStack source, Object... args) {
-        if (TogglePvPCommand.pvpIsToggledOff) return false;
+        if (TogglePvPCommand.pvpIsToggledOff)
+            return false;
 
         if (itemHasEnchant(source, this)) {
             return calculateConditions(source, args);
@@ -67,10 +68,12 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public boolean attemptEnchantExecution(ItemStack source, boolean condition, Object... args) {
-        if (TogglePvPCommand.pvpIsToggledOff) return false;
+        if (TogglePvPCommand.pvpIsToggledOff)
+            return false;
 
         if (itemHasEnchant(source, this)) {
-            if (!condition) return false;
+            if (!condition)
+                return false;
 
             return calculateConditions(source, args);
         }
@@ -107,7 +110,8 @@ public abstract class CustomEnchant implements Listener {
                     return false;
                 }
 
-                if (RegionManager.getInstance().locationIsInRegion(arrow.getLocation(), RegionManager.RegionType.SPAWN)) {
+                if (RegionManager.getInstance().locationIsInRegion(arrow.getLocation(),
+                        RegionManager.RegionType.SPAWN)) {
                     return false;
                 }
             }
@@ -122,26 +126,30 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public void startCooldown(Player player, long ticks, boolean isSeconds) {
-        if (isSeconds) ticks *= 20;
+        if (isSeconds)
+            ticks *= 20;
 
-        if (!cooldownTimes.containsKey(player.getUniqueId())) cooldownTimes.put(player.getUniqueId(), ticks);
-        if (!playersToCooldownState.containsKey(player.getUniqueId())) playersToCooldownState.put(player.getUniqueId(), false);
+        if (!cooldownTimes.containsKey(player.getUniqueId()))
+            cooldownTimes.put(player.getUniqueId(), ticks);
+        if (!playersToCooldownState.containsKey(player.getUniqueId()))
+            playersToCooldownState.put(player.getUniqueId(), false);
 
         if (!cooldownTasks.containsKey(player.getUniqueId())) {
             cooldownTimes.put(player.getUniqueId(), ticks);
 
-            cooldownTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                playersToCooldownState.put(player.getUniqueId(), true);
+            cooldownTasks.put(player.getUniqueId(),
+                    Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                        playersToCooldownState.put(player.getUniqueId(), true);
 
-                cooldownTimes.put(player.getUniqueId(), cooldownTimes.get(player.getUniqueId()) - 1);
+                        cooldownTimes.put(player.getUniqueId(), cooldownTimes.get(player.getUniqueId()) - 1);
 
-                if (cooldownTimes.get(player.getUniqueId()) <= 0f) {
-                    playersToCooldownState.put(player.getUniqueId(), false);
-                    cooldownTimes.put(player.getUniqueId(), 0L);
-                    Bukkit.getServer().getScheduler().cancelTask(cooldownTasks.get(player.getUniqueId()));
-                    cooldownTasks.remove(player.getUniqueId());
-                }
-            }, 0L, 1L));
+                        if (cooldownTimes.get(player.getUniqueId()) <= 0f) {
+                            playersToCooldownState.put(player.getUniqueId(), false);
+                            cooldownTimes.put(player.getUniqueId(), 0L);
+                            Bukkit.getServer().getScheduler().cancelTask(cooldownTasks.get(player.getUniqueId()));
+                            cooldownTasks.remove(player.getUniqueId());
+                        }
+                    }, 0L, 1L));
         }
     }
 
@@ -150,76 +158,96 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public static boolean itemHasEnchant(ItemStack item, CustomEnchant enchant) {
-        if (item == null || item.getType() == Material.AIR) return false;
-        if (item.getItemMeta().getLore() == null) return false;
+        if (item == null || item.getType() == Material.AIR)
+            return false;
+        if (item.getItemMeta().getLore() == null)
+            return false;
 
         List<String> lore = item.getItemMeta().getLore();
 
         String appendRare = "";
 
-        if (enchant.isRareEnchant()) appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
+        if (enchant.isRareEnchant())
+            appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
 
-        if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName())) return true;
+        if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName()))
+            return true;
 
         for (int i = 2; i <= 3; i++) {
-            if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " " + CustomEnchantManager.getInstance().convertToRomanNumeral(i))) return true;
+            if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " "
+                    + CustomEnchantManager.getInstance().convertToRomanNumeral(i)))
+                return true;
         }
 
         return false;
     }
 
     public static boolean itemHasEnchant(ItemStack item, CustomEnchant enchant, int level) {
-        if (item == null || item.getType() == Material.AIR) return false;
-        if (item.getItemMeta().getLore() == null) return false;
+        if (item == null || item.getType() == Material.AIR)
+            return false;
+        if (item.getItemMeta().getLore() == null)
+            return false;
 
         List<String> lore = item.getItemMeta().getLore();
 
         String appendRare = "";
 
-        if (enchant.isRareEnchant()) appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
+        if (enchant.isRareEnchant())
+            appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
 
         if (level == 1) {
             return lore.contains(appendRare + ChatColor.BLUE + enchant.getName());
         }
 
-        return lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " " + CustomEnchantManager.getInstance().convertToRomanNumeral(level));
+        return lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " "
+                + CustomEnchantManager.getInstance().convertToRomanNumeral(level));
     }
 
     public static int getEnchantLevel(ItemStack item, CustomEnchant enchant) {
-        if (item == null || item.getType() == Material.AIR) return 0;
-        if (item.getItemMeta().getLore() == null) return 0;
+        if (item == null || item.getType() == Material.AIR)
+            return 0;
+        if (item.getItemMeta().getLore() == null)
+            return 0;
 
         List<String> lore = item.getItemMeta().getLore();
 
         String appendRare = "";
 
-        if (enchant.isRareEnchant()) appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
+        if (enchant.isRareEnchant())
+            appendRare = ChatColor.LIGHT_PURPLE + "RARE! ";
 
-        if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName())) return 1;
+        if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName()))
+            return 1;
 
         for (int i = 2; i <= 3; i++) {
-            if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " " + CustomEnchantManager.getInstance().convertToRomanNumeral(i))) return i;
+            if (lore.contains(appendRare + ChatColor.BLUE + enchant.getName() + " "
+                    + CustomEnchantManager.getInstance().convertToRomanNumeral(i)))
+                return i;
         }
 
         return 0;
     }
 
     public boolean isNotOnCooldown(Player player) {
-        if (!playersToCooldownState.containsKey(player.getUniqueId())) playersToCooldownState.put(player.getUniqueId(), false);
+        if (!playersToCooldownState.containsKey(player.getUniqueId()))
+            playersToCooldownState.put(player.getUniqueId(), false);
 
         return !playersToCooldownState.get(player.getUniqueId());
     }
 
     public long getCooldownTime(Player player) {
-        if (!cooldownTimes.containsKey(player.getUniqueId())) cooldownTimes.put(player.getUniqueId(), 0L);
+        if (!cooldownTimes.containsKey(player.getUniqueId()))
+            cooldownTimes.put(player.getUniqueId(), 0L);
 
         return cooldownTimes.get(player.getUniqueId()) / 20;
     }
 
     public void setCooldownTime(Player player, long ticks, boolean isSeconds) {
-        if (isSeconds) ticks *= 20;
+        if (isSeconds)
+            ticks *= 20;
 
-        if (!cooldownTimes.containsKey(player.getUniqueId())) cooldownTimes.put(player.getUniqueId(), 0L);
+        if (!cooldownTimes.containsKey(player.getUniqueId()))
+            cooldownTimes.put(player.getUniqueId(), 0L);
 
         cooldownTimes.put(player.getUniqueId(), Math.max(ticks, 0));
     }
@@ -236,13 +264,15 @@ public abstract class CustomEnchant implements Listener {
     }
 
     public void updateHitCount(Player player, int amount) {
-        if (!playersToHitsWithEnchant.containsKey(player.getUniqueId())) playersToHitsWithEnchant.put(player.getUniqueId(), 1);
+        if (!playersToHitsWithEnchant.containsKey(player.getUniqueId()))
+            playersToHitsWithEnchant.put(player.getUniqueId(), 1);
 
         playersToHitsWithEnchant.put(player.getUniqueId(), playersToHitsWithEnchant.get(player.getUniqueId()) + amount);
     }
 
     public boolean hasRequiredHits(Player player, int hitAmount) {
-        if (!playersToHitsWithEnchant.containsKey(player.getUniqueId())) playersToHitsWithEnchant.put(player.getUniqueId(), 1);
+        if (!playersToHitsWithEnchant.containsKey(player.getUniqueId()))
+            playersToHitsWithEnchant.put(player.getUniqueId(), 1);
 
         if (playersToHitsWithEnchant.get(player.getUniqueId()) >= hitAmount) {
             playersToHitsWithEnchant.put(player.getUniqueId(), 0);
@@ -254,16 +284,18 @@ public abstract class CustomEnchant implements Listener {
 
     public void startHitResetTimer(Player player) {
         if (!hitAmountResetTasks.containsKey(player.getUniqueId())) {
-            hitAmountResetTasks.put(player.getUniqueId(), Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
-                hitAmountResetTimes.put(player.getUniqueId(), hitAmountResetTimes.getOrDefault(player.getUniqueId(), 0L) + 1);
+            hitAmountResetTasks.put(player.getUniqueId(),
+                    Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.INSTANCE, () -> {
+                        hitAmountResetTimes.put(player.getUniqueId(),
+                                hitAmountResetTimes.getOrDefault(player.getUniqueId(), 0L) + 1);
 
-                if (hitAmountResetTimes.get(player.getUniqueId()) >= 5) {
-                    playersToHitsWithEnchant.put(player.getUniqueId(), 0);
-                    hitAmountResetTimes.put(player.getUniqueId(), 0L);
-                    Bukkit.getServer().getScheduler().cancelTask(hitAmountResetTasks.get(player.getUniqueId()));
-                    hitAmountResetTasks.remove(player.getUniqueId());
-                }
-            }, 0L, 20L));
+                        if (hitAmountResetTimes.get(player.getUniqueId()) >= 5) {
+                            playersToHitsWithEnchant.put(player.getUniqueId(), 0);
+                            hitAmountResetTimes.put(player.getUniqueId(), 0L);
+                            Bukkit.getServer().getScheduler().cancelTask(hitAmountResetTasks.get(player.getUniqueId()));
+                            hitAmountResetTasks.remove(player.getUniqueId());
+                        }
+                    }, 0L, 20L));
         } else {
             hitAmountResetTimes.put(player.getUniqueId(), 0L);
         }

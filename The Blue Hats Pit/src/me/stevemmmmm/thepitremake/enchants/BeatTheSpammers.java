@@ -19,14 +19,16 @@ public class BeatTheSpammers extends CustomEnchant {
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getEntity(), event);
+            attemptEnchantExecution(((Player) event.getDamager()).getInventory().getItemInHand(), event.getEntity(),
+                    event);
         }
     }
 
     @Override
     public void applyEnchant(int level, Object... args) {
         if (((Player) args[0]).getInventory().getItemInHand().getType() == Material.BOW) {
-            DamageManager.getInstance().addDamage(((EntityDamageByEntityEvent) args[1]), damageAmount.getValueAtLevel(level), CalculationMode.ADDITIVE);
+            DamageManager.getInstance().addDamage(((EntityDamageByEntityEvent) args[1]),
+                    damageAmount.getValueAtLevel(level), CalculationMode.ADDITIVE);
         }
     }
 
@@ -42,10 +44,8 @@ public class BeatTheSpammers extends CustomEnchant {
 
     @Override
     public ArrayList<String> getDescription(int level) {
-        return new LoreBuilder()
-                .declareVariable("+10%", "+25%", "+40%")
-                .write("Deal ").writeVariable(ChatColor.RED, 0, level).write(" damage vs. players").next()
-                .write("holding a bow")
+        return new LoreBuilder().declareVariable("+10%", "+25%", "+40%").write("Deal ")
+                .writeVariable(ChatColor.RED, 0, level).write(" damage vs. players").next().write("holding a bow")
                 .build();
     }
 

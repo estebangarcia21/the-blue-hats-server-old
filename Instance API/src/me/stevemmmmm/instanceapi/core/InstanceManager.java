@@ -23,17 +23,19 @@ public class InstanceManager {
 
     private final HashMap<ServerGame, ArrayList<World>> gameInstances = new HashMap<>();
 
-    private InstanceManager() { }
+    private InstanceManager() {
+    }
 
     public static InstanceManager getInstance() {
-        if (instance == null) instance = new InstanceManager();
+        if (instance == null)
+            instance = new InstanceManager();
 
         return instance;
     }
 
     public void generateGameInstance(ServerGame game) {
         ArrayList<World> instances = gameInstances.getOrDefault(game, new ArrayList<>());
-        //Aye
+        // Aye
 
         World world = replicateWorld(game.getGameMap().getName(), game.getReferenceName() + "_" + instances.size());
 
@@ -85,7 +87,8 @@ public class InstanceManager {
         for (Map.Entry<ServerGame, ArrayList<World>> entry : gameInstances.entrySet()) {
             for (World world : entry.getValue()) {
                 for (Player player : world.getPlayers()) {
-                    ((CraftPlayer) player).getHandle().playerConnection.disconnect("Instance Shutdown! (Server Restart?)");
+                    ((CraftPlayer) player).getHandle().playerConnection
+                            .disconnect("Instance Shutdown! (Server Restart?)");
                 }
 
                 Bukkit.unloadWorld(world, false);
