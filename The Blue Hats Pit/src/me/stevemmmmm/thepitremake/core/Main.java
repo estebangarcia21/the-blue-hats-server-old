@@ -34,14 +34,12 @@ import java.util.logging.Logger;
 
 public class Main extends JavaPlugin implements ServerGame {
     public static Main INSTANCE;
-    // public static ProtocolManager protocolManager;
 
     public static String version = "v1.0";
 
     @Override
     public void onEnable() {
         INSTANCE = this;
-        // protocolManager = ProtocolLibrary.getProtocolManager();
 
         ConfigAPI.registerConfigWriteLocations(this, new HashMap<String, String>() {
             private static final long serialVersionUID = 1L;
