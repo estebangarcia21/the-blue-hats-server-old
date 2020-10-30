@@ -4,7 +4,7 @@
 
 # Discontinued Repository
 
-This repository is no longer being maintained because the code base is very poorly designed. The code base is currently being redesigned in a private repository owned by the repository owner (Stevemmmmm). For more information contact the repository owner on discord @ Stevemmmmm#8896.
+This repository is no longer being maintained due to the fact that this code base was designed extremly poorly. A new code base for The Blue Hats Server is currently being made in a private repository owned by the repository owner, Stevemmmmm. For more information contact the repository owner on discord @ Stevemmmmm#8896.
 
 ## About
 
