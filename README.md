@@ -1,5 +1,9 @@
 # The Blue Hats Server
 
+# Discontinued Repository
+
+This repository is no longer being maintained because the code base is very poorly designed. The code base is currently being redesigned in a private repository owned by the repository owner (Stevemmmmm). For more information contact the repository owner on discord @ Stevemmmmm#8896.
+
 ## About
 
 The Blue Hats Server is an open source community project that attempts to replicate The Hypixel Pit so that people may test enchants or play with friends on a local Minecraft server.
