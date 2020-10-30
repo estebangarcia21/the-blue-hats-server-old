@@ -1,4 +1,6 @@
-# The Blue Hats Server
+<p align="center">
+ <img src="logo.png" width="75%">
+</p>
 
 # Discontinued Repository
 
